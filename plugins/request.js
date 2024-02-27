@@ -1,7 +1,7 @@
 export default function ({$axios, redirect}) {
   $axios.onRequest(config => {
     const defaultParams = {
-      version: '1.0.0',
+      juKey: 'zh'
     }
     if (config.method === 'post') {
       config.data = config.data ? Object.assign(config.data, defaultParams) : defaultParams

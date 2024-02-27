@@ -1,18 +1,16 @@
 <template>
   <div>
     <div class="header">
-
     </div>
-    <slot/>
+    <nuxt/>
     <div class="footer">
-
     </div>
   </div>
 </template>
 <script setup lang="ts">
 </script>
 
-<style lang="scss">
+<style>
 * {
   margin: 0;
   padding: 0;
