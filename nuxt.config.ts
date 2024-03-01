@@ -33,7 +33,7 @@ export default {
   css: [],
 
   plugins: [
-    '@/plugins/request'
+    '@/plugins/request',
   ],
 
   axios: {
@@ -42,8 +42,8 @@ export default {
   },
   proxy: {
     '/api': {
-      // target: 'https://api.jumirui.com',
-      target: 'http://localhost:4000',
+      target: 'http://api-test.taurion.ai',
+      // target: 'http://localhost:4000',
       pathRewrite: {
         '^/api': '' // 删除url中的/api
       }
@@ -63,8 +63,41 @@ export default {
         codeChallengeMethod: '',
         responseType: 'token id_token',
         redirectUri: 'http://localhost:9898',
-        scope: ['openid', 'profile', 'email'],
+        scope: [],
         // 更多配置...
+      },
+      local: {
+        scheme: "refresh",
+        token: {
+          property: "access_token",
+          maxAge: 1800
+          // type: 'Bearer'
+        },
+        refreshToken: {
+          property: "refresh_token",
+          data: "refresh_token",
+          maxAge: 60 * 60 * 24 * 30
+        },
+        user: {
+          property: ""
+        },
+        endpoints: {
+          // backend endpoints
+          login: {
+            url: "/auth/login", // triggering access_token exchange.
+            method: "post"
+          },
+          refresh: {
+            url: "/auth/refresh", // backend api's refresh token endpoint (irrelevant from twitter)
+            method: "post"
+          },
+          user: {
+            url: "/me/profile", // returns twitter profile
+            method: "get"
+          },
+          logout: false
+        },
+        autoLogout: false
       }
     },
     // 其他auth模块配置...

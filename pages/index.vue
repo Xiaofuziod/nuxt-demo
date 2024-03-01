@@ -5,21 +5,48 @@
       {{ user }}
     </div>
     <div style="width: 100px;height: 200px;background: red" @click="loginWithGoogle">Login with Google</div>
+    <div style="width: 100px;height: 200px;background: green" @click="loginWithTwitter">Login with twitter</div>
+
+    <div @click="emailLogin">email login</div>
   </div>
 </template>
 <script>
+import {sendEmail,userRegister} from "~/common/home";
+import {extractParametersFromUrl} from "~/utils";
+
 export default {
   name: 'Home',
   data() {
-    return{
+    return {
       user: 'ta'
     }
   },
+  mounted() {
+    const url = window.location.href
+    const query = extractParametersFromUrl(url)
+    console.log(query)
+    if (query.access_token) {
+      console.log('google login')
+      this.$store.dispatch('googleLogin', query)
+    } else if (this.$route.query.oauth_token) {
+      console.log('twitter login',)
+      this.$store.dispatch('twitterLogin', this.$route.query)
+    }
+
+
+  },
   methods: {
     loginWithGoogle() {
-      console.log('login with google',this.$auth)
+      console.log('login with google', this.$auth)
       this.$auth.loginWith('google')
-
+    },
+    loginWithTwitter() {
+      this.$store.dispatch('twitterRedirectUrl',{})
+      // res.url includes twitter's authentication link
+    },
+    emailLogin() {
+      console.log('email login',this.$store)
+      this.$store.dispatch('emailLogin',{account: "flynn.taurion@gmail.com", password: "123456"})
     }
   }
 }
