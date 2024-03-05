@@ -29,9 +29,21 @@
           Signal source
         </div>
         <div class="source-row">
-          <div class="source-item"></div>
-          <div class="source-item"></div>
-          <div class="source-item"></div>
+          <div class="source-item" v-for="item in 3">
+            <div class="source-item-item">
+              If someone loves you,love them ...
+            </div>
+            <div class="source-item-user">
+              <div class="source-item-user-pic"></div>
+              <div class="source-item-user-right">
+                <div class="source-item-user-right-nickname">Morgan
+                  <img class="img1" src="@/static/images/chat/dui.svg" alt="">
+                </div>
+                <div class="source-item-user-right-username">@lamdcinvestor</div>
+              </div>
+
+            </div>
+          </div>
         </div>
 
         <div class="chat-card-title">
@@ -158,6 +170,56 @@
         background: rgba(140, 180, 189, 0.1);
         box-sizing: border-box;
         padding: 10px 12px 7px;
+
+        .source-item-item {
+          height: 22px;
+          color: rgba(255, 255, 255, 0.7);
+          font-family: Avenir-Roman;
+          font-size: 8px;
+          text-transform: capitalize;
+        }
+
+        .source-item-user {
+          display: flex;
+          align-items: center;
+          margin-top: 8px;
+
+          .source-item-user-pic {
+            width: 16px;
+            height: 16px;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: green;
+          }
+
+          .source-item-user-right {
+            margin-left: 5px;
+
+            .source-item-user-right-nickname {
+              height: 8px;
+              color: rgba(255, 255, 255, 1);
+              font-family: Avenir-Heavy;
+              font-size: 6px;
+              text-transform: capitalize;
+              img {
+                width: 5px;
+                height: 5px;
+                margin-left: 2px;
+              }
+            }
+
+            .source-item-user-right-username {
+              height: 8px;
+              color: rgba(255, 255, 255, 0.5);
+              font-family: Avenir-Book;
+              font-size: 6px;
+              text-transform: capitalize;
+            }
+
+          }
+        }
+
+
       }
     }
 

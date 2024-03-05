@@ -28,7 +28,9 @@
 
         <div class="list-item-content">
           <div class="list-item-title">If someone loves you,love them back unconditionally</div>
-          <div class="list-item-icon"></div>
+          <div class="list-item-icon">
+            <img src="@/static/images/chat/ai2.svg" alt="">
+          </div>
         </div>
 
       </div>
@@ -104,8 +106,11 @@
           border-radius: 70px;
           background: rgba(138, 173, 188, 0.1);
           backdrop-filter: blur(100px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
           img {
-            width: 16px;
+            width: 18px;
           }
         }
       }
