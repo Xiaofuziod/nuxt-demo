@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'aifont';
+    src: url('~assets/fonts/aifont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'aifontf';
+    src: url('~assets/fonts/aifontF.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -30,7 +30,9 @@ export default {
     ]
   },
 
-  css: [],
+  css: [
+    '~/assets/css/font.css'
+  ],
 
   plugins: [
     '@/plugins/request',
