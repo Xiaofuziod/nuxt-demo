@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-content">
     <div class="header">
     </div>
     <nuxt/>
@@ -17,7 +17,12 @@
 }
 .header {
   height: 100px;
-  background: antiquewhite;
+}
+
+.app-content {
+  min-height: 100vh;
+  background-color: rgba(5, 15, 33, 1);
+  position: relative;
 }
 
 </style>
