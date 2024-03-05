@@ -121,7 +121,7 @@ export default {
     .Account {
       height: 24px;
       color: rgba(206, 184, 100, 1);
-      font-family: GruppeF-Fat;
+      font-family: aifontF;
       font-size: 20px;
       line-height: 120.000005%;
       text-transform: uppercase;
@@ -248,7 +248,7 @@ export default {
       .rc-account {
         height: 11px;
         color: rgba(140, 180, 189, 0.6);
-        font-family: GruppeF-Fat;
+        font-family: aifontF;
         font-size: 9px;
         line-height: 120.000005%;
         text-transform: uppercase;

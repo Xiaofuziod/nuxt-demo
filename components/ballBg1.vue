@@ -11,21 +11,20 @@
 <style lang="less">
 .ball-bg {
   position: absolute;
-  z-index: 0;
+  z-index: -1;
   top: 0;
   left: 0;
 }
 .deep-green-ball {
   position: absolute;
-  width: 835.23px;
+  width: 658.8px;
   height: 689px;
-  left: -600.43px;
-  top: -43px;
-
   transform: rotate(43.419579deg);
   border-radius: 176px 254px 176px 176px;
   background: linear-gradient(266.83deg, rgba(8, 148, 150, 0.6) -5.97%, rgba(3, 114, 54, 0.6) 99.31%);
   filter: blur(153.5px);
+  left: -480px;
+  top: 107px;
 }
 
 .light-green-ball1 {

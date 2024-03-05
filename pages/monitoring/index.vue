@@ -25,14 +25,13 @@
       </div>
       <header class="content-header">
         <div class="filter-tabs">
-          <div class="tab-btn active">ALL</div>
-          <div class="tab-btn">FINISHED</div>
-          <div class="tab-btn">UNFINISHED</div>
+          <div class="tab-btn active"><span>ALL</span></div>
+          <div class="tab-btn"><span>FINISHED</span></div>
+          <div class="tab-btn"><span>UNFINISHED</span></div>
         </div>
         <div class="add-monitoring">+ Add AI Monitoring</div>
       </header>
       <div class="monitoring-cards">
-        <!-- Example of a single card -->
         <div class="card">
           <img class="card-img" src="~/assets/imgs/bian.png" alt="">
           <div class="card-header">
@@ -42,7 +41,60 @@
             <p class="other">128进展</p>
           </div>
         </div>
-        <!-- Add more cards as needed -->
+        <div class="card">
+          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
+          <div class="card-header">
+            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
+            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
+            <p class="timestamp">今天20:00</p>
+            <p class="other">128进展</p>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
+          <div class="card-header">
+            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
+            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
+            <p class="timestamp">今天20:00</p>
+            <p class="other">128进展</p>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
+          <div class="card-header">
+            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
+            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
+            <p class="timestamp">今天20:00</p>
+            <p class="other">128进展</p>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
+          <div class="card-header">
+            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
+            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
+            <p class="timestamp">今天20:00</p>
+            <p class="other">128进展</p>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
+          <div class="card-header">
+            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
+            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
+            <p class="timestamp">今天20:00</p>
+            <p class="other">128进展</p>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
+          <div class="card-header">
+            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
+            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
+            <p class="timestamp">今天20:00</p>
+            <p class="other">128进展</p>
+          </div>
+        </div>
       </div>
     </main>
     <ball-bg1/>
@@ -54,7 +106,7 @@
 <style scoped lang="less">
 .monitor-wrapper {
   width: 1152px;
-  height: 616px;
+  height: 100%;
   border-radius: 31px;
   background: rgba(38, 64, 64, 0.2);
   position: relative;
@@ -158,10 +210,22 @@
           color: rgba(140, 180, 189, 0.4);
           font-size: 16px;
           margin-right: 20px;
-          &.active {
-            background: rgba(140, 180, 189, 1);
+          overflow: hidden;
+          position: relative;
+          &.active span {
+            font-size: 16px;
             color: rgba(12, 26, 39, 1);
-            backdrop-filter: blur(217.899994px);
+          }
+          &.active:after {
+            background: rgba(140, 180, 189, 1);
+            content: '';
+            position: absolute;
+            width: 80px; /* 确保伪元素的大小与按钮一致 */
+            height: 90px;
+            transform: rotate(-145deg); /* 旋转45度 */
+            left: 5px;
+            top: -25px;
+            z-index: -1;
           }
         }
       }
@@ -169,11 +233,14 @@
     .monitoring-cards {
       padding: 40px 0;
       display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
       .card {
         padding: 16px 20px;
         width: 399px;
         height: 130px;
         border-radius: 16px;
+        margin-bottom: 16px;
         background: rgba(38, 64, 64, 0.2);
         display: flex;
         .card-img {

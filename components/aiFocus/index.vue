@@ -175,7 +175,7 @@
     .date {
       height: 29px;
       color: rgba(206, 184, 100, 1);
-      font-family: GruppeF-Fat;
+      font-family: aifontF;
       font-size: 24px;
       text-transform: uppercase;
     }

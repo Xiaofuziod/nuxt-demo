@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <AppHeader></AppHeader>
-    <div class="page-content">
+    <div class="page-container">
       <nuxt/>
     </div>
     <div class="footer">
@@ -15,6 +15,7 @@ import AppHeader from "~/components/AppHeader/index.vue";
 <style lang="less">
 body {
   background: rgba(5, 15, 33, 1);
+  font-family: Avenir;
 }
 * {
   margin: 0;
@@ -27,7 +28,7 @@ body {
   position: relative;
   z-index: 1;
   overflow: hidden;
-  .page-content {
+  .page-container {
     height: calc(100vh - 104px);
     display: flex;
     justify-content: center;
