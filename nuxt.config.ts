@@ -36,6 +36,7 @@ export default {
 
   plugins: [
     '@/plugins/request',
+    '@/plugins/socket.io.js'
   ],
 
   axios: {
