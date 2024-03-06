@@ -151,17 +151,4 @@ nav {
 .user-profile span {
   margin-left: 8px;
 }
-
-button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px; /* Adjust the border-radius as needed */
-  background-color: #0062cc; /* Adjust the background color as needed */
-  color: #fff;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3; /* Adjust the hover color as needed */
-}
 </style>

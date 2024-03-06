@@ -8,7 +8,7 @@
 <script setup lang="ts">
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .ball-bg {
   position: absolute;
   z-index: -1;

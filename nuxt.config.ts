@@ -31,7 +31,8 @@ export default {
   },
 
   css: [
-    '~/assets/css/font.css'
+    '~/assets/css/font.css',
+    '~/assets/css/base.css',
   ],
 
   plugins: [
