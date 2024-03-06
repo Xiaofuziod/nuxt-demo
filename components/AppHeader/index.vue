@@ -3,7 +3,7 @@
     <div class="header-box">
       <!-- Logo and title area -->
       <div class="logo">
-        <img src="~/assets/imgs/logo.svg" alt="Taurion logo" />
+        <img src="~/assets/imgs/logo.svg" alt="Taurion logo" @click="goHome" />
       </div>
 
       <!-- Navigation area -->
@@ -46,6 +46,9 @@ export default {
     };
   },
   methods: {
+    goHome() {
+      this.$router.push('/zh/')
+    }
   },
   computed: {
     routepath() {
@@ -72,6 +75,7 @@ header {
 
 .logo img {
   height: 50px; /* Adjust the size as needed */
+  cursor: pointer;
 }
 
 .login-btn {
