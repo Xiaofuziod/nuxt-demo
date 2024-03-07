@@ -1,5 +1,5 @@
-const baseUrl = 'api'
 
+const baseUrl = process.env.NODE_ENV === 'development' ? 'api' : 'http://api-test.taurion.ai'
 export const sendEmail = baseUrl + '/api/auth/base/sendMessage'
 export const userLogin = baseUrl + '/api/auth/login/dologin'
 export const userRegister = baseUrl + '/api/auth/login/register'
