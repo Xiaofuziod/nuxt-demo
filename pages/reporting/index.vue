@@ -11,17 +11,20 @@
         </div>
       </div>
       <div class="Account Selected">Selected（6）
-        <span>Edit</span>
+        <span style="cursor: pointer" @click="showDelete = !showDelete">{{ showDelete ? "OK" : "Edit" }}</span>
       </div>
+      <!--    自选币  -->
       <div class="Frame580">
-        <div class="item" v-for="item in 6">
-          <div class="Rectangle"></div>
-          <div class="Bitcoin">Bitcoin</div>
-          <div class="BTC">BTC</div>
+        <div class="item" v-for="item in followList" :key="item.id">
+          <div class="Rectangle">
+            <img :src="item.icon" alt="">
+          </div>
+          <div class="Bitcoin ellipsis">{{ item.name }}</div>
+          <div class="BTC">{{ item.symbol }}</div>
+          <button v-if="showDelete" style="margin-left: 10px" @click="deleteFollow(item)">X</button>
         </div>
-
       </div>
-      <div class="AddaNewCoin">+ Add a New Coin</div>
+      <div class="AddaNewCoin" @click="showSelect">+ Add a New Coin</div>
     </div>
     <div class="report-center">
       <div class="rc-top">
@@ -31,38 +34,66 @@
         the account Morgan following
       </div>
 
-      <div class="focus-list">
-        <template v-for="item in 2">
-          <AIFocus/>
-        </template>
+      <div class="focus-list-box">
+        <list-container>
+          <div class="focus-list">
+            <template v-for="item in 4">
+              <AIFocus/>
+            </template>
+          </div>
+        </list-container>
       </div>
     </div>
     <div class="right">
       <ChatIndex/>
     </div>
-
+    <asset-select ref="assetSel"/>
   </div>
 </template>
 <script>
 import chatIndex from "~/components/chat/index.vue";
 import AIFocus from '~/components/aiFocus/index.vue'
+import ListContainer from '~/components/scrollView/index.vue'
+import assetSelect from '~/components/assetSelect/index.vue'
+import {deleteFollow, getFollowList} from "~/common/home";
 
 export default {
   name: 'Home',
   components: {
     ChatIndex: chatIndex,
-    AIFocus
+    AIFocus,
+    ListContainer,
+    assetSelect
   },
   data() {
     return {
-      user: 'ta'
+      user: 'ta',
+      followList: [],
+      showDelete: false
     }
   },
   mounted() {
-
-
+    this.getFollowList()
   },
-  methods: {}
+  methods: {
+    showSelect() {
+      this.$refs.assetSel.show()
+    },
+    getFollowList() {
+      this.$axios.get(getFollowList).then(res => {
+        this.followList = res.data.data
+      })
+    },
+    deleteFollow(item) {
+      this.$axios.get(deleteFollow, {
+        params: {
+          id: item.id
+        }
+      }).then(res => {
+        this.getFollowList()
+      })
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -74,6 +105,48 @@ export default {
   white-space: nowrap;
 }
 
+.Frame580 {
+  margin-top: 24px;
+
+  .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+
+  .Rectangle {
+    width: 32px;
+    height: 32px;
+    background-color: green;
+    border-radius: 123.1px;
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .Bitcoin {
+    width: 100px;
+    height: 20px;
+    color: rgba(255, 255, 255, 1);
+    font-family: Avenir-Heavy;
+    font-size: 15px;
+    text-transform: capitalize;
+    margin: 0 12px 0;
+  }
+
+  .BTC {
+    height: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: Avenir;
+    font-weight: 500;
+    font-size: 15px;
+    text-transform: capitalize;
+  }
+}
 
 .page-content {
   max-width: 1152px;
@@ -81,7 +154,7 @@ export default {
   display: flex;
   justify-content: center;
   width: 1152px;
-  border-radius: 31px;
+  border-radius: 31px 31px 0 0;
   background: rgba(38, 64, 64, 0.2);
   backdrop-filter: blur(200px);
   position: relative;
@@ -107,6 +180,7 @@ export default {
     border-right: 2px solid rgba(140, 180, 189, 0.12);
     box-sizing: border-box;
     padding: 32px 24px 20px;
+    position: relative;
 
     .AddaNewCoin {
       height: 22px;
@@ -116,6 +190,10 @@ export default {
       font-size: 16px;
       text-transform: capitalize;
       margin-top: 46px;
+      cursor: pointer;
+      position: absolute;
+      left: 24px;
+      bottom: 30px;
     }
 
     .Account {
@@ -183,50 +261,24 @@ export default {
       }
     }
 
-    .Frame580 {
-      margin-top: 24px;
-
-      .item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-
-      .Rectangle {
-        width: 32px;
-        height: 32px;
-        background-color: green;
-        border-radius: 123.1px;
-      }
-
-      .Bitcoin {
-        height: 20px;
-        color: rgba(255, 255, 255, 1);
-        font-family: Avenir-Heavy;
-        font-size: 15px;
-        text-transform: capitalize;
-        margin: 0 12px 0;
-      }
-
-      .BTC {
-        height: 20px;
-        color: rgba(255, 255, 255, 0.5);
-        font-family: Avenir;
-        font-weight: 500;
-        font-size: 15px;
-        text-transform: capitalize;
-      }
-    }
 
   }
 
   .report-center {
     width: 384px;
-    padding: 32px 40px 0;
+    overflow: hidden;
     border-right: 2px solid rgba(140, 180, 189, 0.12);
+    display: flex;
+    flex-direction: column;
+
+    .focus-list-box {
+      flex: 1;
+      overflow: hidden;
+      box-sizing: inherit;
+    }
 
     .focus-list {
-
+      padding: 0 40px;
     }
 
     .rc-top {
@@ -238,6 +290,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      padding: 32px 40px;
 
       span {
         display: block;

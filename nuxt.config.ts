@@ -36,7 +36,8 @@ export default {
 
   plugins: [
     '@/plugins/request',
-    '@/plugins/socket.io.js'
+    // '@/plugins/socket.io',
+    '@/plugins/dialog-plugin',
   ],
 
   axios: {
@@ -59,52 +60,19 @@ export default {
     host: '0.0.0.0' // default: localhost
   },
 
-  auth: {
-    strategies: {
-      google: {
-        clientId: '86595109680-ago8qfvgdi7785110dp2f95uu3c2e002.apps.googleusercontent.com',
-        codeChallengeMethod: '',
-        responseType: 'token id_token',
-        redirectUri: 'http://localhost:9898',
-        scope: [],
-        // 更多配置...
-      },
-      local: {
-        scheme: "refresh",
-        token: {
-          property: "access_token",
-          maxAge: 1800
-          // type: 'Bearer'
-        },
-        refreshToken: {
-          property: "refresh_token",
-          data: "refresh_token",
-          maxAge: 60 * 60 * 24 * 30
-        },
-        user: {
-          property: ""
-        },
-        endpoints: {
-          // backend endpoints
-          login: {
-            url: "/auth/login", // triggering access_token exchange.
-            method: "post"
-          },
-          refresh: {
-            url: "/auth/refresh", // backend api's refresh token endpoint (irrelevant from twitter)
-            method: "post"
-          },
-          user: {
-            url: "/me/profile", // returns twitter profile
-            method: "get"
-          },
-          logout: false
-        },
-        autoLogout: false
-      }
-    },
-    // 其他auth模块配置...
-  },
+  // auth: {
+  //   strategies: {
+  //     google: {
+  //       clientId: '86595109680-ago8qfvgdi7785110dp2f95uu3c2e002.apps.googleusercontent.com',
+  //       codeChallengeMethod: '',
+  //       responseType: 'token id_token',
+  //       redirectUri: 'http://localhost:9898',
+  //       scope: [],
+  //       // 更多配置...
+  //     }
+  //   },
+  //   // 其他auth模块配置...
+  // },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

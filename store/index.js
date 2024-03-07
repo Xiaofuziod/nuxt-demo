@@ -5,7 +5,7 @@ import {
   changePassword,
   googleLogin,
   twitterLogin,
-  twitterRedirectUrl
+  twitterRedirectUrl, getUserInfo
 } from "~/common/home";
 
 export const state = () => ({
@@ -55,7 +55,7 @@ export const actions = {
   },
   async twitterLogin({commit}, data) {
     try {
-      const res = await this.$axios.get(twitterLogin, {params:data})
+      const res = await this.$axios.get(twitterLogin, {params: data})
       commit('setUser', res.data.data);
     } catch (e) {
 
@@ -80,6 +80,14 @@ export const actions = {
   async changePassword({commit}, {email, password, password1, code}) {
     try {
       const res = await this.$axios.post(changePassword, {email, password, password1, captcha: code})
+      commit('setUser', res.data.data);
+    } catch (e) {
+
+    }
+  },
+  async getUserInfo({commit}) {
+    try {
+      const res = await this.$axios.get(getUserInfo)
       commit('setUser', res.data.data);
     } catch (e) {
 

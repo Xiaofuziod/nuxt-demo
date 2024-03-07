@@ -7,7 +7,7 @@
     <div style="width: 100px;height: 200px;background: red" @click="loginWithGoogle">Login with Google</div>
     <div style="width: 100px;height: 200px;background: green" @click="loginWithTwitter">Login with twitter</div>
 
-    <div @click="emailLogin">email login</div>
+    <button @click="emailLogin" style="color: #FFFFFF">email login</button>
   </div>
 </template>
 <script>

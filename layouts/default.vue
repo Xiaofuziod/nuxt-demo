@@ -8,8 +8,22 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script>
 import AppHeader from "~/components/AppHeader/index.vue";
+export default {
+  components: {
+    AppHeader
+  },
+  data() {
+    return {};
+  },
+  mounted() {
+    this.$store.dispatch('getUserInfo')
+  },
+  methods: {
+
+  }
+}
 </script>
 
 <style lang="less">
@@ -29,7 +43,7 @@ body {
   z-index: 1;
   overflow: hidden;
   .page-container {
-    height: calc(100vh - 104px);
+    height: calc(100vh - 88px);
     display: flex;
     justify-content: center;
     overflow: visible;

@@ -76,12 +76,12 @@
 
 .chat-box {
   width: 515px;
-  top: 104px;
-  left: 701px;
-  border-radius: 0px 31px 31px 31px;
   background-color: rgba(38, 64, 64, 0.3);
   box-sizing: border-box;
   padding: 20px 24px 20px;
+  border-radius: 0 31px 0 0 ;
+  height: 100%;
+  position: relative;
 
 
   .input-box {
@@ -95,6 +95,9 @@
     justify-content: space-between;
     padding: 9px;
     margin-top: 20px;
+    position: absolute;
+    left: 27px;
+    bottom: 20px;
 
     img {
       width: 38px;
