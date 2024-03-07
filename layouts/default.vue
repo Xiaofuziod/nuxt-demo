@@ -28,7 +28,7 @@ export default {
 
 <style lang="less">
 body {
-  background: rgba(5, 15, 33, 1);
+  background: linear-gradient(180deg, rgba(5, 14, 32, 1) 0%, rgba(8, 35, 61, 1) 100%);
   font-family: Avenir;
 }
 * {
@@ -43,10 +43,10 @@ body {
   z-index: 1;
   overflow: hidden;
   .page-container {
-    height: calc(100vh - 88px);
+    height: calc(100vh - 104px);
+    position: relative;
     display: flex;
     justify-content: center;
-    overflow: visible;
   }
 }
 
