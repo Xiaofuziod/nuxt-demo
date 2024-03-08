@@ -4,7 +4,7 @@
       <section class="profile">
         <h2 class="h2-title">ROBOT</h2>
         <div class="user-box">
-          <img src="~/assets/imgs/user.svg" alt="Profile" />
+          <img src="~/assets/imgs/user.svg" alt="Profile"/>
           <div class="name-info">
             <h3 class="name">Saywteri24735haw...</h3>
             <p class="info">Wtweteri247</p>
@@ -17,82 +17,19 @@
       </section>
     </aside>
     <main class="content">
-      <div class="bread-path">
-        <span class="ai-font">ACCOUNT  </span>
-        <span class="split-icon">/</span>
-        <img src="~/assets/imgs/user.svg" alt="">
-        <span>user</span>
-      </div>
+      <breadcrumb-navigation/>
       <header class="content-header">
-        <div class="filter-tabs">
-          <div class="tab-btn active"><span>ALL</span></div>
-          <div class="tab-btn"><span>FINISHED</span></div>
-          <div class="tab-btn"><span>UNFINISHED</span></div>
-        </div>
+        <FilterTabs v-model="activeTab" :tabList="tabs"  />
         <div class="add-monitoring">+ Add AI Monitoring</div>
       </header>
       <div class="monitoring-cards">
-        <div class="card">
+        <div class="card" v-for="(item, index) in cards" :key="index" @click="goDetail(item.id)">
           <img class="card-img" src="~/assets/imgs/bian.png" alt="">
           <div class="card-header">
-            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
-            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
-            <p class="timestamp">今天20:00</p>
-            <p class="other">128进展</p>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
-          <div class="card-header">
-            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
-            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
-            <p class="timestamp">今天20:00</p>
-            <p class="other">128进展</p>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
-          <div class="card-header">
-            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
-            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
-            <p class="timestamp">今天20:00</p>
-            <p class="other">128进展</p>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
-          <div class="card-header">
-            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
-            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
-            <p class="timestamp">今天20:00</p>
-            <p class="other">128进展</p>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
-          <div class="card-header">
-            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
-            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
-            <p class="timestamp">今天20:00</p>
-            <p class="other">128进展</p>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
-          <div class="card-header">
-            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
-            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
-            <p class="timestamp">今天20:00</p>
-            <p class="other">128进展</p>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
-          <div class="card-header">
-            <h3 class="title1">币安Binance中文 ｜ Web3钱...</h3>
-            <h3 class="title2">比特币Layer2是不是今年热门种子选手热门种子选手</h3>
-            <p class="timestamp">今天20:00</p>
-            <p class="other">128进展</p>
+            <h3 class="title1">{{item.title1}}</h3>
+            <h3 class="title2">{{item.desc}}</h3>
+            <p class="timestamp">{{item.timestamp}}</p>
+            <p class="other">{{ item.other }}</p>
           </div>
         </div>
       </div>
@@ -100,7 +37,34 @@
     <ball-bg1/>
   </div>
 </template>
-<script setup lang="ts">
+<script>
+export default {
+  name: 'Monitor',
+  data() {
+    return {
+      cards: [
+        {
+          id:1,
+          title1: "比特币Layer2是不是今年热门种子选手热门种子选手",
+          desc: "比特币Layer2是不是今年热门种子选手热门种子选手",
+          timestamp: "今天20:00",
+          other: "128进展",
+        }
+      ],
+      activeTab: "ALL",
+      tabs: [
+        { label: 'ALL', key: 'ALL' },
+        { label: 'FINISHED', key: 'FINISHED' },
+        { label: 'UNFINISHED', key: 'UNFINISHED' },
+      ]
+    }
+  },
+  methods: {
+    goDetail(id) {
+      this.$router.push(`/${this.$i18n.locale}/monitoring/detail?id=${id}`);
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">
@@ -112,11 +76,13 @@
   position: relative;
   display: flex;
   z-index: 2;
+
   .sidebar {
     width: 252px;
     height: 100%;
     border-right: 1px solid rgba(140, 180, 189, 0.12);
     padding: 32px 24px;
+
     .h2-title {
       height: 24px;
       font-family: aifontf;
@@ -126,6 +92,7 @@
       text-transform: capitalize;
       margin-bottom: 14px;
     }
+
     .profile {
       .user-box {
         width: 204px;
@@ -136,14 +103,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
         .name-info {
           padding-left: 12px;
+
           .name {
             font-weight: 500;
             font-family: Avenir;
             font-size: 14px;
             color: #fff;
           }
+
           .info {
             color: rgba(140, 180, 189, 1);
             font-family: Avenir-Roman;
@@ -158,38 +128,25 @@
         }
       }
     }
+
     .monitoring-type {
       margin-top: 40px;
+
       .item-img {
         width: 124px;
       }
     }
   }
+
   .content {
     width: 899px;
     padding: 34px 39px;
-    .bread-path {
-      font-size: 9px;
-      margin-bottom: 49px;
-      color: rgba(140, 180, 189, 0.6);
-      display: flex;
-      align-items: center;
-      .ai-font {
-        font-family: aifontf;
-        margin-right: 4px;
-      }
-      img {
-        height: 14px;
-        width: 14px;
-        border-radius: 50%;
-        margin: 0 4px;
-      }
-    }
 
     .content-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .add-monitoring {
         width: 152px;
         height: 22px;
@@ -198,43 +155,14 @@
         font-size: 16px;
         text-transform: capitalize;
       }
-      .filter-tabs {
-        display: flex;
-        .tab-btn {
-          width: 93px;
-          height: 36px;
-          line-height: 36px;
-          cursor: pointer;
-          font-family: aifontf;
-          text-align: center;
-          color: rgba(140, 180, 189, 0.4);
-          font-size: 16px;
-          margin-right: 20px;
-          overflow: hidden;
-          position: relative;
-          &.active span {
-            font-size: 16px;
-            color: rgba(12, 26, 39, 1);
-          }
-          &.active:after {
-            background: rgba(140, 180, 189, 1);
-            content: '';
-            position: absolute;
-            width: 80px; /* 确保伪元素的大小与按钮一致 */
-            height: 90px;
-            transform: rotate(-145deg); /* 旋转45度 */
-            left: 5px;
-            top: -25px;
-            z-index: -1;
-          }
-        }
-      }
     }
+
     .monitoring-cards {
       padding: 40px 0;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+
       .card {
         padding: 16px 20px;
         width: 399px;
@@ -243,28 +171,35 @@
         margin-bottom: 16px;
         background: rgba(38, 64, 64, 0.2);
         display: flex;
+        cursor: pointer;
+
         .card-img {
           width: 60px;
           height: 60px;
           border-radius: 10px;
         }
+
         .card-header {
           padding-left: 17px;
+
           .title1 {
             color: rgba(255, 255, 255, 0.6);
             font-size: 10px;
             line-height: 15px;
             height: 15px;
           }
+
           .title2 {
             color: rgba(255, 255, 255, 1);
             font-size: 15px;
             line-height: 25px;
           }
+
           .timestamp {
             color: rgba(140, 180, 189, 1);
             font-size: 12px;
           }
+
           .other {
             color: rgba(255, 255, 255, 0.6);
             font-size: 10px;

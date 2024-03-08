@@ -101,7 +101,8 @@
     <ball-bg2/>
   </div>
 </template>
-
+<script setup lang="ts">
+</script>
 <style lang="less" scoped>
 .home-wrapper {
   position: relative;
@@ -476,5 +477,4 @@
   }
 }
 </style>
-<script setup lang="ts">
-</script>
+
