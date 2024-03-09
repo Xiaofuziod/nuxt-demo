@@ -12,3 +12,5 @@ export const addFollow = baseUrl + '/api/follow/add'
 export const deleteFollow = baseUrl + '/api/follow/delete'
 export const getFollowList = baseUrl + '/api/follow/list'
 export const getUserInfo = baseUrl + '/api/user'
+
+export const analysisCoin = baseUrl + '/api/analysis/coin'

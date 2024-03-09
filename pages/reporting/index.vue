@@ -34,6 +34,10 @@
         the account Morgan following
       </div>
 
+<!--      图表-->
+      <my-echarts></my-echarts>
+
+<!--      资讯-->
       <div class="focus-list-box">
         <list-container>
           <div class="focus-list">
@@ -56,6 +60,7 @@ import AIFocus from '~/components/aiFocus/index.vue'
 import ListContainer from '~/components/scrollView/index.vue'
 import assetSelect from '~/components/assetSelect/index.vue'
 import {deleteFollow, getFollowList} from "~/common/home";
+import MyEcharts from "~/components/echarts/index.vue";
 
 export default {
   name: 'Home',
@@ -63,7 +68,8 @@ export default {
     ChatIndex: chatIndex,
     AIFocus,
     ListContainer,
-    assetSelect
+    assetSelect,
+    MyEcharts
   },
   data() {
     return {

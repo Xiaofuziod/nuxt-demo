@@ -39,6 +39,10 @@ export default {
     '@/plugins/request',
     // '@/plugins/socket.io',
     '@/plugins/dialog-plugin',
+    {
+      src: '~plugins/echarts',
+      ssr: false
+    }
   ],
 
   axios: {
@@ -47,7 +51,8 @@ export default {
   },
   proxy: {
     '/api': {
-      target: 'http://api-test.taurion.ai',
+      // target: 'http://api-test.taurion.ai',
+      target: 'http://54.179.0.150',
       // target: 'http://localhost:4000',
       pathRewrite: {
         '^/api': '' // 删除url中的/api

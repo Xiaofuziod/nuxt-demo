@@ -43,7 +43,7 @@ body {
   z-index: 1;
   overflow: hidden;
   .page-container {
-    height: calc(100vh - 104px);
+    height: calc(100vh - 88px);
     position: relative;
     display: flex;
     justify-content: center;
