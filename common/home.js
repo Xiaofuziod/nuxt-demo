@@ -14,3 +14,4 @@ export const getFollowList = baseUrl + '/api/follow/list'
 export const getUserInfo = baseUrl + '/api/user'
 
 export const analysisCoin = baseUrl + '/api/analysis/coin'
+export const getCoinPrice = baseUrl + '/api/coin/price'
