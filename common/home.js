@@ -1,5 +1,5 @@
 
-const baseUrl = process.env.NODE_ENV === 'development' ? 'api' : 'http://api-test.taurion.ai'
+const baseUrl = process.env.NODE_ENV === 'development' ? 'api' : 'https://api-test.taurion.ai'
 export const sendEmail = baseUrl + '/api/auth/base/sendMessage'
 export const userLogin = baseUrl + '/api/auth/login/dologin'
 export const userRegister = baseUrl + '/api/auth/login/register'
@@ -12,3 +12,6 @@ export const addFollow = baseUrl + '/api/follow/add'
 export const deleteFollow = baseUrl + '/api/follow/delete'
 export const getFollowList = baseUrl + '/api/follow/list'
 export const getUserInfo = baseUrl + '/api/user'
+
+export const analysisCoin = baseUrl + '/api/analysis/coin'
+export const getCoinPrice = baseUrl + '/api/coin/price'

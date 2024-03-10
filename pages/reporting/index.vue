@@ -33,13 +33,17 @@
         <div class="pic"></div>
         the account Morgan following
       </div>
-
+      <!--      资讯-->
       <div class="focus-list-box">
         <list-container>
+
+          <!--      图表-->
+          <my-echarts></my-echarts>
+
           <div class="focus-list">
-            <template v-for="item in 4">
-              <AIFocus/>
-            </template>
+            <div v-for="item in list" :key="item.id">
+              <AIFocus :coin-data="item"/>
+            </div>
           </div>
         </list-container>
       </div>
@@ -55,7 +59,9 @@ import chatIndex from "~/components/chat/index.vue";
 import AIFocus from '~/components/aiFocus/index.vue'
 import ListContainer from '~/components/scrollView/index.vue'
 import assetSelect from '~/components/assetSelect/index.vue'
-import {deleteFollow, getFollowList} from "~/common/home";
+import {analysisCoin, deleteFollow, getFollowList} from "~/common/home";
+import MyEcharts from "~/components/echarts/index.vue";
+import {parseTime} from "~/utils/date";
 
 export default {
   name: 'Home',
@@ -63,17 +69,20 @@ export default {
     ChatIndex: chatIndex,
     AIFocus,
     ListContainer,
-    assetSelect
+    assetSelect,
+    MyEcharts
   },
   data() {
     return {
       user: 'ta',
       followList: [],
-      showDelete: false
+      showDelete: false,
+      list: []
     }
   },
   mounted() {
     this.getFollowList()
+    this.loadData()
   },
   methods: {
     showSelect() {
@@ -91,6 +100,26 @@ export default {
         }
       }).then(res => {
         this.getFollowList()
+      })
+    },
+    loadData() {
+      this.$axios.get(analysisCoin, {params: {id: 67}}).then(res => {
+        const arr = res.data.data.map(item => {
+          const d = parseTime(item.createdDate)
+          return {
+            ...item,
+            isToday: d.isToday,
+            weekDay: d.weekDay,
+            time: d.time,
+            date: d.date
+          }
+        })
+        this.list = [
+          {
+            ...arr[0],
+            list: arr
+          }
+        ]
       })
     }
   }

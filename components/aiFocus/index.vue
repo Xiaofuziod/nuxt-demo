@@ -1,12 +1,12 @@
 <template>
   <div class="focus-item">
     <div class="data-row">
-      <div class="date">2/20</div>
+      <div class="date">{{ coinData.date }}</div>
 
       <div class="date1">
-        Today
+        {{ coinData.isToday ? 'Today' : "" }}
         <div class="date2">
-          Mon
+          {{ coinData.weekDay }}
         </div>
       </div>
     </div>
@@ -18,16 +18,18 @@
         AI focus
       </div>
 
-      <div class="list-item" v-for="item in 3">
+      <div class="list-item" v-for="item in coinData.list" :key="item.id">
 
         <div class="list-item-top">
-          <div class="list-item-top1">2:00</div>
-          <div class="list-item-top2"></div>
+          <div class="list-item-top1">{{ item.time }}</div>
+          <div class="list-item-top2">
+            <img :src="item.coverPhotoUrl" alt="">
+          </div>
           <div class="list-item-top3">Ethereum</div>
         </div>
 
         <div class="list-item-content">
-          <div class="list-item-title">If someone loves you,love them back unconditionally</div>
+          <div class="list-item-title">{{ item.title }}</div>
           <div class="list-item-icon">
             <img src="@/static/images/chat/ai2.svg" alt="">
           </div>
@@ -39,6 +41,41 @@
 
   </div>
 </template>
+<script>
+import {analysisCoin} from "@/common/home";
+
+export default {
+  name: 'AIFocus',
+  props: {
+    coinData: {
+      type: Object,
+      default: () => {
+        return {
+          date: '00/00',
+          isToday: true,
+          weekDay: 'Monday',
+          list: [
+            {
+              id: 1,
+              time: '12:00',
+              coverPhotoUrl: '@/static/images/chat/s2.svg',
+              title: 'Ethereum'
+            }
+          ]
+        }
+      }
+    }
+  },
+  data() {
+    return {
+    }
+  },
+  mounted() {
+  },
+  methods: {}
+}
+
+</script>
 
 <style lang="less">
 
@@ -56,7 +93,7 @@
     box-sizing: border-box;
 
 
-    .list-item{
+    .list-item {
       box-sizing: border-box;
       padding: 26px 24px 0;
 
@@ -70,6 +107,7 @@
           font-size: 10px;
           text-transform: capitalize;
         }
+
         .list-item-top2 {
           width: 14px;
           height: 14px;
@@ -77,7 +115,13 @@
           background: rgba(255, 255, 255, 1);
           margin-left: 12px;
           margin-right: 8px;
+          overflow: hidden;
+          img {
+            display: block;
+            width: 100%;
+          }
         }
+
         .list-item-top3 {
           height: 14px;
           color: rgba(255, 255, 255, 0.6);
@@ -91,6 +135,7 @@
         display: flex;
         align-items: center;
         margin-top: 12px;
+
         .list-item-title {
           flex: 1;
           height: 36px;
@@ -100,6 +145,7 @@
           font-size: 13px;
           text-transform: capitalize;
         }
+
         .list-item-icon {
           width: 36px;
           height: 36px;
@@ -109,6 +155,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
+
           img {
             width: 18px;
           }
@@ -145,6 +192,7 @@
         left: -6px;
         transform: rotate(-45deg);
       }
+
       &::before {
         content: "";
         display: block;
@@ -179,7 +227,8 @@
       font-size: 24px;
       text-transform: uppercase;
     }
-    .date1{
+
+    .date1 {
       height: 14px;
       color: rgba(206, 184, 100, 1);
       font-family: Avenir;
