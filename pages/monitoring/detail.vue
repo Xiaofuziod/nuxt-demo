@@ -4,28 +4,30 @@
     <div class="left">
       <breadcrumb-navigation/>
       <div class="left-header">
-        <img src="~/assets/imgs/btclogo.png" class="left-header-img" alt="">
+        <img :src="monitorDetail?.logo || bianPic"  class="left-header-img" alt="">
         <div class="hotinfo">
           🔥 1456
         </div>
       </div>
-      <FilterTabs v-model="activeTab" :tabList="tabs"  active-color="rgba(206, 184, 100, 1)" />
-      <div class="content">
-        <div class="title">    ✨ 会议总结</div>
-
+      <FilterTabs v-model="activeTab" :tabList="tabs" active-color="rgba(206, 184, 100, 1)" />
+      <!-- 监控详情内容 -->
+      <div v-if="activeTab === '0' && monitorSummary" class="content">
+        <div class="title">✨ {{ monitorSummary.summary }}</div>
         <div class="desc-1">
-          <p>本会议围绕Open AI奥特曼与马斯克的相识，分道扬镳，针锋相对等三个主要章节进行了讨论和分享</p>
-          <p># 相识：2015年硅谷的首次相遇，为透明、开源的人工智能实验室而疯狂</p>
-            <p>#  分道扬镳：2018年马斯克在权力斗争下的黯然离场</p>
-           <p># 针锋相对：之后，奥特曼与马斯克在twitter经常互呛，对于双方的成就和为人均不认可</p>
+          <div v-for="(chapter, index) in monitorSummary.chapters" :key="index">
+            <p># {{ chapter.title }}</p>
+            <p>{{ chapter.content }}</p>
+          </div>
         </div>
-        <div class="title">   ‼️ 会议章节</div>
+      </div>
+      <div v-if="activeTab === '1' && monitorContent" class="content">
+        <div class="title">✨ LINK:{{ monitorContent.link }}</div>
         <div class="desc-1">
-          相识：2015年硅谷的首次相遇，为透明、开源的人工智能实验室而疯狂
-        </div>
-        <div class="desc-2">
-          @Bit.wu：2015年，奥特曼和马斯克在硅谷一家豪华牧场风格酒店——门洛帕克瑰丽酒店（Rosewood Sand Hill）共进晚餐时，似乎还在朝着同一个方向前进。当时，谷歌（Google）刚刚收购了总部位于伦敦的神经网络初创公司DeepMind，这使其成为最有可能开发出通用人工智能（AGI）的公司。通用人工智能是一种在面对不常见的任务时能够与人类匹敌的系统。
-          在晚宴上，两人和其他人讨论了成立一个透明、开源的人工智能实验室，并致力于让先进的人工智能惠及大众的相关事宜。马斯克和“PayPal黑手党”的其他几个成员——包括彼得·蒂尔（Peter Thiel）和雷德·霍夫曼（Reid Hoffman）——投资了数百万美元来启动这一实验室
+          <div v-for="(segment, index) in monitorContent.segments" :key="index">
+            <p>author: {{ segment.title }}</p>
+            <p>time: {{ segment.timeline }}</p>
+            <p>{{ segment.content }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -35,56 +37,59 @@
     <asset-select ref="assetSel"/>
   </div>
 </template>
+
 <script>
-import chatIndex from "~/components/chat/index.vue";
-import AIFocus from '~/components/aiFocus/index.vue'
-import ListContainer from '~/components/scrollView/index.vue'
-import assetSelect from '~/components/assetSelect/index.vue'
-import {deleteFollow, getFollowList} from "~/common/home";
+import ChatIndex from "~/components/chat/index.vue";
+import AIFocus from '~/components/aiFocus/index.vue';
+import ListContainer from '~/components/scrollView/index.vue';
+import AssetSelect from '~/components/assetSelect/index.vue';
+import bianPic from '@/assets/imgs/bian.png'
 
 export default {
   name: 'Home',
   components: {
-    ChatIndex: chatIndex,
+    ChatIndex,
     AIFocus,
     ListContainer,
-    assetSelect
+    AssetSelect
   },
   data() {
     return {
+      bianPic,
       user: 'ta',
       followList: [],
       activeTab: "0",
       tabs: [
         { label: '总结', key: '0' },
         { label: '原文', key: '1' },
-      ]
+      ],
     }
   },
+  computed: {
+    monitorDetail() {
+      return this.$store.state.monitor.monitorDetail
+    },
+    monitorContent() {
+      return this.$store.state.monitor.monitorContent
+    },
+    monitorSummary() {
+      return this.$store.state.monitor.monitorSummary
+    },
+  },
   mounted() {
-    this.getFollowList()
+    this.fetchMonitorDetail(this.$route.query.id); // 假设sourceId是你要查询的监控的ID
   },
   methods: {
-    showSelect() {
-      this.$refs.assetSel.show()
-    },
-    getFollowList() {
-      this.$axios.get(getFollowList).then(res => {
-        this.followList = res.data.data
-      })
-    },
-    deleteFollow(item) {
-      this.$axios.get(deleteFollow, {
-        params: {
-          id: item.id
-        }
-      }).then(res => {
-        this.getFollowList()
-      })
+    // 其他方法保持不变
+    fetchMonitorDetail(sourceId) {
+      this.$store.dispatch('monitor/fetchMonitorDetail', sourceId)
+      this.$store.dispatch('monitor/fetchMonitorSummary', sourceId)
+      this.$store.dispatch('monitor/fetchMonitorContent', sourceId)
     }
   }
 }
 </script>
+
 <style lang="less">
 
 .ellipsis {
