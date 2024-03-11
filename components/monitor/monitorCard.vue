@@ -1,6 +1,6 @@
 <template>
   <div class="card" @click="$emit('click')">
-    <img class="card-img" :src="card?.logo || 'https://test.taurion.ai/_nuxt/img/bian.7f51fdd.png'" alt="">
+    <img class="card-img" :src="card?.logo || bianPic" alt="">
     <div class="card-header">
       <h3 class="title1">{{ card?.title }}</h3>
       <h3 class="title2">{{ card?.author }}</h3>
@@ -16,6 +16,7 @@
   </div>
 </template>
 <script >
+import bianPic from '@/assets/imgs/bian.png'
 export default {
   name: "monitorCard",
   props: {
@@ -28,6 +29,7 @@ export default {
   },
   data() {
     return {
+      bianPic,
       optionShow: false
     }
   },
