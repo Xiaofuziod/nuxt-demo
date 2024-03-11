@@ -3,51 +3,66 @@
     <div class="header-box">
       <!-- Logo and title area -->
       <div class="logo">
-        <img src="~/assets/imgs/logo.svg" alt="Taurion logo" @click="goHome" />
+        <img src="~/assets/imgs/logo.svg" alt="Taurion logo" @click="goHome"/>
       </div>
 
       <!-- Navigation area -->
       <nav v-if="userLoggedIn">
         <ul>
-          <li ><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" href="/zh/reporting">AI Reporting</a></li>
-          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" href="/zh/monitoring">AI Monitoring</a></li>
+          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" href="/zh/reporting">AI Reporting</a>
+          </li>
+          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" href="/zh/monitoring">AI Monitoring</a>
+          </li>
         </ul>
       </nav>
 
       <!-- User action area -->
       <div class="user-actions">
         <div class="vip-btn base-icon-btn" v-if="userLoggedIn && !isVip">
-          <img src="~/assets/imgs/vip.svg" alt="Get Premium" />
+          <img src="~/assets/imgs/vip.svg" alt="Get Premium"/>
           Get Premium
         </div>
         <div class="x-btn base-icon-btn" v-if="!userLoggedIn">
-          <img src="~/assets/imgs/x.svg" alt="Get Premium" />
+          <img src="~/assets/imgs/x.svg" alt="Get Premium"/>
         </div>
         <div class="lang-btn base-icon-btn">
-          <img src="~/assets/imgs/lang.svg" alt="User profile" />
+          <img src="~/assets/imgs/lang.svg" alt="User profile"/>
         </div>
-        <div v-if="!userLoggedIn" class="login-btn">
+        <div v-if="!userLoggedIn" class="login-btn" @click="showLogin">
           LOGIN
         </div>
         <div v-else class="user-profile">
-          <img   src="~/assets/imgs/user.svg" alt="">
+          <img src="~/assets/imgs/user.svg" alt="">
         </div>
       </div>
+      <login ref="loginRef"/>
     </div>
   </header>
 </template>
 
 <script>
+import Login from "@/components/login/index.vue";
+
 export default {
+  components: {Login},
   data() {
     return {
       userLoggedIn: true,
       isVip: false,
     };
   },
+  mounted() {
+    // Check if user is logged in
+    const token = this.$localStorage.getItem('token')
+    this.userLoggedIn = !!token
+    // Check if user is a VIP
+  },
   methods: {
     goHome() {
       this.$router.push('/zh/')
+    },
+    showLogin() {
+      this.$refs.loginRef.show()
     }
   },
   computed: {
@@ -63,6 +78,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+
   .header-box {
     width: 1152px;
     display: flex;
@@ -90,6 +106,7 @@ header {
   background-size: 100% 100%;
   cursor: pointer;
 }
+
 .base-icon-btn {
   width: 48px;
   height: 48px;
@@ -101,6 +118,7 @@ header {
   cursor: pointer;
   margin: 0 16px;
 }
+
 .vip-btn {
   width: 167px;
   height: 44px;
@@ -108,13 +126,16 @@ header {
   margin: 0;
   background: rgba(138, 173, 188, 0.1);
 }
+
 nav {
   flex: 1;
   padding-left: 19px;
+
   ul {
     list-style: none;
     display: flex;
     gap: 1rem; /* Adjust the gap as needed */
+
     a {
       padding-left: 45px;
       color: rgba(140, 180, 189, 0.3);
@@ -122,6 +143,7 @@ nav {
       font-family: aifont;
       cursor: pointer;
       font-size: 14px;
+
       &.active {
         color: rgba(140, 180, 189, 1);
         font-family: aifontf;
@@ -142,9 +164,12 @@ nav {
   border-left: 1px solid #8CB4BD;
   padding-left: 32px;
   overflow: visible;
-  display: flex;align-items: center;
+  display: flex;
+  align-items: center;
   justify-content: center;
   height: 24px;
+  cursor: pointer;
+
   img {
     height: 48px;
     width: 48px;

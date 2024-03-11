@@ -10,6 +10,7 @@
 </template>
 <script>
 import AppHeader from "~/components/AppHeader/index.vue";
+
 export default {
   components: {
     AppHeader
@@ -18,11 +19,12 @@ export default {
     return {};
   },
   mounted() {
-    this.$store.dispatch('getUserInfo')
+    const token = this.$localStorage.getItem('token')
+    if (token) {
+      this.$store.dispatch('user/getUserInfo')
+    }
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 
@@ -31,17 +33,20 @@ body {
   background: linear-gradient(180deg, rgba(5, 14, 32, 1) 0%, rgba(8, 35, 61, 1) 100%);
   font-family: Avenir;
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 .main {
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
   overflow: hidden;
+
   .page-container {
     height: calc(100vh - 88px);
     position: relative;

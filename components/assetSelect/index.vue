@@ -1,8 +1,18 @@
 <template>
   <Dialog ref="modal">
-    <template #header>添加自选币</template>
+    <template #header>
+      <div>
+        添加自选币
+        <span style="cursor: pointer" @click="hide">关闭</span>
+      </div>
+    </template>
     <template #body>
       <div class="Frame580">
+        <div>
+          请输入内容 开始搜索
+          <input type="text" v-model="searchKey">
+          <button @click="loadSearchData">搜索</button>
+        </div>
         <div class="item" v-for="item in list" @click="addSelect(item)">
           <div class="Rectangle">
             <img :src="item.logo" alt="">
@@ -18,36 +28,34 @@
   </Dialog>
 </template>
 <script>
-import {addFollow, getAssetList} from "~/common/home";
 
 export default {
   data() {
     return {
-      list: []
+      searchKey: ''
     }
   },
+  computed: {
+    list() {
+      return this.$store.state.coin.coinList
+    }
+  },
+  mounted() {
+    this.$store.dispatch('coin/fetchCoinList')
+
+  },
   methods: {
-    loadData() {
-      this.$axios.get(getAssetList).then(res => {
-        this.list = res.data.data.records
-      })
-    },
     show() {
       this.$refs.modal.openModal()
-      this.loadData()
     },
     hide() {
       this.$refs.modal.closeModal()
     },
     addSelect(item) {
-      console.log(item)
-      this.$axios.get(addFollow, {
-        params: {
-          id: item.id
-        }
-      }).then(res => {
-        console.log(res)
-      })
+      this.$store.dispatch('coin/addFollow', item.id)
+    },
+    loadSearchData() {
+      this.$store.dispatch('coin/fetchCoinList', this.searchKey)
     }
   }
 }

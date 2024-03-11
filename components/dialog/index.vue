@@ -4,11 +4,11 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <slot name="header"></slot>
-          <slot name="body">
-          </slot>
-          <slot name="footer">
-            <button @click="closeModal">关闭</button>
-          </slot>
+          <div class="modal-center">
+            <slot name="body">
+            </slot>
+          </div>
+          <slot name="footer"></slot>
         </div>
       </div>
     </div>
@@ -35,6 +35,8 @@ export default {
 
 <style scoped>
 .modal-mask {
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, .5);
   position: fixed;
   left: 0;
@@ -54,9 +56,17 @@ export default {
   background-color: #0056b3;
   border-radius: 31px;
   width: 800px;
+  max-height: 70vh;
   margin: 100px auto;
   box-sizing: inherit;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-center {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .modal-enter-active, .modal-leave-active {

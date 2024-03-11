@@ -38,8 +38,9 @@ export default {
   plugins: [
     '@/plugins/request',
     // '@/plugins/socket.io',
-    '@/plugins/dialog-plugin',
+    {src:'@/plugins/dialog-plugin', mode: 'client'},
     { src: '@/plugins/loading-plugin.js', mode: 'client' },
+    { src: '~/plugins/localStorage.js', mode: 'client' },
     {
       src: '~plugins/echarts',
       ssr: false
@@ -67,19 +68,19 @@ export default {
     host: '0.0.0.0' // default: localhost
   },
 
-  // auth: {
-  //   strategies: {
-  //     google: {
-  //       clientId: '86595109680-ago8qfvgdi7785110dp2f95uu3c2e002.apps.googleusercontent.com',
-  //       codeChallengeMethod: '',
-  //       responseType: 'token id_token',
-  //       redirectUri: 'http://localhost:9898',
-  //       scope: [],
-  //       // 更多配置...
-  //     }
-  //   },
-  //   // 其他auth模块配置...
-  // },
+  auth: {
+    strategies: {
+      google: {
+        clientId: '86595109680-ago8qfvgdi7785110dp2f95uu3c2e002.apps.googleusercontent.com',
+        codeChallengeMethod: '',
+        responseType: 'token id_token',
+        redirectUri: 'http://localhost:9898',
+        scope: [],
+        // 更多配置...
+      }
+    },
+    // 其他auth模块配置...
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

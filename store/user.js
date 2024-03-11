@@ -7,14 +7,16 @@ import {
   twitterLogin,
   twitterRedirectUrl, getUserInfo
 } from "~/common/home";
+import defaultUserAvatar from "assets/imgs/user.svg";
 
 export const state = () => ({
-  user: {}
+  userInfo: {}
 });
 
 export const mutations = {
   setUser(state, user) {
-    state.user = user;
+    state.userInfo = {...user, avatar: user.avatar || defaultUserAvatar, nickname: user.nickname || '神秘人士 ~'};
+    this.$localStorage.setItem('token', state.userInfo.tokenInfo.tokenValue);
   }
 };
 
@@ -49,6 +51,7 @@ export const actions = {
       }
       const res = await this.$axios.post(googleLogin, para)
       commit('setUser', res.data.data);
+      await this.$router.replace('/zh')
     } catch (e) {
       console.log('googleLogin error: ', e)
     }
@@ -57,6 +60,7 @@ export const actions = {
     try {
       const res = await this.$axios.get(twitterLogin, {params: data})
       commit('setUser', res.data.data);
+      await this.$router.replace('/zh')
     } catch (e) {
 
     }

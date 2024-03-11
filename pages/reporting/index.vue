@@ -1,58 +1,66 @@
 <template>
-  <div class="page-content">
-    <div class="back"></div>
-    <div class="report-left">
-      <div class="Account">Account</div>
-      <div class="Rectangle82">
-        <div class="Ellipse245"></div>
-        <div>
-          <div class="saywteri2473 ellipsis">saywteri24735hawsaywteri24735hawsaywteri24735haw</div>
-          <div class="wtewteri247">wtewteri247</div>
-        </div>
-      </div>
-      <div class="Account Selected">Selected（6）
-        <span style="cursor: pointer" @click="showDelete = !showDelete">{{ showDelete ? "OK" : "Edit" }}</span>
-      </div>
-      <!--    自选币  -->
-      <div class="Frame580">
-        <div class="item" v-for="item in followList" :key="item.id">
-          <div class="Rectangle">
-            <img :src="item.icon" alt="">
+  <div style="width: 100%;height: 100%">
+    <div class="page-content">
+      <div class="back"></div>
+      <div class="report-left">
+        <div class="Account">Account</div>
+        <div class="Rectangle82">
+          <div class="Ellipse245">
+            <img :src="user.avatar" alt="">
           </div>
-          <div class="Bitcoin ellipsis">{{ item.name }}</div>
-          <div class="BTC">{{ item.symbol }}</div>
-          <button v-if="showDelete" style="margin-left: 10px" @click="deleteFollow(item)">X</button>
+          <div>
+            <div class="saywteri2473 ellipsis">{{ user.account }}</div>
+            <div class="wtewteri247">{{ user.nickname }}</div>
+          </div>
         </div>
-      </div>
-      <div class="AddaNewCoin" @click="showSelect">+ Add a New Coin</div>
-    </div>
-    <div class="report-center">
-      <div class="rc-top">
-        <div class="rc-account">Account</div>
-        <span>/</span>
-        <div class="pic"></div>
-        the account Morgan following
-      </div>
-      <!--      资讯-->
-      <div class="focus-list-box">
-        <list-container>
-
-          <!--      图表-->
-          <my-echarts></my-echarts>
-
-          <div class="focus-list">
-            <div v-for="item in list" :key="item.id">
-              <AIFocus :coin-data="item"/>
+        <div class="Account Selected">Selected{{ followList.length ? ` (${followList.length})` : '' }}
+          <span style="cursor: pointer" @click="showDelete = !showDelete">{{ showDelete ? "OK" : "Edit" }}</span>
+        </div>
+        <!--    自选币  -->
+        <div class="Frame580">
+          <div class="item" v-for="item in followList" :key="item.id">
+            <div class="Rectangle">
+              <img :src="item.icon" alt="">
             </div>
+            <div class="Bitcoin ellipsis">{{ item.name }}</div>
+            <div class="BTC">{{ item.symbol }}</div>
+            <button v-if="showDelete" style="margin-left: 10px" @click="deleteFollow(item)">X</button>
           </div>
-        </list-container>
+        </div>
+        <div class="AddaNewCoin" @click="showSelect">+ Add a New Coin</div>
       </div>
-    </div>
-    <div class="right">
-      <ChatIndex/>
+
+      <div class="report-center">
+        <div class="rc-top">
+          <div class="rc-account">Account</div>
+          <span>/</span>
+          <div class="pic">
+            <img :src="user.avatar" alt="">
+          </div>
+          the account {{ user.account }} following
+        </div>
+        <!--      资讯-->
+        <div class="focus-list-box">
+          <list-container>
+
+            <!--      图表-->
+            <my-echarts></my-echarts>
+
+            <div class="focus-list">
+              <div v-for="item in list" :key="item.id">
+                <AIFocus :coin-data="item"/>
+              </div>
+            </div>
+          </list-container>
+        </div>
+      </div>
+      <div class="right">
+        <ChatIndex/>
+      </div>
     </div>
     <asset-select ref="assetSel"/>
   </div>
+
 </template>
 <script>
 import chatIndex from "~/components/chat/index.vue";
@@ -74,33 +82,28 @@ export default {
   },
   data() {
     return {
-      user: 'ta',
-      followList: [],
       showDelete: false,
       list: []
     }
   },
+  computed: {
+    followList() {
+      return this.$store.state.coin.userCoinList
+    },
+    user() {
+      return this.$store.state.user.userInfo
+    }
+  },
   mounted() {
-    this.getFollowList()
     this.loadData()
+    this.$store.dispatch('coin/fetchUserCoinList')
   },
   methods: {
     showSelect() {
       this.$refs.assetSel.show()
     },
-    getFollowList() {
-      this.$axios.get(getFollowList).then(res => {
-        this.followList = res.data.data
-      })
-    },
     deleteFollow(item) {
-      this.$axios.get(deleteFollow, {
-        params: {
-          id: item.id
-        }
-      }).then(res => {
-        this.getFollowList()
-      })
+      this.$store.dispatch('coin/removeFollow', item.id)
     },
     loadData() {
       this.$axios.get(analysisCoin, {params: {id: 67}}).then(res => {
@@ -136,6 +139,8 @@ export default {
 
 .Frame580 {
   margin-top: 24px;
+  max-height: calc(100% - 220px);
+  overflow-y: auto;
 
   .item {
     display: flex;
@@ -179,6 +184,7 @@ export default {
 
 .page-content {
   max-width: 1152px;
+  height: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -266,8 +272,14 @@ export default {
         width: 42px;
         height: 42px;
         border-radius: 42px;
-        background-color: green;
         margin-right: 12px;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
       }
 
       .saywteri2473 {
@@ -340,8 +352,14 @@ export default {
         width: 14px;
         height: 14px;
         border-radius: 14px;
-        background-color: green;
         margin-right: 3px;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
       }
 
     }
