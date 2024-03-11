@@ -48,9 +48,11 @@ export default {
   background: rgba(38, 64, 64, 0.2);
   display: flex;
   cursor: pointer;
+  position: relative;
   .option-box {
-    position: relative; // Set the position context for absolute positioning of option-list
-
+    position: absolute;
+    top: 10px;
+    right: 20px;
     .hover-point {
       // Styles for the hover-point like padding, font-size, etc.
       // Ensure it's large enough to be easily hovered over
