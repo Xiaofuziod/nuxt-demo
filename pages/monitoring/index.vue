@@ -20,37 +20,24 @@
       <breadcrumb-navigation/>
       <header class="content-header">
         <FilterTabs v-model="activeTab" :tabList="tabs"  />
-        <div class="add-monitoring">+ Add AI Monitoring</div>
+        <div class="add-monitoring" @click="showAddMonitor">+ Add AI Monitoring</div>
       </header>
       <div class="monitoring-cards">
-        <div class="card" v-for="(item, index) in cards" :key="index" @click="goDetail(item.id)">
-          <img class="card-img" src="~/assets/imgs/bian.png" alt="">
-          <div class="card-header">
-            <h3 class="title1">{{item.title1}}</h3>
-            <h3 class="title2">{{item.desc}}</h3>
-            <p class="timestamp">{{item.timestamp}}</p>
-            <p class="other">{{ item.other }}</p>
-          </div>
-        </div>
+        <monitor-card v-for="(item, index) in userMonitors" :key="index" :card="item" show-action  @click="goDetail(item.id)"/>
       </div>
     </main>
     <ball-bg1/>
+    <add-monitor v-if="addMonitorShow"/>
   </div>
 </template>
 <script>
+import AddMonitor from "@/components/monitor/addMonitoring.vue";
+
 export default {
   name: 'Monitor',
+  components: {AddMonitor},
   data() {
     return {
-      cards: [
-        {
-          id:1,
-          title1: "比特币Layer2是不是今年热门种子选手热门种子选手",
-          desc: "比特币Layer2是不是今年热门种子选手热门种子选手",
-          timestamp: "今天20:00",
-          other: "128进展",
-        }
-      ],
       activeTab: "ALL",
       tabs: [
         { label: 'ALL', key: 'ALL' },
@@ -59,10 +46,44 @@ export default {
       ]
     }
   },
+  computed: {
+    userMonitors() {
+      return this.$store.state.monitor.userMonitorList
+    },
+    addMonitorShow() {
+      return this.$store.state.monitor.addMonitorShow
+    }
+  },
   methods: {
+    async fetchMonitors() {
+      await this.$store.dispatch('monitor/fetchUserMonitorList', {
+        status: this.mapTabToStatus(this.activeTab)
+      });
+    },
     goDetail(id) {
       this.$router.push(`/${this.$i18n.locale}/monitoring/detail?id=${id}`);
+    },
+    mapTabToStatus(tab) {
+      switch(tab) {
+        case 'ALL': return '';
+        case 'FINISHED': return 3; // 根据你的状态定义调整
+        case 'UNFINISHED': return 2; // 根据你的状态定义调整
+        default: return 0;
+      }
+    },
+    showAddMonitor() {
+      this.$store.commit('monitor/setAddMonitorShow', true)
     }
+  },
+  watch: {
+    activeTab(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.fetchMonitors();
+      }
+    }
+  },
+  mounted() {
+    this.fetchMonitors();
   }
 }
 </script>
@@ -154,6 +175,7 @@ export default {
         font-weight: 500;
         font-size: 16px;
         text-transform: capitalize;
+        cursor: pointer;
       }
     }
 
@@ -162,50 +184,6 @@ export default {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-
-      .card {
-        padding: 16px 20px;
-        width: 399px;
-        height: 130px;
-        border-radius: 16px;
-        margin-bottom: 16px;
-        background: rgba(38, 64, 64, 0.2);
-        display: flex;
-        cursor: pointer;
-
-        .card-img {
-          width: 60px;
-          height: 60px;
-          border-radius: 10px;
-        }
-
-        .card-header {
-          padding-left: 17px;
-
-          .title1 {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 10px;
-            line-height: 15px;
-            height: 15px;
-          }
-
-          .title2 {
-            color: rgba(255, 255, 255, 1);
-            font-size: 15px;
-            line-height: 25px;
-          }
-
-          .timestamp {
-            color: rgba(140, 180, 189, 1);
-            font-size: 12px;
-          }
-
-          .other {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 10px;
-          }
-        }
-      }
     }
 
   }
