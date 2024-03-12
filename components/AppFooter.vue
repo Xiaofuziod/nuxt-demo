@@ -9,9 +9,9 @@
       <!-- Navigation area -->
       <nav v-if="userLoggedIn">
         <ul>
-          <li ><a href="/zh/reporting">How it work</a></li>
-          <li><a href="/zh/monitoring">Community</a></li>
-          <li><a href="/zh/monitoring">FAQ</a></li>
+          <li ><a href="/reporting">How it work</a></li>
+          <li><a href="/monitoring">Community</a></li>
+          <li><a href="/monitoring">FAQ</a></li>
         </ul>
       </nav>
 

@@ -61,7 +61,7 @@ export default {
       });
     },
     goDetail(id) {
-      this.$router.push(`/${this.$i18n.locale}/monitoring/detail?id=${id}`);
+      this.$router.push(`/monitoring/detail?id=${id}`);
     },
     mapTabToStatus(tab) {
       switch(tab) {

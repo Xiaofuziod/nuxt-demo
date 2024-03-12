@@ -67,16 +67,10 @@ export default {
       color: rgba(12, 26, 39, 1);
     }
     --active-color: rgba(140, 180, 189, 1);
-    &.active:after {
-      background: var(--active-color);
-      content: '';
-      position: absolute;
-      width: 80px; /* 确保伪元素的大小与按钮一致 */
-      height: 90px;
-      transform: rotate(-145deg); /* 旋转45度 */
-      left: 5px;
-      top: -25px;
-      z-index: -1;
+
+
+    &.active {
+      background: linear-gradient(135deg, transparent 6%, var(--active-color) 6%, var(--active-color) 94%, transparent 94%,transparent 100%)
     }
   }
 }

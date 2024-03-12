@@ -20,7 +20,7 @@
       <div class="user-actions">
         <div class="vip-btn base-icon-btn" v-if="userLoggedIn && !isVip">
           <img src="~/assets/imgs/vip.svg" alt="Get Premium"/>
-          Get Premium
+          GET PREMIUM
         </div>
         <div class="x-btn base-icon-btn" v-if="!userLoggedIn">
           <img src="~/assets/imgs/x.svg" alt="Get Premium"/>
@@ -142,6 +142,7 @@ header {
   justify-content: center;
   cursor: pointer;
   margin: 0 16px;
+
 }
 
 .vip-btn {
@@ -150,6 +151,10 @@ header {
   border-radius: 70px;
   margin: 0;
   background: rgba(138, 173, 188, 0.1);
+  font-family: 'Avenir';
+  font-style: normal;
+  font-size: 14px;
+  color: #8CB4BD;
 }
 
 nav {
