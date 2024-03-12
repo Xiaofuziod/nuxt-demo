@@ -2,9 +2,11 @@
   <div class="chat-box">
 
     <div class="chat-top">
-      <div class="chat-top-image"></div>
-      <div class="chat-top-title">
-        Received 🫡 Let me think about ...
+      <div class="chat-top-left">
+        <div class="chat-top-image"></div>
+        <div class="chat-top-title">
+          Received 🫡 Let me think about ...
+        </div>
       </div>
       <div class="chat-top-icon">
         <img class="img1" src="@/static/images/chat/s1.svg" alt="">
@@ -315,6 +317,7 @@ export default {
         box-sizing: border-box;
         text-transform: uppercase;
         overflow: hidden;
+        font-family: Gruppe F;
 
         &::after {
           content: "";
@@ -358,6 +361,11 @@ export default {
     align-items: center;
     justify-content: space-between;
 
+    .chat-top-left {
+      display: flex;
+      align-items: center;
+    }
+
     .chat-top-image {
       width: 48px;
       height: 48px;
@@ -393,6 +401,7 @@ export default {
       text-transform: capitalize;
       text-align: center;
       line-height: 38px;
+      margin-left: 20px;
     }
   }
 }

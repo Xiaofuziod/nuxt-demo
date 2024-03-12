@@ -105,25 +105,24 @@ export default {
       this.$store.dispatch('coin/removeFollow', item.id)
     },
     loadData() {
-      // this.$axios.get(analysisCoin, {params: {id: 67}}).then(res => {
-      //   console.log(res.data)
-      //   const arr = res.data.data.map(item => {
-      //     const d = parseTime(item.createdDate)
-      //     return {
-      //       ...item,
-      //       isToday: d.isToday,
-      //       weekDay: d.weekDay,
-      //       time: d.time,
-      //       date: d.date
-      //     }
-      //   })
-      //   this.list = [
-      //     {
-      //       ...arr[0],
-      //       list: arr
-      //     }
-      //   ]
-      // })
+      this.$axios.get(analysisCoin, {params: {id: 74}}).then(res => {
+        const arr = res.data.data.map(item => {
+          const d = parseTime(item.createdDate)
+          return {
+            ...item,
+            isToday: d.isToday,
+            weekDay: d.weekDay,
+            time: d.time,
+            date: d.date
+          }
+        })
+        this.list = [
+          {
+            ...arr[0],
+            list: arr
+          }
+        ]
+      })
     }
   }
 }

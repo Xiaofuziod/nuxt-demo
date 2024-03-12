@@ -33,21 +33,19 @@ export default {
       }
     },
     handlePaste(event) {
-      // 阻止默认粘贴行为
-      event.preventDefault();
-      // 从粘贴事件获取文本值
+      event.preventDefault(); // 阻止默认粘贴行为
       const text = event.clipboardData.getData('text').slice(0, this.inputs.length);
-      // 分割文本填充到输入框
+
+      // 使用 $set 更新数组，确保视图能够响应式地更新
       text.split('').forEach((char, index) => {
-        this.inputs[index] = char;
+        this.$set(this.inputs, index, char);
       });
-      // 更新视图
+
+      // 检查并触发验证逻辑
       this.$nextTick(() => {
-        // 如果粘贴的文本填满了所有输入框，则验证
         if (text.length === this.inputs.length) {
           this.validateCode();
         } else {
-          // 否则，将焦点移动到下一个空输入框
           this.$refs.inputRefs[text.length].focus();
         }
       });

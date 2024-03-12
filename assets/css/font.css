@@ -11,3 +11,24 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Gruppe F';
+    src: url('~assets/fonts/Gruppe F.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gruppe B';
+    src: url('~assets/fonts/Gruppe B.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gruppe S';
+    src: url('~assets/fonts/Gruppe S.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,9 +1,9 @@
 import {addFollow, deleteFollow, getAssetList, getFollowList} from "@/common/home";
 
-export const state = {
+export const state =  () => ({
   coinList: [],
   userCoinList: [],
-}
+})
 
 export const mutations = {
   setCoinList(state, coinList) {
