@@ -7,7 +7,6 @@ export default function ({$axios, redirect}) {
     if (config.method === 'get') {
       config.params = config.params ? Object.assign(config.params, defaultParams) : defaultParams
     }
-    console.log(localStorage.getItem('token'))
     const token = localStorage.getItem('token')
     $axios.setHeader('Authorization', 'Bearer ' + token)
   })
@@ -16,6 +15,12 @@ export default function ({$axios, redirect}) {
     const code = parseInt(error.response && error.response.status)
     if (code === 400) {
       redirect('/400')
+    }
+  })
+
+  $axios.onResponse(response => {
+    if (response.data.code === 401) {
+      localStorage.removeItem('token')
     }
   })
 }

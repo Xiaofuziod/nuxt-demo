@@ -45,7 +45,8 @@ body {
   flex-direction: column;
   position: relative;
   z-index: 1;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   .page-container {
     height: calc(100vh - 88px);

@@ -10,13 +10,14 @@ import {
 import defaultUserAvatar from "assets/imgs/user.svg";
 
 export const state = () => ({
-  userInfo: {}
+  userInfo: {},
 });
 
 export const mutations = {
   setUser(state, user) {
     state.userInfo = {...user, avatar: user.avatar || defaultUserAvatar, nickname: user.nickname || '神秘人士 ~'};
     this.$localStorage.setItem('token', state.userInfo.tokenInfo.tokenValue);
+    this.$bus.$emit('LOGON_SUCCESS');
   }
 };
 
@@ -34,24 +35,22 @@ export const actions = {
   async emailLogin({commit}, {account, password}) {
     try {
       const res = await this.$axios.post(userLogin, {account, passwd: password})
-      commit('setUser', res.data.data);
+      console.log(res.data)
+      if (res.data.code === 200) {
+        commit('setUser', res.data.data);
+      } else {
+        this._vm.$toast.show({content: res.data.msg, type: 'error'})
+      }
     } catch (e) {
-
+      console.log(e)
     }
   },
 
   async googleLogin({commit}, data) {
     try {
-      let para = {
-        "access_token": data.access_token,
-        "expires_in": data.expires_in,
-        "scope": data.scope,
-        "token_type": data.token_type,
-        "id_token": data.id_token
-      }
-      const res = await this.$axios.post(googleLogin, para)
+      const res = await this.$axios.get(googleLogin, {params: {...data}})
       commit('setUser', res.data.data);
-      await this.$router.replace('/zh')
+      await this.$router.replace('/')
     } catch (e) {
       console.log('googleLogin error: ', e)
     }
@@ -60,7 +59,7 @@ export const actions = {
     try {
       const res = await this.$axios.get(twitterLogin, {params: data})
       commit('setUser', res.data.data);
-      await this.$router.replace('/zh')
+      await this.$router.replace('/')
     } catch (e) {
 
     }
@@ -68,22 +67,23 @@ export const actions = {
   async twitterRedirectUrl({commit}, data) {
     try {
       const res = await this.$axios.post(twitterRedirectUrl, data)
+      console.log(res.data.data)
+      window.location.href = res.data.data;
+    } catch (e) {
+
+    }
+  },
+  async userRegister({commit}, {account, passwd, captcha}) {
+    try {
+      const res = await this.$axios.post(userRegister, {account, passwd, captcha})
       commit('setUser', res.data.data);
     } catch (e) {
 
     }
   },
-  async userRegister({commit}, {email, password, code}) {
+  async changePassword({commit}, {email, passwd, password1, captcha}) {
     try {
-      const res = await this.$axios.post(userRegister, {email, password, captcha: code})
-      commit('setUser', res.data.data);
-    } catch (e) {
-
-    }
-  },
-  async changePassword({commit}, {email, password, password1, code}) {
-    try {
-      const res = await this.$axios.post(changePassword, {email, password, password1, captcha: code})
+      const res = await this.$axios.post(changePassword, {email, passwd, password1, captcha})
       commit('setUser', res.data.data);
     } catch (e) {
 

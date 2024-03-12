@@ -9,9 +9,9 @@
       <!-- Navigation area -->
       <nav v-if="userLoggedIn">
         <ul>
-          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" href="/zh/reporting">AI Reporting</a>
+          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" href="/reporting">AI Reporting</a>
           </li>
-          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" href="/zh/monitoring">AI Monitoring</a>
+          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" href="/monitoring">AI Monitoring</a>
           </li>
         </ul>
       </nav>
@@ -33,6 +33,12 @@
         </div>
         <div v-else class="user-profile">
           <img src="~/assets/imgs/user.svg" alt="">
+
+          <!--        账户操作-->
+          <div class="user-setting">
+            <div @click="changeNickname">修改昵称</div>
+            <div @click="logout">退出登录</div>
+          </div>
         </div>
       </div>
       <login ref="loginRef"/>
@@ -49,6 +55,7 @@ export default {
     return {
       userLoggedIn: true,
       isVip: false,
+      showUserSetting: false
     };
   },
   mounted() {
@@ -56,19 +63,36 @@ export default {
     const token = this.$localStorage.getItem('token')
     this.userLoggedIn = !!token
     // Check if user is a VIP
+
+    // 处理事件
+    this.$bus.$on('LOGON_SUCCESS', () => {
+      this.userLoggedIn = true
+    });
   },
   methods: {
     goHome() {
-      this.$router.push('/zh/')
+      this.$router.push('/')
     },
     showLogin() {
       this.$refs.loginRef.show()
+    },
+    changeNickname() {
+      this.showUserSetting = false
+    },
+    logout() {
+      this.$localStorage.removeItem('token')
+      this.showUserSetting = false
+      this.userLoggedIn = false
+      this.$router.replace('/')
     }
   },
   computed: {
     routepath() {
       return this.$route.path
     }
+  },
+  beforeDestroy() {
+    this.$bus.$off('LOGON_SUCCESS')
   }
 };
 </script>
@@ -88,6 +112,7 @@ header {
     color: #fff;
   }
 }
+
 
 .logo img {
   height: 50px; /* Adjust the size as needed */
@@ -158,22 +183,59 @@ nav {
   display: flex;
   align-items: center;
   gap: 1rem;
+  position: relative;
 }
 
 .user-profile {
-  border-left: 1px solid #8CB4BD;
   padding-left: 32px;
-  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 24px;
   cursor: pointer;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 24px;
+    background: #8CB4BD;
+  }
 
   img {
     height: 48px;
     width: 48px;
     border-radius: 50%;
+  }
+
+  &:hover .user-setting {
+    display: block;
+  }
+
+  .user-setting {
+    position: absolute;
+    top: 0;
+    right: -20px;
+    padding-top: 60px;
+    width: 100px;
+
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: none;
+
+    div {
+      text-align: center;
+      color: #000;
+      line-height: 40px;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 3px;
+      margin-top: 1px;
+    }
   }
 }
 

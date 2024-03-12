@@ -12,6 +12,16 @@ export default ({ app }, inject) => {
       }
       return null; // 或者返回一个默认值
     },
+    removeItem(key) {
+      if (process.client) {
+        localStorage.removeItem(key);
+      }
+    },
+    clear () {
+      if (process.client) {
+        localStorage.clear()
+      }
+    }
     // 可以添加更多localStorage方法
   });
 };

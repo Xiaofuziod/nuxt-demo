@@ -2,7 +2,7 @@
   <transition name="modal">
     <div class="modal-mask" v-if="visible">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container" :style="{width: width}">
           <slot name="header"></slot>
           <div class="modal-center">
             <slot name="body">
@@ -17,6 +17,12 @@
 
 <script>
 export default {
+  props: {
+    width: {
+      type: String,
+      default: '800px',
+    },
+  },
   data() {
     return {
       visible: false,
@@ -53,10 +59,10 @@ export default {
 
 .modal-container {
   /* 弹窗内容样式 */
-  background-color: #0056b3;
+  background-color: #FFFFFF;
   border-radius: 31px;
   width: 800px;
-  max-height: 70vh;
+  max-height: 80vh;
   margin: 100px auto;
   box-sizing: inherit;
   padding: 30px;

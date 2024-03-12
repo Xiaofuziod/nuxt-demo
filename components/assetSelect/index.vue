@@ -60,11 +60,12 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 
 
 .Frame580 {
   margin-top: 24px;
+  color: black;
 
   .item {
     display: flex;
@@ -88,7 +89,7 @@ export default {
 
   .Bitcoin {
     height: 20px;
-    color: rgba(255, 255, 255, 1);
+    //color: rgba(255, 255, 255, 1);
     font-family: Avenir-Heavy;
     font-size: 15px;
     text-transform: capitalize;
@@ -97,7 +98,7 @@ export default {
 
   .BTC {
     height: 20px;
-    color: rgba(255, 255, 255, 0.5);
+    //color: rgba(255, 255, 255, 0.5);
     font-family: Avenir;
     font-weight: 500;
     font-size: 15px;

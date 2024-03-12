@@ -65,12 +65,38 @@
     </div>
 
     <div class="input-box">
-      <input type="text">
-      <img class="img1" src="@/static/images/chat/send2.svg" alt="">
+      <input type="text" v-model="message">
+      <img class="img1" src="@/static/images/chat/send2.svg" alt="" @click="sendMessage">
     </div>
 
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      message: ''
+    }
+  },
+  mounted() {
+    this.$socket.on('messageevent', (data) => {
+      console.log(data);
+    });
+    this.$socket.on('connect', () => {
+      console.log('Connected to socket server');
+    });
+
+    console.log(this)
+  },
+  methods: {
+    sendMessage() {
+      console.log('send message')
+      this.$socket.emit('messageevent', JSON.stringify({message: this.message}))
+    }
+  }
+}
+</script>
 
 <style lang="less">
 
@@ -372,5 +398,3 @@
 }
 
 </style>
-<script setup lang="ts">
-</script>
