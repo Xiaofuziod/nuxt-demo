@@ -18,7 +18,9 @@
         </div>
         <!--    自选币  -->
         <div class="Frame580">
-          <div class="item" v-for="item in followList" :key="item.id">
+          <div class="item" v-for="item in followList" :key="item.id"
+               @click="handleClick(item)"
+          >
             <div class="Rectangle">
               <img :src="item.icon" alt="">
             </div>
@@ -43,8 +45,9 @@
         <div class="focus-list-box">
           <list-container>
             <!--      图表-->
-            <my-echarts></my-echarts>
-
+            <template v-if="coinId">
+              <my-echarts ref="echart"></my-echarts>
+            </template>
             <div class="focus-list">
               <div v-for="item in list" :key="item.id">
                 <AIFocus :coin-data="item"/>
@@ -82,7 +85,8 @@ export default {
   data() {
     return {
       showDelete: false,
-      list: []
+      list: [],
+      coinId: ''
     }
   },
   computed: {
@@ -98,6 +102,13 @@ export default {
     this.$store.dispatch('coin/fetchUserCoinList')
   },
   methods: {
+    handleClick(item) {
+      this.coinId = item.id
+      this.loadData()
+      this.$nextTick(() => {
+        this.$refs.echart.reload(item.id)
+      })
+    },
     showSelect() {
       this.$refs.assetSel.show()
     },
@@ -105,7 +116,7 @@ export default {
       this.$store.dispatch('coin/removeFollow', item.id)
     },
     loadData() {
-      this.$axios.get(analysisCoin, {params: {id: 74}}).then(res => {
+      this.$axios.get(analysisCoin, {params: {}}).then(res => {
         const arr = res.data.data.map(item => {
           const d = parseTime(item.createdDate)
           return {
@@ -127,7 +138,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 
 .ellipsis {
   width: 100%;

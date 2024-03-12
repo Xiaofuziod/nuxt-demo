@@ -45,7 +45,8 @@ export default {
           value: 'all'
         }
       ],
-      activeKey: '1m'
+      activeKey: '1d',
+      coinId: 1
     }
   },
   methods: {
@@ -111,15 +112,17 @@ export default {
     },
     loadData(val) {
       this.activeKey =val && val.value
-      this.$axios.get(getCoinPrice, {params: {coinId: 1, period: this.activeKey}}).then(res => {
+      this.$axios.get(getCoinPrice, {params: {coinId: this.coinId, period: this.activeKey}}).then(res => {
         this.xData = res.data.data.market.map(item => item.date)
         this.yData = res.data.data.market.map(item => (item.price).toFixed(2))
         this.echartsInit()
       })
+    },
+    reload (coinId) {
+      this.activeKey = '1d'
+      this.coinId = coinId
+      this.loadData()
     }
-  },
-  mounted() {
-    this.loadData()
   }
 }
 </script>
