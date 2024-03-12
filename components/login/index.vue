@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       user: 'ta',
-      email: "flynn.taurion@gmail.com",
+      email: "",
       password: "",
       type: 'login', // login, register
       step: 21, // 1,  登录/注册   21, 注册验证码输入  31, 忘记密码 - 输入电子邮箱  32 忘记密码 - 输入新密码
