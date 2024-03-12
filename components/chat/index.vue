@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="chat-content">
+    <div class="chat-content" ref="messagesContainer">
       <div class="focus-box">
         <div class="focus">
           <img src="@/static/images/chat/s2.svg" alt="">
@@ -61,13 +61,13 @@
         </div>
       </div>
 
-      <div class="text-message">
-        The factors that led to the halving of Bitcoin？
+      <div class="text-message" v-for="(item,index) in messageList" :key="index">
+        {{ item.message }}
       </div>
     </div>
 
     <div class="input-box">
-      <input type="text" v-model="message">
+      <input type="text" v-model="message" @keydown.enter="sendMessage">
       <img class="img1" src="@/static/images/chat/send2.svg" alt="" @click="sendMessage">
     </div>
 
@@ -78,38 +78,58 @@
 export default {
   data() {
     return {
-      message: ''
+      message: '',
+      messageList: [
+        {message: 'The factors that led to the halving of Bitcoin？'}
+      ]
     }
   },
   mounted() {
     this.$socket.on('messageevent', (data) => {
-      console.log(data);
+      this.getMessage(data);
     });
     this.$socket.on('connect', () => {
       console.log('Connected to socket server');
     });
-
-    console.log(this)
   },
   methods: {
     sendMessage() {
-      console.log('send message')
       this.$socket.emit('messageevent', JSON.stringify({message: this.message}))
-    }
-  }
+      this.messageList.push({message: "发送:" + this.message})
+      this.message = ''
+      this.$nextTick(() => {
+        this.scrollToBottom();
+      });
+    },
+    getMessage(data) {
+      console.log('收到',data)
+      this.messageList.push({message: '收到：' + data.data.message})
+      this.$nextTick(() => {
+        this.scrollToBottom();
+      });
+    },
+    scrollToBottom() {
+      const messagesContainer = this.$refs.messagesContainer;
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    },
+  },
+  beforeDestroy() {
+    this.$socket.off('messageevent', this.getMessage);
+  },
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 
 .chat-box {
   width: 515px;
   background-color: rgba(38, 64, 64, 0.3);
   box-sizing: border-box;
   padding: 20px 24px 20px;
-  border-radius: 0 31px 0 0 ;
+  border-radius: 0 31px 0 0;
   height: 100%;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 
 
   .input-box {
@@ -123,9 +143,6 @@ export default {
     justify-content: space-between;
     padding: 9px;
     margin-top: 20px;
-    position: absolute;
-    left: 27px;
-    bottom: 20px;
 
     img {
       width: 38px;
@@ -148,6 +165,8 @@ export default {
   }
 
   .chat-content {
+    flex: 1;
+    overflow-y: auto;
 
     .ask-list {
       .ask-item {
@@ -232,6 +251,7 @@ export default {
               font-family: Avenir-Heavy;
               font-size: 6px;
               text-transform: capitalize;
+
               img {
                 width: 5px;
                 height: 5px;

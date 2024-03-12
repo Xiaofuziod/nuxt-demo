@@ -111,7 +111,7 @@ export default {
     },
     loadData(val) {
       this.activeKey =val && val.value
-      this.$axios.get(getCoinPrice, {params: {coinId: 1, period: "1m"}}).then(res => {
+      this.$axios.get(getCoinPrice, {params: {coinId: 1, period: this.activeKey}}).then(res => {
         this.xData = res.data.data.market.map(item => item.date)
         this.yData = res.data.data.market.map(item => (item.price).toFixed(2))
         this.echartsInit()

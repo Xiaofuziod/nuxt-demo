@@ -10,7 +10,7 @@
 <script>
 export default {
   props: {
-    content: {type: String, required: true},
+    content: {type: String, required: false},
     icon: {type: String, default: ''},
     type: {type: String, default: 'info'} // 类型可以是 info, success, warning, error
   },
