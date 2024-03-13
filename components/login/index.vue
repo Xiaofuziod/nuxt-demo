@@ -89,7 +89,7 @@ export default {
     validateInputSuccess(captcha) {
       console.log('validateInputSuccess', captcha, this.step)
       if (this.step === 21) {
-        this.$store.dispatch('user/userRegister', {account: this.email, password: this.password, captcha})
+        this.$store.dispatch('user/userRegister', {account: this.email, passwd: this.password, captcha})
       }
     },
     stepBack() {
