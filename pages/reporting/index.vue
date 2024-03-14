@@ -60,7 +60,6 @@
         <ChatIndex/>
       </div>
     </div>
-    <asset-select ref="assetSel"/>
   </div>
 
 </template>
@@ -68,18 +67,18 @@
 import chatIndex from "~/components/chat/index.vue";
 import AIFocus from '~/components/aiFocus/index.vue'
 import ListContainer from '~/components/scrollView/index.vue'
-import assetSelect from '~/components/assetSelect/index.vue'
 import {analysisCoin, deleteFollow, getFollowList} from "~/common/home";
 import MyEcharts from "~/components/echarts/index.vue";
 import {parseTime} from "~/utils/date";
+import AddCoin from "~/components/report/addCoin.vue";
 
 export default {
   name: 'Home',
   components: {
+    AddCoin,
     ChatIndex: chatIndex,
     AIFocus,
     ListContainer,
-    assetSelect,
     MyEcharts
   },
   data() {
@@ -110,7 +109,7 @@ export default {
       })
     },
     showSelect() {
-      this.$refs.assetSel.show()
+      this.$store.commit('coin/setAddCoinShow', true)
     },
     deleteFollow(item) {
       this.$store.dispatch('coin/removeFollow', item.id)

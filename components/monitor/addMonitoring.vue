@@ -18,7 +18,7 @@
             <img src="@/assets/imgs/empty.svg" alt="">
             <span>未发现匹配结果</span>
         </div>
-        <template v-if="!searchQuery && !loading">
+        <template v-if="!searchQuery && !loading && monitors.length">
           <!-- 监控卡片列表 -->
           <div class="monitor-title">🔥 即将开始的 X Space</div>
           <div class="monitoring-cards" v-if="unstartMonitors.length">
@@ -39,7 +39,7 @@
             />
           </div>
         </template>
-        <template v-if="searchQuery && !loading">
+        <template v-if="searchQuery && !loading && monitors.length">
           <div class="monitoring-cards" v-if="unstartMonitors.length">
             <mid-monitor-card
                 v-for="monitor in unstartMonitors"

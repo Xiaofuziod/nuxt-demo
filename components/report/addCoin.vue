@@ -14,31 +14,26 @@
           <img src="@/assets/imgs/ZKZg.gif" alt="">
         </div>
         <div class="monitor-search-title" v-if="!loading && searchQuery">搜索到的结果</div>
-        <div class="center-box empty-box" v-if="!loading && !monitors.length">
+        <div class="center-box empty-box" v-if="!loading && !coinList.length">
           <img src="@/assets/imgs/empty.svg" alt="">
           <span>未发现匹配结果</span>
         </div>
-        <template v-if="searchQuery && !loading && monitors.length">
-          <div class="monitoring-cards" v-if="unstartMonitors.length">
-            <mid-monitor-card
-                v-for="monitor in unstartMonitors"
-                :key="monitor.id"
-                :card="monitor"
-                @select="select(monitor)"
-            />
-          </div>
+        <template v-if="!loading && coinList.length">
+          <coin-list
+            @select="select"
+          />
         </template>
       </main>
       <div class="monitoring-footer">
         <div class="add-monitoring-cards" >
-          <small-monitor-card
-              v-for="monitor in selectMonitors"
+          <small-coin-card
+              v-for="monitor in selectcoinList"
               :key="monitor.id"
               :card="monitor"
               @remove="remove(monitor.id)"
           />
         </div>
-        <taurion-btn  @click="addMonitor" text="确认"  active-color="rgba(206, 184, 100, 1)"/>
+        <taurion-btn  @click="addCoin" text="确认"  active-color="rgba(206, 184, 100, 1)"/>
       </div>
       <!-- 其余代码 -->
     </div>
@@ -48,30 +43,27 @@
 <script>
 
 import MidMonitorCard from "~/components/monitor/MidMonitorCard.vue";
-import SmallMonitorCard from "~/components/monitor/smallMonitorCard.vue";
+import SmallCoinCard from "~/components/report/smallMonitorCard.vue";
+import CoinList from "~/components/report/coinList.vue";
 let inputlock =  false;
 export default {
   name: "addCoin",
   components: {
-    SmallMonitorCard,
+    CoinList,
+    SmallCoinCard,
     MidMonitorCard
   },
   data() {
     return {
       searchQuery: '',
-      selectMonitors:[],
+      selectcoinList:[],
       loading: false,
     };
   },
+
   computed: {
-    monitors() {
-      return this.$store.state.monitor.monitorList
-    },
-    unstartMonitors() {
-      return this.monitors.filter(item => item.status === 1)
-    },
-    finishMonitors() {
-      return this.monitors.filter(item => item.status === 3)
+    coinList() {
+      return this.$store.state.coin.coinList
     },
   },
   watch: {
@@ -80,37 +72,37 @@ export default {
       inputlock = true
       setTimeout(() => {
         inputlock = false
-        this.searchMonitors()
+        this.searchcoinList()
       },400)
     }
   },
   methods: {
-    searchMonitors() {
+    searchcoinList() {
       this.loading = true
-      this.$store.dispatch('monitor/fetchMonitorList', this.searchQuery).finally(()=> {
+      this.$store.dispatch('coin/fetchCoinList', this.searchQuery).finally(()=> {
         this.loading = false
       });
     },
     select(id){
-      if(this.selectMonitors.length > 4) {
+      if(this.selectcoinList.length > 4) {
         this.$toast.error('同时间最多可添加5个')
       } else {
-        this.selectMonitors = [...this.selectMonitors, id]
+        this.selectcoinList = [...this.selectcoinList, id]
 
       }
     },
     remove(id) {
-      this.selectMonitors = this.selectMonitors.filter(i => i.id !== id)
+      this.selectcoinList = this.selectcoinList.filter(i => i.id !== id)
     },
-    addMonitor() {
-      this.$store.dispatch('monitor/addUserMonitor', this.selectMonitors.map(i => i.id));
+    addCoin() {
+      this.$store.dispatch('coin/addFollow', this.selectcoinList.map(i => i.id))
     },
     close() {
-      this.$store.commit("monitor/setAddMonitorShow", false)
+      this.$store.commit("coin/setAddCoinShow", false)
     }
   },
   mounted() {
-    this.searchMonitors();
+    this.searchcoinList();
   }
 }
 </script>

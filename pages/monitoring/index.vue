@@ -27,15 +27,12 @@
       </div>
     </main>
     <ball-bg1/>
-    <add-monitor v-if="addMonitorShow"/>
   </div>
 </template>
 <script>
-import AddMonitor from "@/components/monitor/addMonitoring.vue";
 
 export default {
   name: 'Monitor',
-  components: {AddMonitor},
   data() {
     return {
       activeTab: "ALL",
@@ -50,9 +47,6 @@ export default {
     userMonitors() {
       return this.$store.state.monitor.userMonitorList
     },
-    addMonitorShow() {
-      return this.$store.state.monitor.addMonitorShow
-    }
   },
   methods: {
     async fetchMonitors() {

@@ -3,60 +3,6 @@ import * as monitorApi from "~/common/monitoring";
 export const state = () => ({
     // monitorList: [],
     monitorList: [
-        {
-            "id": "1",
-            "logo": "",
-            "author": "The Mental Reboot",
-            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
-            "time": "2024-03-05 20:00:00",
-            "status": 1,
-            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
-        },
-        {
-            "id": "2",
-            "logo": "",
-            "author": "The1 Mental Reboot",
-            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
-            "time": "2024-03-05 20:00:00",
-            "status": 1,
-            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
-        },
-        {
-            "id": "3",
-            "logo": "",
-            "author": "The1 Mental Reboot",
-            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
-            "time": "2024-03-05 20:00:00",
-            "status": 1,
-            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
-        },
-        {
-            "id": "12",
-            "logo": "",
-            "author": "The Mental Reboot",
-            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
-            "time": "2024-03-05 20:00:00",
-            "status": 3,
-            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
-        },
-        {
-            "id": "121",
-            "logo": "",
-            "author": "The Mental Reboot",
-            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
-            "time": "2024-03-05 20:00:00",
-            "status": 3,
-            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
-        },
-        {
-            "id": "122",
-            "logo": "",
-            "author": "The Mental Reboot",
-            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
-            "time": "2024-03-05 20:00:00",
-            "status": 3,
-            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
-        }
     ],
     userMonitorList: [],
     monitorDetail: null,
@@ -117,12 +63,13 @@ export const actions = {
             this._vm.$loading.start();
             const res = await this.$axios.get(`${monitorApi.addUserMonitoring}?sourceIds=${sourceIds.join(',')}`);
             if (res && res.data && res.data.ok) {
-                commit('setAddMonitorShow', false)
                 dispatch('fetchUserMonitorList'); // Optionally refresh the user monitor list
+                this._vm.$toast.success("添加成功")
             }
         } catch (e) {
             console.error('addUserMonitor error:', e);
         }  finally {
+            commit('setAddMonitorShow', false)
             this._vm.$loading.finish();
         }
     },

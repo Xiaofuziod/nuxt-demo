@@ -6,13 +6,16 @@
     </div>
     <div class="footer">
     </div>
+    <glob-dialog/>
   </div>
 </template>
 <script>
 import AppHeader from "~/components/AppHeader/index.vue";
+import GlobDialog from "~/components/dialog/GlobDialog.vue";
 
 export default {
   components: {
+    GlobDialog,
     AppHeader
   },
   data() {

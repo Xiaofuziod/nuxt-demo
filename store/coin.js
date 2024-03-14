@@ -3,6 +3,7 @@ import {addFollow, deleteFollow, getAssetList, getFollowList} from "@/common/hom
 export const state =  () => ({
   coinList: [],
   userCoinList: [],
+  addCoinShow:false
 })
 
 export const mutations = {
@@ -11,6 +12,9 @@ export const mutations = {
   },
   setUserCoinList(state, userCoinList) {
     state.userCoinList = userCoinList;
+  },
+  setAddCoinShow(state, bool) {
+    state.addCoinShow = bool
   }
 }
 
@@ -39,14 +43,15 @@ export const actions = {
   },
   async addFollow({commit, dispatch}, id) {
     try {
-      const res = await this.$axios.get(addFollow, {params: {id}});
+      const res = await this.$axios.get(`${addFollow}?id=${id.join('&id=')}`);
       if (res && res.data && res.data.data) {
         dispatch('fetchUserCoinList');
+        this._vm.$toast.success("添加成功")
       }
     } catch (e) {
       console.error('fetchCoinList error:', e);
     } finally {
-      this._vm.$loading.finish();
+      commit('setAddCoinShow', false)
     }
   },
   async removeFollow({commit, dispatch}, id) {
