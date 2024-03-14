@@ -77,8 +77,8 @@ export default {
     height: 16px;
     cursor: pointer;
     position: absolute;
-    right: 24px;
-    top: 24px;
+    right: 25px;
+    top: 28px;
     z-index: 2;
   }
 }

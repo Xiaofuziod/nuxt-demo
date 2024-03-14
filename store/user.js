@@ -29,7 +29,7 @@ export const actions = {
       commit('setUser', res.data.data);
       console.log(res)
     } catch (e) {
-
+      this.$bus.$emit('LOGON_FAIL');
     }
   },
   async emailLogin({commit}, {account, password}) {
@@ -39,9 +39,11 @@ export const actions = {
       if (res.data.code === 200) {
         commit('setUser', res.data.data);
       } else {
+        this.$bus.$emit('LOGON_FAIL');
         this._vm.$toast.show({content: res.data.msg, type: 'error'})
       }
     } catch (e) {
+      this.$bus.$emit('LOGON_FAIL');
       console.log(e)
     }
   },
@@ -52,6 +54,7 @@ export const actions = {
       commit('setUser', res.data.data);
       await this.$router.replace('/')
     } catch (e) {
+      this.$bus.$emit('LOGON_FAIL');
       console.log('googleLogin error: ', e)
     }
   },
@@ -61,16 +64,15 @@ export const actions = {
       commit('setUser', res.data.data);
       await this.$router.replace('/')
     } catch (e) {
-
+      this.$bus.$emit('LOGON_FAIL');
     }
   },
   async twitterRedirectUrl({commit}, data) {
     try {
       const res = await this.$axios.post(twitterRedirectUrl, data)
-      console.log(res.data.data)
       window.location.href = res.data.data;
     } catch (e) {
-
+      this.$bus.$emit('LOGON_FAIL');
     }
   },
   async userRegister({commit}, {account, passwd, captcha}) {
@@ -78,7 +80,7 @@ export const actions = {
       const res = await this.$axios.post(userRegister, {account, passwd, captcha})
       commit('setUser', res.data.data);
     } catch (e) {
-
+      this.$bus.$emit('LOGON_FAIL');
     }
   },
   async changePassword({commit}, {email, passwd, password1, captcha}) {
@@ -86,7 +88,7 @@ export const actions = {
       const res = await this.$axios.post(changePassword, {email, passwd, password1, captcha})
       commit('setUser', res.data.data);
     } catch (e) {
-
+      this.$bus.$emit('LOGON_FAIL');
     }
   },
   async getUserInfo({commit}) {
@@ -94,7 +96,7 @@ export const actions = {
       const res = await this.$axios.get(getUserInfo)
       commit('setUser', res.data.data);
     } catch (e) {
-
+      this.$bus.$emit('LOGON_FAIL');
     }
   }
 };

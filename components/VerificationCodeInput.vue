@@ -63,12 +63,23 @@ export default {
 .verification-code-input {
   display: flex;
   justify-content: space-between;
-  max-width: 300px;
-  margin:30px auto;
+  margin: 0 auto;
+  padding: 0 2px;
+  box-sizing: border-box;
 }
+
 .verification-input {
-  width: 40px;
-  height: 50px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  border: 0.4px solid rgba(140, 180, 189, 0.30);
+  width: 47px;
+  height: 47px;
   text-align: center;
+  background-color: transparent;
+  color: #FFFFFF;
+  outline: none;
+  &:focus {
+    border: 1px solid #8CB4BD;
+  }
 }
 </style>

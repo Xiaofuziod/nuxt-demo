@@ -1,8 +1,9 @@
 <template>
   <div v-if="visible" class="toast" :class="`toast-${type}`">
-    <i v-if="icon" class="icon" :class="`icon-${icon}`"></i>
+    <img v-if="type === 'error'" src="@/assets/imgs/error.svg" alt="">
+    <img v-if="type === 'success'" src="@/assets/imgs/success.svg" alt="">
     <div class="toast-content">
-      {{ content}}
+      {{ content }}
     </div>
   </div>
 </template>
@@ -30,19 +31,29 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .toast {
   /* 样式设置 */
   position: fixed;
-  top: 20px;
+  top: 80px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 10px 20px;
-  border-radius: 5px;
-  color: #000000;
+  padding: 16px 20px;
   z-index: 1000;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #FFFFFF;
+  display: flex;
+  min-width: 180px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(138, 173, 188, 0.10);
+  backdrop-filter: blur(108.94999694824219px);
+}
+
+.toast img {
+  /* 图标样式 */
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
 }
 
 .toast-content {
@@ -52,10 +63,24 @@ export default {
 
 .toast-success {
   /* 成功消息样式 */
+  color: #8CB4BD;
+  font-family: Avenir;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: capitalize;
 }
 
 .toast-error {
   /* 错误消息样式 */
+  color: #F44653;
+  font-family: Avenir;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: capitalize;
 }
 
 /* 其他样式 */
