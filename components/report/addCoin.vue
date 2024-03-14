@@ -2,44 +2,23 @@
   <div class="monitor-wrapper-bg">
     <div class="monitor-wrapper">
       <div class="monitor-header">
-        <p class="text">添加监控信号</p>
+        <p class="text">添加到自选</p>
         <img class="header-close-btn" @click.stop="close()" src="@/assets/imgs/close.svg">
       </div>
       <div class="search-section">
-        <input type="text" v-model="searchQuery" placeholder="搜索监控项目..." class="search-input" >
+        <input type="text" v-model="searchQuery" placeholder="搜索加密货币..." class="search-input" >
       </div>
       <main class="content">
-<!--        loading-->
+        <!--        loading-->
         <div class="center-box loading-box" v-if="loading">
           <img src="@/assets/imgs/ZKZg.gif" alt="">
         </div>
         <div class="monitor-search-title" v-if="!loading && searchQuery">搜索到的结果</div>
         <div class="center-box empty-box" v-if="!loading && !monitors.length">
-            <img src="@/assets/imgs/empty.svg" alt="">
-            <span>未发现匹配结果</span>
+          <img src="@/assets/imgs/empty.svg" alt="">
+          <span>未发现匹配结果</span>
         </div>
-        <template v-if="!searchQuery && !loading">
-          <!-- 监控卡片列表 -->
-          <div class="monitor-title">🔥 即将开始的 X Space</div>
-          <div class="monitoring-cards" v-if="unstartMonitors.length">
-            <mid-monitor-card
-                v-for="monitor in unstartMonitors"
-                :key="monitor.id"
-                :card="monitor"
-                @select="select(monitor)"
-            />
-          </div>
-          <div class="monitor-title">🔥 历史精华 X Space</div>
-          <div class="monitoring-cards" v-if="finishMonitors.length">
-            <mid-monitor-card
-                v-for="monitor in finishMonitors"
-                :key="monitor.id"
-                :card="monitor"
-                @select="select(monitor)"
-            />
-          </div>
-        </template>
-        <template v-if="searchQuery && !loading">
+        <template v-if="searchQuery && !loading && monitors.length">
           <div class="monitoring-cards" v-if="unstartMonitors.length">
             <mid-monitor-card
                 v-for="monitor in unstartMonitors"
@@ -72,6 +51,7 @@ import MidMonitorCard from "~/components/monitor/MidMonitorCard.vue";
 import SmallMonitorCard from "~/components/monitor/smallMonitorCard.vue";
 let inputlock =  false;
 export default {
+  name: "addCoin",
   components: {
     SmallMonitorCard,
     MidMonitorCard
@@ -267,8 +247,6 @@ export default {
     text-transform: uppercase;
     color: #CEB864;
   }
-
-
 
   .header-close-btn {
     cursor: pointer;

@@ -67,7 +67,7 @@ export default {
       switch(tab) {
         case 'ALL': return '';
         case 'FINISHED': return 3; // 根据你的状态定义调整
-        case 'UNFINISHED': return 2; // 根据你的状态定义调整
+        case 'UNFINISHED': return 1; // 根据你的状态定义调整
         default: return 0;
       }
     },

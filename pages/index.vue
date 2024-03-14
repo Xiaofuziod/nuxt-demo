@@ -99,9 +99,13 @@
 
     </div>
     <ball-bg2/>
+<!--    <add-coin/>-->
+<!--    <add-monitoring/>-->
   </div>
 </template>
 <script setup lang="ts">
+import AddCoin from "~/components/report/addCoin.vue";
+import AddMonitoring from "~/components/monitor/addMonitoring.vue";
 </script>
 <style lang="less" scoped>
 .home-wrapper {

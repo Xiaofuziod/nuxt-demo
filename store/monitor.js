@@ -1,7 +1,63 @@
 import * as monitorApi from "~/common/monitoring";
 
 export const state = () => ({
-    monitorList: [],
+    // monitorList: [],
+    monitorList: [
+        {
+            "id": "1",
+            "logo": "",
+            "author": "The Mental Reboot",
+            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
+            "time": "2024-03-05 20:00:00",
+            "status": 1,
+            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
+        },
+        {
+            "id": "2",
+            "logo": "",
+            "author": "The1 Mental Reboot",
+            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
+            "time": "2024-03-05 20:00:00",
+            "status": 1,
+            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
+        },
+        {
+            "id": "3",
+            "logo": "",
+            "author": "The1 Mental Reboot",
+            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
+            "time": "2024-03-05 20:00:00",
+            "status": 1,
+            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
+        },
+        {
+            "id": "12",
+            "logo": "",
+            "author": "The Mental Reboot",
+            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
+            "time": "2024-03-05 20:00:00",
+            "status": 3,
+            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
+        },
+        {
+            "id": "121",
+            "logo": "",
+            "author": "The Mental Reboot",
+            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
+            "time": "2024-03-05 20:00:00",
+            "status": 3,
+            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
+        },
+        {
+            "id": "122",
+            "logo": "",
+            "author": "The Mental Reboot",
+            "title": "Let’s talk $BTC Market Psychology 🧠 Brainstorming 🧠",
+            "time": "2024-03-05 20:00:00",
+            "status": 3,
+            "link": "https://twitter.com/i/spaces/1rmxPMbaVRdKN"
+        }
+    ],
     userMonitorList: [],
     monitorDetail: null,
     monitorSummary: null,
@@ -33,7 +89,6 @@ export const mutations = {
 export const actions = {
     async fetchMonitorList({commit}, searchName = '') {
         try {
-            this._vm.$loading.start();
             const res = await this.$axios.get(`${monitorApi.getMonitorList}?searchName=${searchName}`);
             if (res && res.data && res.data.ok) {
                 commit('setMonitorList', res.data.data);
@@ -41,13 +96,12 @@ export const actions = {
         } catch (e) {
             console.error('fetchMonitorList error:', e);
         } finally {
-            this._vm.$loading.finish();
         }
     },
     async fetchUserMonitorList({commit}, payload) {
         try {
             this._vm.$loading.start();
-            const {page, size, status} = {page: 2, size: 4, status: '', ...(payload||{})}
+            const {page, size, status} = {page: 1, size: 20, status: '', ...(payload||{})}
             const res = await this.$axios.get(`${monitorApi.getUserMonitoringList}?page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
                 commit('setUserMonitorList', res.data.data.records);
