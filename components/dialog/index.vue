@@ -3,6 +3,7 @@
     <div class="modal-mask" v-if="visible">
       <div class="modal-wrapper">
         <div class="modal-container" :style="{width: width}">
+          <img class="close-img" @click="closeModal" src="@/assets/imgs/login/close.svg" alt="">
           <slot name="header"></slot>
           <div class="modal-center">
             <slot name="body">
@@ -59,15 +60,27 @@ export default {
 
 .modal-container {
   /* 弹窗内容样式 */
-  background-color: #FFFFFF;
-  border-radius: 31px;
+  border-radius: 32px;
+  background: rgba(38, 64, 64, 0.30);
+  backdrop-filter: blur(100px);
   width: 800px;
   max-height: 80vh;
   margin: 100px auto;
   box-sizing: inherit;
-  padding: 30px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
+  position: relative;
+
+  .close-img {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    z-index: 2;
+  }
 }
 
 .modal-center {

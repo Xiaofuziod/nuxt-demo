@@ -1,13 +1,12 @@
 <template>
-  <Dialog ref="modal" width="500px">
+  <Dialog ref="modal" width="422px">
     <template #header>
       <div class="header-box">
         <div class="login-title" v-if="step === 1">
-          <span @click="type = 'login'">登录</span> | <span @click="type = 'register'">注册</span>
+          <span :class="{'active': type === 'login' }" @click="type = 'login'">登录</span>
+          <span :class="{'active': type === 'register'}" @click="type = 'register'">注册</span>
         </div>
         <div style="cursor: pointer" v-else @click="stepBack">返回</div>
-
-        <div class="close-btn" @click="hide">关闭</div>
       </div>
     </template>
     <template #body>
@@ -15,41 +14,59 @@
         <!--登录/注册-->
         <div class="login-content" v-if="step === 1">
           <div class="input-label">电子邮箱地址</div>
-          <input class="login-input" v-model="email" type="email">
-          <div class="input-label">密码 <span @click="step = 31">忘记密码</span></div>
-          <input class="login-input" v-model="password" type="password">
+          <input class="login-input" v-model="email" placeholder="输入你的电子邮箱地址" type="email">
+          <div class="input-label">密码 <span @click="step = 31">忘记密码?</span></div>
+          <div class="login-input-box">
+            <input class="login-input" placeholder="输入大于6位字符的密码"
+                   v-model="password" :type="isPassword  ? 'password' : 'text'">
+            <img src="@/assets/imgs/login/paw.svg" alt="" @click="isPassword = !isPassword">
+          </div>
           <div class="login-btn" @click="handleClick">{{ type === 'login' ? "登录" : "创建一个账户" }}</div>
-          <div style="text-align: center">或者</div>
-          <div class="other-box" @click="loginWithGoogle">Login with Google</div>
-          <div class="other-box" @click="loginWithTwitter">Login with twitter</div>
+          <div class="login-line">
+            <div class="login-line-border"></div>
+            <div class="login-line-text">or</div>
+            <div class="login-line-border"></div>
+          </div>
+          <div class="other-box" @click="loginWithGoogle">
+            <img src="@/assets/imgs/login/Google.svg" alt="">
+            使用 Google 授权
+          </div>
+          <div class="other-box" @click="loginWithTwitter">
+            <img src="@/assets/imgs/login/X2.svg" alt="">
+            使用 X 授权
+          </div>
         </div>
 
         <!--注册-->
         <div class="login-content" v-if="step === 21">
-          <div style="text-align: center">验证您的电子邮箱</div>
-          <div style="text-align: center">我们已向 <span>{{ email }}</span> 发送了一封电子邮件，您可以输入电子邮件中的验证码完成注册
+          <div class="login-content-title">验证您的电子邮箱</div>
+          <div class="login-content-desc">我们已向 <span>{{ email }}</span> 发送了一封电子邮件，您可以输入电子邮件中的验证码完成注册
           </div>
-          <div>输入验证码</div>
+          <div class="login-content-tips">输入验证码</div>
           <VerificationCodeInput @validate="validateInputSuccess"/>
-          <div style="color: red;text-align: center">验证码错误，请重新输入</div>
+          <!--          <div style="color: red;text-align: center">验证码错误，请重新输入</div>-->
           <div class="login-btn" @click="sendEmail(4)">重发电子邮件</div>
         </div>
 
         <!--修改密码输入电子邮箱-->
         <div class="login-content" v-if="step === 31">
-          <div style="text-align: center">输入电子邮箱</div>
-          <div style="text-align: center">输入电子邮箱，您将收到用于重置密码的验证码</div>
-          <div>输入电子邮箱</div>
+          <div class="login-content-title">输入电子邮箱</div>
+          <div class="login-content-desc">输入电子邮箱，您将收到用于重置密码的验证码</div>
+          <div class="input-label">输入电子邮箱</div>
           <input class="login-input" v-model="email" type="email">
           <div class="login-btn" @click="sendEmail(2)">下一步</div>
         </div>
 
         <!--修改密码-->
         <div class="login-content" v-if="step === 32">
-          <div>输入新密码</div>
-          <div>密码</div>
-          <input v-model="password" class="login-input" type="password">
-          <div>输入验证码</div>
+          <div class="login-content-title">输入新密码</div>
+          <div class="input-label">密码</div>
+          <div class="login-input-box">
+            <input class="login-input" placeholder="输入大于6位字符的密码"
+                   v-model="password" :type="isPassword  ? 'password' : 'text'">
+            <img src="@/assets/imgs/login/paw.svg" alt="" @click="isPassword = !isPassword">
+          </div>
+          <div class="login-content-tips">输入验证码</div>
           <VerificationCodeInput @validate="validateInputSuccess"/>
           <!--          <div style="color: red;text-align: center">验证码错误，请重新输入</div>-->
           <div class="login-btn" @click="sendEmail(2)">重发电子邮件</div>
@@ -75,8 +92,9 @@ export default {
       user: 'ta',
       email: "",
       password: "",
+      isPassword: true,
       type: 'login', // login, register
-      step: 1, // 1,  登录/注册   21, 注册验证码输入  31, 忘记密码 - 输入电子邮箱  32 忘记密码 - 输入新密码
+      step: 21, // 1,  登录/注册   21, 注册验证码输入  31, 忘记密码 - 输入电子邮箱  32 忘记密码 - 输入新密码
     }
   },
   mounted() {
@@ -168,52 +186,175 @@ export default {
 .login-content {
   color: #000000;
 
+  .login-content-title {
+    color: #FFF;
+    font-family: Avenir;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    text-transform: capitalize;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .login-content-desc {
+    color: #FFF;
+    text-align: center;
+    font-family: Avenir;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+  }
+
+  .login-content-tips {
+    color: #CEB864;
+    text-align: center;
+    font-family: Avenir;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+  }
+
+  .login-line {
+    height: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+
+    .login-line-border {
+      width: 100%;
+      height: 1px;
+      background: rgba(140, 180, 189, 0.12);
+    }
+
+    .login-line-text {
+      color: #8CB4BD;
+      font-family: Avenir;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      padding: 0 24px;
+    }
+  }
+
   .input-label {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+    color: #FFF;
+    font-family: Avenir;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+    margin-bottom: 7px;
+
     span {
       cursor: pointer;
+      color: #5D7B86;
+      font-family: Avenir;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: capitalize;
+    }
+  }
+
+  .login-input-box {
+    position: relative;
+
+    img {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      position: absolute;
+      right: 16px;
+      top: 14px;
     }
   }
 
   .login-input {
     width: 100%;
-    height: 40px;
+    height: 47px;
     margin-bottom: 20px;
-    font-size: 18px;
+    border-radius: 8px;
+    border: 0.4px solid rgba(140, 180, 189, 0.30);
+    color: #5D7B86;
+    font-family: Avenir;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    outline: none;
+    background-color: transparent;
   }
 
   .login-btn {
     width: 100%;
     height: 50px;
-    margin-bottom: 20px;
-    background: #000;
-    color: #fff;
+    margin-top: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border-radius: 8px;
+    background: var(--ceb-864, #CEB864);
+    color: #000;
+    font-family: Avenir;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    text-transform: capitalize;
   }
 
   .other-box {
     width: 100%;
-    height: 50px;
-    margin-top: 20px;
+    height: 52px;
+    margin-top: 16px;
     border: 1px solid #000;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid rgba(140, 180, 189, 0.50);
+
+    color: #8CB4BD;
+    font-family: Avenir;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    text-transform: capitalize;
+
+    img {
+      width: 28px;
+      height: 28px;
+      margin-right: 12px;
+    }
   }
 
 }
 
 .header-box {
-  padding: 10px;
   font-size: 20px;
+  padding-bottom: 24px;
   font-weight: bold;
   color: #333;
   position: relative;
@@ -222,11 +363,22 @@ export default {
   .login-title {
     width: 100%;
     text-align: center;
+    color: rgba(255, 255, 255, 0.40);
+    font-family: Avenir;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    text-transform: capitalize;
 
     span {
       cursor: pointer;
       display: inline-block;
-      padding: 0 10px;
+      padding: 0 24px;
+    }
+
+    .active {
+      color: #CEB864;
     }
   }
 
