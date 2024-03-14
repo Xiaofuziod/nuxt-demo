@@ -69,7 +69,7 @@ export default {
       this.userLoggedIn = true
     });
 
-    this.showLogin()
+    // this.showLogin()
   },
   methods: {
     goHome() {
