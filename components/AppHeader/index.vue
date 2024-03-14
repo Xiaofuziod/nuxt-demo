@@ -68,7 +68,7 @@ export default {
     this.$bus.$on('LOGON_SUCCESS', () => {
       this.userLoggedIn = true
     });
-    this.showLogin()
+    // this.showLogin()
   },
   methods: {
     goHome() {
