@@ -1,68 +1,121 @@
 <template>
   <div class="chat-box">
-
-    <div class="chat-top">
+    <div class="chat-top chat-padding">
       <div class="chat-top-left">
         <div class="chat-top-image"></div>
         <div class="chat-top-title">
           Received 🫡 Let me think about ...
         </div>
       </div>
-      <div class="chat-top-icon">
+      <div class="chat-top-icon" v-if="false">
         <img class="img1" src="@/static/images/chat/s1.svg" alt="">
         <img class="img2" src="@/static/images/chat/s3.svg" alt="">
       </div>
     </div>
 
     <div class="chat-content" ref="messagesContainer">
-      <div class="focus-box">
-        <div class="focus">
-          <img src="@/static/images/chat/s2.svg" alt="">
-          AI focus
+      <div class="chat-padding">
+        <div class="focus-box">
+          <div class="focus-tip">
+            <btn>
+              <img src="@/static/images/chat/s2.svg" alt="">
+              AI focus
+            </btn>
+          </div>
+          <div class="focus-text">
+            If someone loves you,love them back unconditionally
+          </div>
         </div>
-        <div class="focus-text">
-          If someone loves you,love them back unconditionally
-        </div>
-      </div>
 
-      <div class="chat-card">
-        <div class="chat-card-title">
-          <img class="img1" src="@/static/images/chat/s4.svg" alt="">
-          Signal source
-        </div>
-        <div class="source-row">
-          <div class="source-item" v-for="item in 3">
-            <div class="source-item-item">
-              If someone loves you,love them ...
-            </div>
-            <div class="source-item-user">
-              <div class="source-item-user-pic"></div>
-              <div class="source-item-user-right">
-                <div class="source-item-user-right-nickname">Morgan
-                  <img class="img1" src="@/static/images/chat/dui.svg" alt="">
-                </div>
-                <div class="source-item-user-right-username">@lamdcinvestor</div>
+        <div class="chat-card">
+          <div class="chat-card-title">
+            <img class="img1" src="@/static/images/chat/s4.svg" alt="">
+            Signal source
+          </div>
+          <div class="source-row">
+            <div class="source-item" v-for="item in 3">
+              <div class="source-item-item">
+                If someone loves you,love them ...
               </div>
+              <div class="source-item-user">
+                <div class="source-item-user-pic"></div>
+                <div class="source-item-user-right">
+                  <div class="source-item-user-right-nickname">Morgan
+                    <img class="img1" src="@/static/images/chat/dui.svg" alt="">
+                  </div>
+                  <div class="source-item-user-right-username">@lamdcinvestor</div>
+                </div>
 
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-card-title">
+            <img class="img1" src="@/static/images/chat/ai.svg" alt="">
+            You can ask
+          </div>
+
+          <div class="ask-list">
+            <div class="ask-item" v-for="item in 3">
+              The factors that led to the halving of Bitcoin？
+              <img class="img1" src="@/static/images/chat/send.svg" alt="">
             </div>
           </div>
         </div>
 
-        <div class="chat-card-title">
-          <img class="img1" src="@/static/images/chat/ai.svg" alt="">
-          You can ask
+        <div class="btn-box">
+
         </div>
 
-        <div class="ask-list">
-          <div class="ask-item" v-for="item in 3">
-            The factors that led to the halving of Bitcoin？
-            <img class="img1" src="@/static/images/chat/send.svg" alt="">
+        <div v-for="(item,index) in messageList" :key="index">
+          <div class="text-message-box1" v-if="item.source === 'USER' ">
+            <div class="text-message">
+              {{ item.text }}
+            </div>
+          </div>
+          <div class="text-message-box2" v-else>
+            <div class="text-message-v2">
+              <Typewriter @writerOver="writerOver" :text="item.text"/>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="text-message" v-for="(item,index) in messageList" :key="index">
-        {{ item.message }}
+        <div class="text-message-v2">
+          接下来,让我们先完成第一项任务
+          <div class="start-btn-box">
+            <div class="start-btn">
+              <btn>
+                START
+              </btn>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="text-message-v2" style="position: relative">
+          <div class="task-tip">
+            <btn>
+              <img src="@/assets/imgs/chat/task.svg" alt="">
+              任务一
+            </btn>
+          </div>
+          <div class="task-title">添加自选加密货币</div>
+          <div  class="task-desc">添加自选后，Taurion会为你的自选每日生成市场焦点，协助你减少市场噪音</div>
+          <div class="start-btn-box">
+            <div class="start-btn">
+              <btn type="2">
+                Search
+              </btn>
+            </div>
+
+            <div class="start-btn">
+              <btn>
+                START
+              </btn>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -75,13 +128,28 @@
 </template>
 
 <script>
+import Typewriter from "@/components/Typewriter.vue";
+import btn from "./components/btn.vue";
+
 export default {
+  components: {
+    Typewriter,
+    btn
+  },
   data() {
     return {
       message: '',
       messageList: [
-        {message: 'The factors that led to the halving of Bitcoin？'}
-      ]
+        // {text: 'The factors that led to the halving of Bitcoin？', source: "USER"}
+      ],
+      welcomeList: [
+        {text: '欢迎来到Taurion！', source: "T-brain"},
+        {text: '我是T-brain,你的AI金融助理.', source: "T-brain"},
+        {text: "我有强大的大脑,可以帮你汇总海量信息和解答你任何金融疑惑.", source: "T-brain"},
+        {text: "我很荣幸可以成为你的“金融副驾驶.", source: "T-brain"},
+        {text: '你可以问我任何关于金融的问题,我会尽力帮你解答.', source: "T-brain"},
+      ],
+      welcomeIndex: 0,
     }
   },
   mounted() {
@@ -91,6 +159,8 @@ export default {
     this.$socket.on('connect', () => {
       console.log('Connected to socket server');
     });
+    //  第一次进入页面，发送欢迎语
+    this.messageList.push(this.welcomeList[this.welcomeIndex])
   },
   methods: {
     sendMessage() {
@@ -102,8 +172,17 @@ export default {
       });
     },
     getMessage(data) {
-      console.log('收到',data)
+      console.log('收到', data)
       this.messageList.push({message: '收到：' + data.data.message})
+      this.$nextTick(() => {
+        this.scrollToBottom();
+      });
+    },
+    writerOver() {
+      this.welcomeIndex++
+      if (this.welcomeIndex < this.welcomeList.length) {
+        this.messageList.push(this.welcomeList[this.welcomeIndex])
+      }
       this.$nextTick(() => {
         this.scrollToBottom();
       });
@@ -125,11 +204,58 @@ export default {
   width: 515px;
   background-color: rgba(38, 64, 64, 0.3);
   box-sizing: border-box;
-  padding: 20px 24px 20px;
+  padding: 20px 0 20px;
   border-radius: 0 31px 0 0;
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  .task-title {
+    font-family: Avenir;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 16px;
+    margin-top: 10px;
+    color: rgba(206, 184, 100, 1);
+  }
+
+  .task-desc {
+    font-family: Avenir;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 15px;
+    text-align: left;
+    margin-top: 3px;
+  }
+
+  .start-btn-box {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    .start-btn {
+      width: 69px;
+      height: 25px;
+      margin-top: 15px;
+      cursor: pointer;
+      float: right;
+      margin-left: 15px;
+    }
+  }
+
+  .task-tip{
+    width: 93px;
+    height: 25px;
+    position: absolute;
+    top: -12px;
+    left: -1px;
+  }
+
+
+
+  .chat-padding {
+    padding: 0 24px;
+  }
 
 
   .input-box {
@@ -142,7 +268,8 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 9px;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-left: 24px;
 
     img {
       width: 38px;
@@ -193,12 +320,36 @@ export default {
       }
     }
 
+    .text-message-box2 {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .text-message-box1 {
+      display: flex;
+      justify-content: flex-end;
+    }
+
     .text-message {
       box-sizing: border-box;
       padding: 16px 20px;
       border-radius: 16px;
       background: rgba(140, 180, 189, 0.1);
       color: rgba(255, 255, 255, 1);
+      font-family: Avenir;
+      font-weight: 500;
+      font-size: 13px;
+      text-transform: capitalize;
+      margin-top: 14px;
+      display: table;
+    }
+
+    .text-message-v2 {
+      box-sizing: border-box;
+      padding: 16px 20px;
+      border-radius: 16px;
+      color: rgba(255, 255, 255, 1);
+      border: 2px solid rgba(255, 255, 255, 0.1);
       font-family: Avenir;
       font-weight: 500;
       font-size: 13px;
@@ -321,58 +472,14 @@ export default {
         font-size: 13px;
         text-transform: capitalize;
       }
-
-      .focus {
-        width: 93px;
-        height: 25px;
-        color: rgba(25, 40, 54, 1);
-        font-size: 12px;
-        line-height: 120.000005%;
-        background: rgba(206, 184, 100, 1);
-        backdrop-filter: blur(108px);
-        position: absolute;
-        top: -12px;
-        display: flex;
-        align-items: center;
-        box-sizing: border-box;
-        text-transform: uppercase;
-        overflow: hidden;
-        font-family: Gruppe F;
-
-        &::after {
-          content: "";
-          display: block;
-          width: 10px;
-          height: 10px;
-          background-color: black;
-          position: absolute;
-          top: -6px;
-          left: -6px;
-          transform: rotate(-45deg);
-        }
-
-        &::before {
-          content: "";
-          display: block;
-          width: 10px;
-          height: 10px;
-          background-color: black;
-          position: absolute;
-          right: -6px;
-          bottom: -6px;
-          transform: rotate(-45deg);
-        }
-
-
-        img {
-          width: 16px;
-          height: 16px;
-          margin-left: 6px;
-          margin-right: 2px;
-        }
-      }
     }
+  }
 
+  .focus-tip {
+    width: 93px;
+    height: 25px;
+    position: absolute;
+    top: -12px;
   }
 
   .chat-top {
@@ -380,6 +487,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-bottom: 18px;
 
     .chat-top-left {
       display: flex;
