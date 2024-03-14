@@ -90,11 +90,11 @@ export default {
   data() {
     return {
       user: 'ta',
-      email: "",
-      password: "",
+      email: "flynn.taurion@gmail.com",
+      password: "123456",
       isPassword: true,
       type: 'login', // login, register
-      step: 21, // 1,  登录/注册   21, 注册验证码输入  31, 忘记密码 - 输入电子邮箱  32 忘记密码 - 输入新密码
+      step: 1, // 1,  登录/注册   21, 注册验证码输入  31, 忘记密码 - 输入电子邮箱  32 忘记密码 - 输入新密码
     }
   },
   mounted() {
@@ -297,7 +297,6 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    text-transform: capitalize;
     box-sizing: border-box;
     padding: 14px 16px;
     outline: none;
