@@ -8,7 +8,8 @@
         <!--第一步-->
         <div class="step-title">
           <div class="step-title-icon">
-            <img src="@/assets/imgs/chat/finish.svg" alt="">
+            <img class="img-rotate" v-if="welcomeIndex < 5" src="@/assets/imgs/chat/step-loading.svg" alt="">
+            <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
           </div>
           <div class="step-title-text">
             Welcome {{ welcomeIndex }}
@@ -19,7 +20,8 @@
           <div class="step-line"/>
           <div class="step-title">
             <div class="step-title-icon">
-              <img src="@/assets/imgs/chat/finish.svg" alt="">
+              <img class="img-rotate" v-if="welcomeIndex < 9" src="@/assets/imgs/chat/step-loading.svg" alt="">
+              <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
             </div>
             <div class="step-title-text">
               自选加密货币
@@ -45,7 +47,8 @@
         <template v-if="welcomeIndex > 9">
           <div class="step-title">
             <div class="step-title-icon">
-              <img src="@/assets/imgs/chat/finish.svg" alt="">
+              <img class="img-rotate" v-if="welcomeIndex < 12" src="@/assets/imgs/chat/step-loading.svg" alt="">
+              <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
             </div>
             <div class="step-title-text">
               监控信号源
@@ -68,7 +71,8 @@
         <!--第四步-->
         <div class="step-title" v-if="welcomeIndex > 12">
           <div class="step-title-icon">
-            <img src="@/assets/imgs/chat/finish.svg" alt="">
+            <img class="img-rotate" v-if="welcomeIndex < 14" src="@/assets/imgs/chat/step-loading.svg" alt="">
+            <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
           </div>
           <div class="step-title-text">
             开始Taurion之旅吧～
@@ -129,6 +133,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.img-rotate {
+  animation: rotate 1s linear infinite;
+}
 
 
 .add-monitoring-cards {
