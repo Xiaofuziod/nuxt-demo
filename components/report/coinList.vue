@@ -31,7 +31,9 @@
         <div class="coin-change" :class="'negative'">
           {{ coin.quotes.percentChange7d.toFixed(2) }}%
         </div>
-        <div class="option" @click="$emit('select', coin)">
+        <div class="option"
+             :class="`${selectIdList.includes(coin.id) ? 'disable' : ''}`"
+             @click="select(coin)">
           <img src="@/assets/imgs/addPlus.svg" alt="">
         </div>
       </div>
@@ -46,17 +48,30 @@ export default {
   props: {
     listHeight: {
 
+    },
+    selectIds: {
+      type: Array
     }
   },
   computed: {
     coinList() {
       return this.$store.state.coin.coinList
     },
+    selectIdList() {
+      return [...this.selectIds, ...this.$store.state.coin.userCoinList.map(i => i.coinId)]
+    }
   },
   data() {
     return {
     };
   },
+  methods: {
+    select(coin) {
+      console.log(this.selectIdList, coin.id)
+      if(this.selectIdList.includes(coin.id) ) return
+      this.$emit('select', coin)
+    }
+  }
 };
 </script>
 
@@ -176,6 +191,11 @@ export default {
         background: url(@/assets/imgs/nagative.svg);
       }
     }}
-  .option { width: 50px;cursor: pointer}
+  .option { width: 50px;cursor: pointer;
+    &.disable {
+      opacity: 0.3;
+      cursor: auto;
+    }
+  }
 }
 </style>

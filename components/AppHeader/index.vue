@@ -179,7 +179,7 @@ nav {
       font-size: 14px;
 
       &.active {
-        color: rgba(140, 180, 189, 1);
+        color: rgba(206, 184, 100, 1);
         font-family: aifontf;
         font-size: 16px;
         font-weight: 800;

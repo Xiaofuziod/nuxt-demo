@@ -20,7 +20,12 @@
   scrollbar-width: thin; /* 设置滚动条宽度为细 */
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent; /* 设置滚动条颜色为半透明 */
 }
-
+.ellipsis {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .clearfix:after {
   content: " ";
   width: 0;

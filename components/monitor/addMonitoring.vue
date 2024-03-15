@@ -26,6 +26,7 @@
                 v-for="monitor in unstartMonitors"
                 :key="monitor.id"
                 :card="monitor"
+                :disable="selectIdList.includes(monitor.id)"
                 @select="select(monitor)"
             />
           </div>
@@ -35,6 +36,7 @@
                 v-for="monitor in finishMonitors"
                 :key="monitor.id"
                 :card="monitor"
+                :disable="selectIdList.includes(monitor.id)"
                 @select="select(monitor)"
             />
           </div>
@@ -45,6 +47,7 @@
                 v-for="monitor in unstartMonitors"
                 :key="monitor.id"
                 :card="monitor"
+                :disable="selectIdList.includes(monitor.id)"
                 @select="select(monitor)"
             />
           </div>
@@ -93,6 +96,9 @@ export default {
     finishMonitors() {
       return this.monitors.filter(item => item.status === 3)
     },
+    selectIdList() {
+      return this.selectMonitors.map(item => item.id)
+    }
   },
   watch: {
     searchQuery() {
@@ -111,12 +117,13 @@ export default {
         this.loading = false
       });
     },
-    select(id){
+    select(item){
       if(this.selectMonitors.length > 4) {
         this.$toast.error('同时间最多可添加5个')
       } else {
-        this.selectMonitors = [...this.selectMonitors, id]
-
+        const isDuplicate = this.selectMonitors.some((i) => i.id === item.id);
+        if (isDuplicate) return
+        this.selectMonitors = [...this.selectMonitors, item]
       }
     },
     remove(id) {

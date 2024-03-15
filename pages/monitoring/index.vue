@@ -3,11 +3,11 @@
     <aside class="sidebar">
       <section class="profile">
         <h2 class="h2-title">ROBOT</h2>
-        <div class="user-box">
-          <img src="~/assets/imgs/user.svg" alt="Profile"/>
+        <div class="user-box" >
+          <img v-if="user.account" :src="user.avatar" alt="Profile"/>
           <div class="name-info">
-            <h3 class="name">Saywteri24735haw...</h3>
-            <p class="info">Wtweteri247</p>
+            <h3 class="name ellipsis">{{user.account}}</h3>
+            <p class="info">{{user.nickname}}</p>
           </div>
         </div>
       </section>
@@ -47,6 +47,9 @@ export default {
     userMonitors() {
       return this.$store.state.monitor.userMonitorList
     },
+    user() {
+      return this.$store.state.user.userInfo
+    }
   },
   methods: {
     async fetchMonitors() {
@@ -101,7 +104,7 @@ export default {
     .h2-title {
       height: 24px;
       font-family: aifontf;
-      color: rgba(140, 180, 189, 1);
+      color: rgba(206, 184, 100, 1);
       font-size: 20px;
       font-weight: bold;
       text-transform: capitalize;
@@ -127,12 +130,16 @@ export default {
             font-family: Avenir;
             font-size: 14px;
             color: #fff;
+            width: 125px;
           }
 
           .info {
-            color: rgba(140, 180, 189, 1);
+            height: 14px;
+            color: rgba(206, 184, 100, 1);
             font-family: Avenir-Roman;
             font-size: 10px;
+            text-transform: capitalize;
+            margin-top: 2px;
           }
         }
 

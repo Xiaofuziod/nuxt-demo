@@ -3,7 +3,7 @@
     <span class="ai-font">ACCOUNT  </span>
     <span class="split-icon">/</span>
     <img src="~/assets/imgs/user.svg" alt="">
-    <span>user</span>
+    <span>{{user.account}}</span>
   </div>
 </template>
 <script>
@@ -22,7 +22,12 @@ export default {
         return "user";
       },
     },
-  }
+  },
+  computed:{
+    user() {
+      return this.$store.state.user.userInfo
+    }
+  },
 }
 </script>
 <style scoped lang="less">
