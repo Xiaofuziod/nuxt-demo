@@ -136,7 +136,7 @@ export default {
       this.$toast.success('登录成功')
       this.hide()
       //   第一次 去欢迎页面
-      this.$router.push('/welcome')
+      // this.$router.push('/welcome')
       // if (this.$store.state.isFirstLogin) {
       //   this.$router.push('/welcome')
       // } else {
