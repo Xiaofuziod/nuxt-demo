@@ -7,7 +7,9 @@
       <p class="timestamp">{{ card?.time }}</p>
 <!--      <p class="other">{{ card?.status }}</p>-->
     </div>
-    <img class="option-img" @click="$emit('select')" src="@/assets/imgs/addPlus.svg" alt="">
+    <img class="option-img"
+         :class="`${disable ? 'disable' :''}`"
+         @click="$emit('select')" src="@/assets/imgs/addPlus.svg" alt="">
   </div>
 </template>
 <script >
@@ -15,7 +17,7 @@ import bianPic from '@/assets/imgs/bian.png'
 export default {
   name: "MidMonitorCard",
   props: {
-    showAction: {
+    disable: {
       type: Boolean,
     },
     card: {
@@ -50,6 +52,10 @@ export default {
     top: 26px;
     right: 8px;
     cursor: pointer;
+    &.disable {
+      opacity: 0.3;
+      cursor: auto;
+    }
   }
 
 
