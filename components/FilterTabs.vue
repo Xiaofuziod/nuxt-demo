@@ -19,7 +19,7 @@ export default {
   props: {
     activeColor: {
       type: String,
-      default: 'rgba(140, 180, 189, 1)', // 这里是默认的颜色值
+      default: 'rgba(206, 184, 100, 1)', // 这里是默认的颜色值
     },
     value: {
       type: String,
@@ -66,7 +66,7 @@ export default {
       font-size: 16px;
       color: rgba(12, 26, 39, 1);
     }
-    --active-color: rgba(140, 180, 189, 1);
+    --active-color: rgba(206, 184, 100, 1);
 
 
     &.active {

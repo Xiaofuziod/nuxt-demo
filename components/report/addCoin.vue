@@ -21,6 +21,7 @@
         <template v-if="!loading && coinList.length">
           <coin-list
             @select="select"
+            :select-ids="selectcoinList.map(i => i.id)"
           />
         </template>
       </main>
@@ -83,12 +84,14 @@ export default {
         this.loading = false
       });
     },
-    select(id){
+    select(coin){
       if(this.selectcoinList.length > 4) {
         this.$toast.error('同时间最多可添加5个')
       } else {
-        this.selectcoinList = [...this.selectcoinList, id]
-
+        // 去重复
+        const isDuplicate = this.selectcoinList.some((item) => item.id === coin.id);
+        if (isDuplicate) return
+        this.selectcoinList = [...this.selectcoinList, coin];
       }
     },
     remove(id) {
