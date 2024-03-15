@@ -15,18 +15,18 @@
         </div>
         <div class="Account Selected">Selected{{ followList.length ? ` (${followList.length})` : '' }}
           <span style="cursor: pointer" @click="showDelete = !showDelete">{{ showDelete ? "OK" : "Edit" }}</span>
+
         </div>
         <!--    自选币  -->
         <div class="Frame580">
-          <div class="item" v-for="item in followList" :key="item.id"
-               @click="handleClick(item)"
-          >
-            <div class="Rectangle">
-              <img :src="item.icon" alt="">
+          <div class="item" v-for="item in followList" :key="item.id" @click="handleClick(item)">
+            <div class="item-left">
+              <img class="Rectangle" :src="item.icon" alt="">
+              <div class="Bitcoin ellipsis">{{ item.name }}</div>
+              <div class="BTC">{{ item.symbol }}</div>
             </div>
-            <div class="Bitcoin ellipsis">{{ item.name }}</div>
-            <div class="BTC">{{ item.symbol }}</div>
-            <button v-if="showDelete" style="margin-left: 10px" @click="deleteFollow(item)">X</button>
+            <img class="delete-icon" v-if="showDelete" src="@/assets/imgs/report/delete.svg" @click="deleteFollow(item)"
+                 alt="">
           </div>
         </div>
         <div class="AddaNewCoin" @click="showSelect">+ Add a New Coin</div>
@@ -48,11 +48,12 @@
             <template v-if="coinId">
               <my-echarts ref="echart"></my-echarts>
             </template>
-            <div class="focus-list">
-              <div v-for="item in list" :key="item.id">
-                <AIFocus :coin-data="item"/>
-              </div>
-            </div>
+
+            <!--            <div class="focus-list" v-if="list.length > 0">-->
+            <!--              <div v-for="item in list" :key="item.id">-->
+            <!--                <AIFocus :coin-data="item"/>-->
+            <!--              </div>-->
+            <!--            </div>-->
           </list-container>
         </div>
       </div>
@@ -67,7 +68,7 @@
 import chatIndex from "~/components/chat/index.vue";
 import AIFocus from '~/components/aiFocus/index.vue'
 import ListContainer from '~/components/scrollView/index.vue'
-import {analysisCoin, deleteFollow, getFollowList} from "~/common/home";
+import {analysisCoin} from "~/common/home";
 import MyEcharts from "~/components/echarts/index.vue";
 import {parseTime} from "~/utils/date";
 import AddCoin from "~/components/report/addCoin.vue";
@@ -85,7 +86,7 @@ export default {
     return {
       showDelete: false,
       list: [],
-      coinId: ''
+      coinId: 10
     }
   },
   computed: {
@@ -99,6 +100,9 @@ export default {
   mounted() {
     this.loadData()
     this.$store.dispatch('coin/fetchUserCoinList')
+    this.$nextTick(() => {
+      this.$refs.echart.reload(10)
+    })
   },
   methods: {
     handleClick(item) {
@@ -151,34 +155,42 @@ export default {
   max-height: calc(100% - 220px);
   overflow-y: auto;
 
+  .delete-icon {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+
   .item {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
     cursor: pointer;
+    justify-content: space-between;
+  }
+
+  .item-left {
+    width: 154px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   .Rectangle {
+    display: block;
     width: 32px;
     height: 32px;
-    background-color: green;
-    border-radius: 123.1px;
+    border-radius: 32px;
     overflow: hidden;
-
-    img {
-      display: block;
-      width: 100%;
-    }
   }
 
   .Bitcoin {
-    width: 100px;
-    height: 20px;
+    flex: 1;
+    padding: 0 12px;
     color: rgba(255, 255, 255, 1);
     font-family: Avenir-Heavy;
     font-size: 15px;
     text-transform: capitalize;
-    margin: 0 12px 0;
   }
 
   .BTC {
@@ -245,7 +257,6 @@ export default {
       color: rgba(206, 184, 100, 1);
       font-family: aifontF;
       font-size: 20px;
-      line-height: 120.000005%;
       text-transform: uppercase;
 
     }

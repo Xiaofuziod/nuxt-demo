@@ -1,8 +1,10 @@
 <template>
-  <div class="card" :class="{'card-mini': size === 'mini'}">
+  <div class="card">
     <img class="card-img" :src="card?.logo || bianPic" alt="">
     <div class="card-header">
-      <h3 class="title1">{{ card?.name }}</h3>
+      <h3 class="title1">{{ card?.title }}</h3>
+      <h3 class="title2">{{ card?.author }}</h3>
+      <p class="timestamp">{{ card?.time }}</p>
     </div>
     <img class="option-img" @click="$emit('remove')" src="@/assets/imgs/close.svg" alt="">
   </div>
@@ -11,7 +13,7 @@
 import bianPic from '@/assets/imgs/bian.png'
 
 export default {
-  name: "SmallCoinCard",
+  name: "SmallMonitorCard",
   props: {
     showAction: {
       type: Boolean,
@@ -19,10 +21,6 @@ export default {
     card: {
       type: Object,
     },
-    size: {
-      type: String,
-      default: 'small'
-    }
   },
   data() {
     return {
@@ -30,92 +28,89 @@ export default {
       optionShow: false
     }
   },
-  methods: {}
+  methods: {
+    deleteMonitor(id) {
+      this.$store.dispatch('monitor/deleteUserMonitor', id);
+    }
+  }
 }
 </script>
 <style scoped lang="less">
 .card {
-  width: 131px;
-  height: 34px;
-  padding: 6px;
-  border-radius: 8px;
-  background: rgba(38, 64, 64, 0.2);
-  display: flex;
-  align-items: center;
-  margin-right: 8px;
-  margin-bottom: 8px;
-
-  .option-img {
-    cursor: pointer;
-  }
-
-  .card-img {
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
-
-  }
-
-  .card-header {
-    padding-left: 4px;
-    width: 68px;
-
-    .title1 {
-      color: #FFF;
-      font-family: Avenir;
-      font-size: 10px;
-      font-style: normal;
-      font-weight: 800;
-      height: 22px;
-      line-height: 22px;
-      width: 100%;
-      // 超出省略
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  }
-}
-
-.card-mini {
-  width: 132px;
-  height: 48px;
-  flex-shrink: 0;
+  width: 222px;
+  height: 42px;
+  padding: 8px;
   border-radius: 16px;
   border: 2px solid rgba(255, 255, 255, 0.10);
   background: rgba(38, 64, 64, 0.10);
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  .card-img {
-    width: 32px;
-    height: 32px;
-    border-radius: 32px;
-  }
+  margin-right: 8px;
+  margin-bottom: 8px;
+  position: relative;
 
   .option-img {
-    width: 12.75px;
-    height: 12.75px;
+    position: absolute;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    float: right;
+  }
+
+  .card-img {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
   }
 
   .card-header {
-    padding-left: 8px;
+    margin-left: 8px;
+    width: 138px;
+
     .title1 {
-      color: #FFF;
+      color: rgba(255, 255, 255, 0.60);
       font-family: Avenir;
-      font-size: 15px;
+      font-size: 6px;
       font-style: normal;
-      font-weight: 800;
+      font-weight: 400;
       line-height: normal;
       text-transform: capitalize;
-
       // 超出省略
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-  }
 
+    .title2 {
+      color: #FFF;
+      font-family: Avenir;
+      font-size: 8px;
+      font-style: normal;
+      font-weight: 800;
+      line-height: normal;
+      text-transform: capitalize;
+      margin: 1px 0;
+      // 超出省略
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .timestamp {
+      color: #8CB4BD;
+      font-family: Avenir;
+      font-size: 4px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: capitalize;
+    }
+
+    .other {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 10px;
+    }
+  }
 }
 </style>

@@ -36,21 +36,25 @@
 
           <!--        账户操作-->
           <div class="user-setting">
-            <div @click="changeNickname">修改昵称</div>
-            <div @click="logout">退出登录</div>
+            <div class="user-setting-content">
+              <div @click="changeNickname">修改昵称</div>
+              <div @click="logout">退出登录</div>
+            </div>
           </div>
         </div>
       </div>
       <login ref="loginRef"/>
+      <edit-username ref="editUsernameRef"/>
     </div>
   </header>
 </template>
 
 <script>
 import Login from "@/components/login/index.vue";
+import editUsername from "@/components/editUsername.vue";
 
 export default {
-  components: {Login},
+  components: {Login,editUsername},
   data() {
     return {
       userLoggedIn: true,
@@ -78,11 +82,10 @@ export default {
       this.$refs.loginRef.show()
     },
     changeNickname() {
-      this.showUserSetting = false
+      this.$refs.editUsernameRef.show()
     },
     logout() {
       this.$localStorage.removeItem('token')
-      this.showUserSetting = false
       this.userLoggedIn = false
       this.$router.replace('/')
     }
@@ -226,22 +229,33 @@ nav {
     position: absolute;
     top: 0;
     right: -20px;
-    padding-top: 60px;
-    width: 100px;
-
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
     z-index: 10;
+    padding-top: 60px;
     display: none;
 
-    div {
-      text-align: center;
-      color: #000;
-      line-height: 40px;
-      background: #fff;
-      cursor: pointer;
-      border-radius: 3px;
-      margin-top: 1px;
+    .user-setting-content {
+      background: rgba(38, 64, 64, 0.30);
+      backdrop-filter: blur(100px);
+      padding: 20px;
+      border-radius: 16px;
+      div {
+        color: #FFF;
+        font-family: Avenir;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-transform: capitalize;
+
+        &:first-child {
+          padding-bottom: 8px;
+          margin-bottom: 8px;
+          border-bottom: 1px solid rgba(140, 180, 189, 0.12);
+        }
+      }
     }
+
   }
 }
 

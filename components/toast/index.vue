@@ -38,7 +38,7 @@ export default {
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 16px 20px;
+  padding: 16px 48px;
   z-index: 1000;
   display: flex;
   min-width: 180px;
@@ -61,7 +61,7 @@ export default {
   max-width: 300px;
 }
 
-.toast-success {
+.toast-success, .toast-info {
   /* 成功消息样式 */
   color: #8CB4BD;
   font-family: Avenir;

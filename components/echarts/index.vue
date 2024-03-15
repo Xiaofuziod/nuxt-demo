@@ -1,5 +1,6 @@
 <template>
   <div id="echarts">
+<!--    <div>$1873922</div>-->
     <div class="select-row">
       <div v-for="(item,index) in selectList" :key="index"
            :class="{'active': activeKey === item.value}" @click="loadData(item)"
@@ -45,8 +46,8 @@ export default {
           value: 'all'
         }
       ],
-      activeKey: '1d',
-      coinId: 1
+      activeKey: '1m',
+      coinId: 10
     }
   },
   methods: {
@@ -66,6 +67,8 @@ export default {
         },
         grid: {
           right: "18%",
+          top:"5%",
+          left: "8%",
         },
         xAxis: {
           type: 'category',
@@ -110,18 +113,26 @@ export default {
         ]
       })
     },
-    loadData(val) {
-      this.activeKey =val && val.value
-      this.$axios.get(getCoinPrice, {params: {coinId: this.coinId, period: this.activeKey}}).then(res => {
-        this.xData = res.data.data.market.map(item => item.date)
-        this.yData = res.data.data.market.map(item => (item.price).toFixed(2))
+    async loadData(val) {
+      this.activeKey = val && val.value
+      this.xData = []
+      this.yData = []
+      try {
+        const res = await this.$axios.get(getCoinPrice, {params: {coinId: this.coinId, period: this.activeKey}})
+        const market = res.data.data.market
+        market.forEach(item => {
+          this.xData.push(item[0])
+          this.yData.push(item[1])
+        })
         this.echartsInit()
-      })
+      } catch (e) {
+        this.$toast.error('获取数据失败')
+      }
     },
-    reload (coinId) {
-      this.activeKey = '1d'
+    reload(coinId) {
       this.coinId = coinId
-      this.loadData()
+      console.log('reload')
+      this.loadData({value: '1m'})
     }
   }
 }

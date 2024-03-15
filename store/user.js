@@ -22,16 +22,6 @@ export const mutations = {
 };
 
 export const actions = {
-  // "1"登录 ,"2"修改密码 ,"4"注册
-  async sendEmail({commit}, {email, type}) {
-    try {
-      const res = await this.$axios.post(sendEmail, {account: email, type})
-      commit('setUser', res.data.data);
-      console.log(res)
-    } catch (e) {
-      this.$bus.$emit('LOGON_FAIL');
-    }
-  },
   async emailLogin({commit}, {account, password}) {
     try {
       const res = await this.$axios.post(userLogin, {account, passwd: password})
@@ -51,8 +41,13 @@ export const actions = {
   async googleLogin({commit}, data) {
     try {
       const res = await this.$axios.get(googleLogin, {params: {...data}})
-      commit('setUser', res.data.data);
-      await this.$router.replace('/')
+      if (res.data.code === 200) {
+        commit('setUser', res.data.data);
+        await this.$router.replace('/')
+      } else {
+        this.$bus.$emit('LOGON_FAIL');
+        this._vm.$toast.show({content: res.data.msg, type: 'error'})
+      }
     } catch (e) {
       this.$bus.$emit('LOGON_FAIL');
       console.log('googleLogin error: ', e)
@@ -61,8 +56,13 @@ export const actions = {
   async twitterLogin({commit}, data) {
     try {
       const res = await this.$axios.get(twitterLogin, {params: data})
-      commit('setUser', res.data.data);
-      await this.$router.replace('/')
+      if (res.data.code === 200) {
+        commit('setUser', res.data.data);
+        await this.$router.replace('/')
+      } else {
+        this.$bus.$emit('LOGON_FAIL');
+        this._vm.$toast.show({content: res.data.msg, type: 'error'})
+      }
     } catch (e) {
       this.$bus.$emit('LOGON_FAIL');
     }
@@ -70,7 +70,12 @@ export const actions = {
   async twitterRedirectUrl({commit}, data) {
     try {
       const res = await this.$axios.post(twitterRedirectUrl, data)
-      window.location.href = res.data.data;
+      if (res.data.code === 200) {
+        window.location.href = res.data.data;
+      } else {
+        this.$bus.$emit('LOGON_FAIL');
+        this._vm.$toast.show({content: res.data.msg, type: 'error'})
+      }
     } catch (e) {
       this.$bus.$emit('LOGON_FAIL');
     }
@@ -78,7 +83,12 @@ export const actions = {
   async userRegister({commit}, {account, passwd, captcha}) {
     try {
       const res = await this.$axios.post(userRegister, {account, passwd, captcha})
-      commit('setUser', res.data.data);
+      if (res.data.code === 200) {
+        commit('setUser', res.data.data);
+      } else {
+        this.$bus.$emit('LOGON_FAIL');
+        this._vm.$toast.show({content: res.data.msg, type: 'error'})
+      }
     } catch (e) {
       this.$bus.$emit('LOGON_FAIL');
     }
