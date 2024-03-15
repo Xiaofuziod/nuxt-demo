@@ -8,7 +8,7 @@ export default function ({$axios, redirect}) {
       config.params = config.params ? Object.assign(config.params, defaultParams) : defaultParams
     }
     const token = localStorage.getItem('token')
-    $axios.setHeader('Token', 'Bearer ' + token)
+    $axios.setHeader('Authorization', 'Bearer ' + token)
   })
 
   $axios.onError(error => {
