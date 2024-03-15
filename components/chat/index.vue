@@ -193,7 +193,7 @@ export default {
                 layer: "HOT_SOURCES",
                 title: '热门推荐',
                 data: {
-                  coins: this.$store.state.monitor.monitorList
+                  sources: this.$store.state.monitor.monitorList
                 }
               }
             ],
