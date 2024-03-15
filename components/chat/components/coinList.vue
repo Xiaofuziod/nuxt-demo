@@ -11,7 +11,7 @@
         <div class="coin-change" :class="'negative'">
           {{ coin.quotes.percentChange24h.toFixed(2) }}%
         </div>
-        <div class="option" @click="$emit('select', coin)">
+        <div class="option" @click="addCoin(coin)">
           <img src="@/assets/imgs/addPlus.svg" alt="">
         </div>
       </div>
@@ -32,6 +32,12 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    addCoin(coin) {
+      console.log(coin.id, 'coin.id');
+      this.$store.dispatch('monitor/addUserMonitor', [coin.id]);
+    },
   },
 };
 </script>
@@ -151,6 +157,7 @@ export default {
     width: 16px;
     cursor: pointer;
     margin-left: 24px;
+
     img {
       width: 16px;
       height: 16px;

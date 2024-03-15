@@ -20,7 +20,7 @@
       </div>
       <div class="task-title">
         {{ message.title }}
-        <div class="task-title-right" v-if="message.canSkip" @click="skip">
+        <div class="task-title-right" v-if="message.canSkip" @click="taskFinish">
           跳过
           <img src="@/assets/imgs/chat/more.svg" alt="">
         </div>
@@ -114,9 +114,6 @@ export default {
       } else {
         this.$store.dispatch('chat/welcomeToNext')
       }
-    },
-    skip() {
-      this.$store.dispatch('chat/welcomeToNext')
     },
     showSelect() {
       if (this.message.searchType === 'coin') {

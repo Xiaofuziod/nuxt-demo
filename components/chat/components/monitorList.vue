@@ -7,7 +7,7 @@
         <h3 class="title2">{{ card?.title }}</h3>
         <p class="timestamp">{{ card?.time }}</p>
       </div>
-      <img class="option-img" @click="$emit('select')" src="@/assets/imgs/addPlus.svg" alt="">
+      <img class="option-img" @click="addMonitor(card)" src="@/assets/imgs/addPlus.svg" alt="">
     </div>
   </div>
 
@@ -32,9 +32,9 @@ export default {
     }
   },
   methods: {
-    deleteMonitor(id) {
-      this.$store.dispatch('monitor/deleteUserMonitor', id);
-    }
+    addMonitor(card) {
+      this.$store.dispatch('monitor/addUserMonitor', [card.id]);
+    },
   }
 }
 </script>
