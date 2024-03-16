@@ -16,3 +16,4 @@ export const getUserInfo = baseUrl + '/api/user'
 export const analysisCoin = baseUrl + '/api/analysis/coin'
 export const getCoinPrice = baseUrl + '/api/coin/price'
 
+export const getChatMessageList= baseUrl + '/api/chat/list'

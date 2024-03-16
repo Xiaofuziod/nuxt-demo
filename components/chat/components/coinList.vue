@@ -3,13 +3,13 @@
     <div class="icon-list" :style="{ 'height': listHeight }">
       <div v-for="coin in coinList" :key="coin.name" class="coin-row">
         <div class="coin-name">
-          <img :src="coin.logo" class="coin-logo" alt="">
+          <img :src="coin.logo" class="coin-logo" :alt="coin.logo">
           <span class="name">{{ coin.name }}</span>
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
-        <div class="coin-price">${{ coin.quotes.price.toFixed(2) }}</div>
+        <div class="coin-price">${{ coin.marketCap.toFixed(2) }}</div>
         <div class="coin-change" :class="'negative'">
-          {{ coin.quotes.percentChange24h.toFixed(2) }}%
+          {{ coin.circulatingSupply.toFixed(2) }}%
         </div>
         <div class="option" @click="addCoin(coin)">
           <img src="@/assets/imgs/addPlus.svg" alt="">
