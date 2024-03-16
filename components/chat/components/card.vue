@@ -1,8 +1,8 @@
 <template>
   <div class="chat-card">
-    <div v-for="item in layers" :key="item.layer">
+    <div v-for="item in layers">
       <!--信号源相关-->
-      <template v-if="item.layer === 'HOT_SOURCES'">
+      <template v-if="item.type === 'HOT_SOURCES'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/hot.svg" alt="">
           热门信号源
@@ -10,10 +10,49 @@
         <monitor-list :list="item.data?.sources"/>
       </template>
 
+      <!--预测相关-->
+      <template v-if="item.type === 'PREDICTION'">
+        <div class="chat-card-title">
+          <img class="img1" src="@/static/images/chat/hot.svg" alt="">
+          预测
+          {{ item.title }}
+        </div>
+        <div style="color: white">
+          <p>Returns: {{ item.data.returns }}</p>
+          <ul>
+            Positive Developments
+            <li v-for="reason of item.data.advantages">
+              {{ reason }}
+            </li>
+          </ul>
+          <ul>
+            Potential Concerns
+            <li v-for="reason of item.data.disadvantages">
+              {{ reason }}
+            </li>
+          </ul>
+          <p>{{ item.data.conclusion }}</p>
+        </div>
+        <coin-list :coin-list="[item.data.coin]"/>
+      </template>
+
+      <!--日志相关-->
+      <template v-if="item.type === 'LOG'">
+        <div class="chat-card-title">
+          {{ item.toolName }}
+        </div>
+        <p style="color: white">{{ item.log }}</p>
+      </template>
+
+      <!--错误相关-->
+      <template v-if="item.type === 'ERROR'">
+        <div class="chat-card-title">
+          Code: {{ item.code }} Error: {{ item.error }}
+        </div>
+      </template>
 
       <!--币相关-->
-
-      <template v-if="item.layer === 'HOT_COINS'">
+      <template v-if="item.type === 'HOT_COINS'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/hot.svg" alt="">
           热门推荐
@@ -22,7 +61,7 @@
       </template>
 
       <!--监控信号-->
-      <template v-if="item.layer === 'Signal_source'">
+      <template v-if="item.type === 'Signal_source'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/s4.svg" alt="">
           Signal source
@@ -46,8 +85,7 @@
       </template>
 
       <!--问答-->
-
-      <template v-if="item.layer === 'ASK'">
+      <template v-if="item.type === 'ASK'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/ai.svg" alt="">
           You can ask

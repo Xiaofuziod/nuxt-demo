@@ -87,11 +87,14 @@ export default {
   data() {
     return {
       message: '',
-      conversation_id: '',
+      socketSessionId: '',
       welcomeInputDisable: false
     }
   },
   computed: {
+    conversationId() {
+      return this.$store.state.chat.conversationId
+    },
     messageList() {
       return this.$store.state.chat.messageList
     },
@@ -107,15 +110,8 @@ export default {
     }
   },
   mounted() {
-    this.$socket.on('messageevent', (data) => {
-      this.getMessage(data);
-    });
-    this.$socket.on('connect', (data) => {
-      console.log('Connected to socket server', data);
-      if (data) {
-        this.conversation_id = data
-      }
-    });
+    this.$socket.on('chat', this.onWebsocketReceiveMessage);
+    this.$socket.on('connect', this.onWebsocketConnect);
 
     if (this.showWelcome) {
       //  第一次进入页面，发送欢迎语
@@ -132,24 +128,59 @@ export default {
         this.$store.dispatch('monitor/fetchMonitorList', "Bitcoin",)
       }, 3000)
     }
+
+    if (!this.conversationId) {
+      // 加载历史聊天对话
+      // NOTE: 对话 id 为空意味着还没获取过聊天历史，下面的 api 会在返回历史消息的同时附上对话 id。
+      //   对话 id 需要附加到每次的对话消息中，后端凭借该 id 来区别不同的对话上下文。
+      //   这种方式是针对当前用户只有一个会话的情况而简化了交互逻辑。
+      //   更一般的做法应该是先获取对话列表，然后用户点击哪个对话，再根据点击对话的 id 来拉取历史消息。
+      this.$store.dispatch('chat/fetchEarlierMessages', "fakeUserNo")
+    }
   },
   methods: {
+    onWebsocketReceiveMessage(data) {
+      this.getMessage(data);
+    },
+    onWebsocketConnect(data) {
+      console.log('Connected to socket server', data);
+      if (data) {
+        this.socketSessionId = data
+      }
+    },
     sendMessage() {
-      if (!this.message) return
+      if (!this.message || !this.conversationId) return
+      // 用户发送的消息的 seqNo 是当前对话中最大的 seqNo + 1。如果当前对话为空，则 seqNo 为 1。
+      const nextSeqNo = this.messageList.length === 0 ? 1 :
+          this.messageList[this.messageList.length - 1].seqNo + 1;
       let para = {
-        conversation_id: this.conversation_id,
-        seq_no: uuid(),
+        conversationId: this.conversationId,
+        seqNo: nextSeqNo,
         source: "USER",
         context: null,
         language: "zh",
         text: this.message
       }
-      this.$socket.emit('messageevent', para)
+      this.$socket.emit('chat', para)
       this.messageList.push(para)
       this.message = ''
     },
     getMessage(data) {
       console.log('收到', data)
+      if (data.conversationId !== this.conversationId) {
+        console.log(`ignore message from other conversation:`, data)
+        return
+      }
+
+      const lastMsg = this.messageList[this.messageList.length - 1]
+      if (lastMsg && lastMsg.seqNo === data.seqNo && lastMsg.source === data.source) {
+        // 如果新消息和最后一条消息同属一个序号、角色，合并他们的内容
+        lastMsg.text += data.text
+        lastMsg.layers = lastMsg.layers.concat(data.layers)
+      } else {
+        // 否则直接添加新消息
+        this.messageList.push(data)
+      }
       // this.messageList.push({message: '收到：' + data.data.message})
     },
     writerOver() {
@@ -162,7 +193,7 @@ export default {
         // 需要推荐热门币种
         if (lastMsg.needPushHotCoin) {
           let para = {
-            seq_no: null,
+            seqNo: null,
             source: "ASSISTANT",
             context: null,
             language: "zh",
@@ -183,7 +214,7 @@ export default {
         // 需要推荐热门信号源
         if (lastMsg.needPushHotMonitor) {
           let para = {
-            seq_no: null,
+            seqNo: null,
             source: "ASSISTANT",
             context: null,
             language: "zh",
@@ -193,7 +224,7 @@ export default {
                 layer: "HOT_SOURCES",
                 title: '热门推荐',
                 data: {
-                  coins: this.$store.state.monitor.monitorList
+                  sources: this.$store.state.monitor.monitorList
                 }
               }
             ],
@@ -209,7 +240,9 @@ export default {
     },
   },
   beforeDestroy() {
-    this.$socket.off('messageevent', this.getMessage);
+    console.log('Socket disconnect')
+    this.$socket.off('chat', this.onWebsocketReceiveMessage);
+    this.$socket.off('connect', this.onWebsocketConnect);
   },
   watch: {
     messageList() {

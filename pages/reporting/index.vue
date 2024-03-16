@@ -106,10 +106,10 @@ export default {
   },
   methods: {
     handleClick(item) {
-      this.coinId = item.id
+      this.coinId = item.coinId
       this.loadData()
       this.$nextTick(() => {
-        this.$refs.echart.reload(item.id)
+        this.$refs.echart.reload(item.coinId)
       })
     },
     showSelect() {
@@ -120,22 +120,22 @@ export default {
     },
     loadData() {
       this.$axios.get(analysisCoin, {params: {}}).then(res => {
-        const arr = res.data.data.map(item => {
-          const d = parseTime(item.createdDate)
-          return {
-            ...item,
-            isToday: d.isToday,
-            weekDay: d.weekDay,
-            time: d.time,
-            date: d.date
-          }
-        })
-        this.list = [
-          {
-            ...arr[0],
-            list: arr
-          }
-        ]
+        // const arr = res.data.data.map(item => {
+        //   const d = parseTime(item.createdDate)
+        //   return {
+        //     ...item,
+        //     isToday: d.isToday,
+        //     weekDay: d.weekDay,
+        //     time: d.time,
+        //     date: d.date
+        //   }
+        // })
+        // this.list = [
+        //   {
+        //     ...arr[0],
+        //     list: arr
+        //   }
+        // ]
       })
     }
   }

@@ -13,21 +13,21 @@ export type ResponseProps<T> = {
  *
  * 该请求用于获取聊天历史记录，前端会发送一个 ChatHistoryRequestProps 对象给后端，
  * 后端会返回一个 ChatHistoryResponseProps 对象给前端。
- * 在请求中，前端需要指定 user_no 和 oldest_seq_no，
- * user_no 是用户的唯一标识，oldest_seq_no 是前端已经获取到的最老的消息的 seq_no。
- * 如果前端已拉取的消息为空，oldest_seq_no 可以设置为 null。
+ * 在请求中，前端需要指定 userNo 和 oldestSeqNo，
+ * userNo 是用户的唯一标识，oldestSeqNo 是前端已经获取到的最老的消息的 seqNo。
+ * 如果前端已拉取的消息为空，oldestSeqNo 可以设置为 null。
  *
  * 注：该协议仅适用于每个用户仅有一个会话的场景，如果用户可以同时进行多个会话，需要对协议进行调整。
  */
 export type ChatHistoryRequestProps = {
-  user_no: string
+  userNo: string
 
   /**
-   * 最老的消息的 seq_no
+   * 最老的消息的 seqNo
    *
-   * 如果前端已拉取的消息为空，oldest_seq_no 可以设置为 null。
+   * 如果前端已拉取的消息为空，oldestSeqNo 可以设置为 null。
    */
-  oldest_seq_no: number | null
+  oldestSeqNo: number | null
 
   /**
    * 每次拉取的问答消息回合的数量，即多少对问答。
@@ -40,14 +40,14 @@ export type ChatHistoryRequestProps = {
  *
  * 该响应用于返回聊天历史记录，前端会发送一个 ChatHistoryRequestProps 对象给后端，
  * 后端会返回一个 ChatHistoryResponseProps 对象给前端。
- * 在响应中，后端会返回一个 conversation_id 和一个 history 数组，
+ * 在响应中，后端会返回一个 conversationId 和一个 history 数组，
  * history 数组包含了多个 ChatMessageProps 对象，每个 ChatMessageProps 对象包含了一次问或答的信息。
- * conversation_id 是会话的唯一标识，前端需要保存该标识，以便在后续的聊天中使用。
+ * conversationId 是会话的唯一标识，前端需要保存该标识，以便在后续的聊天中使用。
  * 如果 history 数组为空，表示前端已经获取到了所有的消息。
  */
 export type ChatHistoryResponseProps = ResponseProps<{
-  history: ChatMessageProps[]
-  conversation_id: number
+  messages: ChatMessageProps[]
+  conversationId: number
 }>;
 
 /**
@@ -67,7 +67,7 @@ export type ChatMessageProps = {
    * 以便在后续的聊天中使用。
    * 会话 ID 会在一次完整的会话中一直保持不变。
    */
-  conversation_id: number
+  conversationId: number
 
   /**
    * 消息序列号
@@ -76,7 +76,7 @@ export type ChatMessageProps = {
    * 前端发送消息时，需要生成一个消息序列号，后端返回消息时，会将消息序列号原样返回。
    * 消息序列号会在一次完整的会话中递增。
    */
-  seq_no: number;
+  seqNo: number;
 
   source: "USER" | "ASSISTANT";
   context: {
@@ -118,7 +118,7 @@ export type LayerProps = {
  */
 export type LogLayerProps = LayerProps & {
   layer: "LOG"
-  tool_name: string
+  toolName: string
   log: string
 }
 
@@ -179,6 +179,7 @@ export type PredictionLayerProps = LayerProps & {
 export type CoinProps = {
   id: number
   name: string
+  symbol: string
 
   /**
    * 币的 logo url
@@ -190,12 +191,12 @@ export type CoinProps = {
   /**
    * 市值
    */
-  market_cap: number
+  marketCap: number
 
   /**
    * 流通供应量
    */
-  circulating_supply: number
+  circulatingSupply: number
 }
 
 /**
