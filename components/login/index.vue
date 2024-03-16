@@ -111,7 +111,7 @@ export default {
   data() {
     return {
       user: 'ta',
-      email: "flynn.taurion@gmail.com",
+      email: "zongfeishu@gmail.com",
       password: "123456",
       isPassword: true,
       type: 'login', // login, register
@@ -152,6 +152,9 @@ export default {
       console.log('validateInputSuccess', captcha, this.step)
       if (this.step === 21) {
         this.$store.dispatch('user/userRegister', {account: this.email, passwd: this.password, captcha})
+      }
+      if (this.step === 32) {
+        this.$store.dispatch('user/changePassword', {email: this.email, passwd: this.password, captcha})
       }
     },
     stepBack() {

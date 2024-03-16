@@ -131,7 +131,6 @@ export default {
     },
     reload(coinId) {
       this.coinId = coinId
-      console.log('reload')
       this.loadData({value: '1m'})
     }
   }
