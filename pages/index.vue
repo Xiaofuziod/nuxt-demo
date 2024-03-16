@@ -110,16 +110,15 @@ import AddMonitoring from "~/components/monitor/addMonitoring.vue";
 <style lang="less" scoped>
 .home-wrapper {
   position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow:scroll;
   width: 100%;
-  display: flex;
-  justify-content: center;
   z-index: 0;
   padding-top: 16px;
-
+  text-align: center;
   .container {
     z-index: 1;
+    text-align: left;
+    display: inline-block;
   }
 
   .banner-1 {
