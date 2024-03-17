@@ -1,15 +1,17 @@
 <template>
   <div class="ball-bg">
-    <div class="deep-green-ball-1"></div>
-    <div class="deep-green-ball-2"></div>
-    <div class="light-green-ball1"></div>
-    <div class="light-green-ball2"></div>
-    <div class="light-green-ball3"></div>
-    <div class="light-green-ball4"></div>
-    <div class="light-green-ball5"></div>
-    <div class="light-green-ball6"></div>
-    <div class="light-green-ball7"></div>
-    <div class="light-green-ball8"></div>
+    <div class="inner">
+      <div class="deep-green-ball-1"></div>
+      <div class="deep-green-ball-2"></div>
+      <div class="light-green-ball1"></div>
+      <div class="light-green-ball2"></div>
+      <div class="light-green-ball3"></div>
+      <div class="light-green-ball4"></div>
+      <div class="light-green-ball5"></div>
+      <div class="light-green-ball6"></div>
+      <div class="light-green-ball7"></div>
+      <div class="light-green-ball8"></div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -20,7 +22,17 @@
   position: absolute;
   z-index: -1;
   top: 0;
-  left: 50vw;
+  left:0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .inner {
+    width: 100%;
+    left: 50%;
+    position: absolute;
+    top:0;
+    height: 100%;
+  }
 }
 
 .deep-green-ball-1 {
