@@ -93,9 +93,9 @@ export const actions = {
       this.$bus.$emit('LOGON_FAIL');
     }
   },
-  async changePassword({commit}, {email, passwd,  captcha}) {
+  async changePassword({commit}, {account, passwd,  captcha}) {
     try {
-      const res = await this.$axios.post(changePassword, {email, passwd, captcha})
+      const res = await this.$axios.post(changePassword, {account, passwd, captcha})
       commit('setUser', res.data.data);
     } catch (e) {
       this.$bus.$emit('LOGON_FAIL');
