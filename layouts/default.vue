@@ -7,6 +7,8 @@
     <div class="footer">
     </div>
     <glob-dialog/>
+
+    <ball-bg1/>
   </div>
 </template>
 <script>

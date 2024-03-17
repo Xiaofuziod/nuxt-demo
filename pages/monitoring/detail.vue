@@ -1,41 +1,43 @@
 <template>
-  <div class="page-content">
-    <div class="back"></div>
-    <div class="left">
-      <breadcrumb-navigation/>
-      <div class="left-header">
-        <img :src="monitorDetail?.logo || bianPic"  class="left-header-img" alt="">
-        <div class="hotinfo">
-          🔥 1456
+  <div class="page-content-wrapper">
+    <div class="page-content">
+      <div class="left">
+        <breadcrumb-navigation/>
+        <div class="left-header">
+          <img :src="monitorDetail?.logo || bianPic"  class="left-header-img" alt="">
+<!--          <div class="hotinfo">-->
+<!--            🔥 1456-->
+<!--          </div>-->
         </div>
-      </div>
-      <FilterTabs v-model="activeTab" :tabList="tabs" active-color="rgba(206, 184, 100, 1)" />
-      <!-- 监控详情内容 -->
-      <div v-if="activeTab === '0' && monitorSummary" class="content">
-        <div class="title">✨ {{ monitorSummary.summary }}</div>
-        <div class="desc-1">
-          <div v-for="(chapter, index) in monitorSummary.chapters" :key="index">
-            <p># {{ chapter.title }}</p>
-            <p>{{ chapter.content }}</p>
+        <FilterTabs v-model="activeTab" :tabList="tabs" active-color="rgba(206, 184, 100, 1)" />
+        <!-- 监控详情内容 -->
+        <div v-if="activeTab === '0' && monitorSummary" class="content">
+          <div class="title">✨ {{ monitorSummary.summary }}</div>
+          <div class="desc-1">
+            <div v-for="(chapter, index) in monitorSummary.chapters" :key="index">
+              <p># {{ chapter.title }}</p>
+              <p>{{ chapter.content }}</p>
+            </div>
+          </div>
+        </div>
+        <div v-if="activeTab === '1' && monitorContent" class="content">
+          <div class="title">✨ LINK:{{ monitorContent.link }}</div>
+          <div class="desc-1">
+            <div v-for="(segment, index) in monitorContent.segments" :key="index">
+              <p>author: {{ segment.title }}</p>
+              <p>time: {{ segment.timeline }}</p>
+              <p>{{ segment.content }}</p>
+            </div>
           </div>
         </div>
       </div>
-      <div v-if="activeTab === '1' && monitorContent" class="content">
-        <div class="title">✨ LINK:{{ monitorContent.link }}</div>
-        <div class="desc-1">
-          <div v-for="(segment, index) in monitorContent.segments" :key="index">
-            <p>author: {{ segment.title }}</p>
-            <p>time: {{ segment.timeline }}</p>
-            <p>{{ segment.content }}</p>
-          </div>
-        </div>
+      <div class="right">
+        <ChatIndex/>
       </div>
+      <asset-select ref="assetSel"/>
     </div>
-    <div class="right">
-      <ChatIndex/>
-    </div>
-    <asset-select ref="assetSel"/>
   </div>
+
 </template>
 
 <script>
@@ -92,12 +94,6 @@ export default {
 
 <style lang="less">
 
-.ellipsis {
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
 .Frame580 {
   margin-top: 24px;
@@ -141,31 +137,27 @@ export default {
     text-transform: capitalize;
   }
 }
-
+.page-content-wrapper {
+  position: relative;
+  overflow-x: visible;
+  overflow-y: scroll;
+  width: 100%;
+  z-index: 0;
+  padding-top: 16px;
+  text-align: center;
+}
 .page-content {
   max-width: 1152px;
+  width: 1152px;
   margin: 0 auto;
   display: flex;
+  text-align: left;
   justify-content: center;
-  width: 1152px;
   border-radius: 31px 31px 0 0;
   background: rgba(38, 64, 64, 0.2);
   backdrop-filter: blur(200px);
   position: relative;
 
-
-  .back {
-    width: 658.8px;
-    height: 689px;
-    transform: rotate(43.419579deg);
-    border-radius: 176px 254px 176px 176px;
-    background: linear-gradient(266.83deg, rgba(8, 148, 150, 0.6) -5.97%, rgba(3, 114, 54, 0.6) 99.31%);
-    filter: blur(153.5px);
-    position: absolute;
-    left: -480px;
-    z-index: -1;
-    top: 107px;
-  }
   .left {
     flex: 1;
     padding: 34px 40px;

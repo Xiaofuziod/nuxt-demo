@@ -96,11 +96,7 @@
         <div class="partner"><img src="~/assets/imgs/partner3.png" alt=""></div>
       </div>
       <app-footer/>
-
     </div>
-    <ball-bg2/>
-<!--    <add-coin/>-->
-<!--    <add-monitoring/>-->
   </div>
 </template>
 <script setup lang="ts">
@@ -116,6 +112,7 @@ import AddMonitoring from "~/components/monitor/addMonitoring.vue";
   padding-top: 16px;
   text-align: center;
   .container {
+    position: relative;
     z-index: 1;
     text-align: left;
     display: inline-block;

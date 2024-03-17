@@ -38,13 +38,13 @@ export default {
   width: 131px;
   height: 34px;
   padding: 6px;
-  border-radius: 8px;
-  background: rgba(38, 64, 64, 0.2);
   display: flex;
   align-items: center;
   margin-right: 8px;
   margin-bottom: 8px;
-
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.10);
+  background: rgba(38, 64, 64, 0.10);
   .option-img {
     cursor: pointer;
   }

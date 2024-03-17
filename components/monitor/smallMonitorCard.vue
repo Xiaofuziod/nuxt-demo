@@ -40,15 +40,17 @@ export default {
   width: 131px;
   height: 34px;
   padding: 6px;
-  border-radius: 8px;
-  background: rgba(38, 64, 64, 0.2);
   display: flex;
-  position: relative;
+  align-items: center;
   margin-right: 8px;
   margin-bottom: 8px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.10);
+  background: rgba(38, 64, 64, 0.10);
+  position: relative;
   .option-img {
     position: absolute;
-    top: 9px;
+    top: 5px;
     right: 7px;
     cursor: pointer;
   }
@@ -66,8 +68,8 @@ export default {
     .title1 {
       color: rgba(255, 255, 255, 0.6);
       font-size: 5px;
-      line-height: 10px;
-      height: 15px;
+      line-height: 8px;
+      height: 8px;
       width: 100%;
       // 超出省略
       overflow: hidden;

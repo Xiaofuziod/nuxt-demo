@@ -1,7 +1,6 @@
 <template>
-  <div style="width: 100%;height: 100%">
+  <div class="page-content-wrapper">
     <div class="page-content">
-      <div class="back"></div>
       <div class="report-left">
         <div class="Account">Account</div>
         <div class="Rectangle82">
@@ -62,7 +61,6 @@
       </div>
     </div>
   </div>
-
 </template>
 <script>
 import chatIndex from "~/components/chat/index.vue";
@@ -143,13 +141,6 @@ export default {
 </script>
 <style lang="less" scoped>
 
-.ellipsis {
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .Frame580 {
   margin-top: 24px;
   max-height: calc(100% - 220px);
@@ -202,33 +193,25 @@ export default {
     text-transform: capitalize;
   }
 }
-
+.page-content-wrapper {
+  position: relative;
+  overflow-x: visible;
+  overflow-y: scroll;
+  width: 100%;
+  z-index: 0;
+  padding-top: 16px;
+  text-align: center;
+}
 .page-content {
   max-width: 1152px;
-  height: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
   width: 1152px;
+  height: 100%;
+  text-align: left;
+  display: inline-flex;
   border-radius: 31px 31px 0 0;
   background: rgba(38, 64, 64, 0.2);
   backdrop-filter: blur(200px);
   position: relative;
-
-
-  .back {
-    width: 658.8px;
-    height: 689px;
-    transform: rotate(43.419579deg);
-    border-radius: 176px 254px 176px 176px;
-    background: linear-gradient(266.83deg, rgba(8, 148, 150, 0.6) -5.97%, rgba(3, 114, 54, 0.6) 99.31%);
-    filter: blur(153.5px);
-    position: absolute;
-    left: -480px;
-    z-index: -1;
-    top: 107px;
-  }
-
 
   .report-left {
     width: 252px;

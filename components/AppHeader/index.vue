@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="header-box-wrapper">
     <div class="header-box">
       <!-- Logo and title area -->
       <div class="logo">
@@ -101,12 +101,11 @@ export default {
 };
 </script>
 
-<style scoped>
-header {
+<style scoped lang="less">
+.header-box-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-
   .header-box {
     width: 1152px;
     display: flex;
@@ -145,7 +144,7 @@ header {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin: 0 16px;
+  margin: 0 8px 0 0;
 
 }
 
@@ -172,7 +171,7 @@ nav {
 
     a {
       padding-left: 45px;
-      color: rgba(140, 180, 189, 0.3);
+      color: rgba(206, 184, 100, 0.3);
       text-decoration: none;
       font-family: aifont;
       cursor: pointer;

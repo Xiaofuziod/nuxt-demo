@@ -1,33 +1,36 @@
 <template>
-  <div class="monitor-wrapper">
-    <aside class="sidebar">
-      <section class="profile">
-        <h2 class="h2-title">ROBOT</h2>
-        <div class="user-box" >
-          <img v-if="user.account" :src="user.avatar" alt="Profile"/>
-          <div class="name-info">
-            <h3 class="name ellipsis">{{user.account}}</h3>
-            <p class="info">{{user.nickname}}</p>
+  <div class="monitor-slide">
+    <div class="monitor-wrapper">
+      <aside class="sidebar">
+        <section class="profile">
+          <h2 class="h2-title">ROBOT</h2>
+          <div class="user-box">
+            <img v-if="user.account" :src="user.avatar" alt="Profile"/>
+            <div class="name-info">
+              <h3 class="name ellipsis">{{ user.account }}</h3>
+              <p class="info">{{ user.nickname }}</p>
+            </div>
           </div>
+        </section>
+        <section class="monitoring-type">
+          <h2 class="h2-title">MONITORING TYPE</h2>
+          <img class="item-img" src="~/assets/imgs/twiter.svg" alt="">
+        </section>
+      </aside>
+      <main class="content">
+        <breadcrumb-navigation/>
+        <header class="content-header">
+          <FilterTabs v-model="activeTab" :tabList="tabs"/>
+          <div class="add-monitoring" @click="showAddMonitor">+ Add AI Monitoring</div>
+        </header>
+        <div class="monitoring-cards">
+          <monitor-card v-for="(item, index) in userMonitors" :key="index" :card="item" show-action
+                        @click="goDetail(item.id)"/>
         </div>
-      </section>
-      <section class="monitoring-type">
-        <h2 class="h2-title">MONITORING TYPE</h2>
-        <img class="item-img" src="~/assets/imgs/twiter.svg" alt="">
-      </section>
-    </aside>
-    <main class="content">
-      <breadcrumb-navigation/>
-      <header class="content-header">
-        <FilterTabs v-model="activeTab" :tabList="tabs"  />
-        <div class="add-monitoring" @click="showAddMonitor">+ Add AI Monitoring</div>
-      </header>
-      <div class="monitoring-cards">
-        <monitor-card v-for="(item, index) in userMonitors" :key="index" :card="item" show-action  @click="goDetail(item.id)"/>
-      </div>
-    </main>
-    <ball-bg1/>
+      </main>
+    </div>
   </div>
+
 </template>
 <script>
 
@@ -37,9 +40,9 @@ export default {
     return {
       activeTab: "ALL",
       tabs: [
-        { label: 'ALL', key: 'ALL' },
-        { label: 'FINISHED', key: 'FINISHED' },
-        { label: 'UNFINISHED', key: 'UNFINISHED' },
+        {label: 'ALL', key: 'ALL'},
+        {label: 'FINISHED', key: 'FINISHED'},
+        {label: 'UNFINISHED', key: 'UNFINISHED'},
       ]
     }
   },
@@ -61,11 +64,15 @@ export default {
       this.$router.push(`/monitoring/detail?id=${id}`);
     },
     mapTabToStatus(tab) {
-      switch(tab) {
-        case 'ALL': return '';
-        case 'FINISHED': return 3; // 根据你的状态定义调整
-        case 'UNFINISHED': return 1; // 根据你的状态定义调整
-        default: return 0;
+      switch (tab) {
+        case 'ALL':
+          return '';
+        case 'FINISHED':
+          return 3; // 根据你的状态定义调整
+        case 'UNFINISHED':
+          return 1; // 根据你的状态定义调整
+        default:
+          return 0;
       }
     },
     showAddMonitor() {
@@ -86,13 +93,25 @@ export default {
 </script>
 
 <style scoped lang="less">
+.monitor-slide {
+  position: relative;
+  overflow-x: visible;
+  overflow-y: scroll;
+  width: 100%;
+  z-index: 0;
+  padding-top: 16px;
+  text-align: center;
+}
+
 .monitor-wrapper {
   width: 1152px;
   height: 100%;
+  text-align: left;
   border-radius: 31px;
-  background: rgba(38, 64, 64, 0.2);
+  background: rgba(38, 64, 64, 0.20);
+  backdrop-filter: blur(100px);
   position: relative;
-  display: flex;
+  display: inline-flex;
   z-index: 2;
 
   .sidebar {
