@@ -16,16 +16,16 @@
       </div>
       <div class="list-item" v-for="(item,index) in coinData.list" :key="item.id + '-' + index">
         <div class="list-item-top">
-          <div class="list-item-top1">{{ item.time }}</div>
+          <div class="list-item-top1">{{ item.lastUpdatedDate.split(' ')[1] }}</div>
           <div class="list-item-top2">
-            <img :src="item.coverPhotoUrl" alt="">
+            <img v-if="item.coverPhotoUrl" :src="item.coverPhotoUrl" alt="">
           </div>
           <div class="list-item-top3">{{ item.symbol }}</div>
         </div>
 
         <div class="list-item-content">
           <div class="list-item-title">{{ item.title }}</div>
-          <div class="list-item-icon" @click="handleClick(item.id)">
+          <div class="list-item-icon" @click="handleClick(item)">
             <img src="@/static/images/chat/ai2.svg" alt="">
           </div>
         </div>
@@ -67,7 +67,7 @@ export default {
   mounted() {
   },
   methods: {
-    handleClick(id) {
+    handleClick(item) {
       const nextSeqNo = this.messageList.length === 0 ? 1 :
           this.messageList[this.messageList.length - 1].seqNo + 1;
       const para = {
@@ -75,11 +75,11 @@ export default {
         seqNo: nextSeqNo,
         source: "USER",
         language: this.$store.$i18n.locale,
-        text: this.message,
+        text: item.title,
         context: {
           hook: {
             type: "FOCUS",
-            id: id
+            id: item.id
           }
         },
       }

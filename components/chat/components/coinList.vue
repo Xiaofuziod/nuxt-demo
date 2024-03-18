@@ -7,9 +7,9 @@
           <span class="name">{{ coin.name }}</span>
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
-        <div class="coin-price">${{ coin.marketCap.toFixed(2) }}</div>
-        <div class="coin-change negative">
-          {{ coin.circulatingSupply.toFixed(2) }}%
+        <div class="coin-price">${{ formatPrice(coin.currentPrice) }}</div>
+        <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
+          {{ coin.change?.toFixed(2) }}%
         </div>
         <div class="option" @click="addCoin(coin)">
           <img src="@/assets/imgs/addPlus.svg" alt="">
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import {formatPrice} from "@/utils/price";
+
 export default {
   name: 'CoinList',
   props: {
@@ -34,6 +36,7 @@ export default {
     return {};
   },
   methods: {
+    formatPrice,
     addCoin(coin) {
       console.log(coin.id, 'coin.id');
       this.$store.dispatch('monitor/addUserMonitor', [coin.id]);

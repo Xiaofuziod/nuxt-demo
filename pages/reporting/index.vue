@@ -14,7 +14,6 @@
         </div>
         <div class="Account Selected">{{$t("Selected")}}{{ followList.length ? ` (${followList.length})` : '' }}
           <span style="cursor: pointer" @click="showDelete = !showDelete">{{ showDelete ? $t("OK") : $t("Edit") }}</span>
-
         </div>
         <!--    自选币  -->
         <div class="Frame580">
@@ -122,10 +121,12 @@ export default {
         let newData = []
         dateList.forEach(item => {
           const d = parseTime(item)
+          console.log(d)
           newData.push({
             date: d.date,
             isToday: d.isToday,
             weekDay: d.weekDay,
+            time: d.time,
             list: obj[item]
           })
         })

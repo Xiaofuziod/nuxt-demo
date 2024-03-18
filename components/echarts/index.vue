@@ -1,6 +1,18 @@
 <template>
   <div id="echarts">
     <!--    <div>{{ $t("1D_div_1") }}</div>-->
+    <div class="coin-name">
+      <img :src="coin.logo" v-if="coin.logo" class="coin-logo" :alt="coin.logo">
+      <span class="name">{{ coin.name }}</span>
+      <span class="coin-symbol">{{ coin.symbol }}</span>
+    </div>
+    <div class="coin-price-box">
+      <div class="coin-price">${{ formatPrice(coin.currentPrice) }}</div>
+      <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
+        {{ coin.change?.toFixed(2) }}%
+      </div>
+    </div>
+
     <div class="select-row">
       <div v-for="(item,index) in selectList" :key="index"
            :class="{'active': activeKey === item.value}" @click="loadData(item)"
@@ -21,6 +33,7 @@ export default {
     return {
       xData: [],
       yData: [],
+      coin: {},
       selectList: [
         {
           name: '1D',
@@ -52,6 +65,7 @@ export default {
     }
   },
   methods: {
+    formatPrice,
     echartsInit() {
       // 找到容器
       let myChart = this.$echarts.init(document.getElementById('myChart'))
@@ -69,7 +83,7 @@ export default {
         grid: {
           right: "5%",
           top: "5%",
-          left: "10%",
+          left: "15%",
         },
         xAxis: {
           type: 'category',
@@ -135,6 +149,13 @@ export default {
       try {
         const res = await this.$axios.get(getCoinPrice, {params: {coinId: this.coinId, period: this.activeKey}})
         const market = res.data.data.market
+        this.coin = {
+          logo: res.data.data.logo,
+          name: res.data.data.slug,
+          symbol: res.data.data.symbol,
+          currentPrice: res.data.data.currentPrice,
+          change: res.data.data.change
+        }
         market.forEach(item => {
           this.xData.push(item[0])
           this.yData.push(formatPrice(item[1]))
@@ -154,8 +175,116 @@ export default {
 <style scoped lang="less">
 #myChart {
   width: 340px;
-  height: 300px;
+  height: 260px;
   margin: 0 auto;
+}
+
+
+.coin-price-box {
+  display: flex;
+  align-items: center;
+  padding: 10px 40px;
+}
+
+
+.coin-price {
+  color: #FFF;
+  font-family: Avenir;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: capitalize;
+  text-align: right;
+  padding: 0 7px;
+  overflow: hidden;
+
+
+}
+
+.coin-change {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+
+  &:before {
+    content: " ";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-size: 100% 100%;
+    margin-left: 1px;
+  }
+
+  &.positive {
+    color: #42C525;
+    font-family: Avenir;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    text-transform: capitalize;
+
+    &:before {
+      background: url(@/assets/imgs/positive.svg) no-repeat;
+      background-size: 16px 16px;
+    }
+  }
+
+  &.negative {
+    color: #F44653;
+    font-family: Avenir;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    text-transform: capitalize;
+
+    &:before {
+      background: url(@/assets/imgs/nagative.svg) no-repeat;
+      background-size: 16px 16px;
+    }
+  }
+}
+
+.coin-name {
+  box-sizing: border-box;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+
+  .coin-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+  }
+
+  .name {
+    color: #FFF;
+    font-family: Avenir;
+    font-size: 15px;
+    font-style: normal;
+    padding: 0 12px;
+    font-weight: 800;
+    line-height: normal;
+    text-transform: capitalize;
+    max-width: 120px;
+    // 超出省略
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .coin-symbol {
+    color: rgba(255, 255, 255, 0.50);
+    font-family: Avenir;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+  }
 }
 
 .select-row {
@@ -163,16 +292,24 @@ export default {
   padding-left: 31px;
 
   div {
+    width: 28px;
+    height: 20px;
+    flex-shrink: 0;
     display: inline-block;
-    width: 30px;
-    color: #fff;
-    font-size: 12px;
-    cursor: pointer;
+    color: #FFF;
+    font-family: Avenir;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 800;
+    text-transform: capitalize;
     text-align: center;
+    line-height: 20px;
+    cursor: pointer;
   }
 
   div.active {
-    background-color: #0056b3;
+    border-radius: 6px;
+    background: rgba(140, 180, 189, 0.10);
   }
 }
 </style>
