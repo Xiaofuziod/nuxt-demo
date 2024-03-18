@@ -39,6 +39,11 @@ body {
   font-family: Avenir;
 }
 
+html, body {
+  overscroll-behavior-y: none;
+}
+
+
 * {
   margin: 0;
   padding: 0;

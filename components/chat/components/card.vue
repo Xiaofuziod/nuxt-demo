@@ -30,7 +30,6 @@
               <span class="name">{{ item.data.coin.name }}</span>
               <span class="coin-symbol">{{ item.data.coin.symbol }}</span>
             </div>
-
           </div>
 
           <div class="returns-title">
@@ -195,6 +194,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 14px;
   }
 
   .returns-title {
@@ -215,7 +215,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 14px;
 
     img {
       width: 16px;

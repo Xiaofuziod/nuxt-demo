@@ -25,7 +25,7 @@
 
         <div class="list-item-content">
           <div class="list-item-title">{{ item.title }}</div>
-          <div class="list-item-icon">
+          <div class="list-item-icon" @click="handleClick(item.id)">
             <img src="@/static/images/chat/ai2.svg" alt="">
           </div>
         </div>
@@ -48,25 +48,45 @@ export default {
           date: '00/00',
           isToday: true,
           weekDay: 'Monday',
-          list: [
-            {
-              id: 1,
-              time: '12:00',
-              coverPhotoUrl: '@/static/images/chat/s2.svg',
-              title: 'Ethereum'
-            }
-          ]
+          list: []
         }
       }
     }
   },
-  data() {
-    return {
+  computed: {
+    messageList() {
+      return this.$store.state.chat.messageList
+    },
+    conversationId() {
+      return this.$store.state.chat.conversationId
     }
+  },
+  data() {
+    return {}
   },
   mounted() {
   },
-  methods: {}
+  methods: {
+    handleClick(id) {
+      const nextSeqNo = this.messageList.length === 0 ? 1 :
+          this.messageList[this.messageList.length - 1].seqNo + 1;
+      const para = {
+        conversationId: this.conversationId,
+        seqNo: nextSeqNo,
+        source: "USER",
+        language: this.$store.$i18n.locale,
+        text: this.message,
+        context: {
+          hook: {
+            type: "FOCUS",
+            id: id
+          }
+        },
+      }
+      this.$socket.emit('chat', para)
+      this.$store.dispatch('chat/addMessage', para)
+    }
+  }
 }
 
 </script>
@@ -115,6 +135,7 @@ export default {
           margin-left: 12px;
           margin-right: 8px;
           overflow: hidden;
+
           img {
             display: block;
             width: 100%;

@@ -58,6 +58,18 @@ export const actions = {
   },
   addMessage({commit}, message) {
     commit('addMessage', message)
+    // 如果是用户发送的消息，添加一条loading状态的消息
+    if (message.source === 'USER') {
+      commit('addMessage', {
+        seqNo: message.seqNo + 1,
+        source: "ASSISTANT",
+        context: null,
+        language: message.language,
+        text: '',
+        layers: [],
+        loading: true
+      })
+    }
   },
   welcomeToNext({commit, state}) {
     commit('setWelcomeIndex', state.welcomeIndex + 1)
@@ -78,5 +90,5 @@ export const actions = {
     } else {
       commit('addMessage', message)
     }
-  }
+  },
 }

@@ -187,22 +187,14 @@ export default {
         language: this.$store.$i18n.locale,
         text: this.message
       }
+      console.log('发送', para)
       this.$socket.emit('chat', para)
       this.$store.dispatch('chat/addMessage', para)
       this.message = ''
-      this.$store.dispatch('chat/addMessage', {
-        seqNo: nextSeqNo + 1,
-        source: "ASSISTANT",
-        context: null,
-        language: this.$store.$i18n.locale,
-        text: '',
-        layers: [],
-        loading: true
-      })
       this.scrollToBottom()
     },
     getMessage(data) {
-      // console.log('收到', data)
+      console.log('收到', data)
       if (data.conversationId !== this.conversationId) {
         console.log(`ignore message from other conversation:`, data)
         return

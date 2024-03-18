@@ -101,6 +101,7 @@ export default {
   methods: {
     handleClick(item) {
       this.coinId = item.coinId
+      this.list = []
       this.loadData()
       this.$nextTick(() => {
         this.$refs.echart.reload(item.coinId)
