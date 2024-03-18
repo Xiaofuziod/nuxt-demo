@@ -9,11 +9,11 @@
       <!-- Navigation area -->
       <nav v-if="userLoggedIn">
         <ul>
-          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" href="/reporting">
+          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" :href="`${langPath}/reporting`">
             <span>{{$t("REPORTING")}}</span>
           </a>
           </li>
-          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" href="/monitoring">
+          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" :href="`${langPath}/monitoring`">
             <span>{{$t("MONITORING")}}</span></a>
           </li>
         </ul>
@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     goHome() {
-      this.$router.push('/')
+      this.$router.push(this.langPath)
     },
     showLogin() {
       this.$refs.loginRef.show()
@@ -102,12 +102,15 @@ export default {
     logout() {
       this.$localStorage.removeItem('token')
       this.userLoggedIn = false
-      this.$router.replace('/')
+      this.$router.replace(this.langPath)
     }
   },
   computed: {
     routepath() {
       return this.$route.path
+    },
+    langPath() {
+      return this.$i18n.locale === "en" ? '/' : `/${this.$i18n.locale}`
     }
   },
   beforeDestroy() {
