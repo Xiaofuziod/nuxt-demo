@@ -20,8 +20,11 @@
           <div class="returns-top">
             <div class="returns-btn">
               <btn class="btn" type="returns">
-                <img class="img1" src="@/static/images/chat/up.svg" alt="">
-                <div class="returns-btn-text">购买信号{{ item.data.returns > 0 ? '强' : '弱' }}</div>
+                <img class="img1" src="@/static/images/chat/up.svg" alt="" v-if="item.data.returns > 0">
+                <img class="img1" src="@/static/images/chat/down.svg" alt="" v-else>
+                <div class="returns-btn-text"
+                     :class="{ 'positive': item.data.returns > 0, 'negative': item.data.returns < 0}"
+                >购买信号{{ item.data.returns > 0 ? '强' : '弱' }}</div>
               </btn>
             </div>
 
@@ -82,7 +85,7 @@
       <template v-if="item.type === 'HOT_SOURCES'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/s4.svg" alt="">
-          Signal source
+          {{item.title}}
         </div>
         <div class="source-row">
           <div class="source-item" v-for="item in 3">
@@ -229,6 +232,13 @@ export default {
       font-weight: 800;
       text-transform: capitalize;
     }
+    .positive {
+      color: #F44653;
+    }
+    .negative{
+      color: #42C525;
+    }
+
   }
 
   .returns-list {

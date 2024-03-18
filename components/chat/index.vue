@@ -471,8 +471,8 @@ export default {
     }
 
     .chat-top-title {
-      width: 220px;
       height: 38px;
+      padding: 0 20px;
       border-radius: 19px 19px 19px 0;
       background: rgba(138, 173, 188, 0.1);
       backdrop-filter: blur(217.899994px);
