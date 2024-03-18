@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     goHome() {
-      this.$router.push(this.langPath)
+      this.$router.push(this.langPath || '/')
     },
     showLogin() {
       this.$refs.loginRef.show()
@@ -102,7 +102,7 @@ export default {
     logout() {
       this.$localStorage.removeItem('token')
       this.userLoggedIn = false
-      this.$router.replace(this.langPath)
+      this.$router.replace("/")
     }
   },
   computed: {
@@ -110,7 +110,7 @@ export default {
       return this.$route.path
     },
     langPath() {
-      return this.$i18n.locale === "en" ? '/' : `/${this.$i18n.locale}`
+      return this.$i18n.locale === "en" ? '' : `/${this.$i18n.locale}`
     }
   },
   beforeDestroy() {
