@@ -3,7 +3,7 @@
     <div class="monitor-wrapper">
       <aside class="sidebar">
         <section class="profile">
-          <h2 class="h2-title">ROBOT</h2>
+          <h2 class="h2-title">{{ $t("Monitor_h2-title_1") }}</h2>
           <div class="user-box">
             <img v-if="user.account" :src="user.avatar" alt="Profile"/>
             <div class="name-info">
@@ -13,7 +13,7 @@
           </div>
         </section>
         <section class="monitoring-type">
-          <h2 class="h2-title">MONITORING TYPE</h2>
+          <h2 class="h2-title">{{ $t("Monitor_h2-title_2") }}</h2>
           <img class="item-img" src="~/assets/imgs/twiter.svg" alt="">
         </section>
       </aside>
@@ -21,7 +21,7 @@
         <breadcrumb-navigation/>
         <header class="content-header">
           <FilterTabs v-model="activeTab" :tabList="tabs"/>
-          <div class="add-monitoring" @click="showAddMonitor">+ Add AI Monitoring</div>
+          <div class="add-monitoring" @click="showAddMonitor">{{ $t("Monitor_add-monitoring_1") }}</div>
         </header>
         <div class="monitoring-cards">
           <monitor-card v-for="(item, index) in userMonitors" :key="index" :card="item" show-action
@@ -40,9 +40,9 @@ export default {
     return {
       activeTab: "ALL",
       tabs: [
-        {label: 'ALL', key: 'ALL'},
-        {label: 'FINISHED', key: 'FINISHED'},
-        {label: 'UNFINISHED', key: 'UNFINISHED'},
+        {label: this.$t('ALL'), key: 'ALL'},
+        {label: this.$t('FINISHED'), key: 'FINISHED'},
+        {label: this.$t('UNFINISHED'), key: 'UNFINISHED'},
       ]
     }
   },

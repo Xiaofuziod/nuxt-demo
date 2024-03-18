@@ -80,12 +80,17 @@ export default {
       {code: 'en', iso: 'en', file: 'en.js'},
       {code: 'zh', iso: 'zh', file: 'zh.js'},
     ],
-    defaultLocale: 'zh',
+    defaultLocale: 'en',
     lazy: true,
     langDir: 'lang/',
     silentTranslationWarn: true,
     baseUrl: 'xxx',
-    detectBrowserLanguage: false,
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      alwaysRedirect: true,
+      fallbackLocale: 'en'
+    }
   },
   build: {
   }

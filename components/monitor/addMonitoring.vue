@@ -2,7 +2,7 @@
   <div class="monitor-wrapper-bg">
     <div class="monitor-wrapper">
       <div class="monitor-header">
-        <p class="text">添加监控信号</p>
+        <p class="text">{{ $t("addMonitoring_text_1") }}</p>
         <img class="header-close-btn" @click.stop="close()" src="@/assets/imgs/close.svg">
       </div>
       <div class="search-section">
@@ -13,14 +13,14 @@
         <div class="center-box loading-box" v-if="loading">
           <img src="@/assets/imgs/ZKZg.gif" alt="">
         </div>
-        <div class="monitor-search-title" v-if="!loading && searchQuery">搜索到的结果</div>
+        <div class="monitor-search-title" v-if="!loading && searchQuery">{{ $t("addMonitoring_monitor-search-title_1") }}</div>
         <div class="center-box empty-box" v-if="!loading && !monitors.length">
             <img src="@/assets/imgs/empty.svg" alt="">
-            <span>未发现匹配结果</span>
+            <span>{{ $t("addMonitoring_span_1") }}</span>
         </div>
         <template v-if="!searchQuery && !loading && monitors.length">
           <!-- 监控卡片列表 -->
-          <div class="monitor-title">🔥 即将开始的 X Space</div>
+          <div class="monitor-title">{{ $t("addMonitoring_monitor-title_1") }}</div>
           <div class="monitoring-cards" v-if="unstartMonitors.length">
             <mid-monitor-card
                 v-for="monitor in unstartMonitors"
@@ -30,7 +30,7 @@
                 @select="select(monitor)"
             />
           </div>
-          <div class="monitor-title">🔥 历史精华 X Space</div>
+          <div class="monitor-title">{{ $t("addMonitoring_monitor-title_2") }}</div>
           <div class="monitoring-cards" v-if="finishMonitors.length">
             <mid-monitor-card
                 v-for="monitor in finishMonitors"

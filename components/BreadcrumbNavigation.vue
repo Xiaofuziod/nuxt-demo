@@ -1,7 +1,7 @@
 <template>
   <div class="bread-path">
-    <span class="ai-font">ACCOUNT  </span>
-    <span class="split-icon">/</span>
+    <span class="ai-font">{{ $t("breadcrumb_ai-font_1") }}</span>
+    <span class="split-icon">{{ $t("breadcrumb_split-icon_1") }}</span>
     <img src="~/assets/imgs/user.svg" alt="">
     <span>{{user.account}}</span>
   </div>

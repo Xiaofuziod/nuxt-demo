@@ -2,8 +2,8 @@
   <Dialog ref="modal" width="455px">
     <template #body>
       <div class="login-content">
-        <div class="login-content-title">修改昵称</div>
-        <div class="input-label">昵称</div>
+        <div class="login-content-title">{{ $t("Login_login-content-title_1") }}</div>
+        <div class="input-label">{{ $t("Login_input-label_1") }}</div>
         <div class="login-input-box">
           <input class="login-input" placeholder="输入新的昵称" v-model="nickname"
                  type="text"></div>

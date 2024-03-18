@@ -3,7 +3,7 @@
     <template #header>
       <div>
         添加自选币
-        <span style="cursor: pointer" @click="hide">关闭</span>
+        <span style="cursor: pointer" @click="hide">{{ $t("assetSelect_index_span_1") }}</span>
       </div>
     </template>
     <template #body>

@@ -1,11 +1,11 @@
 <template>
   <div class="coins-wrapper">
     <div class="coins-header">
-      <div class="name">Name</div>
-      <div class="price">Price</div>
-      <div class="time">1h%</div>
-      <div class="time">24h%</div>
-      <div class="time">7d%</div>
+      <div class="name">{{ $t("CoinList_name_1") }}</div>
+      <div class="price">{{ $t("CoinList_price_1") }}</div>
+      <div class="time">{{ $t("CoinList_time_1") }}</div>
+      <div class="time">{{ $t("CoinList_time_2") }}</div>
+      <div class="time">{{ $t("CoinList_time_3") }}</div>
       <div class="option"></div>
     </div>
     <div class="icon-list"

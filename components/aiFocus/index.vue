@@ -12,7 +12,7 @@
     <div class="list">
       <div class="focus">
         <img src="@/static/images/chat/s2.svg" alt="">
-        AI focus
+        <span>{{ $t("AIFocus_span_1") }}</span>
       </div>
       <div class="list-item" v-for="(item,index) in coinData.list" :key="item.id + '-' + index">
         <div class="list-item-top">

@@ -4,9 +4,7 @@
       {{ message.taskText }}
       <div class="start-btn-box" v-if="message.startBtnShow">
         <div class="start-btn" @click="startBtnClick">
-          <btn>
-            START
-          </btn>
+          <btn>{{ $t("welcomeTask_btn_1") }}</btn>
         </div>
       </div>
     </div>
@@ -26,19 +24,15 @@
         </div>
       </div>
       <div class="task-desc">
-        <!--添加自选后，Taurion会为你的自选<span>每日生成市场焦点</span>，协助你减少市场噪音-->
+        <!--添加自选后，Taurion会为你的自选<span>{{ $t("welcomeTask_span_1") }}</span>，协助你减少市场噪音-->
         {{ message.desc }}
       </div>
       <div class="start-btn-box">
         <div class="start-btn" @click="showSelect">
-          <btn type="2">
-            搜索
-          </btn>
+          <btn type="2">{{ $t("welcomeTask_btn_2") }}</btn>
         </div>
         <div class="start-btn" @click="taskFinish">
-          <btn :disable="finishBtnDisable">
-            完成
-          </btn>
+          <btn :disable="finishBtnDisable">{{ $t("welcomeTask_btn_3") }}</btn>
         </div>
       </div>
     </div>

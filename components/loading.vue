@@ -2,7 +2,7 @@
   <div class="loading-overlay" v-show="show">
     <div class="loading-content">
       <img  class="loading-img" src="@/assets/imgs/ZKZg.gif" >
-      <span>loading...</span>
+      <span>LOADING</span>
     </div>
   </div>
 </template>

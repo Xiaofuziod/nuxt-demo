@@ -12,7 +12,7 @@
             <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
           </div>
           <div class="step-title-text">
-            Welcome {{ welcomeIndex }}
+            <span>{{ $t("welcome_index_span_1") }}</span> {{ welcomeIndex }}
           </div>
         </div>
         <!--第二步-->
@@ -23,9 +23,7 @@
               <img class="img-rotate" v-if="welcomeIndex < 9" src="@/assets/imgs/chat/step-loading.svg" alt="">
               <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
             </div>
-            <div class="step-title-text">
-              自选加密货币
-            </div>
+            <div class="step-title-text">{{ $t("welcome_index_step-title-text_1") }}</div>
           </div>
           <div class="step-content step-content-border">
             <div class="add-monitoring-cards">
@@ -37,9 +35,7 @@
                   @remove="remove(monitor.id)"
               />
             </div>
-            <div class="add-text" @click="handleClick('coin')">
-              + 添加
-            </div>
+            <div class="add-text" @click="handleClick('coin')">{{ $t("welcome_index_add-text_1") }}</div>
           </div>
         </template>
 

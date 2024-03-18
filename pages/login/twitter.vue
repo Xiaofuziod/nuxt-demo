@@ -2,7 +2,7 @@
 <template>
   <div>
     twitter login success
-    <div class="back-btn" @click="backHome">back home</div>
+    <div class="back-btn" @click="backHome">{{ $t("twitter_back-btn_1") }}</div>
   </div>
 </template>
 <script>

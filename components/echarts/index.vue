@@ -1,6 +1,6 @@
 <template>
   <div id="echarts">
-<!--    <div>$1873922</div>-->
+<!--    <div>{{ $t("1D_div_1") }}</div>-->
     <div class="select-row">
       <div v-for="(item,index) in selectList" :key="index"
            :class="{'active': activeKey === item.value}" @click="loadData(item)"

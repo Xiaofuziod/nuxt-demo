@@ -9,9 +9,12 @@
       <!-- Navigation area -->
       <nav v-if="userLoggedIn">
         <ul>
-          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" href="/reporting">AI Reporting</a>
+          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" href="/reporting">
+            <span>{{$t("REPORTING")}}</span>
+          </a>
           </li>
-          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" href="/monitoring">AI Monitoring</a>
+          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" href="/monitoring">
+            <span>{{$t("MONITORING")}}</span></a>
           </li>
         </ul>
       </nav>
@@ -22,23 +25,25 @@
 <!--          <img src="~/assets/imgs/vip.svg" alt="Get Premium"/>-->
 <!--          GET PREMIUM-->
 <!--        </div>-->
-        <div class="x-btn base-icon-btn" v-if="!userLoggedIn">
-          <img src="~/assets/imgs/x.svg" alt="Get Premium"/>
-        </div>
+<!--        <div class="x-btn base-icon-btn" v-if="!userLoggedIn">-->
+<!--          <img src="~/assets/imgs/x.svg" alt="Get Premium"/>-->
+<!--        </div>-->
         <div class="lang-btn base-icon-btn">
           <img src="~/assets/imgs/lang.svg" alt="User profile"/>
+          <div class="option-list">
+            <div class="option-item" @click.stop="changeLanguage('en')">English</div>
+            <div class="option-item" @click.stop="changeLanguage('zh')">中文</div>
+          </div>
         </div>
-        <div v-if="!userLoggedIn" class="login-btn" @click="showLogin">
-          LOGIN
-        </div>
+        <div v-if="!userLoggedIn" class="login-btn" @click="showLogin">{{ $t("AppHeader_index_login-btn_1") }}</div>
         <div v-else class="user-profile">
           <img src="~/assets/imgs/user.svg" alt="">
 
           <!--        账户操作-->
           <div class="user-setting">
             <div class="user-setting-content">
-              <div @click="changeNickname">修改昵称</div>
-              <div @click="logout">退出登录</div>
+              <div @click="changeNickname">{{ $t("AppHeader_index_div_1") }}</div>
+              <div @click="logout">{{ $t("AppHeader_index_div_2") }}</div>
             </div>
           </div>
         </div>
@@ -83,6 +88,9 @@ export default {
     },
     changeNickname() {
       this.$refs.editUsernameRef.show()
+    },
+    changeLanguage(lang) {
+      this.$i18n.setLocale(lang);
     },
     logout() {
       this.$localStorage.removeItem('token')
@@ -260,5 +268,32 @@ nav {
 
 .user-profile span {
   margin-left: 8px;
+}
+
+
+.lang-btn {
+  position: relative;
+  .option-list {
+    display: none; // Initially hide the option list
+    position: absolute;
+    left: 10px;
+    top: 30px;
+    background-color: rgba(68, 215, 182, 0.2);
+    border-radius: 4px; // Optional: for rounded corners
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Optional: for a slight shadow
+    z-index: 100; // Ensure it's on top of other elements
+    .option-item {
+      padding: 8px 16px; // Example padding, adjust as needed
+      cursor: pointer;
+      color: #fff;
+      &:hover {
+        background-color: rgba(68, 215, 182, 0.5);
+      }
+    }
+  }
+
+  &:hover .option-list {
+    display: block; // Show on hover
+  }
 }
 </style>

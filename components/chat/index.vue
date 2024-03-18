@@ -5,9 +5,7 @@
         <div class="chat-top-image">
           <img src="@/assets/imgs/user/default.png" alt="">
         </div>
-        <div class="chat-top-title">
-          Received 🫡 Let me think about ...
-        </div>
+        <div class="chat-top-title">{{ $t("chat_index_chat-top-title_1") }}</div>
       </div>
       <div class="chat-top-icon" v-if="false">
         <img class="img1" src="@/static/images/chat/s1.svg" alt="">
@@ -25,12 +23,10 @@
               <div class="focus-tip">
                 <btn cursor="default">
                   <img src="@/static/images/chat/s2.svg" alt="">
-                  <div>AI focus</div>
+                  <div>{{ $t("chat_index_div_1") }}</div>
                 </btn>
               </div>
-              <div class="focus-text">
-                If someone loves you,love them back unconditionally
-              </div>
+              <div class="focus-text">{{ $t("chat_index_focus-text_1") }}</div>
             </div>
           </div>
           <!--定制卡片内容-->

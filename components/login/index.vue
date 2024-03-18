@@ -3,8 +3,8 @@
     <template #header>
       <div class="header-box">
         <div class="login-title" v-if="step === 1">
-          <span :class="{'active': type === 'login' }" @click="type = 'login'">登录</span>
-          <span :class="{'active': type === 'register'}" @click="type = 'register'">注册</span>
+          <span :class="{'active': type === 'login' }" @click="type = 'login'">{{ $t("Login_span_1") }}</span>
+          <span :class="{'active': type === 'register'}" @click="type = 'register'">{{ $t("Login_span_2") }}</span>
         </div>
         <div class="back-icon" v-else @click="stepBack">
           <img src="@/assets/imgs/login/back.svg" alt="">

@@ -9,9 +9,9 @@
     </div>
     <img class="remove-btn" src="@/assets/imgs/close.svg" @click.stop="deleteMonitor(card.id)" alt="">
     <!--    <div class="option-box" v-if="showAction">-->
-    <!--      <span class="hover-point">···</span>-->
+    <!--      <span class="hover-point">{{ $t("monitorCard_hover-point_1") }}</span>-->
     <!--      <div class="option-list" @click.stop="deleteMonitor(card.id)">-->
-    <!--        <div class="option-item">DELETE</div>-->
+    <!--        <div class="option-item">{{ $t("monitorCard_option-item_1") }}</div>-->
     <!--      </div>-->
     <!--    </div>-->
   </div>

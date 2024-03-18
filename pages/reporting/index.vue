@@ -2,7 +2,7 @@
   <div class="page-content-wrapper">
     <div class="page-content">
       <div class="report-left">
-        <div class="Account">Account</div>
+        <div class="Account">{{ $t("Home_Account_1") }}</div>
         <div class="Rectangle82">
           <div class="Ellipse245">
             <img :src="user.avatar" v-if="user.avatar" alt="">
@@ -12,8 +12,8 @@
             <div class="wtewteri247">{{ user.nickname }}</div>
           </div>
         </div>
-        <div class="Account Selected">Selected{{ followList.length ? ` (${followList.length})` : '' }}
-          <span style="cursor: pointer" @click="showDelete = !showDelete">{{ showDelete ? "OK" : "Edit" }}</span>
+        <div class="Account Selected">{{$t("Selected")}}{{ followList.length ? ` (${followList.length})` : '' }}
+          <span style="cursor: pointer" @click="showDelete = !showDelete">{{ showDelete ? $t("OK") : $t("Edit") }}</span>
 
         </div>
         <!--    自选币  -->
@@ -28,17 +28,17 @@
                  alt="">
           </div>
         </div>
-        <div class="AddaNewCoin" @click="showSelect">+ Add a New Coin</div>
+        <div class="AddaNewCoin" @click="showSelect">{{ $t("Home_AddaNewCoin_1") }}</div>
       </div>
 
       <div class="report-center">
         <div class="rc-top">
-          <div class="rc-account">Account</div>
-          <span>/</span>
+          <div class="rc-account">{{ $t("Home_rc-account_1") }}</div>
+          <span>{{ $t("Home_span_1") }}</span>
           <div class="pic">
             <img :src="user.avatar" v-if="user.avatar" alt="">
           </div>
-          the account {{ user.account }} following
+          {{ $t("Home_i_1") }}{{ user.account }}{{ $t("Home_i_2") }}
         </div>
         <!--      资讯-->
         <div class="focus-list-box">

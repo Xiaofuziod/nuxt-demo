@@ -1,8 +1,8 @@
 <template>
   <div class="list-container" @scroll="handleScroll">
     <slot></slot>
-    <div v-if="isLoading" class="loading">加载中...</div>
-    <div v-if="isFinished" class="finished">没有更多数据了</div>
+    <div v-if="isLoading" class="loading">{{ $t("scrollView_index_loading_1") }}</div>
+    <div v-if="isFinished" class="finished">{{ $t("scrollView_index_finished_1") }}</div>
   </div>
 </template>
 

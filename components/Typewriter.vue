@@ -1,7 +1,7 @@
 <template>
   <div class="typewriter">
     {{ displayedText }}
-    <span class="cursor" v-if="!over">|</span>
+    <span class="cursor" v-if="!over">{{ $t("Typewriter_cursor_1") }}</span>
   </div>
 </template>
 

@@ -9,9 +9,9 @@
       <!-- Navigation area -->
       <nav v-if="userLoggedIn">
         <ul>
-          <li ><a href="/reporting">How it work</a></li>
-          <li><a href="/monitoring">Community</a></li>
-          <li><a href="/monitoring">FAQ</a></li>
+          <li ><a href="/reporting">{{ $t("AppFooter_a_1") }}</a></li>
+          <li><a href="/monitoring">{{ $t("AppFooter_a_2") }}</a></li>
+          <li><a href="/monitoring">{{ $t("AppFooter_a_3") }}</a></li>
         </ul>
       </nav>
 
@@ -30,11 +30,11 @@
     </div>
     <div class="footer-box-2">
       <div class="left">
-        © 2024 <span class="green">TRAURION.</span> ALL RIGHTS RESERVED.
+        © 2024 <span class="green">{{ $t("AppFooter_green_1") }}</span> ALL RIGHTS RESERVED.
       </div>
       <div class="right">
-        <div class="bottom-link">Terms & condition</div>
-        <div class="bottom-link">Privacy policy</div>
+        <div class="bottom-link">{{ $t("AppFooter_bottom-link_1") }}</div>
+        <div class="bottom-link">{{ $t("AppFooter_bottom-link_2") }}</div>
       </div>
     </div>
   </footer>
