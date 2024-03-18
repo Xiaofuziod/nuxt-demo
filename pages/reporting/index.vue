@@ -335,7 +335,6 @@ export default {
     }
 
     .rc-top {
-      height: 14px;
       color: rgba(140, 180, 189, 0.6);
       font-family: Avenir-Roman;
       font-size: 10px;
