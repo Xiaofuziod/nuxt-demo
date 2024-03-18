@@ -21,7 +21,7 @@
           <span class="name">{{ coin.name }}</span>
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
-        <div class="coin-price">${{ coin.quotes.price.toFixed(2) }}</div>
+        <div class="coin-price">${{ formatPrice(coin.quotes.price) }}</div>
         <div class="coin-change" :class="'positive'">
           {{ coin.quotes.percentChange1h.toFixed(2) }}%
         </div>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import {formatPrice} from "~/utils/price";
+
 export default {
   name: 'CoinList',
   props: {
@@ -66,6 +68,7 @@ export default {
     };
   },
   methods: {
+    formatPrice,
     select(coin) {
       console.log(this.selectIdList, coin.id)
       if(this.selectIdList.includes(coin.id) ) return

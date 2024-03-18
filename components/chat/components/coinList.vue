@@ -7,7 +7,7 @@
           <span class="name">{{ coin.name }}</span>
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
-        <div class="coin-price">${{ coin.marketCap.toFixed(2) }}</div>
+        <div class="coin-price">${{ formatPrice(coin.marketCap) }}</div>
         <div class="coin-change negative">
           {{ coin.circulatingSupply.toFixed(2) }}%
         </div>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import {formatPrice} from "@/utils/price";
+
 export default {
   name: 'CoinList',
   props: {
@@ -34,6 +36,7 @@ export default {
     return {};
   },
   methods: {
+    formatPrice,
     addCoin(coin) {
       console.log(coin.id, 'coin.id');
       this.$store.dispatch('monitor/addUserMonitor', [coin.id]);
