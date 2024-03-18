@@ -15,9 +15,9 @@
       </div>
     </div>
 
-    <div class="chat-content" ref="messagesContainer">
+    <div class="chat-content" ref="messagesContainer" @scroll="handleScroll">
       <div class="chat-padding">
-        <div v-for="(item,index) in messageList" :key="index">
+        <div v-for="(item,index) in messageList" :key="item.seqNo + '-' + index">
           <!--AI焦点-->
           <div class="text-message-box1"
                v-if="item.context && item.context.hook && item.context.hook.type === 'FOCUS'">
@@ -36,8 +36,7 @@
           <!--定制卡片内容-->
           <chat-card :layers="item.layers" v-if="item.layers && item.layers.length > 0"/>
           <!--欢迎的任务-->
-          <welcomeTask v-if="showWelcome && item.source === 'T-brain'"
-                       :message="item"/>
+          <welcomeTask v-if="showWelcome && item.source === 'T-brain'" :message="item"/>
           <!--文本内容-->
           <template v-if="item.text">
             <div class="text-message-box1" v-if="item.source === 'USER'">
@@ -46,13 +45,27 @@
               </div>
             </div>
             <div class="text-message-box2" v-else>
-              <div class="text-message-v2">
+              <div class="text-message-v2" v-if="item.source === 'T-brain'">
                 <Typewriter @writerOver="writerOver" :text="item.text"/>
+              </div>
+              <div class="text-message-v2" v-else>
+                {{ item.text }}
+              </div>
+            </div>
+          </template>
+          <!--loading 内容-->
+          <template v-if="item.loading">
+            <div class="text-message-box2">
+              <div class="text-message-v2">
+                <div class="chat-bubble">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
               </div>
             </div>
           </template>
         </div>
-
       </div>
     </div>
 
@@ -88,7 +101,7 @@ export default {
     return {
       message: '',
       socketSessionId: '',
-      welcomeInputDisable: false
+      welcomeInputDisable: false,
     }
   },
   computed: {
@@ -107,6 +120,9 @@ export default {
     },
     disableSend() {
       return !this.message
+    },
+    isFinished() {
+      return this.$store.state.chat.isFinished
     }
   },
   mounted() {
@@ -128,17 +144,27 @@ export default {
         this.$store.dispatch('monitor/fetchMonitorList', "Bitcoin",)
       }, 3000)
     }
-
-    if (!this.conversationId) {
+    this.loadEarlierMessages()
+  },
+  methods: {
+    handleScroll(e) {
+      const {scrollTop} = e.target;
+      if (!this.isLoading && !this.isFinished && scrollTop <= 0) {
+        console.log('get more')
+        this.isLoading = true
+        this.loadEarlierMessages()
+      }
+    },
+    async loadEarlierMessages() {
+      console.log('loadEarlierMessages', this.conversationId)
       // 加载历史聊天对话
       // NOTE: 对话 id 为空意味着还没获取过聊天历史，下面的 api 会在返回历史消息的同时附上对话 id。
       //   对话 id 需要附加到每次的对话消息中，后端凭借该 id 来区别不同的对话上下文。
       //   这种方式是针对当前用户只有一个会话的情况而简化了交互逻辑。
       //   更一般的做法应该是先获取对话列表，然后用户点击哪个对话，再根据点击对话的 id 来拉取历史消息。
-      this.$store.dispatch('chat/fetchEarlierMessages', "fakeUserNo")
-    }
-  },
-  methods: {
+      await this.$store.dispatch('chat/fetchEarlierMessages', "fakeUserNo")
+      this.isLoading = false
+    },
     onWebsocketReceiveMessage(data) {
       this.getMessage(data);
     },
@@ -158,30 +184,30 @@ export default {
         seqNo: nextSeqNo,
         source: "USER",
         context: null,
-        language: "zh",
+        language: this.$store.$i18n.locale,
         text: this.message
       }
       this.$socket.emit('chat', para)
-      this.messageList.push(para)
+      this.$store.dispatch('chat/addMessage', para)
       this.message = ''
+      this.$store.dispatch('chat/addMessage', {
+        seqNo: nextSeqNo + 1,
+        source: "ASSISTANT",
+        context: null,
+        language: this.$store.$i18n.locale,
+        text: '',
+        layers: [],
+        loading: true
+      })
+      this.scrollToBottom()
     },
     getMessage(data) {
-      console.log('收到', data)
+      // console.log('收到', data)
       if (data.conversationId !== this.conversationId) {
         console.log(`ignore message from other conversation:`, data)
         return
       }
-
-      const lastMsg = this.messageList[this.messageList.length - 1]
-      if (lastMsg && lastMsg.seqNo === data.seqNo && lastMsg.source === data.source) {
-        // 如果新消息和最后一条消息同属一个序号、角色，合并他们的内容
-        lastMsg.text += data.text
-        lastMsg.layers = lastMsg.layers.concat(data.layers)
-      } else {
-        // 否则直接添加新消息
-        this.messageList.push(data)
-      }
-      // this.messageList.push({message: '收到：' + data.data.message})
+      this.$store.dispatch('chat/pushSubscriptMessage', data)
     },
     writerOver() {
       const lastMsg = this.messageList[this.messageList.length - 1]
@@ -189,54 +215,37 @@ export default {
         // 自动下一句
         if (lastMsg.autoNext) {
           this.$store.dispatch('chat/welcomeToNext')
+          this.scrollToBottom()
         }
-        // 需要推荐热门币种
-        if (lastMsg.needPushHotCoin) {
-          let para = {
+        // 需要推荐热门币种 或者 热门信号源
+        if (lastMsg.needPushHotCoin || lastMsg.needPushHotMonitor) {
+          const para = {
             seqNo: null,
             source: "ASSISTANT",
             context: null,
-            language: "zh",
+            language: this.$store.$i18n.locale,
             text: '',
             layers: [
               {
-                layer: "HOT_COINS",
+                layer: lastMsg.needPushHotCoin ? "HOT_COINS" : "HOT_SOURCES",
                 title: '热门推荐',
                 data: {
-                  coins: this.$store.state.coin.coinList
+                  coins: lastMsg.needPushHotCoin ? this.$store.state.coin.coinList : this.$store.state.monitor.monitorList
                 }
               }
             ],
             more: false,
           }
           this.$store.dispatch('chat/addMessage', para)
-        }
-        // 需要推荐热门信号源
-        if (lastMsg.needPushHotMonitor) {
-          let para = {
-            seqNo: null,
-            source: "ASSISTANT",
-            context: null,
-            language: "zh",
-            text: '',
-            layers: [
-              {
-                layer: "HOT_SOURCES",
-                title: '热门推荐',
-                data: {
-                  sources: this.$store.state.monitor.monitorList
-                }
-              }
-            ],
-            more: false,
-          }
-          this.$store.dispatch('chat/addMessage', para)
+          this.scrollToBottom()
         }
       }
     },
     scrollToBottom() {
-      const messagesContainer = this.$refs.messagesContainer;
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      this.$nextTick(() => {
+        const messagesContainer = this.$refs.messagesContainer;
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      });
     },
   },
   beforeDestroy() {
@@ -244,15 +253,50 @@ export default {
     this.$socket.off('chat', this.onWebsocketReceiveMessage);
     this.$socket.off('connect', this.onWebsocketConnect);
   },
-  watch: {
-    messageList() {
-      this.scrollToBottom()
-    }
-  },
 }
 </script>
 
 <style lang="less" scoped>
+
+/* 聊天气泡的基本样式 */
+.chat-bubble {
+  display: flex;
+  gap: 5px; /* 点之间的间隔 */
+  padding: 6px;
+}
+
+/* 点的基本样式 */
+.dot {
+  width: 5px;
+  height: 5px;
+  background-color: rgba(217, 217, 217, 0.2);
+  border-radius: 50%;
+  animation: blink 1.5s infinite; /* 应用动画 */
+}
+
+/* 定义动画 */
+@keyframes blink {
+  0%, 100% {
+    background-color: rgba(217, 217, 217, 0.2);
+  }
+  50% {
+    background-color: #D9D9D9;
+  }
+}
+
+/* 为每个点设置不同的动画延迟，实现轮流变色的效果 */
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
 
 .chat-box {
   width: 515px;
@@ -298,7 +342,6 @@ export default {
       font-family: Avenir;
       font-weight: 500;
       font-size: 13px;
-      text-transform: capitalize;
     }
   }
 

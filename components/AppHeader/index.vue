@@ -18,10 +18,10 @@
 
       <!-- User action area -->
       <div class="user-actions">
-        <div class="vip-btn base-icon-btn" v-if="userLoggedIn && !isVip">
-          <img src="~/assets/imgs/vip.svg" alt="Get Premium"/>
-          GET PREMIUM
-        </div>
+<!--        <div class="vip-btn base-icon-btn" v-if="userLoggedIn && !isVip">-->
+<!--          <img src="~/assets/imgs/vip.svg" alt="Get Premium"/>-->
+<!--          GET PREMIUM-->
+<!--        </div>-->
         <div class="x-btn base-icon-btn" v-if="!userLoggedIn">
           <img src="~/assets/imgs/x.svg" alt="Get Premium"/>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="taurion-btn"
-       :class="{'disable-btn': disable}"
-       :style="{'cursor': cursor}">
+       :class="`taurion-btn-${type}`"
+       :style="{'cursor': cursor,opacity: disable? '0.4' : 1 }">
     <slot></slot>
   </div>
 </template>
@@ -44,6 +44,9 @@ export default {
     height: 12px;
     margin-right: 4px;
   }
+}
+.taurion-btn-returns{
+  --color: rgba(244, 70, 83, .2);
 }
 
 .disable-btn {

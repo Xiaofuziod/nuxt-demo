@@ -17,12 +17,14 @@
 </template>
 <script>
 
+import {updateUserInfo} from "@/common/home";
+
 export default {
   name: 'Login',
   components: {},
   data() {
     return {
-      nickname: '',
+      nickname: this.$store.state.user.nickname || '',
       showLoading: false
     }
   },
@@ -35,10 +37,25 @@ export default {
 
   },
   methods: {
-    handleClick() {
+    async handleClick() {
       if (this.btnDisable) return
-      this.$toast.success('修改成功')
-      this.hide()
+      try {
+        this.showLoading = true
+        const res = await this.$axios.post(updateUserInfo, {
+          nickname: this.nickname
+        })
+        console.log(res.data, 'res.data.data')
+        if (res.data.code === 200) {
+          this.$toast.success('修改成功')
+          this.hide()
+        } else {
+          this.$toast.error(res.data.msg || '修改失败')
+        }
+        this.showLoading = false
+      } catch (e) {
+        this.showLoading = false
+        console.log(e)
+      }
     },
     show() {
       this.$refs.modal.openModal()

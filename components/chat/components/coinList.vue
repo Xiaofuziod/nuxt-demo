@@ -8,7 +8,7 @@
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
         <div class="coin-price">${{ coin.marketCap.toFixed(2) }}</div>
-        <div class="coin-change" :class="'negative'">
+        <div class="coin-change negative">
           {{ coin.circulatingSupply.toFixed(2) }}%
         </div>
         <div class="option" @click="addCoin(coin)">
@@ -60,15 +60,15 @@ export default {
     align-items: center;
 
     .coin-logo {
-      width: 16px;
-      height: 16px;
-      border-radius: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 32px;
     }
 
     .name {
       color: #FFF;
       font-family: Avenir;
-      font-size: 8px;
+      font-size: 15px;
       font-style: normal;
       padding: 0 12px;
       font-weight: 800;
@@ -84,7 +84,7 @@ export default {
     .coin-symbol {
       color: rgba(255, 255, 255, 0.50);
       font-family: Avenir;
-      font-size: 8px;
+      font-size: 15px;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
@@ -96,13 +96,14 @@ export default {
     width: 90px;
     color: #FFF;
     font-family: Avenir;
-    font-size: 8px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 800;
     line-height: normal;
     text-transform: capitalize;
     text-align: right;
     padding: 0 7px;
+    overflow: hidden;
 
 
   }
@@ -112,12 +113,13 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    overflow: hidden;
 
     &:before {
       content: " ";
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 16px;
+      height: 16px;
       background-size: 100% 100%;
       margin-left: 1px;
     }
@@ -125,42 +127,42 @@ export default {
     &.positive {
       color: #42C525;
       font-family: Avenir;
-      font-size: 8px;
+      font-size: 13px;
       font-style: normal;
       font-weight: 800;
       line-height: normal;
       text-transform: capitalize;
 
       &:before {
-        background: url(@/assets/imgs/positive.svg);
-        background-size: 8px 8px;
+        background: url(@/assets/imgs/positive.svg) no-repeat;
+        background-size: 16px 16px;
       }
     }
 
     &.negative {
       color: #F44653;
       font-family: Avenir;
-      font-size: 8px;
+      font-size: 13px;
       font-style: normal;
       font-weight: 800;
       line-height: normal;
       text-transform: capitalize;
 
       &:before {
-        background: url(@/assets/imgs/nagative.svg);
-        background-size: 8px 8px;
+        background: url(@/assets/imgs/nagative.svg) no-repeat;
+        background-size: 16px 16px;
       }
     }
   }
 
   .option {
-    width: 16px;
+    width: 20px;
     cursor: pointer;
-    margin-left: 24px;
+    margin-left: 12px;
 
     img {
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
     }
   }
 }

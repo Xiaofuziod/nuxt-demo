@@ -5,7 +5,7 @@
         <div class="Account">Account</div>
         <div class="Rectangle82">
           <div class="Ellipse245">
-            <img :src="user.avatar" alt="">
+            <img :src="user.avatar" v-if="user.avatar" alt="">
           </div>
           <div>
             <div class="saywteri2473 ellipsis">{{ user.account }}</div>
@@ -36,7 +36,7 @@
           <div class="rc-account">Account</div>
           <span>/</span>
           <div class="pic">
-            <img :src="user.avatar" alt="">
+            <img :src="user.avatar" v-if="user.avatar" alt="">
           </div>
           the account {{ user.account }} following
         </div>
@@ -47,12 +47,11 @@
             <template v-if="coinId">
               <my-echarts ref="echart"></my-echarts>
             </template>
-
-            <!--            <div class="focus-list" v-if="list.length > 0">-->
-            <!--              <div v-for="item in list" :key="item.id">-->
-            <!--                <AIFocus :coin-data="item"/>-->
-            <!--              </div>-->
-            <!--            </div>-->
+            <div class="focus-list" v-if="list.length > 0">
+              <div v-for="item in list" :key="item.id">
+                <AIFocus :coin-data="item"/>
+              </div>
+            </div>
           </list-container>
         </div>
       </div>
@@ -84,7 +83,7 @@ export default {
     return {
       showDelete: false,
       list: [],
-      coinId: 10
+      coinId: ''
     }
   },
   computed: {
@@ -98,9 +97,6 @@ export default {
   mounted() {
     this.loadData()
     this.$store.dispatch('coin/fetchUserCoinList')
-    this.$nextTick(() => {
-      this.$refs.echart.reload(10)
-    })
   },
   methods: {
     handleClick(item) {
@@ -117,23 +113,20 @@ export default {
       this.$store.dispatch('coin/removeFollow', item.id)
     },
     loadData() {
-      this.$axios.get(analysisCoin, {params: {}}).then(res => {
-        // const arr = res.data.data.map(item => {
-        //   const d = parseTime(item.createdDate)
-        //   return {
-        //     ...item,
-        //     isToday: d.isToday,
-        //     weekDay: d.weekDay,
-        //     time: d.time,
-        //     date: d.date
-        //   }
-        // })
-        // this.list = [
-        //   {
-        //     ...arr[0],
-        //     list: arr
-        //   }
-        // ]
+      this.$axios.get(analysisCoin, {params: {id: this.coinId}}).then(res => {
+        let obj = res.data.data
+        let dateList = Object.keys(obj)
+        let newData = []
+        dateList.forEach(item => {
+          const d = parseTime(item)
+          newData.push({
+            date: item,
+            isToday: d.isToday,
+            weekDay: d.weekDay,
+            list: obj[item]
+          })
+        })
+        this.list = newData
       })
     }
   }
@@ -193,6 +186,7 @@ export default {
     text-transform: capitalize;
   }
 }
+
 .page-content-wrapper {
   position: relative;
   overflow-x: visible;
@@ -202,6 +196,7 @@ export default {
   padding-top: 16px;
   text-align: center;
 }
+
 .page-content {
   max-width: 1152px;
   width: 1152px;
@@ -322,7 +317,7 @@ export default {
     }
 
     .focus-list {
-      padding: 0 40px;
+      padding: 0 40px 30px;
     }
 
     .rc-top {

@@ -2,7 +2,6 @@
   <div class="focus-item">
     <div class="data-row">
       <div class="date">{{ coinData.date }}</div>
-
       <div class="date1">
         {{ coinData.isToday ? 'Today' : "" }}
         <div class="date2">
@@ -10,22 +9,18 @@
         </div>
       </div>
     </div>
-
     <div class="list">
-
       <div class="focus">
         <img src="@/static/images/chat/s2.svg" alt="">
         AI focus
       </div>
-
-      <div class="list-item" v-for="item in coinData.list" :key="item.id">
-
+      <div class="list-item" v-for="(item,index) in coinData.list" :key="item.id + '-' + index">
         <div class="list-item-top">
           <div class="list-item-top1">{{ item.time }}</div>
           <div class="list-item-top2">
             <img :src="item.coverPhotoUrl" alt="">
           </div>
-          <div class="list-item-top3">Ethereum</div>
+          <div class="list-item-top3">{{ item.symbol }}</div>
         </div>
 
         <div class="list-item-content">
@@ -34,7 +29,6 @@
             <img src="@/static/images/chat/ai2.svg" alt="">
           </div>
         </div>
-
       </div>
 
     </div>
@@ -85,17 +79,22 @@ export default {
 
   .list {
     width: 305px;
-    height: 293px;
     border-radius: 16px;
     background: rgba(38, 64, 64, 0.2);
     margin-top: 24px;
     position: relative;
     box-sizing: border-box;
+    padding: 19px 24px 10px 24px;
 
 
     .list-item {
       box-sizing: border-box;
-      padding: 26px 24px 0;
+      border-bottom: 1px solid rgba(140, 180, 189, 0.12);
+      padding: 8px 0 10px;
+
+      &:last-child {
+        border-bottom: none;
+      }
 
       .list-item-top {
         display: flex;
@@ -138,7 +137,6 @@ export default {
 
         .list-item-title {
           flex: 1;
-          height: 36px;
           color: rgba(255, 255, 255, 1);
           font-family: Avenir;
           font-weight: 500;
@@ -155,6 +153,7 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+          cursor: pointer;
 
           img {
             width: 18px;
@@ -165,7 +164,6 @@ export default {
     }
 
     .focus {
-
       width: 93px;
       height: 25px;
       color: rgba(25, 40, 54, 1);
@@ -175,6 +173,7 @@ export default {
       backdrop-filter: blur(108px);
       position: absolute;
       top: -12px;
+      left: 0;
       display: flex;
       align-items: center;
       box-sizing: border-box;

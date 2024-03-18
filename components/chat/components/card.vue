@@ -5,7 +5,7 @@
       <template v-if="item.type === 'HOT_SOURCES'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/hot.svg" alt="">
-          热门信号源
+          {{ item.title }}
         </div>
         <monitor-list :list="item.data?.sources"/>
       </template>
@@ -13,35 +13,54 @@
       <!--预测相关-->
       <template v-if="item.type === 'PREDICTION'">
         <div class="chat-card-title">
-          <img class="img1" src="@/static/images/chat/hot.svg" alt="">
-          预测
+          <img class="img1" src="@/static/images/chat/returns.svg" alt="">
           {{ item.title }}
         </div>
-        <div style="color: white">
-          <p>Returns: {{ item.data.returns }}</p>
-          <ul>
+        <div class="returns-box">
+          <div class="returns-top">
+            <div class="returns-btn">
+              <btn class="btn" type="returns">
+                <img class="img1" src="@/static/images/chat/up.svg" alt="">
+                <div class="returns-btn-text">购买信号{{ item.data.returns > 0 ? '强' : '弱' }}</div>
+              </btn>
+            </div>
+
+            <div class="coin-name">
+              <img :src="item.data.coin.logo" class="coin-logo" :alt="item.data.coin.logo">
+              <span class="name">{{ item.data.coin.name }}</span>
+              <span class="coin-symbol">{{ item.data.coin.symbol }}</span>
+            </div>
+
+          </div>
+
+          <div class="returns-title">
             Positive Developments
+          </div>
+          <ul class="returns-list">
             <li v-for="reason of item.data.advantages">
               {{ reason }}
             </li>
           </ul>
-          <ul>
+          <div class="returns-title">
             Potential Concerns
+          </div>
+          <ul class="returns-list">
             <li v-for="reason of item.data.disadvantages">
               {{ reason }}
             </li>
           </ul>
-          <p>{{ item.data.conclusion }}</p>
+          <div class="returns-title">
+            conclusion
+          </div>
+          <p class="returns-conclusion">{{ item.data.conclusion }}</p>
         </div>
-        <coin-list :coin-list="[item.data.coin]"/>
       </template>
 
-      <!--日志相关-->
       <template v-if="item.type === 'LOG'">
         <div class="chat-card-title">
-          {{ item.toolName }}
+          {{ item.toolName }} - {{ item.type }}
         </div>
-        <p style="color: white">{{ item.log }}</p>
+        <p style="color: white;margin-bottom: 20px">{{ item.log }}</p>
       </template>
 
       <!--错误相关-->
@@ -55,13 +74,13 @@
       <template v-if="item.type === 'HOT_COINS'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/hot.svg" alt="">
-          热门推荐
+          {{ item.title }}
         </div>
         <coin-list :coinList="item.data?.coins"/>
       </template>
 
       <!--监控信号-->
-      <template v-if="item.type === 'Signal_source'">
+      <template v-if="item.type === 'HOT_SOURCES'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/s4.svg" alt="">
           Signal source
@@ -105,9 +124,11 @@
 <script>
 import coinList from "@/components/chat/components/coinList.vue";
 import monitorList from "@/components/chat/components/monitorList.vue";
+import Btn from "@/components/chat/components/btn.vue";
 
 export default {
   components: {
+    Btn,
     coinList,
     monitorList
   },
@@ -118,17 +139,130 @@ export default {
     }
   },
   data() {
-    return {
-      unstartMonitors: []
-    }
+    return {}
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
+
+.coin-name {
+  display: flex;
+  align-items: center;
+
+  .coin-logo {
+    width: 16px;
+    height: 16px;
+    border-radius: 32px;
+  }
+
+  .name {
+    color: #FFF;
+    font-family: Avenir;
+    font-size: 10px;
+    font-style: normal;
+    padding: 0 4px;
+    font-weight: 800;
+    line-height: normal;
+    text-transform: capitalize;
+    max-width: 120px;
+    // 超出省略
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .coin-symbol {
+    color: rgba(255, 255, 255, 0.50);
+    font-family: Avenir;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+  }
+}
+
+.returns-box {
+  width: 334px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: rgba(140, 180, 189, 0.10);
+  box-sizing: border-box;
+  padding: 13px 12px;
+  margin-bottom: 14px;
+
+  .returns-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .returns-title {
+    color: rgba(255, 255, 255, 0.70);
+    font-family: Avenir;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+    margin-bottom: 8px;
+  }
+
+  .returns-btn {
+    width: 93px;
+    height: 25px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .returns-btn-text {
+      color: #F44653;
+      font-family: "Gruppe F";
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 800;
+      text-transform: capitalize;
+    }
+  }
+
+  .returns-list {
+    box-sizing: border-box;
+    padding-left: 13px;
+
+    li {
+      color: rgba(255, 255, 255, 0.70);
+      font-family: Avenir;
+      font-size: 8px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: capitalize;
+      margin-bottom: 8px;
+    }
+  }
+
+  .returns-conclusion {
+    color: rgba(255, 255, 255, 0.70);
+    font-family: Avenir;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+  }
+}
+
 .chat-card {
   box-sizing: border-box;
-  padding: 14px 20px 16px;
-  width: 370px;
+  padding: 14px 20px 0;
+  min-width: 370px;
   border-radius: 16px;
   margin-top: 12px;
   border: 2px solid rgba(255, 255, 255, 0.10);
@@ -176,7 +310,7 @@ export default {
   font-family: Avenir;
   font-weight: 500;
   font-size: 9px;
-  text-transform: uppercase;
+  //text-transform: uppercase;
 }
 
 .source-row {
@@ -198,7 +332,7 @@ export default {
       color: rgba(255, 255, 255, 0.7);
       font-family: Avenir-Roman;
       font-size: 8px;
-      text-transform: capitalize;
+      //text-transform: capitalize;
     }
 
     .source-item-user {
@@ -222,7 +356,7 @@ export default {
           color: rgba(255, 255, 255, 1);
           font-family: Avenir-Heavy;
           font-size: 6px;
-          text-transform: capitalize;
+          //text-transform: capitalize;
 
           img {
             width: 5px;
@@ -236,7 +370,7 @@ export default {
           color: rgba(255, 255, 255, 0.5);
           font-family: Avenir-Book;
           font-size: 6px;
-          text-transform: capitalize;
+          //text-transform: capitalize;
         }
 
       }
