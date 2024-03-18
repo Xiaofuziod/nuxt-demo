@@ -1,4 +1,5 @@
 export function formatPrice(price) {
+  if (!price) return ''
   if (price >= 1) {
     // 如果价格大于 0，直接四舍五入到小数点后两位
     return parseFloat(price.toFixed(2));

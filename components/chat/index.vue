@@ -26,7 +26,7 @@
                   <div>{{ $t("chat_index_div_1") }}</div>
                 </btn>
               </div>
-              <div class="focus-text">{{ $t("chat_index_focus-text_1") }}</div>
+              <div class="focus-text">{{ item.text }}</div>
             </div>
           </div>
           <!--定制卡片内容-->
@@ -204,6 +204,7 @@ export default {
         console.log(`ignore message from other conversation:`, data)
         return
       }
+      this.scrollToBottom()
       this.$store.dispatch('chat/pushSubscriptMessage', data)
     },
     writerOver() {
@@ -255,8 +256,7 @@ export default {
   },
   watch: {
     msgLength(newValue, oldValue) {
-      console.log('msgLength', newValue, oldValue)
-      if (newValue - oldValue > 3) {
+      if (newValue - oldValue < 5) {
         this.scrollToBottom()
       }
     }
@@ -373,6 +373,7 @@ export default {
     }
 
     .text-message {
+      max-width: 90%;
       box-sizing: border-box;
       padding: 16px 20px;
       border-radius: 16px;
@@ -387,6 +388,7 @@ export default {
     }
 
     .text-message-v2 {
+      max-width: 90%;
       box-sizing: border-box;
       padding: 16px 20px;
       border-radius: 16px;
