@@ -21,10 +21,10 @@
 
       <!-- User action area -->
       <div class="user-actions">
-<!--        <div class="vip-btn base-icon-btn" v-if="userLoggedIn && !isVip">-->
-<!--          <img src="~/assets/imgs/vip.svg" alt="Get Premium"/>-->
-<!--          GET PREMIUM-->
-<!--        </div>-->
+        <!--        <div class="vip-btn base-icon-btn" v-if="userLoggedIn && !isVip">-->
+        <!--          <img src="~/assets/imgs/vip.svg" alt="Get Premium"/>-->
+        <!--          GET PREMIUM-->
+        <!--        </div>-->
 <!--        <div class="x-btn base-icon-btn" v-if="!userLoggedIn">-->
 <!--          <img src="~/assets/imgs/x.svg" alt="Get Premium"/>-->
 <!--        </div>-->
@@ -59,7 +59,7 @@ import Login from "@/components/login/index.vue";
 import editUsername from "@/components/editUsername.vue";
 
 export default {
-  components: {Login,editUsername},
+  components: {Login, editUsername},
   data() {
     return {
       userLoggedIn: true,
@@ -71,13 +71,17 @@ export default {
     // Check if user is logged in
     const token = this.$localStorage.getItem('token')
     this.userLoggedIn = !!token
-    // Check if user is a VIP
 
     // 处理事件
     this.$bus.$on('LOGON_SUCCESS', () => {
       this.userLoggedIn = true
     });
     // this.showLogin()
+
+    const query = this.$route.query
+    if (query && query.t === 'login') {
+      this.showLogin()
+    }
   },
   methods: {
     goHome() {
@@ -117,6 +121,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
   .header-box {
     width: 1152px;
     display: flex;
@@ -249,6 +254,7 @@ nav {
       backdrop-filter: blur(100px);
       padding: 20px;
       border-radius: 16px;
+
       div {
         color: #FFF;
         font-family: Avenir;

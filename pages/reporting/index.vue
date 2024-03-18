@@ -18,7 +18,9 @@
         </div>
         <!--    自选币  -->
         <div class="Frame580">
-          <div class="item" v-for="item in followList" :key="item.id" @click="handleClick(item)">
+          <div class="item" v-for="item in followList" :key="item.id"
+               :class="{ 'item-active': item.coinId === coinId}"
+               @click="handleClick(item)">
             <div class="item-left">
               <img class="Rectangle" :src="item.icon" alt="">
               <div class="Bitcoin ellipsis">{{ item.name }}</div>
@@ -121,7 +123,7 @@ export default {
         dateList.forEach(item => {
           const d = parseTime(item)
           newData.push({
-            date: item,
+            date: d.date,
             isToday: d.isToday,
             weekDay: d.weekDay,
             list: obj[item]
@@ -139,6 +141,7 @@ export default {
   margin-top: 24px;
   max-height: calc(100% - 220px);
   overflow-y: auto;
+  margin-left: -8px;
 
   .delete-icon {
     width: 16px;
@@ -147,11 +150,20 @@ export default {
   }
 
   .item {
+    height: 48px;
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 4px;
     cursor: pointer;
     justify-content: space-between;
+    border-left: 3px solid transparent;
+    box-sizing: border-box;
+    padding-left: 8px;
+  }
+
+  .item-active {
+    background: linear-gradient(90deg, rgba(172, 241, 216, 0.12) 0%, rgba(172, 241, 216, 0.00) 100%);
+    border-left: 3px solid #ACF1D8;
   }
 
   .item-left {

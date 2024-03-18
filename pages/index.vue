@@ -81,18 +81,26 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import AddCoin from "~/components/report/addCoin.vue";
-import AddMonitoring from "~/components/monitor/addMonitoring.vue";
+<script>
+export default {
+  name: 'Home',
+  data() {
+    return {}
+  },
+  mounted() {
+
+  }
+}
 </script>
 <style lang="less" scoped>
 .home-wrapper {
   position: relative;
-  overflow:scroll;
+  overflow: scroll;
   width: 100%;
   z-index: 0;
   padding-top: 16px;
   text-align: center;
+
   .container {
     position: relative;
     z-index: 1;
@@ -289,6 +297,7 @@ import AddMonitoring from "~/components/monitor/addMonitoring.vue";
     flex-direction: column;
     position: relative;
     margin-top: 123px;
+
     .title1 {
       width: 372px;
       height: 68px;
@@ -321,18 +330,22 @@ import AddMonitoring from "~/components/monitor/addMonitoring.vue";
         top: 155px;
         left: 15px;
       }
+
       &.position-2 {
         top: 472px;
         left: 330px;
       }
+
       &.position-3 {
         top: 488px;
         left: 962px;
       }
+
       &.position-4 {
         top: 212px;
         left: 755px;
       }
+
       .userinfo {
         display: flex;
         align-items: end;
@@ -399,6 +412,7 @@ import AddMonitoring from "~/components/monitor/addMonitoring.vue";
           background: rgba(255, 255, 255, 0.08);
           border-radius: 10px;
         }
+
         &:after {
           content: '';
           position: absolute;
@@ -418,6 +432,7 @@ import AddMonitoring from "~/components/monitor/addMonitoring.vue";
     flex-wrap: wrap;
     width: 1198.3px;
     margin-top: 123px;
+
     .title1 {
       width: 1198px;
       height: 86px;
@@ -430,6 +445,7 @@ import AddMonitoring from "~/components/monitor/addMonitoring.vue";
       text-transform: capitalize;
       color: #CEB864;
     }
+
     .partner {
       width: 322.8px;
       height: 322.8px;
@@ -441,9 +457,11 @@ import AddMonitoring from "~/components/monitor/addMonitoring.vue";
       display: flex;
       align-items: center;
       justify-content: center;
+
       img {
         width: 300px;
       }
+
       &:after {
         background: rgba(153, 188, 138, 0.1);
         content: '';

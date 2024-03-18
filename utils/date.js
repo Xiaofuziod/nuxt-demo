@@ -11,7 +11,7 @@ export function parseTime(timeStr) {
     date.getDate() === today.getDate();
 
   // 获取星期几
-  const weekDays = ['Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.'];
+  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   const weekDay = weekDays[date.getDay()];
 

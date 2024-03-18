@@ -9,7 +9,9 @@ export const state = () => ({
   welcomeList: welcomeList,
   welcomeIndex: 0,
   welcomeAddCoinFinish: false,
-  isFinished: false  // 历史消息是否已经加载完
+  isFinished: false,  // 历史消息是否已经加载完
+
+
 })
 
 export const mutations = {

@@ -262,6 +262,7 @@ export default {
   box-sizing: border-box;
   padding: 14px 20px 0;
   min-width: 370px;
+  max-width: 400px;
   border-radius: 16px;
   margin-top: 12px;
   border: 2px solid rgba(255, 255, 255, 0.10);

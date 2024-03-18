@@ -76,7 +76,6 @@
 <script>
 import Typewriter from "@/components/Typewriter.vue";
 import btn from "./components/btn.vue";
-import uuid from "@/utils/uuid";
 import chatCard from "./components/card.vue";
 import welcomeTask from "./components/welcomeTask.vue";
 
@@ -98,6 +97,7 @@ export default {
       message: '',
       socketSessionId: '',
       welcomeInputDisable: false,
+      isViewingHistory: false,
     }
   },
   computed: {
@@ -119,6 +119,9 @@ export default {
     },
     isFinished() {
       return this.$store.state.chat.isFinished
+    },
+    msgLength() {
+      return this.messageList.length
     }
   },
   mounted() {
@@ -146,19 +149,25 @@ export default {
     handleScroll(e) {
       const {scrollTop} = e.target;
       if (!this.isLoading && !this.isFinished && scrollTop <= 0) {
-        console.log('get more')
         this.isLoading = true
         this.loadEarlierMessages()
       }
     },
     async loadEarlierMessages() {
-      console.log('loadEarlierMessages', this.conversationId)
       // 加载历史聊天对话
       // NOTE: 对话 id 为空意味着还没获取过聊天历史，下面的 api 会在返回历史消息的同时附上对话 id。
       //   对话 id 需要附加到每次的对话消息中，后端凭借该 id 来区别不同的对话上下文。
       //   这种方式是针对当前用户只有一个会话的情况而简化了交互逻辑。
       //   更一般的做法应该是先获取对话列表，然后用户点击哪个对话，再根据点击对话的 id 来拉取历史消息。
+
+      // 获取历史消息之前的滚动条高度
+      const previousHeight = this.$refs.messagesContainer.scrollHeight;
       await this.$store.dispatch('chat/fetchEarlierMessages', "fakeUserNo")
+      // 插入后，调整滚动位置
+      this.$nextTick(() => {
+        const currentHeight = this.$refs.messagesContainer.scrollHeight;
+        this.$refs.messagesContainer.scrollTop += currentHeight - previousHeight;
+      });
       this.isLoading = false
     },
     onWebsocketReceiveMessage(data) {
@@ -190,7 +199,7 @@ export default {
       this.scrollToBottom()
     },
     getMessage(data) {
-      console.log('收到', data)
+      // console.log('收到', data)
       if (data.conversationId !== this.conversationId) {
         console.log(`ignore message from other conversation:`, data)
         return
@@ -232,7 +241,10 @@ export default {
     scrollToBottom() {
       this.$nextTick(() => {
         const messagesContainer = this.$refs.messagesContainer;
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        messagesContainer.scrollTo({
+          top: messagesContainer.scrollHeight,
+          behavior: 'smooth'
+        })
       });
     },
   },
@@ -241,6 +253,14 @@ export default {
     this.$socket.off('chat', this.onWebsocketReceiveMessage);
     this.$socket.off('connect', this.onWebsocketConnect);
   },
+  watch: {
+    msgLength(newValue, oldValue) {
+      console.log('msgLength', newValue, oldValue)
+      if (newValue - oldValue > 3) {
+        this.scrollToBottom()
+      }
+    }
+  }
 }
 </script>
 

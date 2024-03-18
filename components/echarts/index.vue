@@ -1,6 +1,6 @@
 <template>
   <div id="echarts">
-<!--    <div>{{ $t("1D_div_1") }}</div>-->
+    <!--    <div>{{ $t("1D_div_1") }}</div>-->
     <div class="select-row">
       <div v-for="(item,index) in selectList" :key="index"
            :class="{'active': activeKey === item.value}" @click="loadData(item)"
@@ -13,6 +13,7 @@
 </template>
 <script type="text/javascript">
 import {getCoinPrice} from "@/common/home";
+import {formatPrice} from "@/utils/price";
 
 export default {
   name: 'Echarts',
@@ -66,9 +67,9 @@ export default {
           }
         },
         grid: {
-          right: "18%",
-          top:"5%",
-          left: "8%",
+          right: "5%",
+          top: "5%",
+          left: "10%",
         },
         xAxis: {
           type: 'category',
@@ -77,7 +78,18 @@ export default {
         },
         yAxis: {
           type: 'value',
-          position: 'right',
+          position: 'left',
+          // axisLine: {
+          //   show: true, // 显示轴线
+          //   lineStyle: {
+          //     color: '#rgba(128, 251, 241, 1)' // 设置轴线的颜色
+          //   }
+          // },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed' // 这里可以是 'dashed' 或 'dotted'
+            }
+          }
         },
         dataZoom: [
           {
@@ -96,15 +108,18 @@ export default {
             itemStyle: {
               color: 'rgb(255, 70, 131)'
             },
+            lineStyle: {
+              color: '#479e85' // 可以是十六进制颜色码、RGB、RGBA、HSL、HSLA 或颜色名称
+            },
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: 'rgb(255, 158, 68)'
+                  color: 'rgba(2, 160, 131, 0)'
                 },
                 {
                   offset: 1,
-                  color: 'rgb(255, 70, 131)'
+                  color: 'rgba(2, 160, 131, 1)'
                 }
               ])
             },
@@ -122,7 +137,7 @@ export default {
         const market = res.data.data.market
         market.forEach(item => {
           this.xData.push(item[0])
-          this.yData.push(item[1])
+          this.yData.push(formatPrice(item[1]))
         })
         this.echartsInit()
       } catch (e) {
