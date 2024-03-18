@@ -44,9 +44,7 @@
               <div class="text-message-v2" v-if="item.source === 'T-brain'">
                 <Typewriter @writerOver="writerOver" :text="item.text"/>
               </div>
-              <div class="text-message-v2" v-else>
-                {{ formatText(item.text) }}
-              </div>
+              <div class="text-message-v2" v-else>{{ formatText(item.text) }}</div>
             </div>
           </template>
           <!--loading 内容-->
