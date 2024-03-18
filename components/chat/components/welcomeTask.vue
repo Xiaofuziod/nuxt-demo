@@ -29,10 +29,10 @@
       </div>
       <div class="start-btn-box">
         <div class="start-btn" @click="showSelect">
-          <btn type="2">{{ $t("welcomeTask_btn_2") }}</btn>
+          <btn type="2">{{ $t("welcomeTask_btn_3") }}</btn>
         </div>
         <div class="start-btn" @click="taskFinish">
-          <btn :disable="finishBtnDisable">{{ $t("welcomeTask_btn_3") }}</btn>
+          <btn :disable="finishBtnDisable">{{ $t("welcomeTask_btn_2") }}</btn>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@ export default {
       return this.$store.state.monitor.userMonitorList
     },
     finishBtnDisable() {
-      return this.message.searchType === 'coin' ? this.userCoinList.length === 0 : this.userMonitorList.length === 0
+      return this.message.searchType === 'coin' ? this.userCoinList.length === 0 : false
     },
     messageList() {
       return this.$store.state.chat.messageList

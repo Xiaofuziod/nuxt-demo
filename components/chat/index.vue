@@ -142,8 +142,9 @@ export default {
         this.$store.dispatch('coin/fetchCoinList', "Bitcoin")
         this.$store.dispatch('monitor/fetchMonitorList', "Bitcoin",)
       }, 3000)
+    } else {
+      this.loadEarlierMessages()
     }
-    this.loadEarlierMessages()
   },
   methods: {
     handleScroll(e) {
@@ -217,18 +218,19 @@ export default {
         }
         // 需要推荐热门币种 或者 热门信号源
         if (lastMsg.needPushHotCoin || lastMsg.needPushHotMonitor) {
+          console.log('推荐热门币种 或者 热门信号源', this.$store.state.coin.coinList, this.$store.state.monitor.monitorList)
           const para = {
             seqNo: null,
             source: "ASSISTANT",
             context: null,
-            language: this.$store.$i18n.locale,
             text: '',
             layers: [
               {
-                layer: lastMsg.needPushHotCoin ? "HOT_COINS" : "HOT_SOURCES",
+                type: lastMsg.needPushHotCoin ? "HOT_COINS" : "HOT_SOURCES",
                 title: '热门推荐',
                 data: {
-                  coins: lastMsg.needPushHotCoin ? this.$store.state.coin.coinList : this.$store.state.monitor.monitorList
+                  coins: this.$store.state.coin.coinList,
+                  sources: this.$store.state.monitor.monitorList
                 }
               }
             ],

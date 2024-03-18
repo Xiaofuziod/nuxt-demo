@@ -16,8 +16,8 @@ export const state = () => ({
 
 export const mutations = {
   addMessage(state, message) {
-    // console.log('addMessage', message)
     state.messageList.push(message)
+    // console.log(state.messageList)
   },
   prependMessages(state, messages) {
     state.messageList = messages.concat(state.messageList)
@@ -88,6 +88,7 @@ export const actions = {
         text: lastMsg.text + message.text,
         layers: lastMsg.layers.concat(message.layers)
       }
+      console.log('newMsg', newMsg)
       commit('updateMessage', {index: state.messageList.length - 1, message: newMsg})
     } else {
       commit('addMessage', message)
