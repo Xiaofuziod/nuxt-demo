@@ -40,9 +40,9 @@ export default {
   background-color: var(--color);
 
   img {
-    width: 12px;
-    height: 12px;
-    margin-right: 4px;
+    width: 16px;
+    height: 16px;
+    margin-right: 2px;
   }
 }
 .taurion-btn-returns{

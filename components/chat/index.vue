@@ -34,7 +34,7 @@
           <!--欢迎的任务-->
           <welcomeTask v-if="showWelcome && item.source === 'T-brain'" :message="item"/>
           <!--文本内容-->
-          <template v-if="item.text">
+          <template v-if="item.text && !(item.context && item.context.hook)">
             <div class="text-message-box1" v-if="item.source === 'USER'">
               <div class="text-message">
                 {{ item.text }}
@@ -45,7 +45,7 @@
                 <Typewriter @writerOver="writerOver" :text="item.text"/>
               </div>
               <div class="text-message-v2" v-else>
-                {{ item.text }}
+                {{ formatText(item.text) }}
               </div>
             </div>
           </template>
@@ -127,7 +127,6 @@ export default {
   mounted() {
     this.$socket.on('chat', this.onWebsocketReceiveMessage);
     this.$socket.on('connect', this.onWebsocketConnect);
-
     if (this.showWelcome) {
       //  第一次进入页面，发送欢迎语
       const msg = this.$store.state.chat.welcomeList[this.$store.state.chat.welcomeIndex]
@@ -147,6 +146,9 @@ export default {
     }
   },
   methods: {
+    formatText(text) {
+      return text.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    },
     handleScroll(e) {
       const {scrollTop} = e.target;
       if (!this.isLoading && !this.isFinished && scrollTop <= 0) {
@@ -162,11 +164,11 @@ export default {
       //   更一般的做法应该是先获取对话列表，然后用户点击哪个对话，再根据点击对话的 id 来拉取历史消息。
 
       // 获取历史消息之前的滚动条高度
-      const previousHeight = this.$refs.messagesContainer.scrollHeight;
+      const previousHeight = this.$refs.messagesContainer?.scrollHeight;
       await this.$store.dispatch('chat/fetchEarlierMessages', "fakeUserNo")
       // 插入后，调整滚动位置
       this.$nextTick(() => {
-        const currentHeight = this.$refs.messagesContainer.scrollHeight;
+        const currentHeight = this.$refs.messagesContainer?.scrollHeight;
         this.$refs.messagesContainer.scrollTop += currentHeight - previousHeight;
       });
       this.isLoading = false
@@ -218,7 +220,6 @@ export default {
         }
         // 需要推荐热门币种 或者 热门信号源
         if (lastMsg.needPushHotCoin || lastMsg.needPushHotMonitor) {
-          console.log('推荐热门币种 或者 热门信号源', this.$store.state.coin.coinList, this.$store.state.monitor.monitorList)
           const para = {
             seqNo: null,
             source: "ASSISTANT",
@@ -390,7 +391,8 @@ export default {
     }
 
     .text-message-v2 {
-      max-width: 90%;
+      max-width: 420px;
+      overflow: hidden;
       box-sizing: border-box;
       padding: 16px 20px;
       border-radius: 16px;
@@ -399,15 +401,15 @@ export default {
       font-family: Avenir;
       font-weight: 500;
       font-size: 13px;
-      text-transform: capitalize;
       margin-top: 14px;
-      display: table;
+      //display: table;
+      white-space: pre-line;
     }
 
 
     .focus-box {
       width: 277px;
-      height: 62px;
+      //height: 62px;
       border-radius: 16px;
       background: rgba(140, 180, 189, 0.1);
       position: relative;
