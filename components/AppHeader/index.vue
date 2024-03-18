@@ -91,6 +91,9 @@ export default {
     },
     changeLanguage(lang) {
       this.$i18n.setLocale(lang);
+      setTimeout(()=>{
+        window.location.reload()
+      },200)
     },
     logout() {
       this.$localStorage.removeItem('token')
