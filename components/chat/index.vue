@@ -3,9 +3,9 @@
     <div class="chat-top chat-padding">
       <div class="chat-top-left">
         <div class="chat-top-image">
-          <img src="@/assets/imgs/user/default.png" alt="">
+          <img :src="robot.avatar" alt="" v-if="robot.avatar">
         </div>
-        <div class="chat-top-title">{{ $t("chat_index_chat-top-title_1") }}</div>
+        <div class="chat-top-title">{{ robot.text }}</div>
       </div>
       <div class="chat-top-icon" v-if="false">
         <img class="img1" src="@/static/images/chat/s1.svg" alt="">
@@ -44,7 +44,7 @@
               <div class="text-message-v2" v-if="item.source === 'T-brain'">
                 <Typewriter @writerOver="writerOver" :text="item.text"/>
               </div>
-              <div class="text-message-v2" v-else>{{item.text}}</div>
+              <div class="text-message-v2" v-else>{{ item.text }}</div>
             </div>
           </template>
           <!--loading 内容-->
@@ -120,6 +120,9 @@ export default {
     },
     msgLength() {
       return this.messageList.length
+    },
+    robot() {
+      return this.$store.state.chat.robot
     }
   },
   mounted() {
@@ -136,8 +139,8 @@ export default {
 
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
-        this.$store.dispatch('coin/fetchCoinList', "Bitcoin")
-        this.$store.dispatch('monitor/fetchMonitorList', "Bitcoin",)
+        this.$store.dispatch('coin/fetchCoinList', "")
+        this.$store.dispatch('monitor/fetchMonitorList', "",)
       }, 3000)
     } else {
       this.loadEarlierMessages()
@@ -179,6 +182,14 @@ export default {
     },
     sendMessage() {
       if (!this.message || !this.conversationId) return
+      // 上一条消息未处理完，不发送
+      if (this.messageList.length > 0) {
+        const lastMsg = this.messageList[this.messageList.length - 1]
+        if (lastMsg.more === true || lastMsg.loading === true) {
+          return this.$toast.warning('请等待上一条消息处理完毕')
+        }
+      }
+
       // 用户发送的消息的 seqNo 是当前对话中最大的 seqNo + 1。如果当前对话为空，则 seqNo 为 1。
       const nextSeqNo = this.messageList.length === 0 ? 1 :
           this.messageList[this.messageList.length - 1].seqNo + 1;

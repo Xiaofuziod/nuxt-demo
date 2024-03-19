@@ -38,11 +38,11 @@ export default {
   plugins: [
     '@/plugins/request',
     '~/plugins/event-bus.js',
-    '@/plugins/socket.io',
-    {src:'~/plugins/toast.js', mode: 'client'},
-    {src:'@/plugins/dialog-plugin', mode: 'client'},
-    { src: '@/plugins/loading-plugin.js', mode: 'client' },
-    { src: '~/plugins/localStorage.js', mode: 'client' },
+    {src: '@/plugins/socket.io', mode: 'client'},
+    {src: '~/plugins/toast.js', mode: 'client'},
+    {src: '@/plugins/dialog-plugin', mode: 'client'},
+    {src: '@/plugins/loading-plugin.js', mode: 'client'},
+    {src: '~/plugins/localStorage.js', mode: 'client'},
     {
       src: '~plugins/echarts',
       ssr: false
@@ -92,6 +92,5 @@ export default {
       fallbackLocale: 'en'
     }
   },
-  build: {
-  }
+  build: {}
 }

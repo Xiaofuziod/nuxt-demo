@@ -11,10 +11,14 @@
     </div>
     <div class="list">
       <div class="focus">
-        <img src="@/static/images/chat/s2.svg" alt="">
-        <span>{{ $t("AIFocus_span_1") }}</span>
+        <btn>
+          <img src="@/static/images/chat/s2.svg" alt="">
+          <span>{{ $t("AIFocus_span_1") }}</span>
+        </btn>
       </div>
-      <div class="list-item" v-for="(item,index) in coinData.list" :key="item.id + '-' + index">
+      <div class="list-item" v-for="(item,index) in coinData.list"
+           :style="{'opacity': item.trigger === 1 ? 0.4 : 1}"
+           :key="item.id + '-' + index">
         <div class="list-item-top">
           <div class="list-item-top1">{{ item.lastUpdatedDate.split(' ')[1] }}</div>
           <div class="list-item-top2">
@@ -30,16 +34,19 @@
           </div>
         </div>
       </div>
-
     </div>
 
   </div>
 </template>
 <script>
-import {analysisCoin} from "@/common/home";
+import { analysisRead} from "@/common/home";
+import btn from "@/components/chat/components/btn.vue";
 
 export default {
   name: 'AIFocus',
+  components: {
+    btn
+  },
   props: {
     coinData: {
       type: Object,
@@ -85,6 +92,14 @@ export default {
       }
       this.$socket.emit('chat', para)
       this.$store.dispatch('chat/addMessage', para)
+
+      // 记录点击事件
+      this.$axios.get(analysisRead, {params: {id: item.id}}).then(res => {
+        if (res.data.code === 200) {
+          item.trigger = 1
+          this.$emit('read', item.id)
+        }
+      })
     }
   }
 }
@@ -94,9 +109,7 @@ export default {
 <style lang="less">
 
 .focus-item {
-  margin-top: 20px;
   box-sizing: border-box;
-
   .list {
     width: 305px;
     border-radius: 16px;
@@ -185,13 +198,10 @@ export default {
     }
 
     .focus {
-      width: 93px;
+      min-width: 93px;
       height: 25px;
       color: rgba(25, 40, 54, 1);
       font-size: 12px;
-      line-height: 120.000005%;
-      background: rgba(206, 184, 100, 1);
-      backdrop-filter: blur(108px);
       position: absolute;
       top: -12px;
       left: 0;
@@ -201,36 +211,11 @@ export default {
       text-transform: uppercase;
       overflow: hidden;
 
-      &::after {
-        content: "";
-        display: block;
-        width: 10px;
-        height: 10px;
-        background-color: black;
-        position: absolute;
-        top: -6px;
-        left: -6px;
-        transform: rotate(-45deg);
-      }
-
-      &::before {
-        content: "";
-        display: block;
-        width: 10px;
-        height: 10px;
-        background-color: black;
-        position: absolute;
-        right: -6px;
-        bottom: -6px;
-        transform: rotate(-45deg);
-      }
-
-
       img {
         width: 16px;
         height: 16px;
         margin-left: 6px;
-        margin-right: 2px;
+        transform: translateX(-4px);
       }
     }
   }

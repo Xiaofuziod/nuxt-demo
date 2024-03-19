@@ -61,7 +61,7 @@ export default {
   max-width: 300px;
 }
 
-.toast-success, .toast-info {
+.toast-success, .toast-info,.toast-warning {
   /* 成功消息样式 */
   color: #8CB4BD;
   font-family: Avenir;

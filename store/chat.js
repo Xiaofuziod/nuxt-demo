@@ -1,8 +1,10 @@
 import {getChatMessageList} from "@/common/home";
 import {welcomeList} from "@/store/welcomeMessage";
 import Vue from 'vue';
+import robotAvatar from '@/assets/imgs/user/default.png'
 
 
+let timer = null
 export const state = () => ({
   conversationId: null,
   messageList: [],
@@ -10,8 +12,11 @@ export const state = () => ({
   welcomeIndex: 0,
   welcomeAddCoinFinish: false,
   isFinished: false,  // 历史消息是否已经加载完
-
-
+  lastUserQuestion: null,
+  robot: {
+    avatar: robotAvatar,
+    text: 'Hi，需不需要我的帮忙呢？'
+  }
 })
 
 export const mutations = {
@@ -39,15 +44,20 @@ export const mutations = {
   },
   setFinished(state, isFinished) {
     state.isFinished = isFinished
+  },
+  setLastUserQuestion(state, question) {
+    state.lastUserQuestion = question
+  },
+  setRobot(state, robot) {
+    state.robot = {...state.robot, ...robot}
   }
 }
 
 export const actions = {
   async fetchEarlierMessages({commit}, userNo) {
-    console.log('fetchEarlierMessages')
     try {
       const oldestSeqNo = this.state.chat.messageList.length === 0 ? -1 : this.state.chat.messageList[0].seqNo;
-      const res = await this.$axios.get(getChatMessageList, {params: {userNo, size: 10, oldestSeqNo}});
+      const res = await this.$axios.get(getChatMessageList, {params: {userNo, size: 4, oldestSeqNo}});
       if (res && res.data && res.data.data) {
         commit('prependMessages', res.data.data.messages)
         commit('setConversationId', res.data.data.conversationId)
@@ -71,6 +81,12 @@ export const actions = {
         layers: [],
         loading: true
       })
+      // 根据用户的问题，获取机器人的回答
+      let text = "我需要思考下..."
+      if (JSON.stringify(message).includes('FOCUS') || JSON.stringify(message).includes('SIGNAL_SOURCE')) {
+        text = "我已收到您的请求～"
+      }
+      commit('setRobot', {text})
     }
   },
   welcomeToNext({commit, state}) {
@@ -93,5 +109,14 @@ export const actions = {
     } else {
       commit('addMessage', message)
     }
+    if (!message.more) {
+      commit('setRobot', {text: "好啦，已经有答案了～"})
+    }
+    // 测试用 三秒后默认回答我完毕
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      commit('updateMessage', {index: state.messageList.length - 1, message: {...lastMsg, more: false}})
+      commit('setRobot', {text: "好啦，已经有答案了～"})
+    }, 3000)
   },
 }

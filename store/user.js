@@ -18,6 +18,9 @@ export const mutations = {
     state.userInfo = {...user, avatar: user.avatar || defaultUserAvatar, nickname: user.nickname || '神秘人士 ~'};
     this.$localStorage.setItem('token', state.userInfo.tokenInfo.tokenValue);
     this.$bus.$emit('LOGON_SUCCESS');
+  },
+  updateNickname(state, nickname) {
+    state.userInfo.nickname = nickname;
   }
 };
 

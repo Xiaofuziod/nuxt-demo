@@ -111,9 +111,8 @@ export default {
   data() {
     return {
       user: 'ta',
-      // email: "zongfeishu@gmail.com",
-      email: "flynn.taurion@gmail.com",
-      password: "123456",
+      email: "",
+      password: "",
       isPassword: true,
       type: 'login', // login, register
       step: 1, // 1,  登录/注册   21, 注册验证码输入  31, 忘记密码 - 输入电子邮箱  32 忘记密码 - 输入新密码
@@ -150,7 +149,6 @@ export default {
   },
   methods: {
     validateInputSuccess(captcha) {
-      console.log('validateInputSuccess', captcha, this.step)
       if (this.step === 21) {
         this.$store.dispatch('user/userRegister', {account: this.email, passwd: this.password, captcha})
       }

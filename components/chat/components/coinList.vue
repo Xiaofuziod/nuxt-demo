@@ -11,7 +11,9 @@
         <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
           {{ (Number(coin.change) || coin.quotes?.percentChange24h)?.toFixed(2) }}%
         </div>
-        <div class="option" @click="addCoin(coin)">
+        <div class="option" @click="addCoin(coin)"
+             :style="{'opacity': userCoinList.includes(coin.id + '') ? 0.4 : 1}"
+        >
           <img src="@/assets/imgs/addPlus.svg" alt="">
         </div>
       </div>
@@ -32,14 +34,21 @@ export default {
       default: () => [],
     },
   },
+  computed: {
+    userCoinList() {
+      return this.$store.state.coin.userCoinList.map(coin => coin.coinId)
+    },
+  },
   data() {
     return {};
   },
   methods: {
     formatPrice,
     addCoin(coin) {
-      console.log(coin.id, 'coin.id');
-      this.$store.dispatch('monitor/addUserMonitor', [coin.id]);
+      console.log(coin.id + '')
+      if (this.userCoinList.includes(coin.id + '')) return;
+      console.log(coin.id + '', 'coin.id')
+      this.$store.dispatch('coin/addFollow', [coin.id]);
     },
   },
 };

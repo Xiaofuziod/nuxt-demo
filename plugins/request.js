@@ -19,7 +19,6 @@ export default function ({$axios, redirect}) {
   })
 
   $axios.onResponse(response => {
-    console.log(response.data)
     if (response.data.code === 401) {
       localStorage.removeItem('token')
       redirect('/?t=login')
