@@ -151,15 +151,15 @@ export default {
   align-items: center;
 
   .coin-logo {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     border-radius: 32px;
   }
 
   .name {
     color: #FFF;
     font-family: Avenir;
-    font-size: 10px;
+    font-size: 14px;
     font-style: normal;
     padding: 0 4px;
     font-weight: 800;
@@ -175,7 +175,7 @@ export default {
   .coin-symbol {
     color: rgba(255, 255, 255, 0.50);
     font-family: Avenir;
-    font-size: 8px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -184,12 +184,12 @@ export default {
 }
 
 .returns-box {
-  width: 334px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: rgba(140, 180, 189, 0.10);
-  box-sizing: border-box;
-  padding: 13px 12px;
+  //width: 334px;
+  //flex-shrink: 0;
+  //border-radius: 8px;
+  //background: rgba(140, 180, 189, 0.10);
+  //box-sizing: border-box;
+  //padding: 13px 12px;
   margin-bottom: 14px;
 
   .returns-top {
@@ -247,7 +247,7 @@ export default {
     li {
       color: rgba(255, 255, 255, 0.70);
       font-family: Avenir;
-      font-size: 8px;
+      font-size: 12px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
