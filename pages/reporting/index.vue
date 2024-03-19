@@ -121,7 +121,6 @@ export default {
         let newData = []
         dateList.forEach(item => {
           const d = parseTime(item)
-          console.log(d)
           newData.push({
             date: d.date,
             isToday: d.isToday,

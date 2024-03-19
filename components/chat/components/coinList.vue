@@ -7,9 +7,9 @@
           <span class="name">{{ coin.name }}</span>
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
-        <div class="coin-price">${{ formatPrice(coin.currentPrice || coin.quotes?.price) }}</div>
+        <div class="coin-price">${{ formatPrice(coin.currentPrice || coin.price || coin.quotes?.price) }}</div>
         <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
-          {{ (coin.change || coin.quotes?.percentChange24h)?.toFixed(2) }}%
+          {{ (Number(coin.change) || coin.quotes?.percentChange24h)?.toFixed(2) }}%
         </div>
         <div class="option" @click="addCoin(coin)">
           <img src="@/assets/imgs/addPlus.svg" alt="">

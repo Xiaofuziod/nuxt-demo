@@ -1,17 +1,17 @@
 <template>
-  <div class="chat-card">
+  <div>
     <div v-for="item in layers">
       <!--信号源相关-->
-      <template v-if="item.type === 'HOT_SOURCES'">
+      <div class="chat-card" v-if="item.type === 'HOT_SOURCES'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/hot.svg" alt="">
           {{ item.title }}
         </div>
         <monitor-list :list="item.data?.sources"/>
-      </template>
+      </div>
 
       <!--预测相关-->
-      <template v-if="item.type === 'PREDICTION'">
+      <div class="chat-card" v-if="item.type === 'PREDICTION'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/returns.svg" alt="">
           {{ item.title }}
@@ -56,40 +56,42 @@
           </div>
           <p class="returns-conclusion">{{ item.data.conclusion }}</p>
         </div>
-      </template>
+      </div>
 
-      <template v-if="item.type === 'LOG'">
+      <div class="chat-card" v-if="item.type === 'LOG'">
         <div class="chat-card-title">
           {{ item.toolName }} - {{ item.type }}
         </div>
         <p style="color: white;margin-bottom: 20px">{{ item.log }}</p>
-      </template>
+      </div>
 
       <!--错误相关-->
-      <template v-if="item.type === 'ERROR'">
+      <div class="chat-card" v-if="item.type === 'ERROR'">
         <div class="chat-card-title">
           Code: {{ item.code }} Error: {{ item.error }}
         </div>
-      </template>
+      </div>
 
       <!--币相关-->
-      <template v-if="item.type === 'HOT_COINS'">
+      <div class="chat-card" v-if="item.type === 'HOT_COINS'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/hot.svg" alt="">
           {{ item.title }}
         </div>
         <coin-list :coinList="item.data?.coins"/>
-      </template>
+      </div>
 
       <!--监控信号-->
-      <template v-if="item.type === 'HOT_SOURCES'">
+      <div class="chat-card" v-if="item.type === 'HOT_SOURCES'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/s4.svg" alt="">
           {{item.title}}
         </div>
         <div class="source-row">
-          <div class="source-item" v-for="item in 3">
+          <div class="source-item" v-for="item in 2">
             <div class="source-item-item">
+              If someone loves you,love them ...
+              If someone loves you,love them ...
               If someone loves you,love them ...
             </div>
             <div class="source-item-user">
@@ -103,10 +105,9 @@
             </div>
           </div>
         </div>
-      </template>
-
+      </div>
       <!--问答-->
-      <template v-if="item.type === 'ASK'">
+      <div class="chat-card" v-if="item.type === 'ASK'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/ai.svg" alt="">
           You can ask
@@ -117,10 +118,8 @@
             <img class="img1" src="@/static/images/chat/send.svg" alt="">
           </div>
         </div>
-      </template>
-
+      </div>
     </div>
-
   </div>
 </template>
 <script>
@@ -284,22 +283,20 @@ export default {
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 6px 6px 6px 12px;
-    margin-bottom: 10px;
+    padding: 5px 12px;
+    margin-bottom: 11px;
     cursor: pointer;
-
-    height: 26px;
     border-radius: 8px;
-    border: 1px solid rgba(140, 180, 189, 0.3);
-
-    color: rgba(93, 123, 134, 1);
-    font-family: Avenir-Book;
-    font-size: 10px;
+    border: 0.4px solid rgba(140, 180, 189, 0.3);
+    color: #5D7B86;
+    font-family: Avenir;
+    font-size: 13px;
+    font-weight: 350;
     text-transform: capitalize;
 
     img {
-      width: 13px;
-      height: 13px;
+      width: 16px;
+      height: 16px;
     }
   }
 }
@@ -307,80 +304,80 @@ export default {
 .chat-card-title {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 
   img {
-    width: 10px;
-    height: 10px;
-    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
   }
 
-  height: 12px;
   color: rgba(206, 184, 100, 1);
   font-family: Avenir;
   font-weight: 500;
-  font-size: 9px;
-  //text-transform: uppercase;
+  font-size: 12px;
 }
 
 .source-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 23px;
 
   .source-item {
-    width: 102px;
-    height: 63px;
+    width: 154px;
     border-radius: 8px;
     background: rgba(140, 180, 189, 0.1);
     box-sizing: border-box;
-    padding: 10px 12px 7px;
+    padding: 12px 12px 10px;
+    margin-right: 10px;
 
     .source-item-item {
-      height: 22px;
+      height: 32px;
       color: rgba(255, 255, 255, 0.7);
-      font-family: Avenir-Roman;
-      font-size: 8px;
-      //text-transform: capitalize;
+      font-family: Avenir;
+      line-height: 16px;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      white-space: normal;
+
     }
 
     .source-item-user {
       display: flex;
       align-items: center;
-      margin-top: 8px;
+      margin-top: 5px;
 
       .source-item-user-pic {
-        width: 16px;
-        height: 16px;
-        border-radius: 16px;
+        width: 28px;
+        height: 28px;
+        border-radius: 28px;
         overflow: hidden;
         background-color: green;
       }
 
       .source-item-user-right {
-        margin-left: 5px;
+        margin-left: 4px;
 
         .source-item-user-right-nickname {
-          height: 8px;
           color: rgba(255, 255, 255, 1);
           font-family: Avenir-Heavy;
-          font-size: 6px;
-          //text-transform: capitalize;
+          font-size: 14px;
 
           img {
-            width: 5px;
-            height: 5px;
+            width: 8px;
+            height: 8px;
             margin-left: 2px;
           }
         }
 
         .source-item-user-right-username {
-          height: 8px;
           color: rgba(255, 255, 255, 0.5);
           font-family: Avenir-Book;
-          font-size: 6px;
-          //text-transform: capitalize;
+          font-size: 12px;
         }
 
       }
