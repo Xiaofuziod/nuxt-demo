@@ -3,7 +3,10 @@
     <div class="page-content">
       <div class="report-left">
         <div class="Account">{{ $t("Home_Account_1") }}</div>
-        <div class="Rectangle82">
+        <div class="Rectangle82"
+             :class="{ 'item-active': !coinId}"
+             @click="handleClick({ coinId: '' })"
+        >
           <div class="Ellipse245">
             <img :src="user.avatar" v-if="user.avatar" alt="">
           </div>
@@ -12,8 +15,10 @@
             <div class="wtewteri247">{{ user.nickname }}</div>
           </div>
         </div>
-        <div class="Account Selected">{{$t("Selected")}}{{ followList.length ? ` (${followList.length})` : '' }}
-          <span style="cursor: pointer" @click="showDelete = !showDelete">{{ showDelete ? $t("OK") : $t("Edit") }}</span>
+        <div class="Account Selected">{{ $t("Selected") }}{{ followList.length ? ` (${followList.length})` : '' }}
+          <span style="cursor: pointer" @click="showDelete = !showDelete">{{
+              showDelete ? $t("OK") : $t("Edit")
+            }}</span>
         </div>
         <!--    自选币  -->
         <div class="Frame580">
@@ -21,7 +26,7 @@
                :class="{ 'item-active': item.coinId === coinId}"
                @click="handleClick(item)">
             <div class="item-left">
-              <img class="Rectangle" :src="item.icon" alt="">
+              <img class="Rectangle" :src="item.icon" alt="" v-if="item.icon">
               <div class="Bitcoin ellipsis">{{ item.name }}</div>
               <div class="BTC">{{ item.symbol }}</div>
             </div>
@@ -33,13 +38,25 @@
       </div>
 
       <div class="report-center">
+        <!--面包屑-->
         <div class="rc-top">
           <div class="rc-account">{{ $t("Home_rc-account_1") }}</div>
           <span>{{ $t("Home_span_1") }}</span>
-          <div class="pic">
-            <img :src="user.avatar" v-if="user.avatar" alt="">
-          </div>
-          {{ $t("Home_i_1") }}{{ user.account }}{{ $t("Home_i_2") }}
+          <template v-if="coinId">
+            <div class="pic">
+              <img :src="coinData.icon" v-if="coinData.icon" alt="">
+            </div>
+            {{ coinData.name }} {{ coinData.symbol}}
+          </template>
+          <template v-else>
+            <div class="pic">
+              <img :src="user.avatar" v-if="user.avatar" alt="">
+            </div>
+            {{ $t("Home_i_1") }}
+            <span class="top-account">{{ user.account }}</span>
+            {{ $t("Home_i_2") }}
+          </template>
+
         </div>
         <!--      资讯-->
         <div class="focus-list-box">
@@ -70,6 +87,7 @@ import {analysisCoin} from "~/common/home";
 import MyEcharts from "~/components/echarts/index.vue";
 import {parseTime} from "~/utils/date";
 import AddCoin from "~/components/report/addCoin.vue";
+import BoxLoading from "@/components/boxLoading.vue";
 
 export default {
   name: 'Home',
@@ -78,13 +96,15 @@ export default {
     ChatIndex: chatIndex,
     AIFocus,
     ListContainer,
-    MyEcharts
+    MyEcharts,
+    BoxLoading
   },
   data() {
     return {
       showDelete: false,
       list: [],
-      coinId: ''
+      coinId: '',
+      coinData: {}
     }
   },
   computed: {
@@ -104,9 +124,12 @@ export default {
       this.coinId = item.coinId
       this.list = []
       this.loadData()
-      this.$nextTick(() => {
-        this.$refs.echart.reload(item.coinId)
-      })
+      if (item.coinId) {
+        this.coinData = item
+        this.$nextTick(() => {
+          this.$refs.echart.reload(item.coinId)
+        })
+      }
     },
     showSelect() {
       this.$store.commit('coin/setAddCoinShow', true)
@@ -116,32 +139,43 @@ export default {
     },
     loadData() {
       this.$axios.get(analysisCoin, {params: {id: this.coinId}}).then(res => {
-        let obj = res.data.data
-        let dateList = Object.keys(obj)
-        let newData = []
-        dateList.forEach(item => {
-          const d = parseTime(item)
-          newData.push({
-            date: d.date,
-            isToday: d.isToday,
-            weekDay: d.weekDay,
-            time: d.time,
-            list: obj[item]
+        if (res.data.data) {
+          let obj = res.data.data
+          let dateList = Object.keys(obj)
+          let newData = []
+          dateList.forEach(item => {
+            const d = parseTime(item)
+            newData.push({
+              date: d.date,
+              isToday: d.isToday,
+              weekDay: d.weekDay,
+              time: d.time,
+              list: obj[item]
+            })
           })
-        })
-        this.list = newData
+          this.list = newData
+        } else {
+          console.log('no data')
+        }
       })
-    }
+    },
   }
 }
 </script>
 <style lang="less" scoped>
+
+.item-active {
+  background: linear-gradient(90deg, rgba(172, 241, 216, 0.12) 0%, rgba(172, 241, 216, 0.00) 100%);
+  border-left: 3px solid #ACF1D8 !important;
+}
+
 
 .Frame580 {
   margin-top: 24px;
   max-height: calc(100% - 220px);
   overflow-y: auto;
   margin-left: -8px;
+  position: relative;
 
   .delete-icon {
     width: 16px;
@@ -161,10 +195,6 @@ export default {
     padding-left: 8px;
   }
 
-  .item-active {
-    background: linear-gradient(90deg, rgba(172, 241, 216, 0.12) 0%, rgba(172, 241, 216, 0.00) 100%);
-    border-left: 3px solid #ACF1D8;
-  }
 
   .item-left {
     width: 154px;
@@ -270,14 +300,13 @@ export default {
     .Rectangle82 {
       width: 204px;
       height: 58px;
-      border-radius: 16px;
-      background: rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       box-sizing: border-box;
       padding-left: 8px;
       margin-top: 14px;
       margin-bottom: 40px;
+      cursor: pointer;
 
       .Ellipse245 {
         width: 42px;
@@ -335,13 +364,14 @@ export default {
 
     .rc-top {
       color: rgba(140, 180, 189, 0.6);
-      font-family: Avenir-Roman;
-      font-size: 10px;
+      font-family: Avenir;
+      font-size: 14px;
       text-transform: capitalize;
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      padding: 32px 40px;
+      padding: 32px 40px 16px;
+
 
       span {
         display: block;
@@ -349,20 +379,26 @@ export default {
         text-align: center;
       }
 
+      .top-account {
+        display: block;
+        width: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
       .rc-account {
-        height: 11px;
         color: rgba(140, 180, 189, 0.6);
         font-family: aifontF;
-        font-size: 9px;
-        line-height: 120.000005%;
+        font-size: 14px;
         text-transform: uppercase;
       }
 
       .pic {
-        width: 14px;
-        height: 14px;
-        border-radius: 14px;
-        margin-right: 3px;
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+        margin-right: 4px;
         overflow: hidden;
 
         img {

@@ -24,7 +24,7 @@ export default {
   components: {},
   data() {
     return {
-      nickname: this.$store.state.user.nickname || '',
+      nickname: '',
       showLoading: false
     }
   },
@@ -47,6 +47,7 @@ export default {
         console.log(res.data, 'res.data.data')
         if (res.data.code === 200) {
           this.$toast.success('修改成功')
+          this.$store.commit('user/updateNickname', this.nickname)
           this.hide()
         } else {
           this.$toast.error(res.data.msg || '修改失败')
@@ -58,6 +59,7 @@ export default {
       }
     },
     show() {
+      this.nickname = this.$store.state.user.userInfo.nickname
       this.$refs.modal.openModal()
     },
     hide() {

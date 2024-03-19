@@ -25,7 +25,7 @@ export default {
   display: flex;
   width: 100%;
   height: 100%;
-  padding: 0 8px;
+  padding: 0 13px 0 8px;
   font-family: Gruppe F;
   align-items: center;
   justify-content: center;

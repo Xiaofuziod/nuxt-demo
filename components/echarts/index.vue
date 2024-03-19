@@ -1,39 +1,49 @@
 <template>
-  <div id="echarts">
-    <!--    <div>{{ $t("1D_div_1") }}</div>-->
-    <div class="coin-name">
-      <img :src="coin.logo" v-if="coin.logo" class="coin-logo" :alt="coin.logo">
-      <span class="name">{{ coin.name }}</span>
-      <span class="coin-symbol">{{ coin.symbol }}</span>
-    </div>
-    <div class="coin-price-box">
-      <div class="coin-price">${{ formatPrice(coin.currentPrice) }}</div>
-      <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
-        {{ coin.change?.toFixed(2) }}%
+  <div class="echart-box">
+    <box-loading :loading="loading"/>
+
+    <div :style="{opacity: loading?0:1}">
+      <div class="coin-name">
+        <img :src="coin.logo" v-if="coin.logo" class="coin-logo" :alt="coin.logo">
+        <span class="name">{{ coin.name }}</span>
+        <span class="coin-symbol">{{ coin.symbol }}</span>
       </div>
+      <div class="coin-price-box">
+        <div class="coin-price">${{ formatPrice(coin.currentPrice) }}</div>
+        <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
+          {{ coin.change?.toFixed(2) }}%
+        </div>
+        <img src="@/assets/imgs/chat/tips.svg" alt="">
+      </div>
+
+      <div class="select-row">
+        <div v-for="(item,index) in selectList" :key="index"
+             :class="{'active': activeKey === item.value}" @click="loadData(item)"
+        >
+          {{ item.name }}
+        </div>
+      </div>
+      <div id="myChart"></div>
     </div>
 
-    <div class="select-row">
-      <div v-for="(item,index) in selectList" :key="index"
-           :class="{'active': activeKey === item.value}" @click="loadData(item)"
-      >
-        {{ item.name }}
-      </div>
-    </div>
-    <div id="myChart"></div>
   </div>
 </template>
-<script type="text/javascript">
+<script>
 import {getCoinPrice} from "@/common/home";
 import {formatPrice} from "@/utils/price";
+import BoxLoading from "@/components/boxLoading.vue";
 
 export default {
   name: 'Echarts',
+  components: {
+    BoxLoading
+  },
   data() {
     return {
       xData: [],
       yData: [],
       coin: {},
+      loading: false,
       selectList: [
         {
           name: '1D',
@@ -143,6 +153,7 @@ export default {
       })
     },
     async loadData(val) {
+      this.loading = true
       this.activeKey = val && val.value
       this.xData = []
       this.yData = []
@@ -161,8 +172,10 @@ export default {
           this.yData.push(formatPrice(item[1]))
         })
         this.echartsInit()
+        this.loading = false
       } catch (e) {
         this.$toast.error('获取数据失败')
+        this.loading = false
       }
     },
     reload(coinId) {
@@ -173,6 +186,10 @@ export default {
 }
 </script>
 <style scoped lang="less">
+.echart-box {
+  position: relative;
+}
+
 #myChart {
   width: 340px;
   height: 260px;
@@ -183,7 +200,13 @@ export default {
 .coin-price-box {
   display: flex;
   align-items: center;
-  padding: 10px 40px;
+  padding: 12px 40px;
+
+  img {
+    width: 10px;
+    height: 10px;
+    margin-left: 8px;
+  }
 }
 
 
@@ -265,7 +288,7 @@ export default {
     font-family: Avenir;
     font-size: 15px;
     font-style: normal;
-    padding: 0 12px;
+    padding: 0 4px;
     font-weight: 800;
     line-height: normal;
     text-transform: capitalize;
@@ -288,8 +311,8 @@ export default {
 }
 
 .select-row {
-  box-sizing: inherit;
-  padding-left: 31px;
+  box-sizing: border-box;
+  padding-left: 40px;
 
   div {
     width: 28px;
