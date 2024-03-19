@@ -136,8 +136,8 @@ export default {
 
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
-        this.$store.dispatch('coin/fetchCoinList', "Bitcoin")
-        this.$store.dispatch('monitor/fetchMonitorList', "Bitcoin",)
+        this.$store.dispatch('coin/fetchCoinList', "")
+        this.$store.dispatch('monitor/fetchMonitorList', "",)
       }, 3000)
     } else {
       this.loadEarlierMessages()
@@ -179,6 +179,14 @@ export default {
     },
     sendMessage() {
       if (!this.message || !this.conversationId) return
+      // 上一条消息未处理完，不发送
+      if (this.messageList.length > 0) {
+        const lastMsg = this.messageList[this.messageList.length - 1]
+        if (lastMsg.source === 'T-brain' && !lastMsg.autoNext) {
+          return
+        }
+      }
+
       // 用户发送的消息的 seqNo 是当前对话中最大的 seqNo + 1。如果当前对话为空，则 seqNo 为 1。
       const nextSeqNo = this.messageList.length === 0 ? 1 :
           this.messageList[this.messageList.length - 1].seqNo + 1;

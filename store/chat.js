@@ -44,10 +44,9 @@ export const mutations = {
 
 export const actions = {
   async fetchEarlierMessages({commit}, userNo) {
-    console.log('fetchEarlierMessages')
     try {
       const oldestSeqNo = this.state.chat.messageList.length === 0 ? -1 : this.state.chat.messageList[0].seqNo;
-      const res = await this.$axios.get(getChatMessageList, {params: {userNo, size: 10, oldestSeqNo}});
+      const res = await this.$axios.get(getChatMessageList, {params: {userNo, size: 4, oldestSeqNo}});
       if (res && res.data && res.data.data) {
         commit('prependMessages', res.data.data.messages)
         commit('setConversationId', res.data.data.conversationId)
