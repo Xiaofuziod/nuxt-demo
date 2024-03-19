@@ -179,9 +179,11 @@ export default {
       text-align: left;
       overflow: scroll;
       width: 577px;
+      height: calc(100vh - 370px);
       .box-wrapper {
         height: calc(100vh - 470px);
         margin-top: 12px;
+        overflow: scroll;
       }
       .title{
         font-style: normal;
