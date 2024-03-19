@@ -179,7 +179,7 @@ export default {
       text-align: left;
       overflow: scroll;
       width: 577px;
-      height: calc(100vh - 370px);
+      height: calc(100vh - 350px);
       .box-wrapper {
         height: calc(100vh - 470px);
         margin-top: 12px;
