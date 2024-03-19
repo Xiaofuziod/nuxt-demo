@@ -44,7 +44,7 @@
               <div class="text-message-v2" v-if="item.source === 'T-brain'">
                 <Typewriter @writerOver="writerOver" :text="item.text"/>
               </div>
-              <div class="text-message-v2" v-else>{{ formatText(item.text) }}</div>
+              <div class="text-message-v2" v-else>{{item.text}}</div>
             </div>
           </template>
           <!--loading 内容-->
@@ -144,9 +144,6 @@ export default {
     }
   },
   methods: {
-    formatText(text) {
-      return text.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
-    },
     handleScroll(e) {
       const {scrollTop} = e.target;
       if (!this.isLoading && !this.isFinished && scrollTop <= 0) {
