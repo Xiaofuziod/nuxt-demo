@@ -100,6 +100,7 @@ export const actions = {
             this._vm.$loading.start();
             const res = await this.$axios.get(`${monitorApi.getMonitoringDetail}?sourceId=${sourceId}`);
             if (res && res.data && res.data.ok) {
+                console.log(res.data)
                 commit('setMonitorDetail', res.data.data);
             }
         } catch (e) {
@@ -118,12 +119,14 @@ export const actions = {
             console.error('fetchMonitorSummary error:', e);
         }
     },
-    async fetchMonitorContent({commit}, sourceId) {
+    async fetchMonitorContent({commit}, payload) {
         try {
-            const res = await this.$axios.get(`${monitorApi.getMonitoringSource}?sourceId=${sourceId}`);
+            const {page, size, sourceId} = {page: 1, size: 20, ...(payload||{})}
+            const res = await this.$axios.get(`${monitorApi.getMonitoringSource}?sourceId=${sourceId}&page=${page}&size=${size}`);
             if (res && res.data && res.data.ok) {
-                commit('setMonitorContent', res.data.data);
+                commit('setMonitorContent', {page,size,...res.data.data});
             }
+            return res.data.data
         } catch (e) {
             console.error('fetchMonitorContent error:', e);
         }
