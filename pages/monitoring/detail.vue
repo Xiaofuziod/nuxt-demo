@@ -5,36 +5,41 @@
         <breadcrumb-navigation/>
         <div class="left-header">
           <img :src="monitorDetail?.logo || bianPic"  class="left-header-img" alt="">
-<!--          <div class="hotinfo">-->
-<!--            🔥 1456-->
-<!--          </div>-->
+          <div class="right-content">
+            <div class="author">{{ monitorDetail?.author }}</div>
+            <div class="title">{{ monitorDetail?.title }}</div>
+          </div>
         </div>
         <FilterTabs v-model="activeTab" :tabList="tabs" active-color="rgba(206, 184, 100, 1)" />
         <!-- 监控详情内容 -->
         <div v-if="activeTab === '0' && monitorSummary" class="content">
-          <div class="title">✨ {{ monitorSummary.summary }}</div>
+          <div class="title">✨ 会议总结</div>
           <div class="desc-1">
-            <div v-for="(chapter, index) in monitorSummary.chapters" :key="index">
-              <p># {{ chapter.title }}</p>
+            {{ monitorSummary.summary }}
+          </div>
+          <div class="title">‼️ 会议章节</div>
+          <template v-for="(chapter, index) in monitorSummary.chapters">
+            <div class="desc-1">{{ chapter.title }}</div>
+            <div class="desc-2">
               <p>{{ chapter.content }}</p>
             </div>
-          </div>
+          </template>
+
         </div>
-        <div v-if="activeTab === '1' && monitorContent" class="content">
-          <div class="title">✨ LINK:{{ monitorContent.link }}</div>
-          <div class="desc-1">
-            <div v-for="(segment, index) in monitorContent.segments" :key="index">
-              <p>author: {{ segment.title }}</p>
-              <p>time: {{ segment.timeline }}</p>
-              <p>{{ segment.content }}</p>
-            </div>
+        <div v-show="activeTab === '1'" v-if="monitorContent" class="content">
+          <audio-player :audio-src="monitorContent?.link"/>
+          <div class="box-wrapper">
+            <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
+              <template #default="{ items }">
+                <monitor-content-item v-for="(segment, index) in items" :segment="segment" :key="index"/>
+              </template>
+            </InfiniteScroll>
           </div>
         </div>
       </div>
       <div class="right">
         <ChatIndex/>
       </div>
-      <asset-select ref="assetSel"/>
     </div>
   </div>
 
@@ -43,17 +48,12 @@
 <script>
 import ChatIndex from "~/components/chat/index.vue";
 import AIFocus from '~/components/aiFocus/index.vue';
-import ListContainer from '~/components/scrollView/index.vue';
-import AssetSelect from '~/components/assetSelect/index.vue';
 import bianPic from '@/assets/imgs/bian.png'
-
 export default {
   name: 'Home',
   components: {
     ChatIndex,
     AIFocus,
-    ListContainer,
-    AssetSelect
   },
   data() {
     return {
@@ -82,11 +82,21 @@ export default {
     this.fetchMonitorDetail(this.$route.query.id); // 假设sourceId是你要查询的监控的ID
   },
   methods: {
+    async loadData() {
+      const { has_next, segments} = await this.$store.dispatch('monitor/fetchMonitorContent', {
+        sourceId: this.$route.query.id,
+        page: this.monitorContent.page + 1
+      })
+      return {
+        hasNext: has_next,
+        data: segments
+      }
+    },
     // 其他方法保持不变
     fetchMonitorDetail(sourceId) {
       this.$store.dispatch('monitor/fetchMonitorDetail', sourceId)
       this.$store.dispatch('monitor/fetchMonitorSummary', sourceId)
-      this.$store.dispatch('monitor/fetchMonitorContent', sourceId)
+      this.$store.dispatch('monitor/fetchMonitorContent', { sourceId })
     }
   }
 }
@@ -145,10 +155,12 @@ export default {
   z-index: 0;
   padding-top: 16px;
   text-align: center;
+  height: calc(100vh - 88px);
 }
 .page-content {
   max-width: 1152px;
   width: 1152px;
+  height: 100%;
   margin: 0 auto;
   display: flex;
   text-align: left;
@@ -165,6 +177,12 @@ export default {
     .content {
       padding-top: 31px;
       text-align: left;
+      overflow: scroll;
+      width: 577px;
+      .box-wrapper {
+        height: calc(100vh - 470px);
+        margin-top: 12px;
+      }
       .title{
         font-style: normal;
         font-weight: 800;
@@ -175,34 +193,55 @@ export default {
 
       }
       .desc-1 {
-        font-family: 'Avenir';
+        color: rgba(255, 255, 255, 0.80);
+        font-family: Avenir;
+        font-size: 13px;
         font-style: normal;
         font-weight: 500;
-        font-size: 13px;
-        line-height: 18px;
+        line-height: normal;
         text-transform: capitalize;
-
-        color: rgba(255, 255, 255, 0.8);
-
+        margin-bottom: 4px;
       }
       .desc-2 {
-        font-family: 'Avenir';
+        color: rgba(255, 255, 255, 0.50);
+        font-family: Avenir;
+        font-size: 10px;
         font-style: normal;
         font-weight: 400;
-        font-size: 10px;
-        line-height: 14px;
+        line-height: normal;
         text-transform: capitalize;
-        color: rgba(255, 255, 255, 0.5);
-        padding-left: 10px;
-        padding-top: 8px;
-        padding-bottom: 8px;
+        margin-bottom: 8px;
+      }
+    }
+    .right-content {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .author {
+        color: rgba(255, 255, 255, 0.60);
+        font-family: Avenir;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-transform: capitalize;
+      }
+      .title {
+        color: #FFF;
+        font-family: Avenir;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        text-transform: capitalize;
       }
     }
     .left-header {
       padding-bottom: 28px;
       display: flex;
       justify-content: space-between;
-      align-items: end;
+      align-items: center;
       .left-header-img {
         width: 86px;
         height: 86px;
