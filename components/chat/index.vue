@@ -233,7 +233,7 @@ export default {
             text: '',
             layers: [
               {
-                type: lastMsg.needPushHotCoin ? "HOT_COINS" : "HOT_SOURCES",
+                type: lastMsg.needPushHotCoin ? "HOT_COINS" : "SOURCES",
                 title: '热门推荐',
                 data: {
                   coins: this.$store.state.coin.coinList,

@@ -215,4 +215,8 @@ export type SourceProps = {
    * 信号源官网链接
    */
   link: string
+  nickname: string // 账号(默认空字符串)
+  body: string  // 标题/内容
+  type: string // twitter/news
+  releasedAt: string  // 资讯发布时间
 }

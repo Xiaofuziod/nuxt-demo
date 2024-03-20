@@ -112,11 +112,5 @@ export const actions = {
     if (!message.more) {
       commit('setRobot', {text: "好啦，已经有答案了～"})
     }
-    // 测试用 三秒后默认回答我完毕
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      commit('updateMessage', {index: state.messageList.length - 1, message: {...lastMsg, more: false}})
-      commit('setRobot', {text: "好啦，已经有答案了～"})
-    }, 3000)
   },
 }

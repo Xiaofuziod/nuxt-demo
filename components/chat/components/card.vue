@@ -1,8 +1,8 @@
 <template>
   <div>
     <div v-for="item in layers">
-      <!--信号源相关-->
-      <div class="chat-card" v-if="item.type === 'HOT_SOURCES'">
+      <!--欢迎页的 信号源相关-->
+      <div class="chat-card" v-if="item.type === 'SOURCES'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/hot.svg" alt="">
           {{ item.title }}
@@ -88,19 +88,19 @@
           {{item.title}}
         </div>
         <div class="source-row">
-          <div class="source-item" v-for="item in 2">
+          <div class="source-item" v-for="n in item.data.news"
+            @click="goDetail(n)" :key="n.id"
+          >
             <div class="source-item-item">
-              If someone loves you,love them ...
-              If someone loves you,love them ...
-              If someone loves you,love them ...
+              {{n.body }}
             </div>
             <div class="source-item-user">
               <div class="source-item-user-pic"></div>
               <div class="source-item-user-right">
-                <div class="source-item-user-right-nickname">Morgan
-                  <img class="img1" src="@/static/images/chat/dui.svg" alt="">
+                <div class="source-item-user-right-nickname">{{ n.nickname }}
+                  <img class="img1" v-if="n.logo" :src="n.logo" alt="">
                 </div>
-                <div class="source-item-user-right-username">@lamdcinvestor</div>
+                <div class="source-item-user-right-username">{{ n.name }}</div>
               </div>
             </div>
           </div>
@@ -141,6 +141,13 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    goDetail(val) {
+      console.log(val)
+      if (!val.link) return
+      window.open(val.link, '_blank')
+    }
   }
 }
 </script>
@@ -211,7 +218,6 @@ export default {
   }
 
   .returns-btn {
-    width: 93px;
     height: 25px;
     flex-shrink: 0;
     display: flex;
@@ -226,7 +232,7 @@ export default {
     .returns-btn-text {
       color: #F44653;
       font-family: "Gruppe F";
-      font-size: 10px;
+      font-size: 12px;
       font-style: normal;
       font-weight: 800;
       text-transform: capitalize;
@@ -247,7 +253,7 @@ export default {
     li {
       color: rgba(255, 255, 255, 0.70);
       font-family: Avenir;
-      font-size: 12px;
+      font-size: 13px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
@@ -259,7 +265,7 @@ export default {
   .returns-conclusion {
     color: rgba(255, 255, 255, 0.70);
     font-family: Avenir;
-    font-size: 8px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -322,6 +328,8 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 23px;
+  max-width: 100%;
+  overflow-x: auto;
 
   .source-item {
     width: 154px;
@@ -330,6 +338,7 @@ export default {
     box-sizing: border-box;
     padding: 12px 12px 10px;
     margin-right: 10px;
+    cursor: pointer;
 
     .source-item-item {
       height: 32px;
