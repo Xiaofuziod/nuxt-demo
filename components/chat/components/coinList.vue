@@ -1,8 +1,10 @@
 <template>
   <div class="coins-wrapper">
     <div class="icon-list" :style="{ 'height': listHeight }">
-      <div v-for="coin in coinList" :key="coin.name" class="coin-row">
-        <div class="coin-name">
+      <div v-for="coin in coinList" :key="coin.name"
+           :class="{'coin-row-2': hideOption}"
+           class="coin-row">
+        <div class="coin-name" v-if="!hideOption">
           <img :src="coin.logo" class="coin-logo" :alt="coin.logo">
           <span class="name">{{ coin.name }}</span>
           <span class="coin-symbol">{{ coin.symbol }}</span>
@@ -12,6 +14,7 @@
           {{ (Number(coin.change) || coin.quotes?.percentChange24h)?.toFixed(2) }}%
         </div>
         <div class="option" @click="addCoin(coin)"
+             v-if="!hideOption"
              :style="{'opacity': userCoinList.includes(coin.id + '') ? 0.4 : 1}"
         >
           <img src="@/assets/imgs/addPlus.svg" alt="">
@@ -32,6 +35,10 @@ export default {
     coinList: {
       type: Array,
       default: () => [],
+    },
+    hideOption: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -177,6 +184,13 @@ export default {
       width: 20px;
       height: 20px;
     }
+  }
+}
+
+.coin-row-2 {
+  margin-bottom: 0;
+  .coin-price{
+    padding-left: 0;
   }
 }
 </style>
