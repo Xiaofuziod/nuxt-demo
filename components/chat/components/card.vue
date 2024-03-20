@@ -24,7 +24,8 @@
                 <img class="img1" src="@/static/images/chat/down.svg" alt="" v-else>
                 <div class="returns-btn-text"
                      :class="{ 'positive': item.data.returns > 0, 'negative': item.data.returns < 0}"
-                >购买信号{{ item.data.returns > 0 ? '强' : '弱' }}</div>
+                >购买信号{{ item.data.returns > 0 ? '强' : '弱' }}
+                </div>
               </btn>
             </div>
 
@@ -85,14 +86,14 @@
       <div class="chat-card" v-if="item.type === 'HOT_SOURCES'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/s4.svg" alt="">
-          {{item.title}}
+          {{ item.title }}
         </div>
         <div class="source-row">
           <div class="source-item" v-for="n in item.data.news"
-            @click="goDetail(n)" :key="n.id"
+               @click="goDetail(n)" :key="n.id"
           >
             <div class="source-item-item">
-              {{n.body }}
+              {{ n.body }}
             </div>
             <div class="source-item-user">
               <div class="source-item-user-pic"></div>
@@ -106,6 +107,48 @@
           </div>
         </div>
       </div>
+      <!--简报-->
+      <div class="chat-card" v-if="false">
+        <div class="chat-card-title">
+          <img class="img1" src="@/static/images/chat/s4.svg" alt="">
+          WLD 简报
+        </div>
+        <div class="returns-box">
+          <div class="returns-title">
+            介绍
+          </div>
+          <div class="returns-desc">
+            24h内，社区讨论热度增加，多位Kol和新闻发布利好观点，较多新闻也解释出利好的信号，按照历史趋势，高热度且持续利好，是涨幅初期的一种关键表现
+          </div>
+          <div class="returns-title">
+            行情
+          </div>
+          <div>
+            <my-echarts from="chat"/>
+          </div>
+
+          <div class="returns-title">
+            合约
+          </div>
+          <div class="returns-desc">
+            以太坊：
+          </div>
+
+          <div class="returns-title">
+            相关链接
+          </div>
+          <div class="returns-desc">
+            以太坊：
+          </div>
+        </div>
+      </div>
+
+<!--      币 趋势-->
+      <div class="chat-card" v-if="item.type === 'COIN_QUOTES'">
+        <coin-list :coinList="item.data?.datas"/>
+        <my-echarts from="chat" :list="item.data?.datas[0]?.market"/>
+      </div>
+
       <!--问答-->
       <div class="chat-card" v-if="item.type === 'ASK'">
         <div class="chat-card-title">
@@ -126,12 +169,14 @@
 import coinList from "@/components/chat/components/coinList.vue";
 import monitorList from "@/components/chat/components/monitorList.vue";
 import Btn from "@/components/chat/components/btn.vue";
+import MyEcharts from "@/components/echarts/index.vue";
 
 export default {
   components: {
     Btn,
     coinList,
-    monitorList
+    monitorList,
+    MyEcharts
   },
   props: {
     layers: {
@@ -191,12 +236,6 @@ export default {
 }
 
 .returns-box {
-  //width: 334px;
-  //flex-shrink: 0;
-  //border-radius: 8px;
-  //background: rgba(140, 180, 189, 0.10);
-  //box-sizing: border-box;
-  //padding: 13px 12px;
   margin-bottom: 14px;
 
   .returns-top {
@@ -207,14 +246,22 @@ export default {
   }
 
   .returns-title {
+    color: #FFF;
+    font-family: "Gruppe F";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 120%; /* 14.4px */
+    margin-bottom: 8px;
+  }
+
+  .returns-desc{
     color: rgba(255, 255, 255, 0.70);
     font-family: Avenir;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: normal;
-    text-transform: capitalize;
-    margin-bottom: 8px;
+    margin-bottom: 14px;
   }
 
   .returns-btn {
@@ -237,10 +284,12 @@ export default {
       font-weight: 800;
       text-transform: capitalize;
     }
+
     .positive {
       color: #F44653;
     }
-    .negative{
+
+    .negative {
       color: #42C525;
     }
 
@@ -277,7 +326,7 @@ export default {
   box-sizing: border-box;
   padding: 14px 20px 0;
   min-width: 370px;
-  max-width: 400px;
+  max-width: 440px;
   border-radius: 16px;
   margin-top: 12px;
   border: 2px solid rgba(255, 255, 255, 0.10);

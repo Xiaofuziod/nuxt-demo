@@ -67,7 +67,8 @@ export default {
   margin-bottom: 1em;
 
   .coin-name {
-    width: 194px;
+    //width: 194px;
+    flex: 1;
     display: flex;
     align-items: center;
 

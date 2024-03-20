@@ -3,29 +3,33 @@
     <box-loading :loading="loading"/>
 
     <div :style="{opacity: loading?0:1}">
-      <div class="coin-name">
-        <img :src="coin.logo" v-if="coin.logo" class="coin-logo" :alt="coin.logo">
-        <span class="name">{{ coin.name }}</span>
-        <span class="coin-symbol">{{ coin.symbol }}</span>
-      </div>
-      <div class="coin-price-box">
-        <div class="coin-price">${{ formatPrice(coin.currentPrice) }}</div>
-        <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
-          {{ coin.change?.toFixed(2) }}%
+      <template v-if="from !== 'chat'">
+        <div class="coin-name">
+          <img :src="coin.logo" v-if="coin.logo" class="coin-logo" :alt="coin.logo">
+          <span class="name">{{ coin.name }}</span>
+          <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
-        <img src="@/assets/imgs/chat/tips.svg" alt="">
-      </div>
+        <div class="coin-price-box">
+          <div class="coin-price">${{ formatPrice(coin.currentPrice) }}</div>
+          <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
+            {{ coin.change?.toFixed(2) }}%
+          </div>
+          <img src="@/assets/imgs/chat/tips.svg" alt="">
+        </div>
+        <div class="select-row">
+          <div v-for="(item,index) in selectList" :key="index"
+               :class="{'active': activeKey === item.value}" @click="loadData(item)"
+          >
+            {{ item.name }}
+          </div>
+        </div>
+      </template>
 
-      <div class="select-row">
-        <div v-for="(item,index) in selectList" :key="index"
-             :class="{'active': activeKey === item.value}" @click="loadData(item)"
-        >
-          {{ item.name }}
-        </div>
-      </div>
-      <div id="myChart"></div>
+      <div id="myChart"
+           class="chat-content"
+           :class="`chat-content-${from}`"
+           ></div>
     </div>
-
   </div>
 </template>
 <script>
@@ -37,6 +41,16 @@ export default {
   name: 'Echarts',
   components: {
     BoxLoading
+  },
+  props: {
+    from: {
+      type: String,
+      default: 'report'
+    },
+    list: {
+      type: Array,
+      default: () => []
+    }
   },
   data() {
     return {
@@ -74,6 +88,17 @@ export default {
       coinId: 10
     }
   },
+  mounted() {
+    if (this.from === 'chat' && this.list.length) {
+      this.list.forEach(item => {
+        this.xData.push(item[0])
+        this.yData.push(formatPrice(item[1]))
+      })
+      console.log(this.xData, this.yData)
+      this.echartsInit()
+      this.loading = false
+    }
+  },
   methods: {
     formatPrice,
     echartsInit() {
@@ -94,6 +119,7 @@ export default {
           right: "5%",
           top: "5%",
           left: "15%",
+          bottom: "14%"
         },
         xAxis: {
           type: 'category',
@@ -191,9 +217,19 @@ export default {
 }
 
 #myChart {
+
+  margin: 0 auto;
+}
+
+.chat-content-report {
   width: 340px;
   height: 260px;
-  margin: 0 auto;
+}
+
+
+.chat-content-chat {
+  width: 400px;
+  height: 170px;
 }
 
 
