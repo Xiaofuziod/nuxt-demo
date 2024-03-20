@@ -1,19 +1,12 @@
 <template>
-  <div class="card" @click="$emit('click')">
+  <div class="card" :class="`${card.status === 1 ? 'disable' : ''}`" @click="cardClick()">
     <img class="card-img" :src="card?.logo || bianPic" alt="">
     <div class="card-header">
       <h3 class="title1">{{ card?.title }}</h3>
       <h3 class="title2">{{ card?.author }}</h3>
       <p class="timestamp">{{ card?.time }}</p>
-      <!--      <p class="other">{{ card?.status }}</p>-->
     </div>
     <img class="remove-btn" src="@/assets/imgs/close.svg" @click.stop="deleteMonitor(card.id)" alt="">
-    <!--    <div class="option-box" v-if="showAction">-->
-    <!--      <span class="hover-point">{{ $t("monitorCard_hover-point_1") }}</span>-->
-    <!--      <div class="option-list" @click.stop="deleteMonitor(card.id)">-->
-    <!--        <div class="option-item">{{ $t("monitorCard_option-item_1") }}</div>-->
-    <!--      </div>-->
-    <!--    </div>-->
   </div>
 </template>
 <script>
@@ -38,6 +31,13 @@ export default {
   methods: {
     deleteMonitor(id) {
       this.$store.dispatch('monitor/deleteUserMonitor', id);
+    },
+    cardClick() {
+      if (this.card.status === 1) {
+        this.$toast.warning('The activity you are monitoring has not yet concluded.')
+      } else {
+        this.$emit('click')
+      }
     }
   }
 }
