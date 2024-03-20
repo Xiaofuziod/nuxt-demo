@@ -68,26 +68,8 @@ export const actions = {
       console.error('fetchChatMessageList error:', e);
     }
   },
-  addMessage({commit}, message) {
+  pushWelcomeMessage({commit}, message) {
     commit('addMessage', message)
-    // 如果是用户发送的消息，添加一条loading状态的消息
-    if (message.source === 'USER') {
-      commit('addMessage', {
-        seqNo: message.seqNo + 1,
-        source: "ASSISTANT",
-        context: null,
-        language: message.language,
-        text: '',
-        layers: [],
-        loading: true
-      })
-      // 根据用户的问题，获取机器人的回答
-      let text = "我需要思考下..."
-      if (JSON.stringify(message).includes('FOCUS') || JSON.stringify(message).includes('SIGNAL_SOURCE')) {
-        text = "我已收到您的请求～"
-      }
-      commit('setRobot', {text})
-    }
   },
   welcomeToNext({commit, state}) {
     commit('setWelcomeIndex', state.welcomeIndex + 1)
@@ -96,7 +78,7 @@ export const actions = {
   clearMessageList({commit}) {
     commit('clearMessageList')
   },
-  pushSubscriptMessage({commit, state}, message) {
+  pushAIMessage({commit, state}, message) {
     let lastMsg = state.messageList[state.messageList.length - 1]
     if ((lastMsg && lastMsg.seqNo === message.seqNo && lastMsg.source === message.source) || lastMsg.loading) {
       const newMsg = {
@@ -113,4 +95,36 @@ export const actions = {
       commit('setRobot', {text: "好啦，已经有答案了～"})
     }
   },
+  // 发送用户消息 只用传入 text 和 context
+  sendUserMessage({commit, state}, message) {
+    const nextSeqNo = state.messageList.length === 0 ? 0 : state.messageList[state.messageList.length - 1].seqNo + 1
+    commit('addMessage', {
+      conversationId: state.conversationId,
+      seqNo: nextSeqNo,
+      source: "USER",
+      language: this.$i18n.locale,
+      text: message.text,
+      context: message.context
+    })
+
+    commit('addMessage', {
+      conversationId: state.conversationId,
+      seqNo: nextSeqNo + 1,
+      source: "ASSISTANT",
+      context: null,
+      language: this.$i18n.locale,
+      text: '',
+      layers: [],
+      loading: true
+    })
+
+    // 根据用户的问题，获取机器人的回答
+    let text = "我需要思考下..."
+    if (JSON.stringify(message).includes('FOCUS') || JSON.stringify(message).includes('SIGNAL_SOURCE')) {
+      text = "我已收到您的请求～"
+    }
+    commit('setRobot', {text})
+
+    // commit('setLastUserQuestion', message)
+  }
 }

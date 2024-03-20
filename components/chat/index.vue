@@ -29,6 +29,21 @@
               <div class="focus-text">{{ item.text }}</div>
             </div>
           </div>
+
+          <!--信号源-->
+          <div class="text-message-box1"
+               v-if="item.context && item.context.hook && item.context.hook.type === 'SIGNAL_SOURCE'">
+            <div class="focus-box">
+              <div class="focus-tip">
+                <btn cursor="default">
+                  <img src="@/static/images/chat/s2.svg" alt="">
+                  <div>H SPACE</div>
+                </btn>
+              </div>
+              <div class="focus-text">{{ item.text }}</div>
+            </div>
+          </div>
+
           <!--定制卡片内容-->
           <chat-card :layers="item.layers" v-if="item.layers && item.layers.length > 0"/>
           <!--欢迎的任务-->
@@ -128,10 +143,10 @@ export default {
   mounted() {
     this.$socket.on('chat', this.onWebsocketReceiveMessage);
     this.$socket.on('connect', this.onWebsocketConnect);
+    //  第一次进入页面，发送欢迎语
     if (this.showWelcome) {
-      //  第一次进入页面，发送欢迎语
       const msg = this.$store.state.chat.welcomeList[this.$store.state.chat.welcomeIndex]
-      this.$store.dispatch('chat/addMessage', msg)
+      this.$store.dispatch('chat/pushWelcomeMessage', msg)
 
       // 获取用户自选列表 和 监控列表
       this.$store.dispatch('coin/fetchUserCoinList')
@@ -142,7 +157,8 @@ export default {
         this.$store.dispatch('coin/fetchCoinList', "")
         this.$store.dispatch('monitor/fetchMonitorList', "",)
       }, 3000)
-    } else {
+      // 没有历史消息，则去拉取历史消息
+    } else if (this.messageList.length === 0) {
       this.loadEarlierMessages()
     }
   },
@@ -202,8 +218,7 @@ export default {
         text: this.message
       }
       console.log('发送', para)
-      this.$socket.emit('chat', para)
-      this.$store.dispatch('chat/addMessage', para)
+      this.$store.dispatch('chat/sendUserMessage', para)
       this.message = ''
       this.scrollToBottom()
     },
@@ -214,7 +229,7 @@ export default {
         return
       }
       this.scrollToBottom()
-      this.$store.dispatch('chat/pushSubscriptMessage', data)
+      this.$store.dispatch('chat/pushAIMessage', data)
     },
     writerOver() {
       const lastMsg = this.messageList[this.messageList.length - 1]
@@ -243,7 +258,7 @@ export default {
             ],
             more: false,
           }
-          this.$store.dispatch('chat/addMessage', para)
+          this.$store.dispatch('chat/pushWelcomeMessage', para)
           this.scrollToBottom()
         }
       }

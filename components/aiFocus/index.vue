@@ -39,7 +39,7 @@
   </div>
 </template>
 <script>
-import { analysisRead} from "@/common/home";
+import {analysisRead} from "@/common/home";
 import btn from "@/components/chat/components/btn.vue";
 
 export default {
@@ -60,14 +60,7 @@ export default {
       }
     }
   },
-  computed: {
-    messageList() {
-      return this.$store.state.chat.messageList
-    },
-    conversationId() {
-      return this.$store.state.chat.conversationId
-    }
-  },
+  computed: {},
   data() {
     return {}
   },
@@ -75,13 +68,7 @@ export default {
   },
   methods: {
     handleClick(item) {
-      const nextSeqNo = this.messageList.length === 0 ? 1 :
-          this.messageList[this.messageList.length - 1].seqNo + 1;
       const para = {
-        conversationId: this.conversationId,
-        seqNo: nextSeqNo,
-        source: "USER",
-        language: this.$store.$i18n.locale,
         text: item.title,
         context: {
           hook: {
@@ -90,16 +77,12 @@ export default {
           }
         },
       }
-      this.$socket.emit('chat', para)
-      this.$store.dispatch('chat/addMessage', para)
+      this.$store.dispatch('chat/sendUserMessage', para)
 
-      // 记录点击事件
-      this.$axios.get(analysisRead, {params: {id: item.id}}).then(res => {
-        if (res.data.code === 200) {
-          item.trigger = 1
-          this.$emit('read', item.id)
-        }
-      })
+
+      item.trigger = 1
+      this.$emit('read', item.id)
+
     }
   }
 }
@@ -110,6 +93,7 @@ export default {
 
 .focus-item {
   box-sizing: border-box;
+
   .list {
     width: 305px;
     border-radius: 16px;

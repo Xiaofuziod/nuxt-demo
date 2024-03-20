@@ -4,13 +4,13 @@
       <div class="left">
         <breadcrumb-navigation/>
         <div class="left-header">
-          <img :src="monitorDetail?.logo || bianPic"  class="left-header-img" alt="">
+          <img :src="monitorDetail?.logo || bianPic" class="left-header-img" alt="">
           <div class="right-content">
             <div class="author">{{ monitorDetail?.author }}</div>
             <div class="title">{{ monitorDetail?.title }}</div>
           </div>
         </div>
-        <FilterTabs v-model="activeTab" :tabList="tabs" active-color="rgba(206, 184, 100, 1)" />
+        <FilterTabs v-model="activeTab" :tabList="tabs" active-color="rgba(206, 184, 100, 1)"/>
         <!-- 监控详情内容 -->
         <div v-if="activeTab === '0' && monitorSummary" class="content">
           <div class="title">✨ 会议总结</div>
@@ -49,6 +49,7 @@
 import ChatIndex from "~/components/chat/index.vue";
 import AIFocus from '~/components/aiFocus/index.vue';
 import bianPic from '@/assets/imgs/bian.png'
+
 export default {
   name: 'Home',
   components: {
@@ -62,8 +63,8 @@ export default {
       followList: [],
       activeTab: "0",
       tabs: [
-        { label: '总结', key: '0' },
-        { label: '原文', key: '1' },
+        {label: '总结', key: '0'},
+        {label: '原文', key: '1'},
       ],
     }
   },
@@ -81,9 +82,16 @@ export default {
   mounted() {
     this.fetchMonitorDetail(this.$route.query.id); // 假设sourceId是你要查询的监控的ID
   },
+  watch: {
+    monitorDetail(val) {
+      if (val) {
+        this.senMessage()
+      }
+    }
+  },
   methods: {
     async loadData() {
-      const { has_next, segments} = await this.$store.dispatch('monitor/fetchMonitorContent', {
+      const {has_next, segments} = await this.$store.dispatch('monitor/fetchMonitorContent', {
         sourceId: this.$route.query.id,
         page: this.monitorContent.page + 1
       })
@@ -96,7 +104,19 @@ export default {
     fetchMonitorDetail(sourceId) {
       this.$store.dispatch('monitor/fetchMonitorDetail', sourceId)
       this.$store.dispatch('monitor/fetchMonitorSummary', sourceId)
-      this.$store.dispatch('monitor/fetchMonitorContent', { sourceId })
+      this.$store.dispatch('monitor/fetchMonitorContent', {sourceId})
+    },
+    senMessage() {
+      //   自动发一条消息到聊天
+      this.$store.dispatch('chat/sendUserMessage', {
+        text: this.monitorDetail.title,
+        context: {
+          hook: {
+            type: "SIGNAL_SOURCE",
+            id: this.monitorDetail.id
+          }
+        },
+      })
     }
   }
 }
@@ -147,6 +167,7 @@ export default {
     text-transform: capitalize;
   }
 }
+
 .page-content-wrapper {
   position: relative;
   overflow-x: visible;
@@ -157,6 +178,7 @@ export default {
   text-align: center;
   height: calc(100vh - 88px);
 }
+
 .page-content {
   max-width: 1152px;
   width: 1152px;
@@ -180,12 +202,14 @@ export default {
       overflow: scroll;
       width: 577px;
       height: calc(100vh - 350px);
+
       .box-wrapper {
         height: calc(100vh - 470px);
         margin-top: 12px;
         overflow: scroll;
       }
-      .title{
+
+      .title {
         font-style: normal;
         font-weight: 800;
         font-size: 16px;
@@ -194,6 +218,7 @@ export default {
         color: #FFFFFF;
 
       }
+
       .desc-1 {
         color: rgba(255, 255, 255, 0.80);
         font-family: Avenir;
@@ -204,6 +229,7 @@ export default {
         text-transform: capitalize;
         margin-bottom: 4px;
       }
+
       .desc-2 {
         color: rgba(255, 255, 255, 0.50);
         font-family: Avenir;
@@ -215,11 +241,13 @@ export default {
         margin-bottom: 8px;
       }
     }
+
     .right-content {
       padding-left: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
+
       .author {
         color: rgba(255, 255, 255, 0.60);
         font-family: Avenir;
@@ -229,6 +257,7 @@ export default {
         line-height: normal;
         text-transform: capitalize;
       }
+
       .title {
         color: #FFF;
         font-family: Avenir;
@@ -239,15 +268,18 @@ export default {
         text-transform: capitalize;
       }
     }
+
     .left-header {
       padding-bottom: 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .left-header-img {
         width: 86px;
         height: 86px;
       }
+
       .hotinfo {
         font-family: 'Avenir';
         font-style: normal;
