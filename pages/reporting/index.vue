@@ -31,7 +31,7 @@
       <div class="report-center">
         <!--面包屑-->
         <div class="rc-top">
-          <div class="rc-account">{{ $t("Home_rc-account_1") }}</div>
+          <div class="rc-account">{{ !!coinId ? $t("Selected") : $t("Home_rc-account_1") }}</div>
           <span>{{ $t("Home_span_1") }}</span>
           <template v-if="coinId">
             <div class="pic">
@@ -338,6 +338,7 @@ export default {
         font-family: aifontF;
         font-size: 14px;
         text-transform: uppercase;
+        margin-right: 4px;
       }
 
       .pic {
@@ -345,6 +346,7 @@ export default {
         height: 20px;
         border-radius: 20px;
         margin-right: 4px;
+        margin-left: 4px;
         overflow: hidden;
 
         img {

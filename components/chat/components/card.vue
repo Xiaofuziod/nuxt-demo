@@ -89,19 +89,24 @@
           {{ item.title }}
         </div>
         <div class="source-row">
-          <div class="source-item" v-for="n in item.data.news"
+          <div class="source-item" v-for="n in item.data?.news"
                @click="goDetail(n)" :key="n.id"
           >
             <div class="source-item-item">
               {{ n.body }}
             </div>
             <div class="source-item-user">
-              <div class="source-item-user-pic"></div>
+              <div class="source-item-user-pic">
+                <img v-if="n.logo" :src="n.logo" alt="">
+              </div>
               <div class="source-item-user-right">
-                <div class="source-item-user-right-nickname">{{ n.nickname }}
-                  <img class="img1" v-if="n.logo" :src="n.logo" alt="">
+                <div class="source-item-user-right-nickname">
+                  <div>
+                    {{ n.name }}
+                  </div>
+                  <img class="img1" src="@/static/images/chat/dui.svg" alt="">
                 </div>
-                <div class="source-item-user-right-username">{{ n.name }}</div>
+                <div class="source-item-user-right-username">{{ n.uid }}</div>
               </div>
             </div>
           </div>
@@ -413,6 +418,7 @@ export default {
   border-radius: 16px;
   margin-top: 12px;
   border: 2px solid rgba(255, 255, 255, 0.10);
+  display: inline-block;
 }
 
 .ask-list {
@@ -496,7 +502,10 @@ export default {
         height: 28px;
         border-radius: 28px;
         overflow: hidden;
-        background-color: green;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
 
       .source-item-user-right {
@@ -506,6 +515,17 @@ export default {
           color: rgba(255, 255, 255, 1);
           font-family: Avenir-Heavy;
           font-size: 14px;
+          display: flex;
+          align-items: center;
+
+          div {
+            width: 91px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+
 
           img {
             width: 8px;

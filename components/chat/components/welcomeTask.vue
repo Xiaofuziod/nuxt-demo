@@ -4,7 +4,9 @@
       {{ message.taskText }}
       <div class="start-btn-box" v-if="message.startBtnShow">
         <div class="start-btn" @click="startBtnClick">
-          <btn>{{ $t("welcomeTask_btn_1") }}</btn>
+          <btn>
+            <span style="padding-left: 5px">{{ $t("welcomeTask_btn_1") }}</span>
+          </btn>
         </div>
       </div>
     </div>
@@ -29,10 +31,12 @@
       </div>
       <div class="start-btn-box">
         <div class="start-btn" @click="showSelect">
-          <btn type="2">{{ $t("welcomeTask_btn_3") }}</btn>
+          <btn2 type="2">{{ $t("welcomeTask_btn_3") }}</btn2>
         </div>
         <div class="start-btn" @click="taskFinish">
-          <btn :disable="finishBtnDisable">{{ $t("welcomeTask_btn_2") }}</btn>
+          <btn :disable="finishBtnDisable">
+            <span style="padding-left: 5px">{{ $t("welcomeTask_btn_2") }}</span>
+          </btn>
         </div>
       </div>
     </div>
@@ -40,10 +44,12 @@
 </template>
 <script>
 import btn from "@/components/chat/components/btn.vue";
+import btn2 from "@/components/chat/components/btn2.vue";
 
 export default {
   components: {
-    btn
+    btn,
+    btn2
   },
   props: {
     message: {
@@ -122,6 +128,7 @@ export default {
 
 <style lang="less" scoped>
 .text-message-box2 {
+  width: 100%;
   display: flex;
   align-items: flex-start;
 }

@@ -116,6 +116,17 @@ export default {
             const x = point[0] > size.viewSize[0] / 2 ? point[0] - 100 : point[0] + 100;
             const y = point[1] > size.viewSize[1] / 2 ? point[1] - 50 : point[1] + 50;
             return [x, y];
+          },
+          // 自定义提示框的内容格式器
+          formatter: function (params) {
+            let params0 = params[0]
+            return '$'+ params0.value + '<br>' + params0.name;
+          },
+          backgroundColor: 'rgba(38, 64, 64)',
+          borderWidth: 0,
+          textStyle: {
+            color: '#FFF',
+            fontSize: 12, // 字体大小
           }
         },
         grid: {

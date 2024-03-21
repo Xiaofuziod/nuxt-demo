@@ -20,7 +20,7 @@
            :style="{'opacity': item.trigger === 1 ? 0.4 : 1}"
            :key="item.id + '-' + index">
         <div class="list-item-top">
-          <div class="list-item-top1">{{ item.lastUpdatedDate.split(' ')[1] }}</div>
+          <div class="list-item-top1">{{ item.lastUpdatedDate?.split(' ')[1] }}</div>
           <div class="list-item-top2">
             <img v-if="item.coverPhotoUrl" :src="item.coverPhotoUrl" alt="">
           </div>
@@ -144,7 +144,7 @@ export default {
           color: rgba(255, 255, 255, 0.6);
           font-family: Avenir-Roman;
           font-size: 10px;
-          text-transform: capitalize;
+          //text-transform: capitalize;
         }
       }
 
@@ -159,7 +159,7 @@ export default {
           font-family: Avenir;
           font-weight: 500;
           font-size: 13px;
-          text-transform: capitalize;
+          //text-transform: capitalize;
         }
 
         .list-item-icon {
@@ -192,7 +192,6 @@ export default {
       display: flex;
       align-items: center;
       box-sizing: border-box;
-      text-transform: uppercase;
       overflow: hidden;
 
       img {
@@ -207,25 +206,23 @@ export default {
 
   .data-row {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
 
     .date {
-      height: 29px;
+      //height: 29px;
       color: rgba(206, 184, 100, 1);
       font-family: aifontF;
       font-size: 24px;
-      text-transform: uppercase;
     }
 
     .date1 {
-      height: 14px;
       color: rgba(206, 184, 100, 1);
       font-family: Avenir;
       font-weight: 500;
       font-size: 10px;
-      text-transform: uppercase;
-      margin-top: 7px;
       margin-left: 7px;
+      display: flex;
+      flex-direction: column;
     }
 
     .date2 {
@@ -233,7 +230,6 @@ export default {
       color: rgba(140, 180, 189, 0.6);
       font-family: Avenir-Roman;
       font-size: 8px;
-      text-transform: uppercase;
     }
   }
 

@@ -61,7 +61,6 @@ export default {
     font-family: Avenir;
     font-weight: 500;
     font-size: 14px;
-    text-transform: capitalize;
   }
 
   .wtewteri247 {
@@ -69,7 +68,6 @@ export default {
     color: rgba(206, 184, 100, 1);
     font-family: Avenir-Roman;
     font-size: 10px;
-    text-transform: capitalize;
     margin-top: 2px;
   }
 }

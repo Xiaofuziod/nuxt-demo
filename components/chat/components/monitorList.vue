@@ -8,7 +8,7 @@
         <p class="timestamp">{{ card?.time || card.start }}</p>
       </div>
       <img class="option-img"
-           :style="{'opacity': userMonitorList.includes(card.id + '') ? 0.4 : 1}"
+           :style="{'opacity': userMonitorList?.includes(card.id + '') ? 0.4 : 1}"
            @click="addMonitor(card)" src="@/assets/imgs/addPlus.svg" alt="">
     </div>
   </div>

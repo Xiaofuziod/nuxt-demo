@@ -78,7 +78,7 @@
     </div>
 
     <div class="input-box" :class="{'input-disable':disableSend}">
-      <input type="text" v-model="message" :disabled="disableInput" @keydown.enter="sendMessage">
+      <input type="text" id="chatInput" v-model="message" :disabled="disableInput">
       <img class="img1" src="@/static/images/chat/send3.svg" alt="" @click="sendMessage">
     </div>
 
@@ -164,6 +164,13 @@ export default {
 
     this.mode = this.$route.query.mode || 'production'
 
+    // 输入框键盘事件
+
+    this.$nextTick(() => {
+      this.inputKeyDown()
+    })
+
+
   },
   methods: {
     handleScroll(e) {
@@ -172,6 +179,29 @@ export default {
         this.isLoading = true
         this.loadEarlierMessages()
       }
+    },
+    inputKeyDown() {
+      let isComposing = false;
+      let that = this
+
+      const chatInput = document.getElementById('chatInput');
+
+      chatInput.addEventListener('compositionstart', function() {
+        isComposing = true; // 开始输入法组合输入
+      });
+
+      chatInput.addEventListener('compositionend', function() {
+        isComposing = false; // 输入法组合输入结束
+      });
+
+      chatInput.addEventListener('keydown', function(e) {
+        // 如果是回车键，并且不在输入法组合输入状态，且没有按下Shift键
+        if (e.key === 'Enter' && !isComposing && !e.shiftKey) {
+          e.preventDefault(); // 阻止默认行为，如换行
+          that.sendMessage()
+        }
+      });
+
     },
     async loadEarlierMessages() {
       // 加载历史聊天对话
@@ -202,6 +232,7 @@ export default {
       }
     },
     sendMessage() {
+      console.log('send message')
       if (!this.message || !this.conversationId) return
       // 上一条消息未处理完，不发送
       if (this.messageList.length > 0) {
@@ -385,12 +416,14 @@ export default {
   }
 
   .chat-content {
+    width: 100%;
     flex: 1;
     overflow-y: auto;
     margin: 0 auto;
 
 
     .text-message-box2 {
+      width: 100%;
       display: flex;
       align-items: flex-start;
     }
@@ -410,13 +443,13 @@ export default {
       font-family: Avenir;
       font-weight: 500;
       font-size: 13px;
-      text-transform: capitalize;
+      //text-transform: capitalize;
       margin-top: 14px;
       display: table;
     }
 
     .text-message-v2 {
-      max-width: 420px;
+      max-width: 440px;
       overflow: hidden;
       box-sizing: border-box;
       padding: 16px 20px;
@@ -453,7 +486,7 @@ export default {
         font-family: Avenir;
         font-weight: 500;
         font-size: 13px;
-        text-transform: capitalize;
+        //text-transform: capitalize;
       }
     }
   }
@@ -513,7 +546,7 @@ export default {
       font-family: Avenir;
       font-weight: 500;
       font-size: 12px;
-      text-transform: capitalize;
+      //text-transform: capitalize;
       text-align: center;
       line-height: 38px;
       margin-left: 20px;
