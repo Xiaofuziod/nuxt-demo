@@ -14,7 +14,7 @@
           <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
             {{ coin.change?.toFixed(2) }}%
           </div>
-          <img src="@/assets/imgs/chat/tips.svg" alt="">
+          <!--          <img src="@/assets/imgs/chat/tips.svg" alt="">-->
         </div>
         <div class="select-row">
           <div v-for="(item,index) in selectList" :key="index"
@@ -26,10 +26,10 @@
       </template>
 
       <div
-           ref="myChart"
-           class="chat-content"
-           :class="`chat-content-${from}`"
-           ></div>
+          ref="myChart"
+          class="chat-content"
+          :class="`chat-content-${from}`"
+      ></div>
     </div>
   </div>
 </template>
@@ -59,6 +59,7 @@ export default {
       yData: [],
       coin: {},
       loading: false,
+      maxPriceLength: 0,
       selectList: [
         {
           name: '1D',
@@ -104,6 +105,11 @@ export default {
     echartsInit() {
       // 找到容器
       let myChart = this.$echarts.init(this.$refs.myChart)
+
+      let priceLength = this.yData[0].toString().length
+
+      console.log('priceLength', priceLength)
+
       // 开始渲染
       myChart.setOption({
         tooltip: {
@@ -118,7 +124,7 @@ export default {
         grid: {
           right: "5%",
           top: "5%",
-          left: "15%",
+          left: `${priceLength + 8}%`,
           bottom: "14%"
         },
         xAxis: {
@@ -224,12 +230,14 @@ export default {
 .chat-content-report {
   width: 340px;
   height: 260px;
+  margin: 0 auto 12px;
 }
 
 
 .chat-content-chat {
   width: 400px;
   height: 170px;
+  margin: 0 auto 12px;
 }
 
 

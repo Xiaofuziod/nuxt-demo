@@ -13,6 +13,7 @@
         <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
           {{ (Number(coin.change) || coin.quotes?.percentChange24h)?.toFixed(2) }}%
         </div>
+
         <div class="option" @click="addCoin(coin)"
              v-if="!hideOption"
              :style="{'opacity': userCoinList.includes(coin.id + '') ? 0.4 : 1}"
@@ -52,9 +53,7 @@ export default {
   methods: {
     formatPrice,
     addCoin(coin) {
-      console.log(coin.id + '')
       if (this.userCoinList.includes(coin.id + '')) return;
-      console.log(coin.id + '', 'coin.id')
       this.$store.dispatch('coin/addFollow', [coin.id]);
     },
   },
