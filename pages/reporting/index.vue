@@ -3,18 +3,7 @@
     <div class="page-content">
       <div class="report-left">
         <div class="Account">{{ $t("Home_Account_1") }}</div>
-        <div class="Rectangle82"
-             :class="{ 'item-active': !coinId}"
-             @click="handleClick({ coinId: '' })"
-        >
-          <div class="Ellipse245">
-            <img :src="user.avatar" v-if="user.avatar" alt="">
-          </div>
-          <div>
-            <div class="saywteri2473 ellipsis">{{ user.account }}</div>
-            <div class="wtewteri247">{{ user.nickname }}</div>
-          </div>
-        </div>
+        <user-info />
         <div class="Account Selected">{{ $t("Selected") }}{{ followList.length ? ` (${followList.length})` : '' }}
           <span style="cursor: pointer" @click="showDelete = !showDelete">{{
               showDelete ? $t("OK") : $t("Edit")
@@ -297,50 +286,7 @@ export default {
       }
     }
 
-    .Rectangle82 {
-      width: 204px;
-      height: 58px;
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-      padding-left: 8px;
-      margin-top: 14px;
-      margin-bottom: 40px;
-      cursor: pointer;
 
-      .Ellipse245 {
-        width: 42px;
-        height: 42px;
-        border-radius: 42px;
-        margin-right: 12px;
-        overflow: hidden;
-
-        img {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-        }
-      }
-
-      .saywteri2473 {
-        width: 130px;
-        height: 19px;
-        color: rgba(255, 255, 255, 1);
-        font-family: Avenir;
-        font-weight: 500;
-        font-size: 14px;
-        text-transform: capitalize;
-      }
-
-      .wtewteri247 {
-        height: 14px;
-        color: rgba(206, 184, 100, 1);
-        font-family: Avenir-Roman;
-        font-size: 10px;
-        text-transform: capitalize;
-        margin-top: 2px;
-      }
-    }
 
 
   }

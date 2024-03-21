@@ -42,9 +42,9 @@
           </div>
         </template>
         <template v-if="searchQuery && !loading && monitors.length">
-          <div class="monitoring-cards" v-if="unstartMonitors.length">
+          <div class="monitoring-cards">
             <mid-monitor-card
-                v-for="monitor in unstartMonitors"
+                v-for="monitor in monitors"
                 :key="monitor.id"
                 :card="monitor"
                 :disable="selectIdList.includes(monitor.id)"

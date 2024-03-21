@@ -4,13 +4,7 @@
       <aside class="sidebar">
         <section class="profile">
           <h2 class="h2-title">{{ $t("Monitor_h2-title_1") }}</h2>
-          <div class="user-box">
-            <img v-if="user.account" :src="user.avatar" alt="Profile"/>
-            <div class="name-info">
-              <h3 class="name ellipsis">{{ user.account }}</h3>
-              <p class="info">{{ user.nickname }}</p>
-            </div>
-          </div>
+          <user-info />
         </section>
         <section class="monitoring-type">
           <h2 class="h2-title">{{ $t("Monitor_h2-title_2") }}</h2>
