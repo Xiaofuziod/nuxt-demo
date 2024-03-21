@@ -36,8 +36,7 @@
             <div class="focus-box">
               <div class="focus-tip">
                 <btn cursor="default">
-                  <img src="@/static/images/chat/s2.svg" alt="">
-                  <div>H SPACE</div>
+                  <div style="padding-left: 5px">H SPACE</div>
                 </btn>
               </div>
               <div class="focus-text">{{ item.text }}</div>

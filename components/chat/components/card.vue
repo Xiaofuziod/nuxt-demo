@@ -390,7 +390,6 @@ export default {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      text-transform: capitalize;
       margin-bottom: 8px;
     }
   }
@@ -402,7 +401,7 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    text-transform: capitalize;
+    white-space: pre-line;
   }
 }
 
@@ -431,7 +430,6 @@ export default {
     font-family: Avenir;
     font-size: 13px;
     font-weight: 350;
-    text-transform: capitalize;
 
     img {
       width: 16px;
