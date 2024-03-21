@@ -1,5 +1,6 @@
 <template>
-  <div class="Rectangle82">
+  <div class="Rectangle82"
+  :class="{'rect-active':isActive}">
     <div class="Ellipse245">
       <img :src="user.avatar" v-if="user.avatar" alt="">
     </div>
@@ -12,6 +13,12 @@
 <script>
 export default {
   name: 'UserInfo',
+  props:{
+    isActive: {
+      type: Boolean,
+      default: true
+    }
+  },
   computed: {
     user() {
       return this.$store.state.user.userInfo
@@ -31,8 +38,8 @@ export default {
   margin-top: 14px;
   margin-bottom: 40px;
   cursor: pointer;
-  background: linear-gradient(90deg, rgba(172, 241, 216, 0.12) 0%, rgba(172, 241, 216, 0.00) 100%);
-  border-left: 3px solid #ACF1D8 !important;
+
+  border-left: 3px solid transparent;
   .Ellipse245 {
     width: 42px;
     height: 42px;
@@ -65,5 +72,10 @@ export default {
     text-transform: capitalize;
     margin-top: 2px;
   }
+}
+
+.rect-active{
+  border-left-color: #ACF1D8;
+  background: linear-gradient(90deg, rgba(172, 241, 216, 0.12) 0%, rgba(172, 241, 216, 0.00) 100%);
 }
 </style>

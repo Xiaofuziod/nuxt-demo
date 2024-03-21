@@ -3,7 +3,9 @@
     <div class="page-content">
       <div class="report-left">
         <div class="Account">{{ $t("Home_Account_1") }}</div>
-        <user-info />
+        <div @click="handleClick({coinId:''})">
+          <user-info :is-active="!coinId"/>
+        </div>
         <div class="Account Selected">{{ $t("Selected") }}{{ followList.length ? ` (${followList.length})` : '' }}
           <span style="cursor: pointer" @click="showDelete = !showDelete">{{
               showDelete ? $t("OK") : $t("Edit")
@@ -35,7 +37,7 @@
             <div class="pic">
               <img :src="coinData.icon" v-if="coinData.icon" alt="">
             </div>
-            {{ coinData.name }} {{ coinData.symbol}}
+            {{ coinData.name }} {{ coinData.symbol }}
           </template>
           <template v-else>
             <div class="pic">
@@ -285,8 +287,6 @@ export default {
         text-transform: capitalize;
       }
     }
-
-
 
 
   }

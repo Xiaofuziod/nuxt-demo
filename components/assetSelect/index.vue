@@ -55,7 +55,7 @@ export default {
       this.$store.dispatch('coin/addFollow', item.id)
     },
     loadSearchData() {
-      this.$store.dispatch('coin/fetchCoinList', {keyWord: this.searchKey})
+      this.$store.dispatch('coin/fetchCoinList', {keyword: this.searchKey})
     }
   }
 }

@@ -45,6 +45,7 @@ export default {
     margin-right: 2px;
   }
 }
+
 .taurion-btn-returns{
   --color: rgba(244, 70, 83, .2);
 }

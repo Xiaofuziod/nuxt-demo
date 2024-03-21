@@ -59,7 +59,6 @@ export default {
       yData: [],
       coin: {},
       loading: false,
-      maxPriceLength: 0,
       selectList: [
         {
           name: '1D',
@@ -108,8 +107,6 @@ export default {
 
       let priceLength = this.yData[0].toString().length
 
-      console.log('priceLength', priceLength)
-
       // 开始渲染
       myChart.setOption({
         tooltip: {
@@ -152,7 +149,8 @@ export default {
             type: 'inside',
             start: 0,
             end: 100,
-            showBottom: false
+            showBottom: false,
+            zoomOnMouseWheel: this.from !== 'chat'
           }
         ],
         series: [

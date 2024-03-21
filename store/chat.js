@@ -4,7 +4,15 @@ import Vue from 'vue';
 import robotAvatar from '@/assets/imgs/user/default.png'
 
 
-let timer = null
+let timer = null  // 机器人回答后，3秒后关闭
+let timer2 = null  // 五分钟没有操作，机器人会自动问候
+
+// 问候语
+const wList = [
+  'Hi，需不需要我的帮忙呢？',
+  '记住啦，我24小时都为你服务哦～',
+  'Hi，有啥不懂的想要了解的吗？'
+]
 export const state = () => ({
   conversationId: null,
   messageList: [],
@@ -15,7 +23,7 @@ export const state = () => ({
   lastUserQuestion: null,
   robot: {
     avatar: robotAvatar,
-    text: 'Hi，需不需要我的帮忙呢？'
+    text: wList[Math.floor(Math.random() * wList.length)]
   }
 })
 
@@ -101,6 +109,12 @@ export const actions = {
     if (!message.more) {
       commit('setRobot', {text: "好啦，已经有答案了～"})
     }
+    // 五分钟没有操作，机器人会自动问候
+    clearTimeout(timer2)
+    timer2 = setInterval(() => {
+      commit('setRobot', {text: wList[Math.floor(Math.random() * wList.length)]})
+    }, 300 * 1000)
+
   },
   // 发送用户消息 只用传入 text 和 context
   sendUserMessage({commit, state}, message) {
