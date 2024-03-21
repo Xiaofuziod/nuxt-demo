@@ -30,9 +30,11 @@
 <!--        </div>-->
         <div class="lang-btn base-icon-btn">
           <img src="~/assets/imgs/lang.svg" alt="User profile"/>
-          <div class="option-list">
-            <div class="option-item" @click.stop="changeLanguage('en')">English</div>
-            <div class="option-item" @click.stop="changeLanguage('zh')">中文</div>
+          <div class="user-setting">
+            <div class="user-setting-content">
+              <div class="option-item" @click.stop="changeLanguage('en')">English</div>
+              <div class="option-item" @click.stop="changeLanguage('zh')">中文</div>
+            </div>
           </div>
         </div>
         <div v-if="!userLoggedIn" class="login-btn" @click="showLogin">{{ $t("AppHeader_index_login-btn_1") }}</div>
@@ -242,42 +244,39 @@ nav {
   &:hover .user-setting {
     display: block;
   }
+}
+.user-setting {
+  position: absolute;
+  top: 0;
+  right: -20px;
+  border-radius: 16px;
+  z-index: 10;
+  padding-top: 60px;
+  display: none;
 
-  .user-setting {
-    position: absolute;
-    top: 0;
-    right: -20px;
+  .user-setting-content {
+    background: rgba(38, 64, 64, 0.30);
+    backdrop-filter: blur(100px);
+    padding: 20px;
     border-radius: 16px;
-    z-index: 10;
-    padding-top: 60px;
-    display: none;
-
-    .user-setting-content {
-      background: rgba(38, 64, 64, 0.30);
-      backdrop-filter: blur(100px);
-      padding: 20px;
-      border-radius: 16px;
-
-      div {
-        color: #FFF;
-        font-family: Avenir;
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        text-transform: capitalize;
-
-        &:first-child {
-          padding-bottom: 8px;
-          margin-bottom: 8px;
-          border-bottom: 1px solid rgba(140, 180, 189, 0.12);
-        }
+    div {
+      color: #FFF;
+      font-family: Avenir;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: capitalize;
+      cursor: pointer;
+      &:first-child {
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid rgba(140, 180, 189, 0.12);
       }
     }
-
   }
-}
 
+}
 .user-profile span {
   margin-left: 8px;
 }
@@ -285,27 +284,8 @@ nav {
 
 .lang-btn {
   position: relative;
-  .option-list {
-    display: none; // Initially hide the option list
-    position: absolute;
-    left: 10px;
-    top: 30px;
-    background-color: rgba(68, 215, 182, 0.2);
-    border-radius: 4px; // Optional: for rounded corners
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Optional: for a slight shadow
-    z-index: 100; // Ensure it's on top of other elements
-    .option-item {
-      padding: 8px 16px; // Example padding, adjust as needed
-      cursor: pointer;
-      color: #fff;
-      &:hover {
-        background-color: rgba(68, 215, 182, 0.5);
-      }
-    }
-  }
-
-  &:hover .option-list {
-    display: block; // Show on hover
+  &:hover .user-setting {
+    display: block;
   }
 }
 </style>

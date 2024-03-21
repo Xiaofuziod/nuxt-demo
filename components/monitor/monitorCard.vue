@@ -35,6 +35,8 @@ export default {
     cardClick() {
       if (this.card.status === 1) {
         this.$toast.warning('The activity you are monitoring has not yet concluded.')
+      } else if(this.card.status === 7) {
+        this.$toast.warning('The activity you are monitoring has canceled.')
       } else {
         this.$emit('click')
       }
@@ -45,15 +47,14 @@ export default {
 <style scoped lang="less">
 .card {
   padding: 16px 20px;
-  width: 399px;
+  width: 389px;
   height: 130px;
   border-radius: 16px;
-  margin-bottom: 16px;
+  margin: 8px;
   background: rgba(38, 64, 64, 0.2);
-  display: flex;
   cursor: pointer;
   position: relative;
-
+  display: inline-flex;
   .remove-btn {
     position: absolute;
     top: 13px;

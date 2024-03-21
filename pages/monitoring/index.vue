@@ -17,9 +17,21 @@
           <FilterTabs v-model="activeTab" :tabList="tabs"/>
           <div class="add-monitoring" @click="showAddMonitor">{{ $t("Monitor_add-monitoring_1") }}</div>
         </header>
-        <div class="monitoring-cards">
-          <monitor-card v-for="(item, index) in userMonitors" :key="index" :card="item" show-action
-                        @click="goDetail(item.id)"/>
+        <div class="center-box loading-box" v-if="loading">
+          <img src="@/assets/imgs/ZKZg.gif" alt="">
+        </div>
+        <div class="monitoring-cards" v-if="!loading">
+          <infinite-scroll  :loadData="loadData" :initData="userMonitorsRecords">
+            <template #default="{ items }">
+              <monitor-card v-for="(item, index) in items" :key="index" :card="item" show-action
+                            @click="goDetail(item.id)"/>
+            </template>
+
+          </infinite-scroll>
+          <div class="center-box empty-box" v-if="!userMonitorsRecords.length">
+            <img src="@/assets/imgs/empty.svg" alt="">
+            <span>{{ $t("addMonitoring_span_1") }}</span>
+          </div>
         </div>
       </main>
     </div>
@@ -33,6 +45,7 @@ export default {
   data() {
     return {
       activeTab: "ALL",
+      loading: true,
       tabs: [
         {label: this.$t('ALL'), key: 'ALL'},
         {label: this.$t('FINISHED'), key: 'FINISHED'},
@@ -42,17 +55,33 @@ export default {
   },
   computed: {
     userMonitors() {
-      return this.$store.state.monitor.userMonitorList
+      return this.$store.state.monitor.userMonitor
+    },
+    userMonitorsRecords() {
+      return this.userMonitors?.records || []
     },
     user() {
       return this.$store.state.user.userInfo
     }
   },
   methods: {
+    async loadData() {
+      const {hasNext, records} = await this.$store.dispatch('monitor/fetchUserMonitorList', {
+        status: this.mapTabToStatus(this.activeTab),
+        page: (this.$store.state.monitor.userMonitor?.page || 0) +1
+      })
+      return {
+        hasNext,
+        data: records
+      }
+    },
     async fetchMonitors() {
+      this.loading = true
       await this.$store.dispatch('monitor/fetchUserMonitorList', {
-        status: this.mapTabToStatus(this.activeTab)
+        status: this.mapTabToStatus(this.activeTab),
+        page: 1
       });
+      this.loading = false
     },
     goDetail(id) {
       this.$router.push(`/monitoring/detail?id=${id}`);
@@ -192,12 +221,30 @@ export default {
         cursor: pointer;
       }
     }
-
+    .loading-box {
+      img {
+        width: 32.757px;
+        height: 32.972px;
+      }
+    }
+    .empty-box {
+      flex-direction: column;
+      color: rgba(140, 180, 189, 0.60);
+      font-family: Avenir;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      text-transform: capitalize;
+      img {
+        width: 64.757px;
+        height: 76.972px;
+      }
+    }
     .monitoring-cards {
-      padding: 40px 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      padding: 20px 0;
+      height: calc(100vh - 265px);
+      overflow: hidden;
     }
 
   }
