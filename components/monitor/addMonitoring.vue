@@ -14,13 +14,18 @@
           <img src="@/assets/imgs/ZKZg.gif" alt="">
         </div>
         <div class="monitor-search-title" v-if="!loading && searchQuery">{{ $t("addMonitoring_monitor-search-title_1") }}</div>
-        <div class="center-box empty-box" v-if="!loading && !monitors.length">
+        <div class="center-box empty-box" v-if="!loading &&
+        (
+            (searchQuery && !monitorList.length) ||
+            (!searchQuery && !unstartMonitors.length && !finishMonitors.length)
+        )
+">
             <img src="@/assets/imgs/empty.svg" alt="">
             <span>{{ $t("addMonitoring_span_1") }}</span>
         </div>
-        <template v-if="!searchQuery && !loading && monitors.length">
+        <template v-if="!searchQuery && !loading">
           <!-- 监控卡片列表 -->
-          <div class="monitor-title">{{ $t("addMonitoring_monitor-title_1") }}</div>
+          <div class="monitor-title" v-if="unstartMonitors.length">{{ $t("addMonitoring_monitor-title_1") }}</div>
           <div class="monitoring-cards" v-if="unstartMonitors.length">
             <mid-monitor-card
                 v-for="monitor in unstartMonitors"
@@ -30,7 +35,7 @@
                 @select="select(monitor)"
             />
           </div>
-          <div class="monitor-title">{{ $t("addMonitoring_monitor-title_2") }}</div>
+          <div class="monitor-title" v-if="finishMonitors.length">{{ $t("addMonitoring_monitor-title_2") }}</div>
           <div class="monitoring-cards" v-if="finishMonitors.length">
             <mid-monitor-card
                 v-for="monitor in finishMonitors"
@@ -41,15 +46,19 @@
             />
           </div>
         </template>
-        <template v-if="searchQuery && !loading && monitors.length">
+        <template v-if="searchQuery && !loading && monitorList.length">
           <div class="monitoring-cards">
-            <mid-monitor-card
-                v-for="monitor in monitors"
-                :key="monitor.id"
-                :card="monitor"
-                :disable="selectIdList.includes(monitor.id)"
-                @select="select(monitor)"
-            />
+            <infinite-scroll  :loadData="loadData" :initData="monitorList">
+              <template #default="{ items }">
+                <mid-monitor-card
+                    v-for="monitor in items"
+                    :key="monitor.id"
+                    :card="monitor"
+                    :disable="selectIdList.includes(monitor.id)"
+                    @select="select(monitor)"/>
+              </template>
+
+            </infinite-scroll>
           </div>
         </template>
       </main>
@@ -87,14 +96,14 @@ export default {
     };
   },
   computed: {
-    monitors() {
-      return this.$store.state.monitor.monitorList
+    monitorList() {
+      return this.$store.state.monitor.searchMonitor?.records || []
     },
     unstartMonitors() {
-      return this.monitors.filter(item => item.status === 1)
+      return this.$store.state.monitor.unstartMonitors
     },
     finishMonitors() {
-      return this.monitors.filter(item => item.status === 3)
+      return this.$store.state.monitor.finishMonitors
     },
     selectIdList() {
       return this.selectMonitors.map(item => item.id)
@@ -102,6 +111,7 @@ export default {
   },
   watch: {
     searchQuery() {
+      if(!this.searchQuery) return;
       if(inputlock) return
       inputlock = true
       setTimeout(() => {
@@ -113,7 +123,27 @@ export default {
   methods: {
     searchMonitors() {
       this.loading = true
-      this.$store.dispatch('monitor/fetchMonitorList', this.searchQuery).finally(()=> {
+      this.$store.dispatch('monitor/fetchMonitorList', {
+        searchName: this.searchQuery
+      }).finally(()=> {
+        this.loading = false
+      });
+    },
+    async loadData() {
+      const {has_next, records} = await this.$store.dispatch('monitor/fetchUserMonitorList', {
+        status: this.mapTabToStatus(this.activeTab),
+        searchName: this.searchQuery,
+        page: (this.$store.state.monitor.searchMonitor.page || 0) +1
+      })
+      return {
+        hasNext: has_next,
+        data: records
+      }
+    },
+    getInitMonitors() {
+      this.loading =true
+      this.$store.dispatch('monitor/fetchFinishMonitorList', {});
+      this.$store.dispatch('monitor/fetchUnstartMonitorList', {}).finally(()=> {
         this.loading = false
       });
     },
@@ -137,7 +167,7 @@ export default {
     }
   },
   mounted() {
-    this.searchMonitors();
+    this.getInitMonitors()
   }
 }
 </script>

@@ -35,6 +35,7 @@ export default {
       this.isLoading = true;
       try {
         const { data, hasNext } = await this.loadData();
+        console.log('{ data, hasNext } ',{ data, hasNext } )
         this.items = this.items.concat(data);
         this.hasNext = hasNext; // 根据加载的数据更新hasNext状态
       } catch (error) {

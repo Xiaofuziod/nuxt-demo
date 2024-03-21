@@ -43,9 +43,9 @@ export default {
   height: 72px;
   padding: 12px;
   border-radius: 16px;
-  margin-bottom: 16px;
+  margin: 3px;
   background: rgba(38, 64, 64, 0.2);
-  display: flex;
+  display: inline-flex;
   position: relative;
   .option-img {
     position: absolute;
