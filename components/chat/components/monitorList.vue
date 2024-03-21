@@ -5,9 +5,11 @@
       <div class="card-header">
         <h3 class="title1">{{ card?.author }}</h3>
         <h3 class="title2">{{ card?.title }}</h3>
-        <p class="timestamp">{{ card?.time }}</p>
+        <p class="timestamp">{{ card?.time || card.start }}</p>
       </div>
-      <img class="option-img" @click="addMonitor(card)" src="@/assets/imgs/addPlus.svg" alt="">
+      <img class="option-img"
+           :style="{'opacity': userMonitorList.includes(card.id + '') ? 0.4 : 1}"
+           @click="addMonitor(card)" src="@/assets/imgs/addPlus.svg" alt="">
     </div>
   </div>
 
@@ -23,6 +25,11 @@ export default {
     },
     list: {
       type: Array,
+    }
+  },
+  computed: {
+    userMonitorList() {
+      return this.$store.state.monitor.userMonitorList
     }
   },
   data() {
@@ -41,36 +48,36 @@ export default {
 <style scoped lang="less">
 .card {
   width: 100%;
-  height: 26px;
-  margin-bottom: 13px;
+  //height: 26px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   position: relative;
 
   .option-img {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 0;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
   }
 
 
   .card-img {
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
 
   }
 
   .card-header {
     margin-left: 8px;
-    width: 225px;
+    overflow: hidden;
+    padding: 0 12px 0 8px;
+    flex: 1;
 
     .title1 {
       color: rgba(255, 255, 255, 0.60);
       font-family: Avenir;
-      font-size: 6px;
+      font-size: 12px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
@@ -84,7 +91,7 @@ export default {
     .title2 {
       color: #FFF;
       font-family: Avenir;
-      font-size: 8px;
+      font-size: 14px;
       font-style: normal;
       font-weight: 800;
       line-height: normal;
@@ -99,16 +106,11 @@ export default {
     .timestamp {
       color: #8CB4BD;
       font-family: Avenir;
-      font-size: 4px;
+      font-size: 12px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
       text-transform: capitalize;
-    }
-
-    .other {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 10px;
     }
   }
 }

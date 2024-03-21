@@ -80,7 +80,7 @@ export default {
   methods: {
     searchcoinList() {
       this.loading = true
-      this.$store.dispatch('coin/fetchCoinList', this.searchQuery).finally(()=> {
+      this.$store.dispatch('coin/fetchCoinList', {keyWord:this.searchQuery}).finally(()=> {
         this.loading = false
       });
     },

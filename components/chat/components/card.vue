@@ -2,12 +2,12 @@
   <div>
     <div v-for="item in layers">
       <!--欢迎页的 信号源相关-->
-      <div class="chat-card" v-if="item.type === 'SOURCES'">
+      <div class="chat-card" v-if="item.type === 'MONITORING_SIGNAL'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/hot.svg" alt="">
           {{ item.title }}
         </div>
-        <monitor-list :list="item.data?.sources"/>
+        <monitor-list :list="item.data?.datas"/>
       </div>
 
       <!--预测相关-->

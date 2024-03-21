@@ -55,7 +55,7 @@
               </div>
             </div>
             <div class="text-message-box2" v-else>
-              <div class="text-message-v2" v-if="item.source === 'T-brain'">
+              <div class="text-message-v2 text-message-v3" v-if="item.source === 'T-brain'">
                 <Typewriter @writerOver="writerOver" :text="item.text"/>
               </div>
               <div class="text-message-v2" v-else>{{ item.text }}</div>
@@ -110,6 +110,7 @@ export default {
       socketSessionId: '',
       welcomeInputDisable: false,
       isViewingHistory: false,
+      mode: 'production',
     }
   },
   computed: {
@@ -153,13 +154,16 @@ export default {
 
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
-        this.$store.dispatch('coin/fetchCoinList', "")
+        this.$store.dispatch('coin/fetchCoinList', {size: 5})
         this.$store.dispatch('monitor/fetchMonitorList', "",)
       }, 3000)
       // 没有历史消息，则去拉取历史消息
     } else if (this.messageList.length === 0) {
       this.loadEarlierMessages()
     }
+
+    this.mode = this.$route.query.mode || 'production'
+
   },
   methods: {
     handleScroll(e) {
@@ -179,11 +183,13 @@ export default {
       // 获取历史消息之前的滚动条高度
       const previousHeight = this.$refs.messagesContainer?.scrollHeight;
       await this.$store.dispatch('chat/fetchEarlierMessages', "fakeUserNo")
-      // 插入后，调整滚动位置
-      this.$nextTick(() => {
-        const currentHeight = this.$refs.messagesContainer?.scrollHeight;
-        this.$refs.messagesContainer.scrollTop += currentHeight - previousHeight;
-      });
+      if (this.$refs.messagesContainer) {
+        // 插入后，调整滚动位置
+        this.$nextTick(() => {
+          const currentHeight = this.$refs.messagesContainer?.scrollHeight;
+          this.$refs.messagesContainer.scrollTop += currentHeight - previousHeight;
+        });
+      }
       this.isLoading = false
     },
     onWebsocketReceiveMessage(data) {
@@ -211,12 +217,16 @@ export default {
     },
     getMessage(data) {
       // console.log('收到', data)
+      let msg = data
+      if (this.mode !== 'dev' && data.layers) {
+        msg.layers = data.layers.filter(layer => layer.type !== 'LOG')
+      }
       if (data.conversationId !== this.conversationId) {
         console.log(`ignore message from other conversation:`, data)
         return
       }
       this.scrollToBottom()
-      this.$store.dispatch('chat/pushAIMessage', data)
+      this.$store.dispatch('chat/pushAIMessage', msg)
     },
     writerOver() {
       const lastMsg = this.messageList[this.messageList.length - 1]
@@ -239,7 +249,7 @@ export default {
                 title: '热门推荐',
                 data: {
                   coins: this.$store.state.coin.coinList,
-                  sources: this.$store.state.monitor.monitorList
+                  datas: this.$store.state.monitor.monitorList
                 }
               }
             ],
@@ -257,6 +267,12 @@ export default {
           top: messagesContainer.scrollHeight,
           behavior: 'smooth'
         })
+        setTimeout(() => {
+          messagesContainer.scrollTo({
+            top: messagesContainer.scrollHeight,
+            behavior: 'smooth'
+          })
+        }, 100)
       });
     },
   },
@@ -371,6 +387,7 @@ export default {
   .chat-content {
     flex: 1;
     overflow-y: auto;
+    margin: 0 auto;
 
 
     .text-message-box2 {
@@ -412,6 +429,10 @@ export default {
       margin-top: 14px;
       //display: table;
       white-space: pre-line;
+    }
+
+    .text-message-v3{
+      white-space: inherit;
     }
 
 

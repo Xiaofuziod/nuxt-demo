@@ -19,9 +19,9 @@ export const mutations = {
 }
 
 export const actions = {
-  async fetchCoinList({commit}, keyword = '') {
+  async fetchCoinList({commit}, {keyword = '',size = 20}) {
     try {
-      const res = await this.$axios.get(getAssetList, {params: {keyword, page: 1, size: 20}});
+      const res = await this.$axios.get(getAssetList, {params: {keyword, page: 1, size}});
       if (res && res.data && res.data.data) {
         commit('setCoinList', res.data.data.records);
       }
