@@ -36,8 +36,7 @@
             <div class="focus-box">
               <div class="focus-tip">
                 <btn cursor="default">
-                  <img src="@/static/images/chat/s2.svg" alt="">
-                  <div>H SPACE</div>
+                  <div style="padding-left: 5px">H SPACE</div>
                 </btn>
               </div>
               <div class="focus-text">{{ item.text }}</div>
@@ -206,19 +205,7 @@ export default {
         }
       }
 
-      // 用户发送的消息的 seqNo 是当前对话中最大的 seqNo + 1。如果当前对话为空，则 seqNo 为 1。
-      const nextSeqNo = this.messageList.length === 0 ? 1 :
-          this.messageList[this.messageList.length - 1].seqNo + 1;
-      let para = {
-        conversationId: this.conversationId,
-        seqNo: nextSeqNo,
-        source: "USER",
-        context: null,
-        language: this.$store.$i18n.locale,
-        text: this.message
-      }
-      console.log('发送', para)
-      this.$store.dispatch('chat/sendUserMessage', para)
+      this.$store.dispatch('chat/sendUserMessage', {text: this.message})
       this.message = ''
       this.scrollToBottom()
     },

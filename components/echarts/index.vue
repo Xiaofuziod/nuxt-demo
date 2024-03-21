@@ -25,7 +25,8 @@
         </div>
       </template>
 
-      <div id="myChart"
+      <div
+           ref="myChart"
            class="chat-content"
            :class="`chat-content-${from}`"
            ></div>
@@ -94,7 +95,6 @@ export default {
         this.xData.push(item[0])
         this.yData.push(formatPrice(item[1]))
       })
-      console.log(this.xData, this.yData)
       this.echartsInit()
       this.loading = false
     }
@@ -103,7 +103,7 @@ export default {
     formatPrice,
     echartsInit() {
       // 找到容器
-      let myChart = this.$echarts.init(document.getElementById('myChart'))
+      let myChart = this.$echarts.init(this.$refs.myChart)
       // 开始渲染
       myChart.setOption({
         tooltip: {

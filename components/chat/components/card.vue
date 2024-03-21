@@ -108,10 +108,10 @@
         </div>
       </div>
       <!--简报-->
-      <div class="chat-card" v-if="false">
+      <div class="chat-card" v-if="item.type === 'COIN_INTRODUCTION'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/s4.svg" alt="">
-          WLD 简报
+          {{ item.title }}
         </div>
         <div class="returns-box">
           <div class="returns-title">
@@ -123,27 +123,62 @@
           <div class="returns-title">
             行情
           </div>
-          <div>
-            <my-echarts from="chat"/>
+          <div class="jb-box">
+            <div class="jb-box-price">价格：</div>
+            <coin-list :coinList="[item.coin]" :hideOption="true"/>
+          </div>
+          <div style="margin-bottom: 10px">
+            <my-echarts from="chat" :list="item.market"/>
           </div>
 
-          <div class="returns-title">
-            合约
-          </div>
-          <div class="returns-desc">
-            以太坊：
-          </div>
+
+          <template v-if="item.address">
+            <div class="returns-title">
+              交易所
+            </div>
+            <div class="returns-desc">
+              以太坊：
+            </div>
+          </template>
+
 
           <div class="returns-title">
             相关链接
           </div>
-          <div class="returns-desc">
-            以太坊：
+          <div class="link-box">
+            <a class="link-item"
+               v-if="item.links.website && item.links.website.length > 0"
+               :href="item.links.website[0]" target="_blank"
+            >
+              <img src="@/assets/imgs/chat/link1.svg" alt="">
+              网站
+            </a>
+            <a class="link-item"
+                 v-if="item.links?.technical_doc && item.links?.technical_doc.length > 0"
+                 :href="item.links?.technical_doc[0]" target="_blank"
+            >
+              <img src="@/assets/imgs/chat/link1.svg" alt="">
+              白皮书
+            </a>
+            <a class="link-item"
+                 v-if="item.links?.source_code && item.links?.source_code.length > 0"
+                 :href="item.links?.source_code[0]" target="_blank"
+            >
+              <img src="@/assets/imgs/chat/link1.svg" alt="">
+              GitHub
+            </a>
+            <a class="link-item"
+                 v-if="item.links?.twitter  && item.links?.twitter .length > 0"
+                 :href="item.links?.twitter [0]" target="_blank"
+            >
+              <img src="@/assets/imgs/chat/link1.svg" alt="">
+              X
+            </a>
           </div>
         </div>
       </div>
 
-<!--      币 趋势-->
+      <!--      币 趋势-->
       <div class="chat-card" v-if="item.type === 'COIN_QUOTES'">
         <coin-list :coinList="item.data?.datas"/>
         <my-echarts from="chat" :list="item.data?.datas[0]?.market"/>
@@ -197,6 +232,38 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+
+.link-box {
+  display: flex;
+  align-items: center;
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-decoration: none;
+
+    border-radius: 4px;
+    background: rgba(138, 173, 188, 0.10);
+    backdrop-filter: blur(108.94999694824219px);
+
+    color: #CEB864;
+    font-family: Avenir;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+
+    img {
+      width: 14px;
+      height: 14px;
+      margin-right: 4px;
+    }
+  }
+}
 
 .coin-name {
   display: flex;
@@ -255,7 +322,24 @@ export default {
     margin-bottom: 8px;
   }
 
-  .returns-desc{
+  .jb-box {
+    display: flex;
+    align-items: center;
+    padding-bottom: 4px;
+
+    .jb-box-price {
+      color: rgba(255, 255, 255, 0.70);
+      font-family: Avenir;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: capitalize;
+    }
+
+  }
+
+  .returns-desc {
     color: rgba(255, 255, 255, 0.70);
     font-family: Avenir;
     font-size: 14px;
@@ -306,7 +390,6 @@ export default {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      text-transform: capitalize;
       margin-bottom: 8px;
     }
   }
@@ -318,7 +401,7 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    text-transform: capitalize;
+    white-space: pre-line;
   }
 }
 
@@ -347,7 +430,6 @@ export default {
     font-family: Avenir;
     font-size: 13px;
     font-weight: 350;
-    text-transform: capitalize;
 
     img {
       width: 16px;

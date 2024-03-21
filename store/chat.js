@@ -91,6 +91,13 @@ export const actions = {
     } else {
       commit('addMessage', message)
     }
+    // 临时解决方案，如果机器人回答了，3秒后关闭
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      const ls = state.messageList[state.messageList.length - 1]
+      commit('updateMessage', {index: state.messageList.length - 1, message: {...ls, more: false}})
+      commit('setRobot', {text: "好啦，已经有答案了～"})
+    },3000)
     if (!message.more) {
       commit('setRobot', {text: "好啦，已经有答案了～"})
     }
