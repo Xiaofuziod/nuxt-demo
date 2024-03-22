@@ -2,7 +2,7 @@
   <div class="infinite-scroll-container" @scroll="checkBottom">
     <slot :items="items"></slot> <!-- 使用slot来展示items，增加组件的灵活性 -->
     <div v-if="isLoading" class="loading-container">
-      <img src="@/assets/imgs/ZKZg.gif" alt="Loading..." />
+      <dot-carousel/>
     </div>
   </div>
 </template>

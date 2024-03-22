@@ -6,7 +6,20 @@
           <div class="title1">{{ $t("MONITORING") }}</div>
           <div class="title2">{{ $t("pages_index_title2_1") }}</div>
           <div class="banner-1-btn"></div>
-          <img class="desc-img" src="~/assets/imgs/banner-1-desc.svg" alt="">
+          <div class="desc-code">
+            <typing-text
+                :lines="[
+              { text: 'BUILD        THE  ' },
+              { text: 'BEST   WEB3' },
+              { text: 'INVESTMENT PRODUCTS' },
+        ]"
+            />
+<!--            <div class="wrapper">-->
+<!--              <div class="typing-demo">BUILD THE</div>-->
+<!--              <div class="typing-demo">BEST WEB3</div>-->
+<!--              <div class="typing-demo">INVESTMENT PRODUCTS</div>-->
+<!--            </div>-->
+          </div>
         </div>
         <img src="~/assets/imgs/home-banner-1.svg" alt="">
       </div>
@@ -116,6 +129,8 @@ export default {
     display: flex;
     justify-content: space-between;
 
+    .desc-code {
+    }
     .banner-left {
       padding: 181px 0 101px 64px;
 

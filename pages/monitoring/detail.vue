@@ -27,7 +27,7 @@
 
         </div>
         <div v-show="activeTab === '1'" v-if="monitorContent" class="content">
-          <audio-player :audio-src="monitorContent?.link"/>
+          <audio-player v-if="monitorContent?.link" :audio-src="monitorContent?.link"/>
           <div class="box-wrapper">
             <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
               <template #default="{ items }">
