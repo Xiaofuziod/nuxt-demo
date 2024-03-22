@@ -42,9 +42,6 @@
               <div class="focus-text">{{ item.text }}</div>
             </div>
           </div>
-
-          <!--定制卡片内容-->
-          <chat-card :layers="item.layers" v-if="item.layers && item.layers.length > 0"/>
           <!--欢迎的任务-->
           <welcomeTask v-if="showWelcome && item.source === 'T-brain'" :message="item"/>
           <!--文本内容-->
@@ -73,6 +70,8 @@
               </div>
             </div>
           </template>
+          <!--定制卡片内容-->
+          <chat-card :layers="item.layers" v-if="item.layers && item.layers.length > 0"/>
         </div>
       </div>
     </div>

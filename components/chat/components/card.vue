@@ -190,14 +190,14 @@
       </div>
 
       <!--问答-->
-      <div class="chat-card" v-if="item.type === 'ASK'">
+      <div class="chat-card" v-if="item.type === 'YOU_CAN_ASK'">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/ai.svg" alt="">
-          You can ask
+          {{item.title}}
         </div>
         <div class="ask-list">
-          <div class="ask-item" v-for="item in 3">
-            The factors that led to the halving of Bitcoin？
+          <div class="ask-item" v-for="(q,i) in item.data?.questions" :key="i" @click="sendQuestion(q)">
+            {{q}}
             <img class="img1" src="@/static/images/chat/send.svg" alt="">
           </div>
         </div>
@@ -232,6 +232,9 @@ export default {
       console.log(val)
       if (!val.link) return
       window.open(val.link, '_blank')
+    },
+    sendQuestion(val) {
+      this.$store.dispatch('chat/sendUserMessage', {text: val})
     }
   }
 }

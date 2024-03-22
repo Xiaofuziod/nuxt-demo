@@ -6,6 +6,7 @@ import robotAvatar from '@/assets/imgs/user/default.png'
 
 let timer = null  // 机器人回答后，3秒后关闭
 let timer2 = null  // 五分钟没有操作，机器人会自动问候
+let timer3 = null  // 五分钟没有收到回复，认为机器人掉线了
 
 // 问候语
 const wList = [
@@ -105,7 +106,7 @@ export const actions = {
       const ls = state.messageList[state.messageList.length - 1]
       commit('updateMessage', {index: state.messageList.length - 1, message: {...ls, more: false}})
       commit('setRobot', {text: "好啦，已经有答案了～"})
-    },3000)
+    }, 3000)
     if (!message.more) {
       commit('setRobot', {text: "好啦，已经有答案了～"})
     }
@@ -148,6 +149,14 @@ export const actions = {
       text = "我已收到您的请求～"
     }
     commit('setRobot', {text})
+
+    // 如果五分钟没有收到回复，认为机器人掉线了
+
+    clearTimeout(timer3)
+    timer3 = setTimeout(() => {
+      commit('setRobot', {text: "很抱歉，我可能掉线了，请重新提问～"})
+    }, 300 * 1000)
+
 
     // commit('setLastUserQuestion', message)
   }
