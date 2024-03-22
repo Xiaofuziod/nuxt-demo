@@ -293,10 +293,10 @@ export default {
     scrollToBottom() {
       this.$nextTick(() => {
         const messagesContainer = this.$refs.messagesContainer;
-        messagesContainer.scrollTo({
-          top: messagesContainer.scrollHeight,
-          behavior: 'smooth'
-        })
+        // messagesContainer.scrollTo({
+        //   top: messagesContainer.scrollHeight,
+        //   behavior: 'smooth'
+        // })
         setTimeout(() => {
           messagesContainer.scrollTo({
             top: messagesContainer.scrollHeight,
