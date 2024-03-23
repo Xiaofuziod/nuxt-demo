@@ -336,19 +336,19 @@ export default {
     transform: translate(-50%, -50%);
     border-radius: 100%;
     z-index: 2;
-    box-shadow: 0 0 5px 5px #1c084f;
+    box-shadow: 0 0 5px 5px #083E4F;
   }
 
   &::before {
     width: 48px;
     height: 48px;
-    background-color: #1a084e;
+    background-color: #084E46;
   }
 
   &::after {
     width: 40px;
     height: 40px;
-    background-color: #2f1e5f;
+    background-color: #1E535F;
     animation: circle-size 0.8s linear infinite alternate;
   }
 
@@ -400,7 +400,7 @@ export default {
     transform: translate(-50%, -50%);
     border-radius: 100%;
     z-index: 1;
-    box-shadow: 2px -1px 6px 12px #823ca6, 5px -2px 9px 2px #aab3d2, -4px -5px 13px 2px #5acee3, -8px 1px 3px 2px #1b7d8f, 3px 2px 30px 2px #f30bf5;
+    box-shadow: 2px -1px 6px 12px #443CA6, 5px -2px 9px 2px #AAC6D2, -4px -5px 13px 2px #5AE3A9, -8px 1px 3px 2px #1B8F65, 3px 2px 30px 2px #480BF5;
     animation: shadow-rotate 1.5s linear infinite;
     transform-origin: center;
   }

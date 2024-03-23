@@ -78,20 +78,20 @@ export default {
   },
   methods: {
     handleClick(item) {
-      // const para = {
-      //   text: item.title,
-      //   context: {
-      //     hook: {
-      //       type: "FOCUS",
-      //       id: item.id
-      //     }
-      //   },
-      // }
-      // this.$store.dispatch('chat/sendUserMessage', para)
-      //
-      //
-      // item.trigger = 1
-      // this.$emit('read', item.id)
+      const para = {
+        text: item.title,
+        context: {
+          hook: {
+            type: "FOCUS",
+            id: item.id
+          }
+        },
+      }
+      this.$store.dispatch('chat/sendUserMessage', para)
+
+
+      item.trigger = 1
+      this.$emit('read', item.id)
 
     },
     animate() {
@@ -215,9 +215,9 @@ export default {
 <style lang="less" scoped>
 
 .button {
-  --primary: #275EFE;
-  --primary-dark: #2055EE;
-  --primary-darkest: #133FC0;
+  --primary: #CEB864;
+  --primary-dark: #CEB864;
+  --primary-darkest: #CEB864;
   --text: #FFFFFF;
   --text-opacity: 1;
   --success: #2B3044;
