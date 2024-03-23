@@ -30,14 +30,15 @@
         <div class="list-item-content">
           <div class="list-item-title">{{ item.title }}</div>
           <div class="list-item-icon" @click="handleClick(item)">
-            <button class="button">
-              <span class="default">
-                <img src="@/static/images/chat/ai2.svg" alt="">
-              </span>
-              <span class="success"></span>
-              <div class="left"></div>
-              <div class="right"></div>
-            </button>
+            <img src="@/static/images/chat/ai2.svg" alt="">
+<!--            <button class="button">-->
+<!--              <span class="default">-->
+<!--                <img src="@/static/images/chat/ai2.svg" alt="">-->
+<!--              </span>-->
+<!--              <span class="success"></span>-->
+<!--              <div class="left"></div>-->
+<!--              <div class="right"></div>-->
+<!--            </button>-->
           </div>
         </div>
       </div>
