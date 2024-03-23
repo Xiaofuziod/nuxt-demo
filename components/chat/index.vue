@@ -1,9 +1,12 @@
 <template>
   <div class="chat-box">
-    <div class="chat-top chat-padding">
+    <div class="chat-top">
       <div class="chat-top-left">
         <div class="chat-top-image">
-          <img :src="robot.avatar" alt="" v-if="robot.avatar">
+          <div class="mic">
+            <img class="mic-icon" :src="robot.avatar" alt="" v-if="robot.avatar">
+            <div class="mic-shadow"></div>
+          </div>
         </div>
         <div class="chat-top-title">{{ robot.text }}</div>
       </div>
@@ -321,6 +324,110 @@ export default {
 
 <style lang="less" scoped>
 
+.mic {
+  color: #fff;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    z-index: 2;
+    box-shadow: 0 0 5px 5px #1c084f;
+  }
+
+  &::before {
+    width: 48px;
+    height: 48px;
+    background-color: #1a084e;
+  }
+
+  &::after {
+    width: 40px;
+    height: 40px;
+    background-color: #2f1e5f;
+    animation: circle-size 0.8s linear infinite alternate;
+  }
+
+  &-icon {
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 35px;
+    height: 35px;
+    z-index: 3;
+
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      box-sizing: border-box;
+      position: absolute;
+    }
+
+    &::before {
+      width: 2px;
+      height: 5px;
+      top: calc(100% + 1px);
+      left: 50%;
+      transform: translate(-50%, 0);
+      background-color: #fff;
+    }
+
+    &::after {
+      border: 2px solid;
+      width: 8px;
+      height: 18px;
+      left: 50%;
+      top: -10px;
+      border-radius: 4px;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  &-shadow {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    z-index: 1;
+    box-shadow: 2px -1px 6px 12px #823ca6, 5px -2px 9px 2px #aab3d2, -4px -5px 13px 2px #5acee3, -8px 1px 3px 2px #1b7d8f, 3px 2px 30px 2px #f30bf5;
+    animation: shadow-rotate 1.5s linear infinite;
+    transform-origin: center;
+  }
+}
+
+@keyframes circle-size {
+  from {
+    width: 40px;
+    height: 40px;
+  }
+  to {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+
+@keyframes shadow-rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+
 /* 聊天气泡的基本样式 */
 .chat-bubble {
   display: flex;
@@ -365,7 +472,7 @@ export default {
   width: 515px;
   background-color: rgba(38, 64, 64, 0.3);
   box-sizing: border-box;
-  padding: 20px 0 20px;
+  padding: 0 0 20px;
   border-radius: 0 31px 0 0;
   height: 100%;
   display: flex;
@@ -495,27 +602,23 @@ export default {
   }
 
   .chat-top {
+    height: 88px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 18px;
 
     .chat-top-left {
+      height: 100%;
       display: flex;
       align-items: center;
     }
 
     .chat-top-image {
-      width: 48px;
-      height: 48px;
-      border-radius: 48px;
-      overflow: hidden;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
+      width: 88px;
+      height: 88px;
+      position: relative;
+      margin-left: 15px;
     }
 
     .chat-top-icon {
@@ -546,7 +649,7 @@ export default {
       //text-transform: capitalize;
       text-align: center;
       line-height: 38px;
-      margin-left: 20px;
+      margin-left: 5px;
     }
   }
 }
