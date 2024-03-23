@@ -94,22 +94,19 @@ export const welcomeList = [
   {
     text:"虽然你选择了跳过这个任务",
     source: "T-brain",
-    autoNext: false,
-    needPushHotMonitor: true,
+    autoNext: true,
     id: 16,
   },
   {
     text:"但别忘了，我是有这个强大的监控功能的哦～",
     source: "T-brain",
-    autoNext: false,
-    needPushHotMonitor: true,
+    autoNext: true,
     id: 17,
   },
   {
     text:"看来你已经迫不及待想体验 Taurion 了",
     source: "T-brain",
-    autoNext: false,
-    needPushHotMonitor: true,
+    autoNext: true,
     id: 18,
   },
   // 此处插入监控推荐数据
