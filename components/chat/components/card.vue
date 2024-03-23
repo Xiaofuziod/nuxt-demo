@@ -522,7 +522,7 @@ export default {
           align-items: center;
 
           div {
-            width: 91px;
+            width: 85px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

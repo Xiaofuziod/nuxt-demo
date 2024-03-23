@@ -22,6 +22,7 @@ export const state = () => ({
   welcomeAddCoinFinish: false,
   isFinished: false,  // 历史消息是否已经加载完
   lastUserQuestion: null,
+  messageStatus: null, // loading concat success error
   robot: {
     avatar: robotAvatar,
     text: wList[Math.floor(Math.random() * wList.length)]
@@ -31,7 +32,6 @@ export const state = () => ({
 export const mutations = {
   addMessage(state, message) {
     state.messageList.push(message)
-    // console.log(state.messageList)
   },
   prependMessages(state, messages) {
     state.messageList = messages.concat(state.messageList)
@@ -59,6 +59,9 @@ export const mutations = {
   },
   setRobot(state, robot) {
     state.robot = {...state.robot, ...robot}
+  },
+  setMessageStatus(state, status) {
+    state.messageStatus = status
   }
 }
 
@@ -100,13 +103,18 @@ export const actions = {
     } else {
       commit('addMessage', message)
     }
-    // 临时解决方案，如果机器人回答了，3秒后关闭
+
+
+    // 消息状态更改为success
+    commit('setMessageStatus', message.more ? 'concat' : 'success')
+
+    // 临时解决方案，如果机器人回答了，10秒后关闭
     clearTimeout(timer)
     timer = setTimeout(() => {
-      const ls = state.messageList[state.messageList.length - 1]
-      commit('updateMessage', {index: state.messageList.length - 1, message: {...ls, more: false}})
+      commit('setMessageStatus', 'success')
       commit('setRobot', {text: "好啦，已经有答案了～"})
-    }, 3000)
+    }, 10 * 1000)
+
     if (!message.more) {
       commit('setRobot', {text: "好啦，已经有答案了～"})
     }
@@ -142,6 +150,8 @@ export const actions = {
       layers: [],
       loading: true
     })
+    // 消息状态更改为loading
+    commit('setMessageStatus', 'loading')
 
     // 根据用户的问题，获取机器人的回答
     let text = "我需要思考下..."

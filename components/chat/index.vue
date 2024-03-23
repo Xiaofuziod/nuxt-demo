@@ -78,7 +78,9 @@
 
     <div class="input-box" :class="{'input-disable':disableSend}">
       <input type="text" id="chatInput" v-model="message" :disabled="disableInput">
-      <img class="img1" src="@/static/images/chat/send3.svg" alt="" @click="sendMessage">
+      <div class="send-btn" @click="sendMessage">
+        <send-btn/>
+      </div>
     </div>
 
   </div>
@@ -89,13 +91,15 @@ import Typewriter from "@/components/Typewriter.vue";
 import btn from "./components/btn.vue";
 import chatCard from "./components/card.vue";
 import welcomeTask from "./components/welcomeTask.vue";
+import SendBtn from "@/components/chat/components/sendBtn.vue";
 
 export default {
   components: {
     Typewriter,
     btn,
     chatCard,
-    welcomeTask
+    welcomeTask,
+    SendBtn
   },
   props: {
     showWelcome: {
@@ -137,6 +141,9 @@ export default {
     },
     robot() {
       return this.$store.state.chat.robot
+    },
+    messageStatus() {
+      return this.$store.state.chat.messageStatus
     }
   },
   mounted() {
@@ -185,15 +192,15 @@ export default {
 
       const chatInput = document.getElementById('chatInput');
 
-      chatInput.addEventListener('compositionstart', function() {
+      chatInput.addEventListener('compositionstart', function () {
         isComposing = true; // 开始输入法组合输入
       });
 
-      chatInput.addEventListener('compositionend', function() {
+      chatInput.addEventListener('compositionend', function () {
         isComposing = false; // 输入法组合输入结束
       });
 
-      chatInput.addEventListener('keydown', function(e) {
+      chatInput.addEventListener('keydown', function (e) {
         // 如果是回车键，并且不在输入法组合输入状态，且没有按下Shift键
         if (e.key === 'Enter' && !isComposing && !e.shiftKey) {
           e.preventDefault(); // 阻止默认行为，如换行
@@ -234,11 +241,8 @@ export default {
       console.log('send message')
       if (!this.message || !this.conversationId) return
       // 上一条消息未处理完，不发送
-      if (this.messageList.length > 0) {
-        const lastMsg = this.messageList[this.messageList.length - 1]
-        if (lastMsg.more === true || lastMsg.loading === true) {
-          return this.$toast.warning('请等待上一条消息处理完毕')
-        }
+      if (this.messageStatus === 'loading' || this.messageStatus === 'concat') {
+        return this.$toast.warning('请等待上一条消息处理完毕')
       }
 
       this.$store.dispatch('chat/sendUserMessage', {text: this.message})
@@ -246,11 +250,12 @@ export default {
       this.scrollToBottom()
     },
     getMessage(data) {
-      // console.log('收到', data)
       let msg = data
       if (this.mode !== 'dev' && data.layers) {
         msg.layers = data.layers.filter(layer => layer.type !== 'LOG')
       }
+      // 修复空数组
+      msg.layers = msg.layers?.filter(l => !!l) || []
       if (data.conversationId !== this.conversationId) {
         console.log(`ignore message from other conversation:`, data)
         return
@@ -293,21 +298,14 @@ export default {
     scrollToBottom() {
       this.$nextTick(() => {
         const messagesContainer = this.$refs.messagesContainer;
-        // messagesContainer.scrollTo({
-        //   top: messagesContainer.scrollHeight,
-        //   behavior: 'smooth'
-        // })
-        setTimeout(() => {
-          messagesContainer.scrollTo({
-            top: messagesContainer.scrollHeight,
-            behavior: 'smooth'
-          })
-        }, 100)
+        messagesContainer.scrollTo({
+          top: messagesContainer.scrollHeight,
+          behavior: 'smooth'
+        })
       });
     },
   },
   beforeDestroy() {
-    console.log('Socket disconnect')
     this.$socket.off('chat', this.onWebsocketReceiveMessage);
     this.$socket.off('connect', this.onWebsocketConnect);
   },
@@ -391,9 +389,9 @@ export default {
     margin-top: 10px;
     margin-left: 24px;
 
-    img {
-      width: 38px;
-      height: 38px;
+    .send-btn {
+      width: 42px;
+      height: 42px;
     }
 
     input {
@@ -463,7 +461,7 @@ export default {
       white-space: pre-line;
     }
 
-    .text-message-v3{
+    .text-message-v3 {
       white-space: inherit;
     }
 
