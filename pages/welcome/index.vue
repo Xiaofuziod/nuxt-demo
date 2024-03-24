@@ -12,7 +12,7 @@
             <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
           </div>
           <div class="step-title-text">
-            <span>{{ $t("welcome_index_span_1") }}</span> {{ welcomeIndex }}
+            <span>{{ $t("welcome_index_span_1") }}</span>
           </div>
         </div>
         <!--第二步-->
