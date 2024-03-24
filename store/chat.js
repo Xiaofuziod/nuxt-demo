@@ -70,10 +70,6 @@ export const mutations = {
   setMessageStatus(state, status) {
     state.messageStatus = status
   },
-  setWelcomeList(state, list) {
-    console.log('setWelcomeList', list)
-    state.welcomeList = list
-  }
 }
 
 export const actions = {
