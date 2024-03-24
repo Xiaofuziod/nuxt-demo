@@ -22,7 +22,7 @@
         {{ message.title }}
 
         <div class="task-title-right" v-if="message.canSkip" @click="task2Finish('skip')">
-          跳过
+          {{$t('welcomeTask_btn_4')}}
           <img src="@/assets/imgs/chat/more.svg" alt="">
         </div>
       </div>
@@ -102,7 +102,7 @@ export default {
     },
     async taskFinish() {
       if (this.message.searchType === 'coin' && this.userCoinList.length === 0) {
-        return this.$toast.info('请至少保留一个加密货币')
+        return this.$toast.info(this.$t('coinLimitTips'))
       }
       const idx = this.messageList.findIndex(item => item.id === this.message.id)
       // await this.$store.commit('chat/updateWelcomeAddCoinFinish', true)

@@ -6,7 +6,7 @@
         <img class="header-close-btn" @click.stop="close()" src="@/assets/imgs/close.svg">
       </div>
       <div class="search-section">
-        <input type="text" v-model="searchQuery" placeholder="搜索加密货币..." class="search-input" >
+        <input type="text" v-model="searchQuery" :placeholder="$t('addCoin_span_1')" class="search-input" >
       </div>
       <main class="content">
         <!--        loading-->
@@ -16,7 +16,7 @@
         <div class="monitor-search-title" v-if="!loading && searchQuery">{{ $t("addCoin_monitor-search-title_1") }}</div>
         <div class="center-box empty-box" v-if="!loading && !coinList.length">
           <img src="@/assets/imgs/empty.svg" alt="">
-          <span>{{ $t("addCoin_span_1") }}</span>
+          <span>{{ $t("addCoin_span_2") }}</span>
         </div>
         <template v-if="!loading && coinList.length">
           <coin-list
@@ -34,7 +34,7 @@
               @remove="remove(monitor.id)"
           />
         </div>
-        <taurion-btn  @click="addCoin" text="确认"  active-color="rgba(206, 184, 100, 1)"/>
+        <taurion-btn  @click="addCoin" :text="$t('Save')"  active-color="rgba(206, 184, 100, 1)"/>
       </div>
       <!-- 其余代码 -->
     </div>
@@ -86,7 +86,7 @@ export default {
     },
     select(coin){
       if(this.selectcoinList.length > 4) {
-        this.$toast.error('同时间最多可添加5个')
+        this.$toast.error(this.$t('addCoin_tips-1'))
       } else {
         // 去重复
         const isDuplicate = this.selectcoinList.some((item) => item.id === coin.id);

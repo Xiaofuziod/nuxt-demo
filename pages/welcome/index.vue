@@ -88,7 +88,7 @@
             <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
           </div>
           <div class="step-title-text">
-            开始Taurion之旅吧～
+            {{ $t('Welcome_step-title-text_1')}}
           </div>
         </div>
       </div>

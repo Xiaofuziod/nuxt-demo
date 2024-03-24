@@ -23,7 +23,11 @@ export default {
   data() {
     return {};
   },
+  beforeCreate() {
+    this.$store.commit('lang/setTranslate', this.$i18n.messages[this.$i18n.locale])
+  },
   mounted() {
+    //更新语言
     const token = this.$localStorage.getItem('token')
     if (token) {
       this.$store.dispatch('user/getUserInfo')

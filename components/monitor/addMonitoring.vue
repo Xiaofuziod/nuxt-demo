@@ -6,7 +6,7 @@
         <img class="header-close-btn" @click.stop="close()" src="@/assets/imgs/close.svg">
       </div>
       <div class="search-section">
-        <input type="text" v-model="searchQuery" placeholder="搜索监控项目..." class="search-input" >
+        <input type="text" v-model="searchQuery" :placeholder="$t('addMonitoring_placeholder_1')" class="search-input" >
       </div>
       <main class="content">
 <!--        loading-->

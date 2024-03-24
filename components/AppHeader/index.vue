@@ -34,6 +34,7 @@
             <div class="user-setting-content">
               <div class="option-item" @click.stop="changeLanguage('en')">English</div>
               <div class="option-item" @click.stop="changeLanguage('zh')">中文</div>
+              <div class="option-item" @click.stop="changeLanguage('pt-br')">Português do Brasil</div>
             </div>
           </div>
         </div>
@@ -268,10 +269,13 @@ nav {
       line-height: normal;
       text-transform: capitalize;
       cursor: pointer;
-      &:first-child {
-        padding-bottom: 8px;
-        margin-bottom: 8px;
-        border-bottom: 1px solid rgba(140, 180, 189, 0.12);
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(140, 180, 189, 0.12);
+      &:last-child {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border-bottom: none
       }
     }
   }

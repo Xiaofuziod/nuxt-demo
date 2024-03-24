@@ -24,7 +24,7 @@
                 <img class="img1" src="@/static/images/chat/down.svg" alt="" v-else>
                 <div class="returns-btn-text"
                      :class="{ 'positive': item.data.returns > 0, 'negative': item.data.returns < 0}"
-                >购买信号{{ item.data.returns > 0 ? '强' : '弱' }}
+                >{{ item.data.returns > 0 ? $t('StrongBullish') : $t('StrongBearish') }}
                 </div>
               </btn>
             </div>
@@ -120,16 +120,16 @@
         </div>
         <div class="returns-box">
           <div class="returns-title">
-            介绍
+            {{$t('INTRODUCTION')}}
           </div>
           <div class="returns-desc">
             24h内，社区讨论热度增加，多位Kol和新闻发布利好观点，较多新闻也解释出利好的信号，按照历史趋势，高热度且持续利好，是涨幅初期的一种关键表现
           </div>
           <div class="returns-title">
-            行情
+            {{$t('MARKET')}}
           </div>
           <div class="jb-box">
-            <div class="jb-box-price">价格：</div>
+            <div class="jb-box-price">{{ $t('PRICE') }}：</div>
             <coin-list :coinList="[item.coin]" :hideOption="true"/>
           </div>
           <div style="margin-bottom: 10px">
@@ -139,16 +139,16 @@
 
           <template v-if="item.address">
             <div class="returns-title">
-              交易所
+              {{$t('Exchange')}}
             </div>
             <div class="returns-desc">
-              以太坊：
+              {{$t('Ethereum')}}：
             </div>
           </template>
 
 
           <div class="returns-title">
-            相关链接
+            {{ $t('LINKS') }}
           </div>
           <div class="link-box">
             <a class="link-item"
@@ -156,21 +156,21 @@
                :href="item.links.website[0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
-              网站
+              {{$t('Website')}}
             </a>
             <a class="link-item"
                  v-if="item.links?.technical_doc && item.links?.technical_doc.length > 0"
                  :href="item.links?.technical_doc[0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
-              白皮书
+              {{$t('Whitepaper')}}
             </a>
             <a class="link-item"
                  v-if="item.links?.source_code && item.links?.source_code.length > 0"
                  :href="item.links?.source_code[0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
-              GitHub
+              {{$t('GitHub')}}
             </a>
             <a class="link-item"
                  v-if="item.links?.twitter  && item.links?.twitter .length > 0"
