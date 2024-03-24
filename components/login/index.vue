@@ -62,7 +62,7 @@
             {{ $t('ResendEmail') }}
           </div>
           <div class="login-btn login-btn-disable" v-else>
-            {{ $t('Send') }}（{{ nums }}s）
+            {{ $t('Sent') }}（{{ nums }}s）
           </div>
         </div>
 
@@ -98,7 +98,7 @@
             {{ $t('ResendEmail') }}
           </div>
           <div class="login-btn login-btn-disable" v-else>
-            {{ $t('Send') }}（{{ nums }}s）
+            {{ $t('Sent') }}（{{ nums }}s）
           </div>
         </div>
       </div>
@@ -147,7 +147,7 @@ export default {
     });
     this.$bus.$on("REGISTER_SUCCESS", () => {
       this.showLoading = false
-      this.$toast.success('注册成功')
+      this.$toast.success(this.$t('RegistrationSuccess'))
       this.hide()
       this.$router.push('/welcome')
     });
