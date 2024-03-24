@@ -17,7 +17,7 @@
         <div class="login-content" v-if="step === 1">
           <div class="input-label">电子邮箱地址</div>
           <input class="login-input" v-model="email" placeholder="输入你的电子邮箱地址" type="email">
-          <div class="input-label">密码 <span @click="step = 31">忘记密码?</span></div>
+          <div class="input-label">密码 <span @click="step = 31" v-if="type === 'login'">忘记密码?</span></div>
           <div class="login-input-box">
             <input class="login-input" placeholder="输入大于6位字符的密码" v-model="password"
                    :type="isPassword  ? 'password' : 'text'">
@@ -49,7 +49,7 @@
             <img src="@/assets/imgs/login/email.svg" alt="">
           </div>
           <div class="login-content-title">验证您的电子邮箱</div>
-          <div class="login-content-desc">我们已向 <span>{{ email }}</span>
+          <div class="login-content-desc">我们已向 <span style="color: #CEB864">{{ email }}</span>
             发送了一封电子邮件，您可以输入电子邮件中的验证码完成注册
           </div>
           <div class="login-content-tips">输入验证码</div>
@@ -57,9 +57,12 @@
             <VerificationCodeInput @validate="validateInputSuccess"/>
             <div class="ver-code-tips" v-if="false">验证码错误，请重新输入</div>
           </div>
-          <div class="login-btn" @click="sendEmail(4)">
+          <div class="login-btn" @click="sendEmail(4)" v-if="nums < 1">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
             重发电子邮件
+          </div>
+          <div class="login-btn login-btn-disable" v-else>
+            已发送({{ nums }}s)
           </div>
         </div>
 
@@ -103,6 +106,8 @@
 import VerificationCodeInput from "@/components/VerificationCodeInput.vue";
 import {sendEmail} from "@/common/home";
 
+
+let timer = null
 export default {
   name: 'Login',
   components: {
@@ -116,7 +121,8 @@ export default {
       isPassword: true,
       type: 'login', // login, register
       step: 1, // 1,  登录/注册   21, 注册验证码输入  31, 忘记密码 - 输入电子邮箱  32 忘记密码 - 输入新密码
-      showLoading: false
+      showLoading: false,
+      nums: 0
     }
   },
   computed: {
@@ -153,7 +159,7 @@ export default {
         this.$store.dispatch('user/userRegister', {account: this.email, passwd: this.password, captcha})
       }
       if (this.step === 32) {
-        this.$store.dispatch('user/changePassword', {email: this.email, passwd: this.password, captcha})
+        this.$store.dispatch('user/changePassword', {account: this.email, passwd: this.password, captcha})
       }
     },
     stepBack() {
@@ -166,6 +172,7 @@ export default {
       }
     },
     handleClick() {
+      if (this.btnDisable) return
       if (this.showLoading) return
       //  "1"登录 ,"2"修改密码 ,"4"注册
       if (!this.isEmailValid(this.email)) {
