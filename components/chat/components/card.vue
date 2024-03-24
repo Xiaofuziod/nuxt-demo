@@ -183,8 +183,8 @@
         </div>
       </div>
 
-      <!--      币 趋势-->
-      <div class="chat-card" v-if="item.type === 'COIN_QUOTES'">
+      <!-- 单个币行情 -->
+      <div class="chat-card" v-if="item.type === 'COIN_PRICE'">
         <coin-list :coinList="item.data?.datas"/>
         <my-echarts from="chat" :list="item.data?.datas[0]?.market"/>
       </div>
