@@ -118,8 +118,7 @@ export default {
   },
   data() {
     return {
-      user: 'ta',
-      email: "zongfeis@gmail.com",
+      email: "",
       password: "",
       isPassword: true,
       type: 'login', // login, register
