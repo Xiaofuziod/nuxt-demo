@@ -18,7 +18,7 @@
 
     <div class="chat-content" ref="messagesContainer" @scroll="handleScroll">
       <div class="chat-padding">
-        <div v-for="(item,index) in messageList" :key="item.seqNo + '-' + index">
+        <template v-for="(item,index) in messageList">
           <!--AI焦点-->
           <div class="text-message-box1"
                v-if="item.context && item.context.hook && item.context.hook.type === 'FOCUS'">
@@ -56,7 +56,7 @@
             </div>
             <div class="text-message-box2" v-else>
               <div class="text-message-v2 text-message-v3" v-if="item.source === 'T-brain'">
-                <Typewriter @writerOver="writerOver" :text="item.text"/>
+                <Typewriter @writerOver="writerOver" :highlightList="item.highlightList" :text="item.text"/>
               </div>
               <div class="text-message-v2" v-else>{{ item.text }}</div>
             </div>
@@ -75,7 +75,7 @@
           </template>
           <!--定制卡片内容-->
           <chat-card :layers="item.layers" v-if="item.layers && item.layers.length > 0"/>
-        </div>
+        </template>
       </div>
     </div>
 
@@ -128,7 +128,7 @@ export default {
     },
     disableInput() {
       if (this.showWelcome) {
-        return !this.$store.state.chat.welcomeAddCoinFinish
+        return this.$store.state.chat.welcomeIndex < 7
       } else {
         return false
       }
@@ -164,7 +164,7 @@ export default {
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
         this.$store.dispatch('coin/fetchCoinList', {size: 5})
-        this.$store.dispatch('monitor/fetchMonitorList', "",)
+        this.$store.dispatch('monitor/fetchMonitorList', {size: 5})
       }, 3000)
       // 没有历史消息，则去拉取历史消息
     } else if (this.messageList.length === 0) {
@@ -183,6 +183,7 @@ export default {
   },
   methods: {
     handleScroll(e) {
+      if (this.showWelcome) return
       const {scrollTop} = e.target;
       if (!this.isLoading && !this.isFinished && scrollTop <= 0) {
         this.isLoading = true
@@ -283,11 +284,18 @@ export default {
             text: '',
             layers: [
               {
-                type: lastMsg.needPushHotCoin ? "HOT_COINS" : "SOURCES",
+                type: lastMsg.needPushHotCoin ? "HOT_COINS" : "MONITORING_SIGNAL",
                 title: '热门推荐',
                 data: {
                   coins: this.$store.state.coin.coinList,
-                  datas: this.$store.state.monitor.monitorList
+                  datas: this.$store.state.monitor.searchMonitor?.records
+                }
+              },
+              {
+                type: "YOU_CAN_ASK",
+                title: '您可以问我',
+                data: {
+                  questions: ['BTC价格', 'ETH价格', 'BTC走势']
                 }
               }
             ],
@@ -295,6 +303,10 @@ export default {
           }
           this.$store.dispatch('chat/pushWelcomeMessage', para)
           this.scrollToBottom()
+        }
+        if (lastMsg.over) {
+          this.$store.dispatch('chat/clearMessageList')
+          this.$router.replace('/reporting')
         }
       }
     },
@@ -325,8 +337,6 @@ export default {
 <style lang="less" scoped>
 
 .mic {
-  color: #fff;
-
   &::before,
   &::after {
     content: "";
@@ -336,19 +346,19 @@ export default {
     transform: translate(-50%, -50%);
     border-radius: 100%;
     z-index: 2;
-    box-shadow: 0 0 5px 5px #083E4F;
+    box-shadow: 0 0 2px 2px #083E4F;
   }
 
   &::before {
-    width: 48px;
-    height: 48px;
-    background-color: #084E46;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(20, 37, 47, 1);
   }
 
   &::after {
-    width: 40px;
-    height: 40px;
-    background-color: #1E535F;
+    width: 25px;
+    height: 25px;
+    background-color: #6B9297;
     animation: circle-size 0.8s linear infinite alternate;
   }
 
@@ -359,8 +369,8 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     display: block;
-    width: 35px;
-    height: 35px;
+    width: 28px;
+    height: 28px;
     z-index: 3;
 
     &::before,
@@ -372,8 +382,8 @@ export default {
     }
 
     &::before {
-      width: 2px;
-      height: 5px;
+      width: 0.2px;
+      height: 0.5px;
       top: calc(100% + 1px);
       left: 50%;
       transform: translate(-50%, 0);
@@ -382,25 +392,25 @@ export default {
 
     &::after {
       border: 2px solid;
-      width: 8px;
-      height: 18px;
+      width: 0.8px;
+      height: 1.8px;
       left: 50%;
-      top: -10px;
+      top: -1px;
       border-radius: 4px;
       transform: translate(-50%, 0);
     }
   }
 
   &-shadow {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    //transform: translate(-50%, -50%);
     border-radius: 100%;
     z-index: 1;
-    box-shadow: 2px -1px 6px 12px #443CA6, 5px -2px 9px 2px #AAC6D2, -4px -5px 13px 2px #5AE3A9, -8px 1px 3px 2px #1B8F65, 3px 2px 30px 2px #480BF5;
+    box-shadow: 1px -5.5px 3px 1.5px rgba(30, 83, 95, 0.3), 2.4px -1px 4.7px 1px rgba(30, 83, 95, 0.3), -2.1px -2.5px 9.7px 1px rgba(26, 41, 49, 0.3), 5.1px .5px 1.7px 1px rgba(30, 83, 95, 0.3), .3px .2px 7.7px 1px rgba(26, 41, 49, 0.3);
     animation: shadow-rotate 1.5s linear infinite;
     transform-origin: center;
   }
@@ -408,12 +418,12 @@ export default {
 
 @keyframes circle-size {
   from {
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
   }
   to {
-    width: 52px;
-    height: 52px;
+    width: 30px;
+    height: 30px;
   }
 }
 
@@ -524,6 +534,7 @@ export default {
     flex: 1;
     overflow-y: auto;
     margin: 0 auto;
+    position: relative;
 
 
     .text-message-box2 {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{'topSticky':message.type === 'task' && !message.finish}">
     <div class="text-message-v2" v-if="message.type === 'taskStart' || message.type === 'taskFinish' ">
       {{ message.taskText }}
       <div class="start-btn-box" v-if="message.startBtnShow">
@@ -20,20 +20,22 @@
       </div>
       <div class="task-title">
         {{ message.title }}
-        <div class="task-title-right" v-if="message.canSkip" @click="taskFinish">
+
+        <div class="task-title-right" v-if="message.canSkip" @click="task2Finish('skip')">
           跳过
           <img src="@/assets/imgs/chat/more.svg" alt="">
         </div>
       </div>
       <div class="task-desc">
-        <!--添加自选后，Taurion会为你的自选<span>{{ $t("welcomeTask_span_1") }}</span>，协助你减少市场噪音-->
-        {{ message.desc }}
+        <span v-for="(s,i) in message.desc?.split('')"
+              :class="{'highlight': message.highlightList?.includes(i)}"
+              :i="i">{{ s }}</span>
       </div>
       <div class="start-btn-box">
         <div class="start-btn" @click="showSelect">
           <btn2 type="2">{{ $t("welcomeTask_btn_3") }}</btn2>
         </div>
-        <div class="start-btn" @click="taskFinish">
+        <div class="start-btn" @click="task2Finish">
           <btn :disable="finishBtnDisable">
             <span style="padding-left: 5px">{{ $t("welcomeTask_btn_2") }}</span>
           </btn>
@@ -87,12 +89,23 @@ export default {
     }
   },
   methods: {
+    async task2Finish(val) {
+      // 如果是跳过的，则需要删除 欢迎文案中的
+      // 16 , 17 ,18 跳过的文案
+      //  13. 14 非跳过的文案
+      if (val === 'skip') {
+        await this.$store.dispatch('chat/updateWelcomeList', [13, 14])
+      } else {
+        await this.$store.dispatch('chat/updateWelcomeList', [16, 17, 18])
+      }
+      await this.taskFinish()
+    },
     async taskFinish() {
       if (this.message.searchType === 'coin' && this.userCoinList.length === 0) {
         return this.$toast.info('请至少保留一个加密货币')
       }
       const idx = this.messageList.findIndex(item => item.id === this.message.id)
-      await this.$store.commit('chat/updateWelcomeAddCoinFinish', true)
+      // await this.$store.commit('chat/updateWelcomeAddCoinFinish', true)
       await this.$store.commit('chat/updateMessage', {
         index: idx,
         message: {...this.message, finish: true}
@@ -105,15 +118,7 @@ export default {
         index: idx,
         message: {...this.message, startBtnShow: false}
       })
-      if (this.message.type === 'taskFinish') {
-        this.$toast.success('任务完成')
-        this.$store.dispatch('chat/clearMessageList')
-        setTimeout(() => {
-          this.$router.replace('/reporting')
-        }, 1000)
-      } else {
-        this.$store.dispatch('chat/welcomeToNext')
-      }
+      this.$store.dispatch('chat/welcomeToNext')
     },
     showSelect() {
       if (this.message.searchType === 'coin') {
@@ -131,6 +136,16 @@ export default {
   width: 100%;
   display: flex;
   align-items: flex-start;
+}
+
+.highlight {
+  color: #CEB864;
+}
+
+.topSticky {
+  position: sticky;
+  top: 10px;
+  z-index: 9999;
 }
 
 .task-title {
@@ -172,10 +187,10 @@ export default {
   line-height: 15px;
   text-align: left;
   margin-top: 3px;
-
-  span {
-    color: #CEB864;
-  }
+  //
+  //span {
+  //  color: #CEB864;
+  //}
 }
 
 .start-btn-box {

@@ -1,7 +1,7 @@
 import {getChatMessageList} from "@/common/home";
 import {welcomeList} from "@/store/welcomeMessage";
 import Vue from 'vue';
-import robotAvatar from '@/assets/imgs/user/default.png'
+import robotAvatar from '@/assets/imgs/user/default.svg'
 
 
 let timer = null  // 机器人回答后，3秒后关闭
@@ -19,7 +19,7 @@ export const state = () => ({
   messageList: [],
   welcomeList: welcomeList,
   welcomeIndex: 0,
-  welcomeAddCoinFinish: false,
+  // welcomeAddCoinFinish: false,
   isFinished: false,  // 历史消息是否已经加载完
   lastUserQuestion: null,
   messageStatus: null, // loading concat success error
@@ -45,9 +45,9 @@ export const mutations = {
   updateMessage(state, {index, message}) {
     Vue.set(state.messageList, index, message);
   },
-  updateWelcomeAddCoinFinish(state, finish) {
-    state.welcomeAddCoinFinish = finish
-  },
+  // updateWelcomeAddCoinFinish(state, finish) {
+  //   state.welcomeAddCoinFinish = finish
+  // },
   setConversationId(state, conversationId) {
     state.conversationId = conversationId
   },
@@ -62,6 +62,10 @@ export const mutations = {
   },
   setMessageStatus(state, status) {
     state.messageStatus = status
+  },
+  setWelcomeList(state, list) {
+    console.log('setWelcomeList', list)
+    state.welcomeList = list
   }
 }
 
@@ -86,6 +90,10 @@ export const actions = {
   welcomeToNext({commit, state}) {
     commit('setWelcomeIndex', state.welcomeIndex + 1)
     commit('addMessage', state.welcomeList[state.welcomeIndex])
+  },
+  updateWelcomeList({commit,state}, ids) {
+    const list = state.welcomeList.filter(item => !ids.includes(item.id))
+    commit('setWelcomeList', list)
   },
   clearMessageList({commit}) {
     commit('clearMessageList')

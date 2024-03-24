@@ -35,6 +35,15 @@
                   @remove="remove(monitor.id)"
               />
             </div>
+            <template v-if="coinShowMoreBtn">
+              <div class="show-more" v-if="!coinShowMore" @click="coinShowMore = true">
+                展开全部<img src="@/assets/imgs/chat/down.svg" alt="">
+              </div>
+              <div class="show-more" v-else @click="coinShowMore = false">
+                收起<img src="@/assets/imgs/chat/up.svg" alt="">
+              </div>
+            </template>
+
             <div class="add-text" @click="handleClick('coin')">{{ $t("welcome_index_add-text_1") }}</div>
           </div>
         </template>
@@ -59,6 +68,14 @@
                   @remove="removeMonitor(monitor.id)"
               />
             </div>
+            <template v-if="monitorShowMoreBtn">
+              <div class="show-more" v-if="!monitorShowMore" @click="monitorShowMore = true">
+                展开全部<img src="@/assets/imgs/chat/down.svg" alt="">
+              </div>
+              <div class="show-more" v-else @click="monitorShowMore = false">
+                收起<img src="@/assets/imgs/chat/up.svg" alt="">
+              </div>
+            </template>
             <div class="add-text" @click="handleClick('monitor')">
               + 添加
             </div>
@@ -96,10 +113,16 @@ export default {
   },
   computed: {
     userCoinList() {
-      return this.$store.state.coin.userCoinList
+      return (this.coinShowMore || this.$store.state.coin.userCoinList?.length <= 4) ? this.$store.state.coin.userCoinList : this.$store.state.coin.userCoinList.slice(0, 4)
     },
     userMonitorList() {
-      return this.$store.state.monitor.userMonitorList
+      return (this.monitorShowMore || this.$store.state.monitor.userMonitor?.records?.length <= 4) ? this.$store.state.monitor.userMonitor?.records : this.$store.state.monitor.userMonitor?.records.slice(0, 4)
+    },
+    coinShowMoreBtn() {
+      return this.$store.state.coin.userCoinList.length > 4
+    },
+    monitorShowMoreBtn() {
+      return this.$store.state.monitor.userMonitor?.records?.length > 4
     },
     welcomeIndex() {
       return this.$store.state.chat.welcomeIndex;
@@ -107,7 +130,8 @@ export default {
   },
   data() {
     return {
-      //
+      coinShowMore: false,
+      monitorShowMore: false
     }
   },
   methods: {
@@ -130,6 +154,28 @@ export default {
 
 <style lang="less" scoped>
 
+.show-more {
+  cursor: pointer;
+  color: rgba(140, 180, 189, 0.50);
+  font-family: Avenir;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  width: 280px;
+
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 7px;
+    margin-left: 4px;
+  }
+}
+
 
 @keyframes rotate {
   from {
@@ -146,7 +192,7 @@ export default {
 
 
 .add-monitoring-cards {
-  width: 430px;
+  width: 350px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -155,8 +201,9 @@ export default {
   box-sizing: border-box;
   padding-left: 20px;
   height: 100%;
-  width: 515px;
+  width: 400px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-bottom: 30px;
 
   .step-line {
@@ -220,7 +267,7 @@ export default {
 .welcome-page {
   width: 100vw;
   height: 100vh;
-  background: rgba(5, 15, 33, 1);
+  background: rgba(5, 15, 33, .5);
   overflow-y: hidden;
   overflow-x: auto;
   position: fixed;

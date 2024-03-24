@@ -26,6 +26,7 @@ export const mutations = {
         state.addMonitorShow = bool
     },
     setUserMonitor(state, data) {
+        console.log(data)
         state.userMonitor = data;
     },
     setMonitorDetail(state, detail) {

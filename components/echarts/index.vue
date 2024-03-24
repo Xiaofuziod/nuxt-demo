@@ -203,7 +203,7 @@ export default {
         const market = res.data.data.market
         this.coin = {
           logo: res.data.data.logo,
-          name: res.data.data.slug,
+          name: res.data.data.name,
           symbol: res.data.data.symbol,
           currentPrice: res.data.data.currentPrice,
           change: res.data.data.change

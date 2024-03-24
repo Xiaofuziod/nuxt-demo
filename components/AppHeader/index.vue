@@ -7,7 +7,7 @@
       </div>
 
       <!-- Navigation area -->
-      <nav v-if="userLoggedIn">
+      <nav v-if="userLoggedIn && !routepath.includes('welcome')">
         <ul>
           <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" :href="`${langPath}/reporting`">
             <span>{{$t("REPORTING")}}</span>

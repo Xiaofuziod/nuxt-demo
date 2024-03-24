@@ -15,6 +15,7 @@ export const welcomeList = [
     text: "我有强大的大脑,可以帮你汇总海量信息和解答你任何金融疑惑.",
     source: "T-brain",
     autoNext: true,
+    highlightList: [12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27], // 高亮的关键词的下标
     id: 3,
   },
   {
@@ -47,6 +48,7 @@ export const welcomeList = [
     searchType: 'coin',
     finish: false,
     desc: '添加自选后，Taurion会为你的自选每日生成市场焦点，协助你减少市场噪音',
+    highlightList: [19, 20, 21, 22, 23, 24, 25, 26], // 高亮的关键词的下标
     id: 7,
   },
   {
@@ -54,6 +56,7 @@ export const welcomeList = [
     autoNext: false,
     source: "T-brain",
     needPushHotCoin: true,
+    highlightList: [5, 6, 7, 8, 10, 11, 12, 13], // 高亮的关键词的下标
     id: 8,
   },
   // 此处需要插入 自选加密货币推荐数据
@@ -92,19 +95,19 @@ export const welcomeList = [
   },
   // 此处插入跳过的文案
   {
-    text:"虽然你选择了跳过这个任务",
+    text: "虽然你选择了跳过这个任务",
     source: "T-brain",
     autoNext: true,
     id: 16,
   },
   {
-    text:"但别忘了，我是有这个强大的监控功能的哦～",
+    text: "但别忘了，我是有这个强大的监控功能的哦～",
     source: "T-brain",
     autoNext: true,
     id: 17,
   },
   {
-    text:"看来你已经迫不及待想体验 Taurion 了",
+    text: "看来你已经迫不及待想体验 Taurion 了",
     source: "T-brain",
     autoNext: true,
     id: 18,
@@ -122,6 +125,7 @@ export const welcomeList = [
     autoNext: true,
     id: 14,
   },
+  // 启动Taurion
   {
     taskText: '让我们启动Taurion吧？',
     type: "taskFinish",
@@ -129,5 +133,30 @@ export const welcomeList = [
     source: "T-brain",
     autoNext: false,
     id: 15,
+  },
+  {
+    text: '3',
+    source: "T-brain",
+    autoNext: true,
+    id: 21,
+  },
+  {
+    text: '2',
+    source: "T-brain",
+    autoNext: true,
+    id: 22,
+  },
+  {
+    text: '1',
+    source: "T-brain",
+    autoNext: true,
+    id: 23,
+  },
+  {
+    text: '开始啦',
+    source: "T-brain",
+    autoNext: false,
+    over: true,
+    id: 24,
   },
 ]

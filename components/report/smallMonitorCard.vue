@@ -1,8 +1,8 @@
 <template>
   <div class="card" :class="{'card-mini': size === 'mini'}">
-    <img class="card-img" :src="card?.logo || bianPic" alt="">
+    <img class="card-img" :src="card?.logo || card.icon || bianPic" alt="">
     <div class="card-header">
-      <h3 class="title1">{{ card?.name }}</h3>
+      <h3 class="title1">{{ card?.symbol }}</h3>
     </div>
     <img class="option-img" @click="$emit('remove')" src="@/assets/imgs/close.svg" alt="">
   </div>
