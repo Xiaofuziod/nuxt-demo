@@ -15,6 +15,7 @@ export const getWelcomeList = (t) => [
     text: t["welcome_text_3"],
     source: "T-brain",
     autoNext: true,
+    highlightWordList: [t["welcome_text_3_1"], t["welcome_text_3_2"]],
     id: 3,
   },
   {
@@ -47,6 +48,7 @@ export const getWelcomeList = (t) => [
     searchType: 'coin',
     finish: false,
     desc: t["welcome_desc_7"],
+    highlightWordList: [t["welcome_desc_7_1"]],
     id: 7,
   },
   {
@@ -54,6 +56,7 @@ export const getWelcomeList = (t) => [
     autoNext: false,
     source: "T-brain",
     needPushHotCoin: true,
+    highlightWordList: [t["welcome_text_8_1"], t["welcome_text_8_2"]],
     id: 8,
   },
   {

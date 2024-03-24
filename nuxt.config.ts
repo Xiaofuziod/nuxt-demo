@@ -81,7 +81,7 @@ export default {
       {code: 'zh', iso: 'zh', file: 'zh.js'},
       {code: 'pt-br', iso: 'pt-br', file: 'pt-br.js'},
     ],
-    defaultLocale: 'en',
+    defaultLocale: 'zh',
     lazy: true,
     langDir: 'lang/',
     silentTranslationWarn: true,

@@ -250,8 +250,8 @@ export default {
       }
     },
     sendMessage() {
-      console.log('send message')
       if (!this.message || !this.conversationId) return
+      console.log('send message')
       // 上一条消息未处理完，不发送
       if (this.messageStatus === 'loading' || this.messageStatus === 'concat') {
         return this.$toast.warning('请等待上一条消息处理完毕')
@@ -514,10 +514,10 @@ export default {
     margin-top: 10px;
     margin-left: 24px;
 
-    .send-btn {
-      width: 42px;
-      height: 42px;
-    }
+    //.send-btn {
+    //  width: 48px;
+    //  height: 48px;
+    //}
 
     input {
       display: block;

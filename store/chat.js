@@ -17,7 +17,7 @@ export const state = () => ({
   isFinished: false,  // 历史消息是否已经加载完
   lastUserQuestion: null,
   messageStatus: null, // loading concat success error
-  wList:[],
+  wList: [],
   robot: {
     avatar: robotAvatar,
     text: '',
@@ -29,6 +29,7 @@ export const mutations = {
     state.messageList.push(message)
   },
   setWelcomeList(state, list) {
+    console.log('setWelcomeList', list)
     state.welcomeList = list
   },
   setWlist(state, t) {
@@ -73,7 +74,24 @@ export const mutations = {
 
 export const actions = {
   updateLang({commit, rootState}) {
-    commit('setWelcomeList', getWelcomeList(rootState.lang.t))
+    const arr = getWelcomeList(rootState.lang.t)
+    arr.forEach((item) => {
+      if (item.highlightWordList) {
+        let indexList = []
+        const text = item.text || item.desc
+        item.highlightWordList.forEach(word => {
+          const index = text.indexOf(word)
+          console.log('word', word, index)
+          if (index > -1) {
+            for (let i = index; i < index + word.length; i++) {
+              indexList.push(i)
+            }
+          }
+        })
+        item.highlightList = indexList
+      }
+    })
+    commit('setWelcomeList', arr)
     commit('setWlist', rootState.lang.t)
   },
   async fetchEarlierMessages({commit}, userNo) {
@@ -97,14 +115,14 @@ export const actions = {
     commit('setWelcomeIndex', state.welcomeIndex + 1)
     commit('addMessage', state.welcomeList[state.welcomeIndex])
   },
-  updateWelcomeList({commit,state}, ids) {
+  updateWelcomeList({commit, state}, ids) {
     const list = state.welcomeList.filter(item => !ids.includes(item.id))
     commit('setWelcomeList', list)
   },
   clearMessageList({commit}) {
     commit('clearMessageList')
   },
-  pushAIMessage({commit, state,rootState}, message) {
+  pushAIMessage({commit, state, rootState}, message) {
     let lastMsg = state.messageList[state.messageList.length - 1]
     if ((lastMsg && lastMsg.seqNo === message.seqNo && lastMsg.source === message.source) || lastMsg.loading) {
       const newMsg = {
@@ -135,7 +153,8 @@ export const actions = {
     // 五分钟没有操作，机器人会自动问候
     clearTimeout(timer2)
     timer2 = setInterval(() => {
-      commit('setRobot', {text: state.wlist[Math.floor(Math.random() * state.wlist.length)]
+      commit('setRobot', {
+        text: state.wlist[Math.floor(Math.random() * state.wlist.length)]
       })
     }, 300 * 1000)
 

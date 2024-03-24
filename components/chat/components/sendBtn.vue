@@ -1,5 +1,5 @@
 <template>
-  <button :class="{'loading':loading}" type="submit">
+  <button :class="{'loading': loading}" type="submit">
     <img class="img1" src="@/static/images/chat/send3.svg" alt="">
   </button>
 </template>
@@ -30,8 +30,6 @@ export default {
 @keyframes button-loading {
 
   0% {
-    background-color: #5585ff;
-    border-color: #5585ff;
   }
 
   20% {
@@ -40,7 +38,7 @@ export default {
   }
 
   40% {
-    border-color: #5585ff;
+    border-color: #ACF0D8;
     background-color: transparent;
     transform: scale(1, 1);
   }
@@ -48,8 +46,8 @@ export default {
   60% {
     transform: scale(.7, 1.1);
     color: transparent;
-    border-color: #5585ff;
-    background-color: #5585ff;
+    border-color:#ACF0D8;
+    background-color:#ACF0D8;
   }
 
   80% {
@@ -58,8 +56,8 @@ export default {
 
   100% {
 
-    background-color: #5585ff;
-    border-color: #5585ff;
+    background-color:#ACF0D8;
+    border-color:#ACF0D8;
     color: transparent;
   }
 
@@ -118,8 +116,8 @@ export default {
   }
 
   10% {
-    background-color: #5585ff;
-    border-color: #5585ff;
+    background-color:#ACF0D8;
+    border-color:#ACF0D8;
   }
 
   70% {
@@ -169,15 +167,14 @@ button {
   overflow: hidden;
   width: 42px;
   height: 42px;
-  color: #5585ff;
-  border: 2px solid transparent;
+  color:#CEB864;
+  border:2px solid transparent;
   background-color: transparent;
   cursor: pointer;
   line-height: 2;
   margin: 0;
   padding: 0;
   border-radius: 50%;
-  font-size: 1.125rem;
   text-transform: lowercase;
   outline: none;
   transition: transform .125s;
@@ -221,7 +218,7 @@ button {
   &.ready {
     text-indent: 0;
     color: transparent;
-    background-color: #5585ff;
+    background-color: #8CB4BD;
     animation: button-ready .333s forwards;
   }
 
