@@ -40,7 +40,7 @@ export const getWelcomeList = (t) => [
   {
     source: "T-brain",
     type: "task",
-    taskName: '任务一',
+    taskName: t['FirstTask'],
     autoNext: true,
     title: t["welcome_title_7"],
     canSkip: false,
@@ -73,7 +73,7 @@ export const getWelcomeList = (t) => [
   {
     source: "T-brain",
     type: "task",
-    taskName: '任务二',
+    taskName: t['SecondTask'],
     autoNext: true,
     title: t["welcome_title_11"],
     searchType: 'monitor',

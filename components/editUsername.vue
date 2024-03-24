@@ -5,11 +5,11 @@
         <div class="login-content-title">{{ $t("Login_login-content-title_1") }}</div>
         <div class="input-label">{{ $t("Login_input-label_1") }}</div>
         <div class="login-input-box">
-          <input class="login-input" placeholder="输入新的昵称" v-model="nickname"
+          <input class="login-input" :placeholder="$t('Login_login-input-placeholder_1')" v-model="nickname"
                  type="text"></div>
         <div class="login-btn" :class="{'login-btn-disable':btnDisable}" @click="handleClick">
           <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
-          确定
+          {{$t('Login_login-btn_1')}}
         </div>
       </div>
     </template>
@@ -46,11 +46,11 @@ export default {
         })
         console.log(res.data, 'res.data.data')
         if (res.data.code === 200) {
-          this.$toast.success('修改成功')
+          this.$toast.success(this.$t('EditSuccess'))
           this.$store.commit('user/updateNickname', this.nickname)
           this.hide()
         } else {
-          this.$toast.error(res.data.msg || '修改失败')
+          this.$toast.error(res.data.msg || this.$t('EditError'))
         }
         this.showLoading = false
       } catch (e) {

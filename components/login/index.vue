@@ -16,30 +16,30 @@
         <!--登录/注册-->
         <div class="login-content" v-if="step === 1">
           <div class="input-label">{{$t("EmailAddress")}}</div>
-          <input class="login-input" v-model="email" placeholder="输入你的电子邮箱地址" type="email">
-          <div class="input-label">密码 <span @click="step = 31">忘记密码?</span></div>
+          <input class="login-input" v-model="email" :placeholder="$t('EnterYourEmail')" type="email">
+          <div class="input-label">{{ $t('Password') }} <span @click="step = 31"> {{ $t('ForgotPassword') }}</span></div>
           <div class="login-input-box">
-            <input class="login-input" placeholder="输入大于6位字符的密码" v-model="password"
+            <input class="login-input" :placeholder="$t('EnterLimit')" v-model="password"
                    :type="isPassword  ? 'password' : 'text'">
             <img src="@/assets/imgs/login/paw.svg" v-if="isPassword" alt="" @click="isPassword = !isPassword">
             <img src="@/assets/imgs/login/paw2.svg" v-else alt="" @click="isPassword = !isPassword">
           </div>
           <div class="login-btn" :class="{'login-btn-disable': btnDisable}" @click="handleClick">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
-            {{ type === 'login' ? "登录" : "创建一个账户" }}
+            {{ type === 'login' ? $t('Login') : $t('CreateAccount') }}
           </div>
           <div class="login-line">
             <div class="login-line-border"></div>
-            <div class="login-line-text">or</div>
+            <div class="login-line-text">{{ $t('OR')}}</div>
             <div class="login-line-border"></div>
           </div>
           <div class="other-box" @click="loginWithGoogle">
             <img src="@/assets/imgs/login/Google.svg" alt="">
-            使用 Google 授权
+            {{$t('ContinueWithGoogle')}}
           </div>
           <div class="other-box" @click="loginWithTwitter">
             <img src="@/assets/imgs/login/X2.svg" alt="">
-            使用 X 授权
+            {{$t('ContinueWithX')}}
           </div>
         </div>
 
@@ -48,51 +48,51 @@
           <div class="login-email-box">
             <img src="@/assets/imgs/login/email.svg" alt="">
           </div>
-          <div class="login-content-title">验证您的电子邮箱</div>
-          <div class="login-content-desc">我们已向 <span>{{ email }}</span>
-            发送了一封电子邮件，您可以输入电子邮件中的验证码完成注册
+          <div class="login-content-title">{{ $t('VerifyYourEmail') }}</div>
+          <div class="login-content-desc">{{ $t('SenttoemailtoBefore') }} <span>{{ email }}</span>
+            {{$t('SenttoemailtoAfter')}}
           </div>
-          <div class="login-content-tips">输入验证码</div>
+          <div class="login-content-tips">{{ $t('EnterverificationCode') }}</div>
           <div class="ver-code-box">
             <VerificationCodeInput @validate="validateInputSuccess"/>
-            <div class="ver-code-tips" v-if="false">验证码错误，请重新输入</div>
+            <div class="ver-code-tips" v-if="false">{{$t('VerificationCodeFailedTips')}}</div>
           </div>
           <div class="login-btn" @click="sendEmail(4)">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
-            重发电子邮件
+            {{ $t('ResendEmail') }}
           </div>
         </div>
 
         <!--修改密码输入电子邮箱-->
         <div class="login-content" v-if="step === 31">
-          <div class="login-content-title">输入电子邮箱</div>
-          <div class="login-content-desc2">输入电子邮箱，您将收到用于重置密码的验证码</div>
-          <div class="input-label">输入电子邮箱</div>
-          <input class="login-input" style="margin-bottom: 8px" v-model="email" type="email">
-          <div class="login-btn" :class="{'login-btn-disable': btnDisable}" @click="sendEmail(2)">
-            <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
-            下一步
-          </div>
+          <div class="login-content-title">{{ $t('EnterYourEmail') }}</div>
+          <div class="login-content-desc2">{{ $t('ReceiveAVerification') }}</div>
+            <div class="input-label">{{ $t('EnterYourEmail') }}</div>
+            <input class="login-input" style="margin-bottom: 8px" v-model="email" type="email">
+            <div class="login-btn" :class="{'login-btn-disable': btnDisable}" @click="sendEmail(2)">
+              <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
+              {{$t('Next')}}
+            </div>
         </div>
 
         <!--修改密码-->
         <div class="login-content" v-if="step === 32">
-          <div class="login-content-title">输入新密码</div>
-          <div class="input-label">密码</div>
+          <div class="login-content-title">{{$t('EnterNewPassword')}}</div>
+          <div class="input-label">{{$t('Password')}}</div>
           <div class="login-input-box">
-            <input class="login-input" placeholder="输入大于6位字符的密码"
+            <input class="login-input" :placeholder="$t('EnterLimit')"
                    v-model="password" :type="isPassword  ? 'password' : 'text'">
             <img src="@/assets/imgs/login/paw.svg" alt="" v-if="!isPassword" @click="isPassword = !isPassword">
             <img src="@/assets/imgs/login/paw2.svg" alt="" v-else @click="isPassword = !isPassword">
           </div>
-          <div class="login-content-tips">输入验证码</div>
+          <div class="login-content-tips">{{ $t('EnterverificationCode') }}</div>
           <div class="ver-code-box">
             <VerificationCodeInput @validate="validateInputSuccess"/>
-            <div class="ver-code-tips" v-if="false">验证码错误，请重新输入</div>
+            <div class="ver-code-tips" v-if="false">{{$t('VerificationCodeFailedTips')}}</div>
           </div>
           <div class="login-btn" @click="sendEmail(2)">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
-            重发电子邮件
+            {{ $t('ResendEmail') }}
           </div>
         </div>
       </div>
@@ -133,7 +133,7 @@ export default {
     // 处理事件
     this.$bus.$on('LOGON_SUCCESS', () => {
       this.showLoading = false
-      this.$toast.success('登录成功')
+      this.$toast.success(this.$t('LoginSuccess'))
       this.hide()
       //   第一次 去欢迎页面
       // this.$router.push('/welcome')
@@ -169,11 +169,11 @@ export default {
       if (this.showLoading) return
       //  "1"登录 ,"2"修改密码 ,"4"注册
       if (!this.isEmailValid(this.email)) {
-        this.$toast.show({content: '请输入正确的电子邮箱地址', type: 'error'})
+        this.$toast.show({content: this.$t('ErrorEmailTips'), type: 'error'})
         return
       }
       if (this.password.length < 6) {
-        this.$toast.show({content: '密码长度不能小于6位', type: 'error'})
+        this.$toast.show({content: this.$t('EnterLimit'), type: 'error'})
         return
       }
       if (this.type === 'login') {
@@ -188,7 +188,7 @@ export default {
       if (this.showLoading) return
       //  "1"登录 ,"2"修改密码 ,"4"注册
       if (!this.isEmailValid(this.email)) {
-        this.$toast.error('请输入正确的电子邮箱地址')
+        this.$toast.error(this.$t('ErrorEmailTips'))
         return
       }
       try {
@@ -196,10 +196,10 @@ export default {
         const res = await this.$axios.post(sendEmail, {account: this.email, type})
         this.showLoading = false
         if (res.data.code === 200) {
-          this.$toast.success('发送成功')
+          this.$toast.success(this.$t('Sent'))
           if (type === 2) this.step = 32
         } else {
-          this.$toast.error(res.data.msg || '发送失败,请稍后重试！')
+          this.$toast.error(res.data.msg || this.$t('sentError'))
         }
       } catch (e) {
         this.showLoading = false
