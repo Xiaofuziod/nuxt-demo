@@ -28,9 +28,8 @@ export const mutations = {
   addMessage(state, message) {
     state.messageList.push(message)
   },
-  setWelcomeList(state, t) {
-    console.log(t)
-    state.welcomeList = getWelcomeList(t)
+  setWelcomeList(state, list) {
+    state.welcomeList = list
   },
   setWlist(state, t) {
     state.wlist = [
@@ -74,7 +73,7 @@ export const mutations = {
 
 export const actions = {
   updateLang({commit, rootState}) {
-    commit('setWelcomeList', rootState.lang.t)
+    commit('setWelcomeList', getWelcomeList(rootState.lang.t))
     commit('setWlist', rootState.lang.t)
   },
   async fetchEarlierMessages({commit}, userNo) {

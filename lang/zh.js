@@ -148,7 +148,7 @@ export default  {
   "Three": "3",
   "Two": "2",
   "One": "1",
-  "Go": "开始",
+  "Go": "开始啦！",
   "Save": "确认",
   "addCoin_tips-1": "同时间最多可添加5个",
   "addMonitoring_placeholder_1": "搜索Space名称，主持人...",

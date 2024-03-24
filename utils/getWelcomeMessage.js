@@ -127,4 +127,29 @@ export const getWelcomeList = (t) => [
     autoNext: true,
     id: 18,
   },
+  {
+    text: t["Three"],
+    source: "T-brain",
+    autoNext: true,
+    id: 21,
+  },
+  {
+    text: t["Two"],
+    source: "T-brain",
+    autoNext: true,
+    id: 22,
+  },
+  {
+    text: t["One"],
+    source: "T-brain",
+    autoNext: true,
+    id: 23,
+  },
+  {
+    text: t["Go"],
+    source: "T-brain",
+    autoNext: false,
+    over: true,
+    id: 24,
+  },
 ]
