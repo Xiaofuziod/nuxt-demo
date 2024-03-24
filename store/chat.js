@@ -1,37 +1,43 @@
 import {getChatMessageList} from "@/common/home";
-import {welcomeList} from "@/store/welcomeMessage";
 import Vue from 'vue';
 import robotAvatar from '@/assets/imgs/user/default.png'
-
+import {getWelcomeList} from "@/utils/getWelcomeMessage";
 
 let timer = null  // 机器人回答后，3秒后关闭
 let timer2 = null  // 五分钟没有操作，机器人会自动问候
 let timer3 = null  // 五分钟没有收到回复，认为机器人掉线了
 
-// 问候语
-const wList = [
-  'Hi，需不需要我的帮忙呢？',
-  '记住啦，我24小时都为你服务哦～',
-  'Hi，有啥不懂的想要了解的吗？'
-]
 export const state = () => ({
   conversationId: null,
   messageList: [],
-  welcomeList: welcomeList,
+  welcomeList: [],
   welcomeIndex: 0,
   welcomeAddCoinFinish: false,
   isFinished: false,  // 历史消息是否已经加载完
   lastUserQuestion: null,
   messageStatus: null, // loading concat success error
+  wList:[],
   robot: {
     avatar: robotAvatar,
-    text: wList[Math.floor(Math.random() * wList.length)]
+    text: '',
   }
 })
 
 export const mutations = {
   addMessage(state, message) {
     state.messageList.push(message)
+  },
+  setWelcomeList(state, t) {
+    console.log(t)
+    state.welcomeList = getWelcomeList(t)
+  },
+  setWlist(state, t) {
+    state.wlist = [
+      t["robot_message_1"],
+      t["robot_message_2"],
+      t["robot_message_3"]
+    ]
+    state.robot.text = state.wlist[Math.floor(Math.random() * state.wlist.length)]
   },
   prependMessages(state, messages) {
     state.messageList = messages.concat(state.messageList)
@@ -66,6 +72,10 @@ export const mutations = {
 }
 
 export const actions = {
+  updateLang({commit, rootState}) {
+    commit('setWelcomeList', rootState.lang.t)
+    commit('setWlist', rootState.lang.t)
+  },
   async fetchEarlierMessages({commit}, userNo) {
     try {
       const oldestSeqNo = this.state.chat.messageList.length === 0 ? -1 : this.state.chat.messageList[0].seqNo;
@@ -90,7 +100,7 @@ export const actions = {
   clearMessageList({commit}) {
     commit('clearMessageList')
   },
-  pushAIMessage({commit, state}, message) {
+  pushAIMessage({commit, state,rootState}, message) {
     let lastMsg = state.messageList[state.messageList.length - 1]
     if ((lastMsg && lastMsg.seqNo === message.seqNo && lastMsg.source === message.source) || lastMsg.loading) {
       const newMsg = {
@@ -112,21 +122,22 @@ export const actions = {
     clearTimeout(timer)
     timer = setTimeout(() => {
       commit('setMessageStatus', 'success')
-      commit('setRobot', {text: "好啦，已经有答案了～"})
+      commit('setRobot', {text: rootState.lang.t("robot_message_4")})
     }, 10 * 1000)
 
     if (!message.more) {
-      commit('setRobot', {text: "好啦，已经有答案了～"})
+      commit('setRobot', {text: rootState.lang.t("robot_message_4")})
     }
     // 五分钟没有操作，机器人会自动问候
     clearTimeout(timer2)
     timer2 = setInterval(() => {
-      commit('setRobot', {text: wList[Math.floor(Math.random() * wList.length)]})
+      commit('setRobot', {text: state.wlist[Math.floor(Math.random() * state.wlist.length)]
+      })
     }, 300 * 1000)
 
   },
   // 发送用户消息 只用传入 text 和 context
-  sendUserMessage({commit, state}, message) {
+  sendUserMessage({commit, state, rootState}, message) {
     const nextSeqNo = state.messageList.length === 0 ? 0 : state.messageList[state.messageList.length - 1].seqNo + 1
     const para = {
       conversationId: state.conversationId,
@@ -154,9 +165,9 @@ export const actions = {
     commit('setMessageStatus', 'loading')
 
     // 根据用户的问题，获取机器人的回答
-    let text = "我需要思考下..."
+    let text = rootState.lang.t['robot_message_5']
     if (JSON.stringify(message).includes('FOCUS') || JSON.stringify(message).includes('SIGNAL_SOURCE')) {
-      text = "我已收到您的请求～"
+      text = rootState.lang.t['robot_message_6']
     }
     commit('setRobot', {text})
 
@@ -164,7 +175,7 @@ export const actions = {
 
     clearTimeout(timer3)
     timer3 = setTimeout(() => {
-      commit('setRobot', {text: "很抱歉，我可能掉线了，请重新提问～"})
+      commit('setRobot', {text: rootState.lang.t['robot_message_7']})
     }, 300 * 1000)
 
 

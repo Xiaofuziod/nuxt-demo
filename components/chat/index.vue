@@ -80,7 +80,9 @@
     </div>
 
     <div class="input-box" :class="{'input-disable':disableSend}">
-      <input type="text" id="chatInput" v-model="message" :disabled="disableInput">
+      <input type="text" id="chatInput" v-model="message"
+             :placeholder="$t('Robot_message_ask')"
+             :disabled="disableInput">
       <div class="send-btn" @click="sendMessage">
         <send-btn/>
       </div>
@@ -150,6 +152,9 @@ export default {
     }
   },
   mounted() {
+    // 初始化语言
+    this.initLang()
+
     this.$socket.on('chat', this.onWebsocketReceiveMessage);
     this.$socket.on('connect', this.onWebsocketConnect);
     //  第一次进入页面，发送欢迎语
@@ -182,6 +187,9 @@ export default {
 
   },
   methods: {
+    initLang() {
+      this.$store.dispatch('chat/updateLang')
+    },
     handleScroll(e) {
       const {scrollTop} = e.target;
       if (!this.isLoading && !this.isFinished && scrollTop <= 0) {

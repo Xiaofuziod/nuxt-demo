@@ -148,7 +148,7 @@
 
 
           <div class="returns-title">
-            相关链接
+            {{ $t('LINKS') }}
           </div>
           <div class="link-box">
             <a class="link-item"
@@ -156,21 +156,21 @@
                :href="item.links.website[0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
-              网站
+              {{$t('Website')}}
             </a>
             <a class="link-item"
                  v-if="item.links?.technical_doc && item.links?.technical_doc.length > 0"
                  :href="item.links?.technical_doc[0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
-              白皮书
+              {{$t('Whitepaper')}}
             </a>
             <a class="link-item"
                  v-if="item.links?.source_code && item.links?.source_code.length > 0"
                  :href="item.links?.source_code[0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
-              GitHub
+              {{$t('GitHub')}}
             </a>
             <a class="link-item"
                  v-if="item.links?.twitter  && item.links?.twitter .length > 0"

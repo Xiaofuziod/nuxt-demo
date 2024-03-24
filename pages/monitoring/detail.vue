@@ -13,11 +13,11 @@
         <FilterTabs v-model="activeTab" :tabList="tabs" active-color="rgba(206, 184, 100, 1)"/>
         <!-- 监控详情内容 -->
         <div v-if="activeTab === '0' && monitorSummary" class="content">
-          <div class="title">✨ 会议总结</div>
+          <div class="title">✨ {{ $t("SUMMARYOFMEETING") }}</div>
           <div class="desc-1">
             {{ monitorSummary.summary }}
           </div>
-          <div class="title">‼️ 会议章节</div>
+          <div class="title">‼️ {{ $t("SECTIONOFMEETING")}}</div>
           <template v-for="(chapter, index) in monitorSummary.chapters">
             <div class="desc-1">{{ chapter.title }}</div>
             <div class="desc-2">
@@ -63,8 +63,8 @@ export default {
       followList: [],
       activeTab: "0",
       tabs: [
-        {label: '总结', key: '0'},
-        {label: '原文', key: '1'},
+        {label: this.$t('SUMMARIZE'), key: '0'},
+        {label: this.$t('ORIGINAL'), key: '1'},
       ],
     }
   },

@@ -15,7 +15,7 @@
       <div>
         <!--登录/注册-->
         <div class="login-content" v-if="step === 1">
-          <div class="input-label">电子邮箱地址</div>
+          <div class="input-label">{{$t("EmailAddress")}}</div>
           <input class="login-input" v-model="email" placeholder="输入你的电子邮箱地址" type="email">
           <div class="input-label">密码 <span @click="step = 31">忘记密码?</span></div>
           <div class="login-input-box">
