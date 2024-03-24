@@ -21,15 +21,15 @@
           <span class="name">{{ coin.name }}</span>
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
-        <div class="coin-price">${{ formatPrice(coin.quotes.price) }}</div>
-        <div class="coin-change" :class="'positive'">
-          {{ coin.quotes.percentChange1h.toFixed(2) }}%
+        <div class="coin-price">${{ formatPrice(coin.currentPrice || coin.price || coin.quotes?.price) }}</div>
+        <div class="coin-change" :class="{'positive': coin.quotes.percentChange1h > 0, 'negative': coin.quotes.percentChange1h < 0}">
+          {{ Number(coin.quotes.percentChange1h)?.toFixed(2) }}%
         </div>
-        <div class="coin-change" :class="'negative'">
-          {{ coin.quotes.percentChange24h.toFixed(2) }}%
+        <div class="coin-change" :class="{'positive': coin.quotes.percentChange24h > 0, 'negative': coin.quotes.percentChange24h < 0}">
+          {{ Number(coin.quotes.percentChange24h)?.toFixed(2) }}%
         </div>
-        <div class="coin-change" :class="'negative'">
-          {{ coin.quotes.percentChange7d.toFixed(2) }}%
+        <div class="coin-change" :class="{'positive': coin.quotes.percentChange7d > 0, 'negative': coin.quotes.percentChange7d < 0}">
+          {{ Number(coin.quotes.percentChange7d)?.toFixed(2) }}%
         </div>
         <div class="option"
              :class="`${selectIdList.includes(coin.id) ? 'disable' : ''}`"
@@ -161,6 +161,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 800;
     &:before {
       content: " ";
       display: inline-block;
