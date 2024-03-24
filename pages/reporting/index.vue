@@ -7,7 +7,9 @@
           <user-info :is-active="!coinId"/>
         </div>
         <div class="Account Selected">{{ $t("Selected") }}{{ followList.length ? ` (${followList.length})` : '' }}
-          <span style="cursor: pointer" @click="showDelete = !showDelete">{{
+          <span style="cursor: pointer"
+                v-if="followList.length > 0"
+                @click="showDelete = !showDelete">{{
               showDelete ? $t("OK") : $t("Edit")
             }}</span>
         </div>
@@ -43,9 +45,7 @@
             <div class="pic">
               <img :src="user.avatar" v-if="user.avatar" alt="">
             </div>
-            {{ $t("Home_i_1") }}
             <span class="top-account">{{ user.account }}</span>
-            {{ $t("Home_i_2") }}
           </template>
 
         </div>
@@ -312,7 +312,6 @@ export default {
       color: rgba(140, 180, 189, 0.6);
       font-family: Avenir;
       font-size: 14px;
-      text-transform: capitalize;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -327,7 +326,8 @@ export default {
 
       .top-account {
         display: block;
-        width: 50px;
+        width: 180px;
+        text-align: left;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

@@ -155,15 +155,15 @@ export default {
             }
           }
         },
-        dataZoom: [
-          {
-            type: 'inside',
-            start: 0,
-            end: 100,
-            showBottom: false,
-            zoomOnMouseWheel: this.from !== 'chat'
-          }
-        ],
+        // dataZoom: [
+        //   {
+        //     type: 'inside',
+        //     start: 0,
+        //     end: 100,
+        //     showBottom: false,
+        //     zoomOnMouseWheel: this.from !== 'chat'
+        //   }
+        // ],
         series: [
           {
             name: '',
