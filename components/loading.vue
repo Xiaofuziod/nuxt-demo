@@ -2,7 +2,7 @@
   <div class="loading-overlay" v-show="show">
     <div class="loading-content">
       <img  class="loading-img" src="@/assets/imgs/ZKZg.gif" >
-      <span>LOADING</span>
+      <span>{{ $t('loading_span_1') }}</span>
     </div>
   </div>
 </template>
