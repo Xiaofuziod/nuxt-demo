@@ -54,6 +54,10 @@ export default {
       const verificationCode = this.inputs.join('');
       console.log('验证验证码：', verificationCode);
       this.$emit('validate', verificationCode);
+    },
+    clearInputs() {
+      this.inputs = Array(6).fill('');
+      this.$refs.inputRefs[0].focus();
     }
   }
 };

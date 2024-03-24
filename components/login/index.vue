@@ -17,9 +17,9 @@
         <div class="login-content" v-if="step === 1">
           <div class="input-label">电子邮箱地址</div>
           <input class="login-input" v-model="email" placeholder="输入你的电子邮箱地址" type="email">
-          <div class="input-label">密码 <span @click="step = 31" v-if="type === 'login'">忘记密码?</span></div>
+          <div class="input-label">密码 <span @click="changePwd" v-if="type === 'login'">忘记密码?</span></div>
           <div class="login-input-box">
-            <input class="login-input" placeholder="输入大于6位字符的密码" v-model="password"
+            <input class="login-input" placeholder="输入你的密码" v-model="password"
                    :type="isPassword  ? 'password' : 'text'">
             <img src="@/assets/imgs/login/paw.svg" v-if="isPassword" alt="" @click="isPassword = !isPassword">
             <img src="@/assets/imgs/login/paw2.svg" v-else alt="" @click="isPassword = !isPassword">
@@ -54,7 +54,7 @@
           </div>
           <div class="login-content-tips">输入验证码</div>
           <div class="ver-code-box">
-            <VerificationCodeInput @validate="validateInputSuccess"/>
+            <VerificationCodeInput  ref="vInput" @validate="validateInputSuccess"/>
             <div class="ver-code-tips" v-if="false">验证码错误，请重新输入</div>
           </div>
           <div class="login-btn" @click="sendEmail(4)" v-if="nums < 1">
@@ -62,7 +62,7 @@
             重发电子邮件
           </div>
           <div class="login-btn login-btn-disable" v-else>
-            已发送({{ nums }}s)
+            已发送（{{ nums }}s）
           </div>
         </div>
 
@@ -71,7 +71,7 @@
           <div class="login-content-title">输入电子邮箱</div>
           <div class="login-content-desc2">输入电子邮箱，您将收到用于重置密码的验证码</div>
           <div class="input-label">输入电子邮箱</div>
-          <input class="login-input" style="margin-bottom: 8px" v-model="email" type="email">
+          <input class="login-input" placeholder="输入你的电子邮箱地址" style="margin-bottom: 8px" v-model="email" type="email">
           <div class="login-btn" :class="{'login-btn-disable': btnDisable}" @click="sendEmail(2)">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
             下一步
@@ -82,20 +82,23 @@
         <div class="login-content" v-if="step === 32">
           <div class="login-content-title">输入新密码</div>
           <div class="input-label">密码</div>
-          <div class="login-input-box">
-            <input class="login-input" placeholder="输入大于6位字符的密码"
+          <div class="login-input-box" style="margin-bottom: 20px">
+            <input class="login-input" placeholder="输入你的密码"
                    v-model="password" :type="isPassword  ? 'password' : 'text'">
             <img src="@/assets/imgs/login/paw.svg" alt="" v-if="!isPassword" @click="isPassword = !isPassword">
             <img src="@/assets/imgs/login/paw2.svg" alt="" v-else @click="isPassword = !isPassword">
           </div>
           <div class="login-content-tips">输入验证码</div>
           <div class="ver-code-box">
-            <VerificationCodeInput @validate="validateInputSuccess"/>
+            <VerificationCodeInput ref="vInput" @validate="validateInputSuccess"/>
             <div class="ver-code-tips" v-if="false">验证码错误，请重新输入</div>
           </div>
-          <div class="login-btn" @click="sendEmail(2)">
+          <div class="login-btn" @click="sendEmail(2)" v-if="nums < 1">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
             重发电子邮件
+          </div>
+          <div class="login-btn login-btn-disable" v-else>
+            已发送（{{ nums }}s）
           </div>
         </div>
       </div>
@@ -116,7 +119,7 @@ export default {
   data() {
     return {
       user: 'ta',
-      email: "",
+      email: "zongfeis@gmail.com",
       password: "",
       isPassword: true,
       type: 'login', // login, register
@@ -141,13 +144,12 @@ export default {
       this.showLoading = false
       this.$toast.success('登录成功')
       this.hide()
-      //   第一次 去欢迎页面
-      // this.$router.push('/welcome')
-      // if (this.$store.state.isFirstLogin) {
-      //   this.$router.push('/welcome')
-      // } else {
-      //   this.$router.push('/reporting')
-      // }
+    });
+    this.$bus.$on("REGISTER_SUCCESS", () => {
+      this.showLoading = false
+      this.$toast.success('注册成功')
+      this.hide()
+      this.$router.push('/welcome')
     });
     this.$bus.$on('LOGON_FAIL', () => {
       this.showLoading = false
@@ -188,7 +190,6 @@ export default {
         this.$store.dispatch('user/emailLogin', {account: this.email, password: this.password})
       } else {
         this.sendEmail(4)
-        this.step = 21
       }
     },
     async sendEmail(type) {
@@ -198,6 +199,7 @@ export default {
         this.$toast.error('请输入正确的电子邮箱地址')
         return
       }
+      this.$refs.vInput?.clearInputs()
       try {
         this.showLoading = true
         const res = await this.$axios.post(sendEmail, {account: this.email, type})
@@ -205,6 +207,17 @@ export default {
         if (res.data.code === 200) {
           this.$toast.success('发送成功')
           if (type === 2) this.step = 32
+          if (type === 4 && this.step !== 21) this.step = 21
+          // 开始倒计时
+          this.nums = 60
+          timer = setInterval(() => {
+            if (this.nums < 1) {
+              clearInterval(timer)
+            } else {
+              this.nums--
+            }
+          }, 1000)
+
         } else {
           this.$toast.error(res.data.msg || '发送失败,请稍后重试！')
         }
@@ -226,8 +239,18 @@ export default {
     show() {
       this.$refs.modal.openModal()
     },
+    changePwd() {
+      this.email = ''
+      this.password = ''
+      this.step = 31
+    },
     hide() {
       this.$refs.modal.closeModal()
+      this.email = ''
+      this.password = ''
+      this.step = 1
+      this.showLoading = false
+      clearInterval(timer)
     },
     isEmailValid(email) {
       const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -237,6 +260,7 @@ export default {
   beforeDestroy() {
     this.$bus.$off('LOGON_SUCCESS')
     this.$bus.$off('LOGON_FAIL')
+    this.$bus.$off('REGISTER_SUCCESS')
   }
 }
 </script>
@@ -317,7 +341,6 @@ export default {
 
   .login-content-desc2 {
     color: rgba(255, 255, 255, 0.40);
-    text-align: center;
     font-family: Avenir;
     font-size: 14px;
     font-style: normal;

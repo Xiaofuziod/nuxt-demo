@@ -17,7 +17,12 @@ export const mutations = {
   setUser(state, user) {
     state.userInfo = {...user, avatar: user.avatar || defaultUserAvatar, nickname: user.nickname || '神秘人士 ~'};
     this.$localStorage.setItem('token', state.userInfo.tokenInfo.tokenValue);
-    this.$bus.$emit('LOGON_SUCCESS');
+    // times 如果大于0就是首次登陆
+    if (user.times && user.times > 0) {
+      this.$bus.$emit('REGISTER_SUCCESS');
+    } else {
+      this.$bus.$emit('LOGON_SUCCESS');
+    }
   },
   updateNickname(state, nickname) {
     state.userInfo.nickname = nickname;
@@ -87,7 +92,7 @@ export const actions = {
     try {
       const res = await this.$axios.post(userRegister, {account, passwd, captcha})
       if (res.data.code === 200) {
-        commit('setUser', res.data.data);
+        commit('setUser', {...res.data.data, times: 1});
       } else {
         this.$bus.$emit('LOGON_FAIL');
         this._vm.$toast.show({content: res.data.msg, type: 'error'})
@@ -96,12 +101,16 @@ export const actions = {
       this.$bus.$emit('LOGON_FAIL');
     }
   },
-  async changePassword({commit}, {account, passwd,  captcha}) {
+  async changePassword({commit}, {account, passwd, captcha}) {
     try {
       const res = await this.$axios.post(changePassword, {account, passwd, captcha})
-      commit('setUser', res.data.data);
+      if (res.data.code === 200) {
+        commit('setUser', res.data.data);
+      } else {
+        this._vm.$toast.show({content: res.data.msg, type: 'error'})
+      }
     } catch (e) {
-      this.$bus.$emit('LOGON_FAIL');
+      console.log(e)
     }
   },
   async getUserInfo({commit}) {
