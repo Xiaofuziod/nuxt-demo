@@ -16,8 +16,8 @@
         <!--登录/注册-->
         <div class="login-content" v-if="step === 1">
           <div class="input-label">{{$t("EmailAddress")}}</div>
-          <input class="login-input" v-model="email" :placeholder="$t('EnterYourEmail')" type="email">
-          <div class="input-label">{{ $t('Password') }} <span @click="step = 31"> {{ $t('ForgotPassword') }}</span></div>
+          <input class="login-input" v-model="email" :placeholder="$t('EnterYourEmail')"  type="email">
+          <div class="input-label">{{ $t('Password') }} <span @click="changePwd" v-if="type === 'login'">{{ $t('ForgotPassword') }}</span></div>
           <div class="login-input-box">
             <input class="login-input" :placeholder="$t('EnterLimit')" v-model="password"
                    :type="isPassword  ? 'password' : 'text'">
@@ -49,17 +49,20 @@
             <img src="@/assets/imgs/login/email.svg" alt="">
           </div>
           <div class="login-content-title">{{ $t('VerifyYourEmail') }}</div>
-          <div class="login-content-desc">{{ $t('SenttoemailtoBefore') }} <span>{{ email }}</span>
+          <div class="login-content-desc">{{ $t('SenttoemailtoBefore') }} <span style="color: #CEB864">{{ email }}</span>
             {{$t('SenttoemailtoAfter')}}
           </div>
           <div class="login-content-tips">{{ $t('EnterverificationCode') }}</div>
           <div class="ver-code-box">
-            <VerificationCodeInput @validate="validateInputSuccess"/>
+            <VerificationCodeInput  ref="vInput" @validate="validateInputSuccess"/>
             <div class="ver-code-tips" v-if="false">{{$t('VerificationCodeFailedTips')}}</div>
           </div>
-          <div class="login-btn" @click="sendEmail(4)">
+          <div class="login-btn" @click="sendEmail(4)" v-if="nums < 1">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
             {{ $t('ResendEmail') }}
+          </div>
+          <div class="login-btn login-btn-disable" v-else>
+            {{ $t('Send') }}（{{ nums }}s）
           </div>
         </div>
 
@@ -67,19 +70,19 @@
         <div class="login-content" v-if="step === 31">
           <div class="login-content-title">{{ $t('EnterYourEmail') }}</div>
           <div class="login-content-desc2">{{ $t('ReceiveAVerification') }}</div>
-            <div class="input-label">{{ $t('EnterYourEmail') }}</div>
-            <input class="login-input" style="margin-bottom: 8px" v-model="email" type="email">
-            <div class="login-btn" :class="{'login-btn-disable': btnDisable}" @click="sendEmail(2)">
-              <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
-              {{$t('Next')}}
-            </div>
+          <div class="input-label">{{ $t('EnterYourEmail') }}</div>
+          <input class="login-input" :placeholder="$t('EnterYourEmail')" style="margin-bottom: 8px" v-model="email" type="email">
+          <div class="login-btn" :class="{'login-btn-disable': btnDisable}" @click="sendEmail(2)">
+            <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
+            {{$t('Next')}}
+          </div>
         </div>
 
         <!--修改密码-->
         <div class="login-content" v-if="step === 32">
           <div class="login-content-title">{{$t('EnterNewPassword')}}</div>
           <div class="input-label">{{$t('Password')}}</div>
-          <div class="login-input-box">
+          <div class="login-input-box" style="margin-bottom: 20px">
             <input class="login-input" :placeholder="$t('EnterLimit')"
                    v-model="password" :type="isPassword  ? 'password' : 'text'">
             <img src="@/assets/imgs/login/paw.svg" alt="" v-if="!isPassword" @click="isPassword = !isPassword">
@@ -87,12 +90,15 @@
           </div>
           <div class="login-content-tips">{{ $t('EnterverificationCode') }}</div>
           <div class="ver-code-box">
-            <VerificationCodeInput @validate="validateInputSuccess"/>
+            <VerificationCodeInput ref="vInput" @validate="validateInputSuccess"/>
             <div class="ver-code-tips" v-if="false">{{$t('VerificationCodeFailedTips')}}</div>
           </div>
-          <div class="login-btn" @click="sendEmail(2)">
+          <div class="login-btn" @click="sendEmail(2)" v-if="nums < 1">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
             {{ $t('ResendEmail') }}
+          </div>
+          <div class="login-btn login-btn-disable" v-else>
+            {{ $t('Send') }}（{{ nums }}s）
           </div>
         </div>
       </div>
@@ -103,6 +109,8 @@
 import VerificationCodeInput from "@/components/VerificationCodeInput.vue";
 import {sendEmail} from "@/common/home";
 
+
+let timer = null
 export default {
   name: 'Login',
   components: {
@@ -116,7 +124,8 @@ export default {
       isPassword: true,
       type: 'login', // login, register
       step: 1, // 1,  登录/注册   21, 注册验证码输入  31, 忘记密码 - 输入电子邮箱  32 忘记密码 - 输入新密码
-      showLoading: false
+      showLoading: false,
+      nums: 0
     }
   },
   computed: {
@@ -135,13 +144,12 @@ export default {
       this.showLoading = false
       this.$toast.success(this.$t('LoginSuccess'))
       this.hide()
-      //   第一次 去欢迎页面
-      // this.$router.push('/welcome')
-      // if (this.$store.state.isFirstLogin) {
-      //   this.$router.push('/welcome')
-      // } else {
-      //   this.$router.push('/reporting')
-      // }
+    });
+    this.$bus.$on("REGISTER_SUCCESS", () => {
+      this.showLoading = false
+      this.$toast.success('注册成功')
+      this.hide()
+      this.$router.push('/welcome')
     });
     this.$bus.$on('LOGON_FAIL', () => {
       this.showLoading = false
@@ -153,7 +161,7 @@ export default {
         this.$store.dispatch('user/userRegister', {account: this.email, passwd: this.password, captcha})
       }
       if (this.step === 32) {
-        this.$store.dispatch('user/changePassword', {email: this.email, passwd: this.password, captcha})
+        this.$store.dispatch('user/changePassword', {account: this.email, passwd: this.password, captcha})
       }
     },
     stepBack() {
@@ -166,6 +174,7 @@ export default {
       }
     },
     handleClick() {
+      if (this.btnDisable) return
       if (this.showLoading) return
       //  "1"登录 ,"2"修改密码 ,"4"注册
       if (!this.isEmailValid(this.email)) {
@@ -181,7 +190,6 @@ export default {
         this.$store.dispatch('user/emailLogin', {account: this.email, password: this.password})
       } else {
         this.sendEmail(4)
-        this.step = 21
       }
     },
     async sendEmail(type) {
@@ -191,6 +199,7 @@ export default {
         this.$toast.error(this.$t('ErrorEmailTips'))
         return
       }
+      this.$refs.vInput?.clearInputs()
       try {
         this.showLoading = true
         const res = await this.$axios.post(sendEmail, {account: this.email, type})
@@ -198,6 +207,17 @@ export default {
         if (res.data.code === 200) {
           this.$toast.success(this.$t('Sent'))
           if (type === 2) this.step = 32
+          if (type === 4 && this.step !== 21) this.step = 21
+          // 开始倒计时
+          this.nums = 60
+          timer = setInterval(() => {
+            if (this.nums < 1) {
+              clearInterval(timer)
+            } else {
+              this.nums--
+            }
+          }, 1000)
+
         } else {
           this.$toast.error(res.data.msg || this.$t('sentError'))
         }
@@ -219,8 +239,18 @@ export default {
     show() {
       this.$refs.modal.openModal()
     },
+    changePwd() {
+      this.email = ''
+      this.password = ''
+      this.step = 31
+    },
     hide() {
       this.$refs.modal.closeModal()
+      this.email = ''
+      this.password = ''
+      this.step = 1
+      this.showLoading = false
+      clearInterval(timer)
     },
     isEmailValid(email) {
       const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -230,6 +260,7 @@ export default {
   beforeDestroy() {
     this.$bus.$off('LOGON_SUCCESS')
     this.$bus.$off('LOGON_FAIL')
+    this.$bus.$off('REGISTER_SUCCESS')
   }
 }
 </script>
@@ -310,7 +341,6 @@ export default {
 
   .login-content-desc2 {
     color: rgba(255, 255, 255, 0.40);
-    text-align: center;
     font-family: Avenir;
     font-size: 14px;
     font-style: normal;
