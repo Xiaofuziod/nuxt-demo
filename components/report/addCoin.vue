@@ -2,7 +2,7 @@
   <div class="monitor-wrapper-bg">
     <div class="monitor-wrapper">
       <div class="monitor-header">
-        <p class="text">{{ $t("addCoin_text_1") }}</p>
+        <p class="text">{{ $t("AddCryptocurrency") }}</p>
         <img class="header-close-btn" @click.stop="close()" src="@/assets/imgs/close.svg">
       </div>
       <div class="search-section">

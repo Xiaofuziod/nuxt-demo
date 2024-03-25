@@ -45,7 +45,6 @@ export default {
   data() {
     return {
       activeTab: "ALL",
-      loading: true,
       tabs: [
         {label: this.$t('ALL'), key: 'ALL'},
         {label: this.$t('FINISHED'), key: 'FINISHED'},
@@ -56,6 +55,9 @@ export default {
   computed: {
     userMonitors() {
       return this.$store.state.monitor.userMonitor
+    },
+    loading() {
+      return this.$store.state.monitor.loading
     },
     userMonitorsRecords() {
       return this.userMonitors?.records || []
@@ -76,12 +78,12 @@ export default {
       }
     },
     async fetchMonitors() {
-      this.loading = true
+      this.$store.commit('monitor/setLoading', true)
       await this.$store.dispatch('monitor/fetchUserMonitorList', {
         status: this.mapTabToStatus(this.activeTab),
         page: 1
       });
-      this.loading = false
+      this.$store.commit('monitor/setLoading', false)
     },
     goDetail(id) {
       this.$router.push(`/monitoring/detail?id=${id}`);

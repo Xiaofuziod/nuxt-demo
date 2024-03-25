@@ -41,8 +41,8 @@ export default {
     "addCoin_monitor-search-title_1": "Resultados da Pesquisa",
     "addCoin_span_1": "Pesquise nome da moeda, abreviação da moeda...",
     "addCoin_span_2": "Sem Resultado",
-    "Login_span_1": "Inscrever-se",
-    "Login_span_2": "Entrar",
+    "Login_span_2": "Inscrever-se",
+    "Login_span_1": "Entrar",
     "MONITORING": "Vigilância da IA",
     "REPORTING": "Foco da IA",
     "FEEDBACK": "FEEDBACK",
@@ -82,6 +82,11 @@ export default {
     "welcome_taskText_6": "Agora, vamos começar com a primeira tarefa.",
     "welcome_title_7": "Adicionar Criptomoedas",
     "welcome_desc_7": "Uma vez adicionadas, o Taurion irá gerar um foco de mercado diário dos seus ativos para ajudá-lo a reduzir o ruído do mercado",
+    "welcome_desc_7_1": "foco de mercado diário",
+    "welcome_text_3_1": "financeiras",
+    "welcome_text_3_2": "perguntas",
+    "welcome_text_8_1": "me fazendo perguntas",
+    "welcome_text_8_2": "pesquisando",
     "welcome_text_8": "Você pode rapidamente adicionar criptomoedas me fazendo perguntas ou pesquisando.",
     "welcome_text_9": "🎉 Muito bem, completamos a primeira tarefa",
     "welcome_taskText_10": "Agora, vamos completar a segunda tarefa",
@@ -184,5 +189,9 @@ export default {
     "SECTIONOFMEETING": "Sessões",
     "Robot_message_crash": "Ops...",
     "Robot_message_ask": "Pergunte Qualquer Coisa...",
-    "AppFooter_bottom-link_3": "Contate-Nos"
+    "AppFooter_bottom-link_3": "Contate-Nos",
+    "robot_message_8": "Bem-vindo ao Taurion, seu co-piloto de criptografia de IA.",
+    "robot_message_9": "Reduzir o ruído do mercado para você",
+    "robot_message_10": "Encontre sua próxima oportunidade",
+    "robot_message_11": "Aproveite sua jornada"
 }

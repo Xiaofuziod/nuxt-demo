@@ -191,11 +191,12 @@ export default {
   background: rgba(38, 64, 64, 0.2);
   backdrop-filter: blur(200px);
   position: relative;
-
+  .right {
+    width: 515px;
+  }
   .left {
     flex: 1;
     padding: 34px 40px;
-
     .content {
       padding-top: 31px;
       text-align: left;
@@ -276,6 +277,7 @@ export default {
       .left-header-img {
         width: 86px;
         height: 86px;
+        border-radius: 20px;
       }
 
       .hotinfo {

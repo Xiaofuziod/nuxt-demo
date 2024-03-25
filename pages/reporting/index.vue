@@ -45,7 +45,7 @@
             <div class="pic">
               <img :src="user.avatar" v-if="user.avatar" alt="">
             </div>
-            <span class="top-account">{{ user.account }}</span>
+            <span class="top-account">{{ user.nickname || user.account }}</span>
           </template>
 
         </div>

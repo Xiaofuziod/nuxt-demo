@@ -3,9 +3,9 @@
     <div class="coins-header">
       <div class="name">{{ $t("CoinList_name_1") }}</div>
       <div class="price">{{ $t("CoinList_price_1") }}</div>
-      <div class="time">{{ $t("CoinList_time_1") }}</div>
+<!--      <div class="time">{{ $t("CoinList_time_1") }}</div>-->
       <div class="time">{{ $t("CoinList_time_2") }}</div>
-      <div class="time">{{ $t("CoinList_time_3") }}</div>
+<!--      <div class="time">{{ $t("CoinList_time_3") }}</div>-->
       <div class="option"></div>
     </div>
     <div class="icon-list"
@@ -22,15 +22,15 @@
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
         <div class="coin-price">${{ formatPrice(coin.currentPrice || coin.price || coin.quotes?.price) }}</div>
-        <div class="coin-change" :class="{'positive': coin.quotes.percentChange1h > 0, 'negative': coin.quotes.percentChange1h < 0}">
-          {{ Number(coin.quotes.percentChange1h)?.toFixed(2) }}%
-        </div>
+<!--        <div class="coin-change" :class="{'positive': coin.quotes.percentChange1h > 0, 'negative': coin.quotes.percentChange1h < 0}">-->
+<!--          {{ Number(coin.quotes.percentChange1h)?.toFixed(2) }}%-->
+<!--        </div>-->
         <div class="coin-change" :class="{'positive': coin.quotes.percentChange24h > 0, 'negative': coin.quotes.percentChange24h < 0}">
           {{ Number(coin.quotes.percentChange24h)?.toFixed(2) }}%
         </div>
-        <div class="coin-change" :class="{'positive': coin.quotes.percentChange7d > 0, 'negative': coin.quotes.percentChange7d < 0}">
-          {{ Number(coin.quotes.percentChange7d)?.toFixed(2) }}%
-        </div>
+<!--        <div class="coin-change" :class="{'positive': coin.quotes.percentChange7d > 0, 'negative': coin.quotes.percentChange7d < 0}">-->
+<!--          {{ Number(coin.quotes.percentChange7d)?.toFixed(2) }}%-->
+<!--        </div>-->
         <div class="option"
              :class="`${selectIdList.includes(coin.id) ? 'disable' : ''}`"
              @click="select(coin)">
@@ -93,7 +93,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    .name { width: 194px}
+    .name { width: 356px}
     .price { width: 95px}
     .time { width: 95px}
     .option { width: 50px}
@@ -109,7 +109,7 @@ export default {
   align-items: center;
   margin-bottom: 1em;
   .coin-name {
-    width: 194px;
+    width: 356px;
     display: flex;
     align-items: center;
     .coin-logo {
@@ -126,7 +126,7 @@ export default {
       font-weight: 800;
       line-height: normal;
       text-transform: capitalize;
-      max-width: 120px;
+      max-width: 280px;
       // 超出省略
       overflow: hidden;
       text-overflow: ellipsis;

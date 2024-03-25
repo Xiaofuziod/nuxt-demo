@@ -43,7 +43,7 @@ export const getWelcomeList = (t) => [
     type: "task",
     taskName: t['FirstTask'],
     autoNext: true,
-    title: t["welcome_title_7"],
+    title: t["AddCryptocurrency"],
     canSkip: false,
     searchType: 'coin',
     finish: false,

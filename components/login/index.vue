@@ -15,8 +15,8 @@
       <div>
         <!--登录/注册-->
         <div class="login-content" v-if="step === 1">
-          <div class="input-label">{{ $t("EmailAddress") }}</div>
-          <input class="login-input" v-model="email" :placeholder="$t('EnterYourEmail')" type="email">
+          <div class="input-label">{{ $t("LoginEmailAddress") }}</div>
+          <input class="login-input" v-model="email" :placeholder="$t('LoginEnterYourEmail')" type="email">
           <div class="input-label">{{ $t('Password') }} <span @click="changePwd"
                                                               v-if="type === 'login'">{{ $t('ForgotPassword') }}</span>
           </div>
@@ -74,8 +74,8 @@
         <div class="login-content" v-if="step === 31">
           <div class="login-content-title">{{ $t('EnterYourEmail') }}</div>
           <div class="login-content-desc2">{{ $t('ReceiveAVerification') }}</div>
-          <div class="input-label">{{ $t('EnterYourEmail') }}</div>
-          <input class="login-input" :placeholder="$t('EnterYourEmail')" style="margin-bottom: 8px" v-model="email"
+          <div class="input-label">{{ $t('Email') }}</div>
+          <input class="login-input" :placeholder="$t('ResetEmailTips')" style="margin-bottom: 8px" v-model="email"
                  type="email">
           <div class="login-btn" :class="{'login-btn-disable': btnDisable}" @click="sendEmail(2)">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">

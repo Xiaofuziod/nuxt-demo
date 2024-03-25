@@ -118,13 +118,6 @@ import SmallCoinCard from "@/components/report/smallMonitorCard.vue";
 import SmallMonitorCard from "@/components/chat/components/smallMonitorCard.vue";
 import FullScreenVideoLoader from "@/components/FullScreenVideoLoader.vue";
 
-// 欢迎页 机器人头部文案
-const welcomeRobotMsgList = [
-  'Welcome to Taurion, your crypto AI co-pilot.',
-  "Reduce market noise for you",
-  "Find your next opportunity",
-  "Enjoy your journey",
-]
 
 export default {
   components: {
@@ -153,16 +146,16 @@ export default {
     },
     welcomeStep() {
       if (this.welcomeIndex < 5) {
-        this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[0]})
+        this.$store.commit('chat/setRobot', {text: this.$t('robot_message_8')})
         return 1
       } else if (this.welcomeIndex < 9) {
-        this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[1]})
+        this.$store.commit('chat/setRobot', {text: this.$t('robot_message_9')})
         return 2
       } else if (this.welcomeIndex < 15) {
-        this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[2]})
+        this.$store.commit('chat/setRobot', {text: this.$t('robot_message_10')})
         return 3
       } else {
-        this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[3]})
+        this.$store.commit('chat/setRobot', {text: this.$t('robot_message_11')})
         return 4
       }
     }

@@ -29,12 +29,15 @@
 <!--          <img src="~/assets/imgs/x.svg" alt="Get Premium"/>-->
 <!--        </div>-->
         <div class="lang-btn base-icon-btn">
-          <img src="~/assets/imgs/lang.svg" alt="User profile"/>
-          <div class="user-setting">
-            <div class="user-setting-content">
+<!--          <img v-else src="~/assets/imgs/lang.svg"  alt="User profile"/>-->
+          <span v-if="$i18n.locale === 'en'">EN</span>
+          <span v-if="$i18n.locale === 'pt-br'">PT</span>
+          <span v-if="$i18n.locale === 'zh'">ZH</span>
+          <div class="lang-setting">
+            <div class="lang-setting-content">
               <div class="option-item" @click.stop="changeLanguage('en')">English</div>
+              <div class="option-item" @click.stop="changeLanguage('pt-br')">Português Brasil</div>
               <div class="option-item" @click.stop="changeLanguage('zh')">中文</div>
-              <div class="option-item" @click.stop="changeLanguage('pt-br')">Português do Brasil</div>
             </div>
           </div>
         </div>
@@ -145,9 +148,13 @@ export default {
 }
 
 
-.logo img {
-  height: 50px; /* Adjust the size as needed */
-  cursor: pointer;
+.logo {
+  height: 30px;
+  width: 109px;
+  img {
+    width: 109px;
+    cursor: pointer;
+  }
 }
 
 .login-btn {
@@ -294,8 +301,51 @@ nav {
 
 .lang-btn {
   position: relative;
-  &:hover .user-setting {
+  color: rgba(206, 184, 100, 1);
+  font-family: Avenir;
+  &:hover .lang-setting {
     display: block;
   }
+}
+
+.lang-setting {
+  position: absolute;
+  top: 0;
+  right: -50px;
+  border-radius: 16px;
+  z-index: 10;
+  padding-top: 60px;
+  display: none;
+
+  .lang-setting-content {
+    background: rgba(38, 64, 64, 0.30);
+    backdrop-filter: blur(100px);
+    border-radius: 16px;
+    overflow: hidden;
+    .option-item {
+      color: #FFF;
+      font-family: Avenir;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: capitalize;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(140, 180, 189, 0.12);
+      width: 120px;
+      &:hover {
+        background: rgba(65, 110, 110, 0.5);
+      }
+      &:first-child {
+        padding-top: 12px;
+      }
+      &:last-child {
+        padding-bottom: 12px;
+        border-bottom: none
+      }
+    }
+  }
+
 }
 </style>
