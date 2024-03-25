@@ -200,8 +200,6 @@ export default {
     "robot_message_11": "享受您的旅程",
     // 新增 2024-03-25
     "welcome_index_step-title-text_2":"监控信号源",
-    "popularRecommendations":"热门推荐",
-    "youCanAsk":"你可以这样问我",
     "youCanAsk1":"ETH价格-测试数据，待产品提供",
     "youCanAsk2":"ETH价格-测试数据，待产品提供",
     "youCanAsk3":"ETH价格-测试数据，待产品提供",
