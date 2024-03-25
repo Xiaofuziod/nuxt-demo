@@ -72,7 +72,11 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    messageList() {
+      return this.$store.state.chat.messageList
+    }
+  },
   data() {
     return {}
   },
@@ -81,6 +85,11 @@ export default {
   },
   methods: {
     handleClick(item) {
+      const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'FOCUS')
+      if (sourceList.length > 0) {
+        const ids = sourceList.map(item => item.context?.hook?.id + '')
+        if (ids.includes(item.id + '')) return
+      }
       const para = {
         text: item.title,
         context: {

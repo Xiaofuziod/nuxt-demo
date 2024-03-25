@@ -151,11 +151,11 @@ export const actions = {
     clearTimeout(timer)
     timer = setTimeout(() => {
       commit('setMessageStatus', 'success')
-      if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang.t("robot_message_4")})
+      if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang?.t("robot_message_4")})
     }, 10 * 1000)
 
     if (!message.more) {
-      if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang.t("robot_message_4")})
+      if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang?.t("robot_message_4")})
     }
 
     if (state.pageName !== 'welcome') {
