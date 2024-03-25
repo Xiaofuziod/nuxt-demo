@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="step-title-text">
-            <span>{{ $t("welcome_index_span_1") }} </span>
+            <span>{{ $t("welcome_index_span_1") }} </span> {{welcomeIndex}} {{welcomeStep}}
           </div>
         </div>
         <!--第二步-->
@@ -155,7 +155,7 @@ export default {
       if (this.welcomeIndex < 5) {
         this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[0]})
         return 1
-      } else if (this.welcomeIndex < 10) {
+      } else if (this.welcomeIndex < 9) {
         this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[1]})
         return 2
       } else if (this.welcomeIndex < 15) {
