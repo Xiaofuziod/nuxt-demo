@@ -14,7 +14,7 @@ export default {
     text: String, // 要显示的文本
     typingSpeed: { // 打字速度，单位是毫秒
       type: Number,
-      default: 10,
+      default: 30,
     },
     highlightList: {
       type: Array,
