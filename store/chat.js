@@ -12,7 +12,7 @@ export const state = () => ({
   conversationId: null,
   messageList: [],
   welcomeList: [],
-  welcomeIndex: 9,
+  welcomeIndex: 0,
   // welcomeAddCoinFinish: false,
   isFinished: false,  // 历史消息是否已经加载完
   lastUserQuestion: null,
