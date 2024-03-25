@@ -13,7 +13,7 @@
 
     <div class="text-message-v2"
          v-if="message.type === 'task' && !message.finish"
-         style="position: relative;background: #0E1A22;">
+         style="position: relative;background: rgb(8,20,38);">
       <div class="task-tip">
         <btn>
           <img src="@/assets/imgs/chat/task.svg" alt="">

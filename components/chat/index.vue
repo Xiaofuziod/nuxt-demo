@@ -291,7 +291,7 @@ export default {
             layers: [
               {
                 type: lastMsg.needPushHotCoin ? "HOT_COINS" : "MONITORING_SIGNAL",
-                title: this.$t("popularRecommendations"),
+                title:  lastMsg.needPushHotCoin ?this.$t("TOPCRYPTOCURRENCIES") : this.$t("TOPSIGNALSOURCE"),
                 data: {
                   coins: this.$store.state.coin.coinList,
                   datas: this.$store.state.monitor.searchMonitor?.records
@@ -299,7 +299,7 @@ export default {
               },
               {
                 type: "YOU_CAN_ASK",
-                title: this.$t("youCanAsk"),
+                title: this.$t("YOUCANASK"),
                 data: {
                   questions: lastMsg.needPushHotCoin ? [this.$t('youCanAsk1'), this.$t('youCanAsk2'), this.$t('youCanAsk3')] : [this.$t('youCanAsk4'), this.$t('youCanAsk5'), this.$t('youCanAsk6')]
                 }

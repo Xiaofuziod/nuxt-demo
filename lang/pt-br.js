@@ -200,8 +200,6 @@ export default {
     "robot_message_11": "Aproveite sua jornada",
     // 新增 2024-03-25
     "welcome_index_step-title-text_2":"Fonte de sinal de monitoramento",
-    "popularRecommendations":"Recomendações populares",
-    "youCanAsk":"Você pode me perguntar assim",
     "youCanAsk1":"Dados de teste de preço ETH, a serem fornecidos por produto",
     "youCanAsk2":"Dados de teste de preço ETH, a serem fornecidos por produto",
     "youCanAsk3":"Dados de teste de preço ETH, a serem fornecidos por produto",
