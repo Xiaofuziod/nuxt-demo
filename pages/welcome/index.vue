@@ -167,7 +167,7 @@ export default {
     return {
       coinShowMore: false,
       monitorShowMore: false,
-      hideVideo: true,
+      hideVideo: false,
       isOver: false,
     }
   },
