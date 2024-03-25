@@ -29,7 +29,7 @@
 
         <div class="list-item-content">
           <div class="list-item-title">{{ item.title }}</div>
-          <button class="button">
+          <button class="button" @click="handleClick(item)">
               <span class="default">
                 <img src="@/static/images/chat/ai2.svg" alt="">
               </span>
@@ -37,11 +37,11 @@
             <div class="left"></div>
             <div class="right"></div>
           </button>
-<!--          -->
-<!--          <div class="list-item-icon" @click="handleClick(item)">-->
-<!--            <img src="@/static/images/chat/ai2.svg" alt="">-->
-<!--            -->
-<!--          </div>-->
+          <!--          -->
+          <!--          <div class="list-item-icon" @click="handleClick(item)">-->
+          <!--            <img src="@/static/images/chat/ai2.svg" alt="">-->
+          <!--            -->
+          <!--          </div>-->
         </div>
       </div>
 
@@ -51,7 +51,7 @@
 </template>
 <script>
 import btn from "@/components/chat/components/btn.vue";
-import { gsap } from 'gsap';
+import {gsap} from 'gsap';
 
 
 export default {
@@ -92,10 +92,8 @@ export default {
       }
       this.$store.dispatch('chat/sendUserMessage', para)
 
-
       item.trigger = 1
       this.$emit('read', item.id)
-
     },
     animate() {
       document.querySelectorAll('.button').forEach(button => {
