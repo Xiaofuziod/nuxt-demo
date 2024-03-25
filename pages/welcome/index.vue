@@ -279,6 +279,8 @@ export default {
     height: calc(100vh - 100px);
     margin: 100px auto 0;
     display: flex;
+    border-radius: 36px 0 0 0;
+    overflow: hidden;
 
     .chat-box {
       width: 515px;

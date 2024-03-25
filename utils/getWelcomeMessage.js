@@ -105,14 +105,6 @@ export const getWelcomeList = (t) => [
     id: 14,
   },
   {
-    taskText: t["welcome_taskText_15"],
-    type: "taskFinish",
-    startBtnShow: true,
-    source: "T-brain",
-    autoNext: false,
-    id: 15,
-  },
-  {
     text: t["welcome_text_16"],
     source: "T-brain",
     autoNext: true,
@@ -129,6 +121,14 @@ export const getWelcomeList = (t) => [
     source: "T-brain",
     autoNext: true,
     id: 18,
+  },
+  {
+    taskText: t["welcome_taskText_15"],
+    type: "taskFinish",
+    startBtnShow: true,
+    source: "T-brain",
+    autoNext: false,
+    id: 19,
   },
   {
     text: t["Three"],

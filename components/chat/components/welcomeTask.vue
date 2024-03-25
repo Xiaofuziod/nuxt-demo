@@ -11,7 +11,9 @@
       </div>
     </div>
 
-    <div class="text-message-v2" v-if="message.type === 'task' && !message.finish" style="position: relative">
+    <div class="text-message-v2"
+         v-if="message.type === 'task' && !message.finish"
+         style="position: relative;background: rgba(38, 64, 64);">
       <div class="task-tip">
         <btn>
           <img src="@/assets/imgs/chat/task.svg" alt="">
@@ -22,7 +24,7 @@
         {{ message.title }}
 
         <div class="task-title-right" v-if="message.canSkip" @click="task2Finish('skip')">
-          {{$t('welcomeTask_btn_4')}}
+          {{ $t('welcomeTask_btn_4') }}
           <img src="@/assets/imgs/chat/more.svg" alt="">
         </div>
       </div>
@@ -105,7 +107,6 @@ export default {
         return this.$toast.info(this.$t('coinLimitTips'))
       }
       const idx = this.messageList.findIndex(item => item.id === this.message.id)
-      // await this.$store.commit('chat/updateWelcomeAddCoinFinish', true)
       await this.$store.commit('chat/updateMessage', {
         index: idx,
         message: {...this.message, finish: true}

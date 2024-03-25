@@ -171,6 +171,8 @@ export default {
         this.$store.dispatch('coin/fetchCoinList', {size: 5})
         this.$store.dispatch('monitor/fetchMonitorList', {size: 5})
       }, 3000)
+      // 获取消息ID
+      this.loadEarlierMessages()
       // 没有历史消息，则去拉取历史消息
     } else if (this.messageList.length === 0) {
       this.loadEarlierMessages()
@@ -230,7 +232,7 @@ export default {
 
       // 获取历史消息之前的滚动条高度
       const previousHeight = this.$refs.messagesContainer?.scrollHeight;
-      await this.$store.dispatch('chat/fetchEarlierMessages', "fakeUserNo")
+      await this.$store.dispatch('chat/fetchEarlierMessages', this.showWelcome)
       if (this.$refs.messagesContainer) {
         // 插入后，调整滚动位置
         this.$nextTick(() => {

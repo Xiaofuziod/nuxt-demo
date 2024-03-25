@@ -15,7 +15,7 @@ export const state = () => ({
 
 export const mutations = {
   setUser(state, user) {
-    state.userInfo = {...user, avatar: user.avatar || defaultUserAvatar, nickname: user.nickname || '神秘人士 ~'};
+    state.userInfo = {...user, avatar: user.avatar || defaultUserAvatar, nickname: user.nickname};
     this.$localStorage.setItem('token', state.userInfo.tokenInfo.tokenValue);
     // times 如果大于0就是首次登陆
     if (user.times && user.times > 0) {
@@ -51,7 +51,6 @@ export const actions = {
       const res = await this.$axios.get(googleLogin, {params: {...data}})
       if (res.data.code === 200) {
         commit('setUser', res.data.data);
-        await this.$router.replace('/')
       } else {
         this.$bus.$emit('LOGON_FAIL');
         this._vm.$toast.show({content: res.data.msg, type: 'error'})
@@ -66,7 +65,6 @@ export const actions = {
       const res = await this.$axios.get(twitterLogin, {params: data})
       if (res.data.code === 200) {
         commit('setUser', res.data.data);
-        await this.$router.replace('/')
       } else {
         this.$bus.$emit('LOGON_FAIL');
         this._vm.$toast.show({content: res.data.msg, type: 'error'})
@@ -105,7 +103,8 @@ export const actions = {
     try {
       const res = await this.$axios.post(changePassword, {account, passwd, captcha})
       if (res.data.code === 200) {
-        commit('setUser', res.data.data);
+        this._vm.$toast.show({content: "ResetSuccess", type: 'success'})
+
       } else {
         this._vm.$toast.show({content: res.data.msg, type: 'error'})
       }

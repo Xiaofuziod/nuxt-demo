@@ -12,7 +12,7 @@ export const state = () => ({
   conversationId: null,
   messageList: [],
   welcomeList: [],
-  welcomeIndex: 0,
+  welcomeIndex: 9,
   // welcomeAddCoinFinish: false,
   isFinished: false,  // 历史消息是否已经加载完
   lastUserQuestion: null,
@@ -81,7 +81,6 @@ export const actions = {
         const text = item.text || item.desc
         item.highlightWordList.forEach(word => {
           const index = text.indexOf(word)
-          console.log('word', word, index)
           if (index > -1) {
             for (let i = index; i < index + word.length; i++) {
               indexList.push(i)
@@ -94,16 +93,17 @@ export const actions = {
     commit('setWelcomeList', arr)
     commit('setWlist', rootState.lang.t)
   },
-  async fetchEarlierMessages({commit}, userNo) {
+  async fetchEarlierMessages({commit}, showWelcome = false) {
     try {
       const oldestSeqNo = this.state.chat.messageList.length === 0 ? -1 : this.state.chat.messageList[0].seqNo;
-      const res = await this.$axios.get(getChatMessageList, {params: {userNo, size: 10, oldestSeqNo}});
+      const res = await this.$axios.get(getChatMessageList, {params: {size: 10, oldestSeqNo}});
       if (res && res.data && res.data.data) {
-        commit('prependMessages', res.data.data.messages)
+        if (!showWelcome) {
+          commit('prependMessages', res.data.data.messages)
+          commit('setFinished', res.data.data.messages.length < 1)
+        }
         commit('setConversationId', res.data.data.conversationId)
-        commit('setFinished', res.data.data.messages.length < 1)
       }
-      console.log('fetchEarlierMessages', res.data.data.messages)
     } catch (e) {
       console.error('fetchChatMessageList error:', e);
     }
@@ -114,6 +114,7 @@ export const actions = {
   welcomeToNext({commit, state}) {
     commit('setWelcomeIndex', state.welcomeIndex + 1)
     commit('addMessage', state.welcomeList[state.welcomeIndex])
+
   },
   updateWelcomeList({commit, state}, ids) {
     const list = state.welcomeList.filter(item => !ids.includes(item.id))

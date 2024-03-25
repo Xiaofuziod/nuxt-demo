@@ -101,6 +101,16 @@ export default {
     return {}
   },
   mounted() {
+    // 一点登录的逻辑
+    const query = this.$route.query
+    if (query.code) {
+      const redirect_uri = `${window.location.origin}`;
+      this.$store.dispatch('user/googleLogin', {code:query.code, url: redirect_uri})
+    }
+
+    if (query.oauth_token) {
+      this.$store.dispatch('user/twitterLogin', this.$route.query)
+    }
 
   }
 }

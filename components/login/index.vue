@@ -15,9 +15,11 @@
       <div>
         <!--登录/注册-->
         <div class="login-content" v-if="step === 1">
-          <div class="input-label">{{$t("EmailAddress")}}</div>
-          <input class="login-input" v-model="email" :placeholder="$t('EnterYourEmail')"  type="email">
-          <div class="input-label">{{ $t('Password') }} <span @click="changePwd" v-if="type === 'login'">{{ $t('ForgotPassword') }}</span></div>
+          <div class="input-label">{{ $t("EmailAddress") }}</div>
+          <input class="login-input" v-model="email" :placeholder="$t('EnterYourEmail')" type="email">
+          <div class="input-label">{{ $t('Password') }} <span @click="changePwd"
+                                                              v-if="type === 'login'">{{ $t('ForgotPassword') }}</span>
+          </div>
           <div class="login-input-box">
             <input class="login-input" :placeholder="$t('EnterLimit')" v-model="password"
                    :type="isPassword  ? 'password' : 'text'">
@@ -30,16 +32,16 @@
           </div>
           <div class="login-line">
             <div class="login-line-border"></div>
-            <div class="login-line-text">{{ $t('OR')}}</div>
+            <div class="login-line-text">{{ $t('OR') }}</div>
             <div class="login-line-border"></div>
           </div>
           <div class="other-box" @click="loginWithGoogle">
             <img src="@/assets/imgs/login/Google.svg" alt="">
-            {{$t('ContinueWithGoogle')}}
+            {{ $t('ContinueWithGoogle') }}
           </div>
           <div class="other-box" @click="loginWithTwitter">
             <img src="@/assets/imgs/login/X2.svg" alt="">
-            {{$t('ContinueWithX')}}
+            {{ $t('ContinueWithX') }}
           </div>
         </div>
 
@@ -49,13 +51,15 @@
             <img src="@/assets/imgs/login/email.svg" alt="">
           </div>
           <div class="login-content-title">{{ $t('VerifyYourEmail') }}</div>
-          <div class="login-content-desc">{{ $t('SenttoemailtoBefore') }} <span style="color: #CEB864">{{ email }}</span>
-            {{$t('SenttoemailtoAfter')}}
+          <div class="login-content-desc">{{ $t('SenttoemailtoBefore') }} <span style="color: #CEB864">{{
+              email
+            }}</span>
+            {{ $t('SenttoemailtoAfter') }}
           </div>
           <div class="login-content-tips">{{ $t('EnterverificationCode') }}</div>
           <div class="ver-code-box">
-            <VerificationCodeInput  ref="vInput" @validate="validateInputSuccess"/>
-            <div class="ver-code-tips" v-if="false">{{$t('VerificationCodeFailedTips')}}</div>
+            <VerificationCodeInput ref="vInput" @validate="validateInputSuccess"/>
+            <div class="ver-code-tips" v-if="false">{{ $t('VerificationCodeFailedTips') }}</div>
           </div>
           <div class="login-btn" @click="sendEmail(4)" v-if="nums < 1">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
@@ -71,17 +75,18 @@
           <div class="login-content-title">{{ $t('EnterYourEmail') }}</div>
           <div class="login-content-desc2">{{ $t('ReceiveAVerification') }}</div>
           <div class="input-label">{{ $t('EnterYourEmail') }}</div>
-          <input class="login-input" :placeholder="$t('EnterYourEmail')" style="margin-bottom: 8px" v-model="email" type="email">
+          <input class="login-input" :placeholder="$t('EnterYourEmail')" style="margin-bottom: 8px" v-model="email"
+                 type="email">
           <div class="login-btn" :class="{'login-btn-disable': btnDisable}" @click="sendEmail(2)">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
-            {{$t('Next')}}
+            {{ $t('Next') }}
           </div>
         </div>
 
         <!--修改密码-->
         <div class="login-content" v-if="step === 32">
-          <div class="login-content-title">{{$t('EnterNewPassword')}}</div>
-          <div class="input-label">{{$t('Password')}}</div>
+          <div class="login-content-title">{{ $t('EnterNewPassword') }}</div>
+          <div class="input-label">{{ $t('Password') }}</div>
           <div class="login-input-box" style="margin-bottom: 20px">
             <input class="login-input" :placeholder="$t('EnterLimit')"
                    v-model="password" :type="isPassword  ? 'password' : 'text'">
@@ -91,7 +96,7 @@
           <div class="login-content-tips">{{ $t('EnterverificationCode') }}</div>
           <div class="ver-code-box">
             <VerificationCodeInput ref="vInput" @validate="validateInputSuccess"/>
-            <div class="ver-code-tips" v-if="false">{{$t('VerificationCodeFailedTips')}}</div>
+            <div class="ver-code-tips" v-if="false">{{ $t('VerificationCodeFailedTips') }}</div>
           </div>
           <div class="login-btn" @click="sendEmail(2)" v-if="nums < 1">
             <img src="@/assets/imgs/ZKZg.gif" alt="" v-if="showLoading">
@@ -107,7 +112,7 @@
 </template>
 <script>
 import VerificationCodeInput from "@/components/VerificationCodeInput.vue";
-import {sendEmail} from "@/common/home";
+import {changePassword, sendEmail} from "@/common/home";
 
 
 let timer = null
@@ -144,6 +149,7 @@ export default {
       this.showLoading = false
       this.$toast.success(this.$t('LoginSuccess'))
       this.hide()
+      this.$router.push('/reporting')
     });
     this.$bus.$on("REGISTER_SUCCESS", () => {
       this.showLoading = false
@@ -158,14 +164,22 @@ export default {
   methods: {
     validateInputSuccess(captcha) {
       if (this.step === 21) {
+        this.$loading.start()
         this.$store.dispatch('user/userRegister', {account: this.email, passwd: this.password, captcha})
+        this.$loading.finish()
       }
       if (this.step === 32) {
-        this.$store.dispatch('user/changePassword', {account: this.email, passwd: this.password, captcha})
+        this.changePassword({
+          account: this.email,
+          passwd: this.password,
+          captcha
+        })
       }
     },
     stepBack() {
       if (this.step === 21 || this.step === 31) {
+        this.password = ''
+        this.email = ''
         this.step = 1
         return
       }
@@ -193,12 +207,8 @@ export default {
       }
     },
     async sendEmail(type) {
-      if (this.showLoading) return
+      if (this.showLoading || !this.isEmailValid(this.email)) return
       //  "1"登录 ,"2"修改密码 ,"4"注册
-      if (!this.isEmailValid(this.email)) {
-        this.$toast.error(this.$t('ErrorEmailTips'))
-        return
-      }
       this.$refs.vInput?.clearInputs()
       try {
         this.showLoading = true
@@ -223,6 +233,25 @@ export default {
         }
       } catch (e) {
         this.showLoading = false
+        console.log(e)
+      }
+    },
+    async changePassword({account, passwd, captcha}) {
+      try {
+        this.$loading.start()
+        const res = await this.$axios.post(changePassword, {account, passwd, captcha})
+        if (res.data.code === 200) {
+          this.$toast.show({content: this.$t('ResetSuccess'), type: 'success'})
+          this.email = ''
+          this.password = ''
+          this.type = 'login'
+          this.step = 1
+        } else {
+          this.$toast.show({content: res.data.msg, type: 'error'})
+        }
+        this.$loading.finish()
+      } catch (e) {
+        this.$loading.finish()
         console.log(e)
       }
     },
@@ -323,14 +352,14 @@ export default {
     font-style: normal;
     font-weight: 900;
     line-height: normal;
-    text-transform: capitalize;
+    //text-transform: capitalize;
     text-align: center;
     margin-bottom: 24px;
   }
 
   .login-content-desc {
     color: #FFF;
-    text-align: center;
+    //text-align: center;
     font-family: Avenir;
     font-size: 14px;
     font-style: normal;
@@ -357,7 +386,7 @@ export default {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    text-transform: capitalize;
+    //text-transform: capitalize;
     margin-bottom: 8px;
   }
 
@@ -397,7 +426,7 @@ export default {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    text-transform: capitalize;
+    //text-transform: capitalize;
     margin-bottom: 7px;
 
     span {
@@ -408,7 +437,7 @@ export default {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      text-transform: capitalize;
+      //text-transform: capitalize;
     }
   }
 
@@ -463,7 +492,7 @@ export default {
     font-style: normal;
     font-weight: 900;
     line-height: normal;
-    text-transform: capitalize;
+    //text-transform: capitalize;
 
     img {
       width: 16px;
@@ -495,7 +524,7 @@ export default {
     font-style: normal;
     font-weight: 900;
     line-height: normal;
-    text-transform: capitalize;
+    //text-transform: capitalize;
 
     img {
       width: 28px;
@@ -528,7 +557,7 @@ export default {
     font-style: normal;
     font-weight: 900;
     line-height: normal;
-    text-transform: capitalize;
+    //text-transform: capitalize;
     padding-bottom: 24px;
 
     span {
