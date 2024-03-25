@@ -106,6 +106,7 @@ export default {
     "robot_message_5": "我需要一些时间来思考...",
     "robot_message_6": "我已经收到你的请求了~",
     "robot_message_7": "抱歉，看来我可能掉线了，请重新提问～",
+    "AddSuccess": '添加成功',
     "Email": "电子邮箱",
     "LoginEmailAddress": "电子邮箱地址",
     "LoginEnterYourEmail": "输入你的电子邮箱地址",

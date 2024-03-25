@@ -107,7 +107,7 @@ export const actions = {
         } finally {
         }
     },
-    async addUserMonitor({dispatch, commit}, sourceIds) {
+    async addUserMonitor({dispatch, commit, rootState}, sourceIds) {
         try {
             this._vm.$loading.start();
             const res = await this.$axios.get(`${monitorApi.addUserMonitoring}?sourceIds=${sourceIds.join(',')}`);
@@ -115,7 +115,7 @@ export const actions = {
                 commit('setLoading', true)
                 await dispatch('fetchUserMonitorList'); // Optionally refresh the user monitor list
                 commit('setLoading', false)
-                this._vm.$toast.success("添加成功")
+                this._vm.$toast.success(rootState.lang.t['AddSuccess'])
             }
         } catch (e) {
             console.error('addUserMonitor error:', e);

@@ -41,13 +41,13 @@ export const actions = {
       console.error('fetchCoinList error:', e);
     }
   },
-  async addFollow({commit, dispatch}, id) {
+  async addFollow({commit, dispatch, rootState}, id) {
     try {
       this._vm.$loading.start();
       const res = await this.$axios.get(`${addFollow}?id=${id.join('&id=')}`);
       if (res && res.data && res.data.code === 200) {
         dispatch('fetchUserCoinList');
-        this._vm.$toast.success("添加成功")
+        this._vm.$toast.success(rootState.lang.t['AddSuccess'])
       }
     } catch (e) {
       console.error('fetchCoinList error:', e);
