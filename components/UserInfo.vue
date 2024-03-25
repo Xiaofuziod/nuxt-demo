@@ -2,15 +2,16 @@
   <div class="Rectangle82"
   :class="{'rect-active':isActive}">
     <div class="Ellipse245">
-      <img :src="user.avatar" v-if="user.avatar" alt="">
+      <img :src="user.avatar" v-if="user.avatar || MonitorAvator" alt="">
     </div>
     <div>
       <div class="saywteri2473 ellipsis">{{ user.account }}</div>
-      <div class="wtewteri247">{{ user.nickname }}</div>
+      <div class="wtewteri247">{{ user.nickname || user.account }}</div>
     </div>
   </div>
 </template>
 <script>
+import MonitorAvator from '@/assets/imgs/monitorAvator.svg'
 export default {
   name: 'UserInfo',
   props:{
@@ -18,6 +19,9 @@ export default {
       type: Boolean,
       default: true
     }
+  },
+  data() {
+    return {MonitorAvator}
   },
   computed: {
     user() {

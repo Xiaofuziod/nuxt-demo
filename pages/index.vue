@@ -37,48 +37,50 @@
         <div class="banner-right">
           <div class="title1">{{ $t("FEEDBACK") }}</div>
           <div class="title2">{{ $t("pages_index_title2_3") }}</div>
-          <div class="desc">{{ $t("pages_index_desc_2") }}</div>
+          <div class="desc">{{ $t("pages_index_desc_1") }}</div>
           <img class="arc-line" src="~/assets/imgs/banner-arc-line.png" alt="">
         </div>
       </div>
       <div class="banner-4">
         <div class="title1">{{ $t("pages_index_title1_4") }}</div>
-        <div class="title2">{{ $t("pages_index_title2_4") }}</div>
+        <div class="title2">{{ $t("pages_index_title2_3") }}</div>
         <div class="user-box position-1">
           <div class="userinfo">
             <img src="~/assets/imgs/user-girl-1.png" alt="">
             <span class="name">{{ $t("pages_index_name_1") }}</span>
             <span class="phone">{{ $t("pages_index_phone_1") }}</span>
           </div>
-          <p class="desc">{{ $t("pages_index_desc_3") }}</p>
+          <p class="desc">{{ $t("pages_index_desc_1") }}</p>
           <div class="line"></div>
         </div>
         <div class="user-box position-2">
           <div class="userinfo">
             <img src="~/assets/imgs/user-girl-2.png" alt="">
-            <span class="name">{{ $t("pages_index_name_2") }}</span>
-            <span class="phone">{{ $t("pages_index_phone_2") }}</span>
+            <span class="name">{{ $t("pages_index_name_1") }}</span>
+            <span class="phone">{{ $t("pages_index_phone_1") }}</span>
           </div>
-          <p class="desc">{{ $t("pages_index_desc_4") }}</p>
+          <p class="desc">{{ $t("pages_index_desc_1") }}</p>
           <div class="line"></div>
         </div>
         <div class="user-box position-3">
           <div class="userinfo">
-            <img src="~/assets/imgs/user-boy-1.png" alt="">
-            <span class="name">{{ $t("pages_index_name_3") }}</span>
-            <span class="phone">{{ $t("pages_index_phone_3") }}</span>
+            <img src="~/assets/imgs/user.svg" alt="">
+            <span class="name">{{ $t("pages_index_name_1") }}</span>
+            <span class="phone">{{ $t("pages_index_phone_1") }}</span>
           </div>
-          <p class="desc">{{ $t("pages_index_desc_5") }}</p>
-          <div class="line"></div>
+          <p class="desc">
+            {{ $t("pages_index_desc_1") }}
+          </p>
         </div>
         <div class="user-box position-4">
           <div class="userinfo">
             <img src="~/assets/imgs/user.svg" alt="">
-            <span class="name">{{ $t("pages_index_name_4") }}</span>
-            <span class="phone">{{ $t("pages_index_phone_4") }}</span>
+            <span class="name">{{ $t("pages_index_name_1") }}</span>
+            <span class="phone">{{ $t("pages_index_phone_1") }}</span>
           </div>
-          <p class="desc">{{ $t("pages_index_desc_6") }}</p>
-          <div class="line"></div>
+          <p class="desc">
+            {{ $t("pages_index_desc_1") }}
+          </p>
         </div>
       </div>
       <div class="banner-5">

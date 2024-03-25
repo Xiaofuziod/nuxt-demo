@@ -48,7 +48,7 @@ export default {
 .card {
   padding: 16px 20px;
   width: 389px;
-  height: 130px;
+  height: 109px;
   border-radius: 16px;
   margin: 8px;
   background: rgba(38, 64, 64, 0.2);
@@ -63,42 +63,6 @@ export default {
     width: 13px;
     cursor: pointer;
   }
-
-  //.option-box {
-  //  position: absolute;
-  //  top: 10px;
-  //  right: 20px;
-  //  .hover-point {
-  //    // Styles for the hover-point like padding, font-size, etc.
-  //    // Ensure it's large enough to be easily hovered over
-  //    font-size: 24px;
-  //    color: rgba(255, 255, 255, 0.76);
-  //  }
-  //
-  //  .option-list {
-  //    display: none; // Initially hide the option list
-  //    position: absolute;
-  //    left: 0;
-  //    top: 20px;
-  //    background-color: rgba(68, 215, 182, 0.2);
-  //    border-radius: 4px; // Optional: for rounded corners
-  //    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Optional: for a slight shadow
-  //    z-index: 100; // Ensure it's on top of other elements
-  //    .option-item {
-  //      padding: 8px 16px; // Example padding, adjust as needed
-  //      cursor: pointer;
-  //      color: #fff;
-  //      &:hover {
-  //        background-color: rgba(68, 215, 182, 0.5);
-  //      }
-  //    }
-  //  }
-  //
-  //  &:hover .option-list {
-  //    display: block; // Show on hover
-  //  }
-  //}
-
 
   .card-img {
     width: 60px;
@@ -123,13 +87,19 @@ export default {
     }
 
     .title2 {
-      color: rgba(255, 255, 255, 1);
+      color: #FFF;
+      font-family: Avenir;
       font-size: 15px;
-      line-height: 25px;
+      font-style: normal;
+      font-weight: 800;
+      text-transform: capitalize;
+      width: 225px;
+      text-wrap: normal;
+      line-height: 30px;
     }
 
     .timestamp {
-      color: rgba(140, 180, 189, 1);
+      color: #CEB864;
       font-size: 12px;
     }
 
