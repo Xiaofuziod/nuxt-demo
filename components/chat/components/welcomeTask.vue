@@ -13,7 +13,7 @@
 
     <div class="text-message-v2"
          v-if="message.type === 'task' && !message.finish"
-         style="position: relative;background: rgba(38, 64, 64);">
+         style="position: relative;background: #0E1A22;">
       <div class="task-tip">
         <btn>
           <img src="@/assets/imgs/chat/task.svg" alt="">
@@ -73,9 +73,6 @@ export default {
     userCoinList() {
       return this.$store.state.coin.userCoinList
     },
-    userMonitorList() {
-      return this.$store.state.monitor.userMonitorList
-    },
     finishBtnDisable() {
       return this.message.searchType === 'coin' ? this.userCoinList.length === 0 : false
     },
@@ -95,10 +92,8 @@ export default {
       // 如果是跳过的，则需要删除 欢迎文案中的
       // 16 , 17 ,18 跳过的文案
       //  13. 14 非跳过的文案
-      if (val === 'skip') {
-        await this.$store.dispatch('chat/updateWelcomeList', [13, 14])
-      } else {
-        await this.$store.dispatch('chat/updateWelcomeList', [16, 17, 18])
+      if (this.message.searchType === 'monitor') {
+        await this.$store.dispatch('chat/updateWelcomeList', val === 'skip' ? [13, 14] : [16, 17, 18])
       }
       await this.taskFinish()
     },
@@ -146,7 +141,7 @@ export default {
 .topSticky {
   position: sticky;
   top: 10px;
-  z-index: 9999;
+  z-index: 99;
 }
 
 .task-title {

@@ -10,7 +10,8 @@
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
         <div class="coin-price">${{ formatPrice(coin.currentPrice || coin.price || coin.quotes?.price) }}</div>
-        <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
+        <div class="coin-change"
+             :class="{'positive': (Number(coin.change) || coin.quotes?.percentChange24h) > 0, 'negative': (Number(coin.change) || coin.quotes?.percentChange24h) < 0}">
           {{ (Number(coin.change) || coin.quotes?.percentChange24h)?.toFixed(2) }}%
         </div>
 
@@ -188,7 +189,8 @@ export default {
 
 .coin-row-2 {
   margin-bottom: 0;
-  .coin-price{
+
+  .coin-price {
     padding-left: 0;
   }
 }

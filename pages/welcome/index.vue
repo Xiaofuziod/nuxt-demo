@@ -1,10 +1,13 @@
 <template>
   <div class="welcome-page">
+    <FullScreenVideoLoader @video-ended="videoEnded" v-if="!hideVideo"/>
     <div class="welcome-content">
-      <div class="chat-box">
-        <chat :showWelcome="true"/>
+      <div class="chat-box-0"
+           :class="{'chat-box-anime': hideVideo,'chat-box-anime2': isOver}">
+        <chat :showWelcome="true" @welcomeOver="welcomeOver"/>
       </div>
-      <div class="step-box">
+      <div class="step-box"
+           :class="{'step-box-anime': hideVideo,'step-box-anime2': isOver}">
         <!--第一步-->
         <div class="step-title">
           <div class="step-title-icon">
@@ -14,7 +17,7 @@
             </div>
           </div>
           <div class="step-title-text">
-            <span>{{ $t("welcome_index_span_1") }}</span> {{ welcomeIndex }} - {{welcomeStep}}
+            <span>{{ $t("welcome_index_span_1") }}</span> {{ welcomeIndex }} - {{ welcomeStep }}
           </div>
         </div>
         <!--第二步-->
@@ -29,7 +32,7 @@
             </div>
             <div class="step-title-text">{{ $t("welcome_index_step-title-text_1") }}</div>
           </div>
-          <div class="step-content" :class="{'step-content-border': welcomeStep > 3}">
+          <div class="step-content" :class="{'step-content-border': welcomeStep > 2}">
             <div class="add-monitoring-cards">
               <small-coin-card
                   v-for="monitor in userCoinList"
@@ -41,16 +44,17 @@
             </div>
             <template v-if="coinShowMoreBtn">
               <div class="show-more" v-if="!coinShowMore" @click="coinShowMore = true">
-                展开全部<img src="@/assets/imgs/chat/down.svg" alt="">
+                {{ $t("ShowAll") }}<img src="@/assets/imgs/chat/down.svg" alt="">
               </div>
               <div class="show-more" v-else @click="coinShowMore = false">
-                收起<img src="@/assets/imgs/chat/up.svg" alt="">
+                {{ $t("Collapse") }}<img src="@/assets/imgs/chat/up.svg" alt="">
               </div>
             </template>
 
             <div class="add-text"
                  v-if="welcomeIndex > 5"
-                 @click="handleClick('coin')">{{ $t("welcome_index_add-text_1") }}</div>
+                 @click="handleClick('coin')">{{ $t("welcome_index_add-text_1") }}
+            </div>
           </div>
         </template>
 
@@ -78,19 +82,19 @@
             </div>
             <template v-if="monitorShowMoreBtn">
               <div class="show-more" v-if="!monitorShowMore" @click="monitorShowMore = true">
-                展开全部<img src="@/assets/imgs/chat/down.svg" alt="">
+                {{ $t("ShowAll") }}<img src="@/assets/imgs/chat/down.svg" alt="">
               </div>
               <div class="show-more" v-else @click="monitorShowMore = false">
-                收起<img src="@/assets/imgs/chat/up.svg" alt="">
+                {{ $t("Collapse") }}<img src="@/assets/imgs/chat/up.svg" alt="">
               </div>
             </template>
             <div class="add-text" @click="handleClick('monitor')">
-              + 添加
+              {{ $t("welcome_index_add-text_1") }}
             </div>
           </div>
         </template>
         <!--第四步-->
-        <div class="step-title"  v-if="welcomeStep >= 4">
+        <div class="step-title" v-if="welcomeStep >= 4">
           <div class="step-title-icon">
             <span class="step-loading style-2" v-if="welcomeStep < 5"></span>
             <div class='btn-container' v-else>
@@ -112,6 +116,7 @@ import AddCoin from "~/components/report/addCoin.vue";
 import AddMonitor from "~/components/monitor/addMonitoring.vue";
 import SmallCoinCard from "@/components/report/smallMonitorCard.vue";
 import SmallMonitorCard from "@/components/chat/components/smallMonitorCard.vue";
+import FullScreenVideoLoader from "@/components/FullScreenVideoLoader.vue";
 
 // 欢迎页 机器人头部文案
 const welcomeRobotMsgList = [
@@ -127,7 +132,8 @@ export default {
     SmallCoinCard,
     chat,
     AddCoin,
-    AddMonitor
+    AddMonitor,
+    FullScreenVideoLoader
   },
   computed: {
     userCoinList() {
@@ -148,9 +154,9 @@ export default {
     welcomeStep() {
       if (this.welcomeIndex < 5) {
         return 1
-      } else if (this.welcomeIndex < 9) {
+      } else if (this.welcomeIndex < 10) {
         return 2
-      } else if (this.welcomeIndex < 12) {
+      } else if (this.welcomeIndex < 15) {
         return 3
       } else {
         return 4
@@ -160,10 +166,38 @@ export default {
   data() {
     return {
       coinShowMore: false,
-      monitorShowMore: false
+      monitorShowMore: false,
+      hideVideo: true,
+      isOver: false,
     }
   },
+  mounted() {
+    this.videoEnded()
+  },
   methods: {
+    welcomeOver() {
+      this.isOver = true
+      setTimeout(() => {
+        this.$store.dispatch('chat/clearMessageList')
+        this.$router.replace('/reporting')
+      }, 3000)
+    },
+    videoEnded() {
+      console.log('video ended', this.$store.state.chat.welcomeIndex)
+      // 一秒后 销毁视频页面
+      setTimeout(() => {
+        this.hideVideo = true
+      }, 1000)
+
+      // 两秒后 聊天框从底部出现 并且开始发消息
+
+      setTimeout(() => {
+        const msg = this.$store.state.chat.welcomeList[this.$store.state.chat.welcomeIndex]
+        this.$store.dispatch('chat/pushWelcomeMessage', msg)
+      }, 3000)
+
+
+    },
     handleClick(type) {
       if (type === 'coin') {
         this.$store.commit('coin/setAddCoinShow', true)
@@ -348,6 +382,15 @@ export default {
   flex-wrap: wrap;
 }
 
+.step-box-anime {
+  animation: moveB 2s forwards;
+}
+
+.step-box-anime2 {
+  opacity: 1;
+  animation: moveD 2s forwards;
+}
+
 .step-box {
   box-sizing: border-box;
   padding-left: 20px;
@@ -356,6 +399,8 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
   padding-bottom: 30px;
+  transform: translateX(100%);
+  opacity: 0;
 
   .step-line {
     width: 1px;
@@ -421,27 +466,89 @@ export default {
 
 .welcome-page {
   width: 100vw;
-  height: 100vh;
+  height: cale(100vh - 88px);
   background: rgba(5, 15, 33, .5);
   overflow-y: hidden;
   overflow-x: auto;
-  position: fixed;
-  left: 0;
-  top: 0;
+  padding-top: 12px;
 
   .welcome-content {
     width: 1050px;
-    height: calc(100vh - 100px);
-    margin: 100px auto 0;
+    height: 100%;
+    margin: 0 auto;
     display: flex;
     border-radius: 36px 0 0 0;
     overflow: hidden;
 
-    .chat-box {
+    .chat-box-0 {
       width: 515px;
+      opacity: 0;
+    }
+
+    .chat-box-anime {
+      animation: moveA 1s 0s forwards;
+    }
+
+    .chat-box-anime2 {
+      animation: moveC 1s 0s forwards;
     }
   }
 
 }
+
+@keyframes moveA {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+@keyframes moveC {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes moveB {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes moveD {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
 
 </style>

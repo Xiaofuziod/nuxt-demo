@@ -156,15 +156,7 @@ export default {
     this.initLang()
     this.$socket.on('chat', this.onWebsocketReceiveMessage);
     this.$socket.on('connect', this.onWebsocketConnect);
-    //  第一次进入页面，发送欢迎语
     if (this.showWelcome) {
-      const msg = this.$store.state.chat.welcomeList[this.$store.state.chat.welcomeIndex]
-      this.$store.dispatch('chat/pushWelcomeMessage', msg)
-
-      // 获取用户自选列表 和 监控列表
-      this.$store.dispatch('coin/fetchUserCoinList')
-      this.$store.dispatch('monitor/fetchUserMonitorList')
-
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
         this.$store.dispatch('coin/fetchCoinList', {size: 5})
@@ -251,7 +243,6 @@ export default {
     },
     sendMessage() {
       if (!this.message || !this.conversationId) return
-      console.log('send message')
       // 上一条消息未处理完，不发送
       if (this.messageStatus === 'loading' || this.messageStatus === 'concat') {
         return this.$toast.warning('请等待上一条消息处理完毕')
@@ -280,8 +271,15 @@ export default {
       if (lastMsg.source === 'T-brain') {
         // 自动下一句
         if (lastMsg.autoNext) {
-          this.$store.dispatch('chat/welcomeToNext')
-          this.scrollToBottom()
+          if (lastMsg.sleep) {
+            setTimeout(() => {
+              this.$store.dispatch('chat/welcomeToNext')
+              this.scrollToBottom()
+            }, lastMsg.sleep)
+          } else {
+            this.$store.dispatch('chat/welcomeToNext')
+            this.scrollToBottom()
+          }
         }
         // 需要推荐热门币种 或者 热门信号源
         if (lastMsg.needPushHotCoin || lastMsg.needPushHotMonitor) {
@@ -313,8 +311,9 @@ export default {
           this.scrollToBottom()
         }
         if (lastMsg.over) {
-          this.$store.dispatch('chat/clearMessageList')
-          this.$router.replace('/reporting')
+          setTimeout(() => {
+            this.$emit('welcomeOver')
+          }, 1000)
         }
       }
     },

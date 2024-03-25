@@ -43,8 +43,9 @@ export const actions = {
   },
   async addFollow({commit, dispatch}, id) {
     try {
+      this._vm.$loading.start();
       const res = await this.$axios.get(`${addFollow}?id=${id.join('&id=')}`);
-      if (res && res.data && res.data.data) {
+      if (res && res.data && res.data.code === 200) {
         dispatch('fetchUserCoinList');
         this._vm.$toast.success("添加成功")
       }
@@ -52,13 +53,14 @@ export const actions = {
       console.error('fetchCoinList error:', e);
     } finally {
       commit('setAddCoinShow', false)
+      this._vm.$loading.finish();
     }
   },
   async removeFollow({commit, dispatch}, id) {
     try {
       this._vm.$loading.start();
       const res = await this.$axios.get(deleteFollow, {params: {id}});
-      if (res && res.data && res.data.data) {
+      if (res && res.data && res.data.code === 200) {
         dispatch('fetchUserCoinList');
       }
     } catch (e) {

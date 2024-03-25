@@ -52,9 +52,6 @@ export const mutations = {
   updateMessage(state, {index, message}) {
     Vue.set(state.messageList, index, message);
   },
-  // updateWelcomeAddCoinFinish(state, finish) {
-  //   state.welcomeAddCoinFinish = finish
-  // },
   setConversationId(state, conversationId) {
     state.conversationId = conversationId
   },
@@ -120,6 +117,7 @@ export const actions = {
 
   },
   updateWelcomeList({commit, state}, ids) {
+    console.log('updateWelcomeList', ids)
     const list = state.welcomeList.filter(item => !ids.includes(item.id))
     commit('setWelcomeList', list)
   },
