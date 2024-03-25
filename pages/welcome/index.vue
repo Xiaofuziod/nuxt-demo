@@ -96,7 +96,7 @@
         <!--第四步-->
         <div class="step-title" v-if="welcomeStep >= 4">
           <div class="step-title-icon">
-            <span class="step-loading style-2" v-if="welcomeStep < 5"></span>
+            <span class="step-loading style-2" v-if="isOver"></span>
             <div class='btn-container' v-else>
               <button class='btn btn--shockwave is-active'></button>
             </div>
@@ -217,7 +217,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 
 @mixin afterBg {
   content: '';

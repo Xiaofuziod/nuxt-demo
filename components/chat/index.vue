@@ -357,14 +357,14 @@ export default {
   }
 
   &::before {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     background-color: rgba(20, 37, 47, 1);
   }
 
   &::after {
-    width: 25px;
-    height: 25px;
+    width: 48px;
+    height: 48px;
     background-color: #6B9297;
     animation: circle-size 0.8s linear infinite alternate;
   }
@@ -376,8 +376,8 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     display: block;
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
     z-index: 3;
 
     &::before,
@@ -409,15 +409,15 @@ export default {
   }
 
   &-shadow {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     position: absolute;
     top: 50%;
     left: 50%;
     //transform: translate(-50%, -50%);
     border-radius: 100%;
     z-index: 1;
-    box-shadow: 1px -5.5px 3px 1.5px rgba(30, 83, 95, 0.3), 2.4px -1px 4.7px 1px rgba(30, 83, 95, 0.3), -2.1px -2.5px 9.7px 1px rgba(26, 41, 49, 0.3), 5.1px .5px 1.7px 1px rgba(30, 83, 95, 0.3), .3px .2px 7.7px 1px rgba(26, 41, 49, 0.3);
+    box-shadow: 2px -5px 6px 3px rgba(30, 83, 95, 0.3), 5px -2px 10px 2px rgba(30, 83, 95, 0.3), -2px -3px 20px 2px rgba(26, 41, 49, 0.3), 5px 1px 3px 2px rgba(30, 83, 95, 0.3), .6px .4px 15px 2px rgba(26, 41, 49, 0.3);
     animation: shadow-rotate 1.5s linear infinite;
     transform-origin: center;
   }
@@ -425,8 +425,8 @@ export default {
 
 @keyframes circle-size {
   from {
-    width: 25px;
-    height: 25px;
+    width: 43px;
+    height: 43px;
   }
   to {
     width: 30px;
