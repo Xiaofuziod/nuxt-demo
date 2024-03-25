@@ -257,7 +257,7 @@ export default {
     },
     loginWithGoogle() {
       const client_id = '86595109680-ago8qfvgdi7785110dp2f95uu3c2e002.apps.googleusercontent.com';
-      const redirect_uri = `${window.location.origin}/login/google`;
+      const redirect_uri = `${window.location.origin}`;
       const response_type = 'code';
       const scope = 'email profile openid';
       window.location = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}`;
