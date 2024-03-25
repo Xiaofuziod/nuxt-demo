@@ -79,6 +79,11 @@ export default {
     this.$bus.$on('LOGON_SUCCESS', () => {
       this.userLoggedIn = true
     });
+    this.$bus.$on('REGISTER_SUCCESS', () => {
+      this.userLoggedIn = true
+    });
+
+
     // this.showLogin()
 
     const query = this.$route.query
@@ -118,6 +123,7 @@ export default {
   },
   beforeDestroy() {
     this.$bus.$off('LOGON_SUCCESS')
+    this.$bus.$off('REGISTER_SUCCESS')
   }
 };
 </script>

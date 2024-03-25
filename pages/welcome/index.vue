@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="step-title-text">
-            <span>{{ $t("welcome_index_span_1") }} </span> {{welcomeIndex}} {{welcomeStep}}
+            <span>{{ $t("welcome_index_span_1") }} </span>
           </div>
         </div>
         <!--第二步-->
