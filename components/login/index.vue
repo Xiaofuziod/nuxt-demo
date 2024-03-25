@@ -21,7 +21,7 @@
                                                               v-if="type === 'login'">{{ $t('ForgotPassword') }}</span>
           </div>
           <div class="login-input-box">
-            <input class="login-input" :placeholder="$t('EnterLimit')" v-model="password"
+            <input class="login-input" :placeholder="$t('EnterYourPassword')" v-model="password"
                    :type="isPassword  ? 'password' : 'text'">
             <img src="@/assets/imgs/login/paw.svg" v-if="isPassword" alt="" @click="isPassword = !isPassword">
             <img src="@/assets/imgs/login/paw2.svg" v-else alt="" @click="isPassword = !isPassword">
@@ -88,7 +88,7 @@
           <div class="login-content-title">{{ $t('EnterNewPassword') }}</div>
           <div class="input-label">{{ $t('Password') }}</div>
           <div class="login-input-box" style="margin-bottom: 20px">
-            <input class="login-input" :placeholder="$t('EnterLimit')"
+            <input class="login-input" :placeholder="$t('EnterYourPassword')"
                    v-model="password" :type="isPassword  ? 'password' : 'text'">
             <img src="@/assets/imgs/login/paw.svg" alt="" v-if="!isPassword" @click="isPassword = !isPassword">
             <img src="@/assets/imgs/login/paw2.svg" alt="" v-else @click="isPassword = !isPassword">
