@@ -196,4 +196,14 @@ export default {
     "robot_message_9":"Reduce market noise for you",
     "robot_message_10":"Find your next opportunity",
     "robot_message_11": "Enjoy your journey",
+    // 新增 2024-03-25
+    "welcome_index_step-title-text_2":"Monitoring signal source",
+    "popularRecommendations":"Popular Recommendations",
+    "youCanAsk":"You can ask me like this",
+    "youCanAsk1":"ETH price-test data, to be provided by product",
+    "youCanAsk2":"ETH price-test data, to be provided by product",
+    "youCanAsk3":"ETH price-test data, to be provided by product",
+    "youCanAsk4":"ETH price-test data, to be provided by product",
+    "youCanAsk5":"ETH price-test data, to be provided by product",
+    "youCanAsk6":"ETH price-test data, to be provided by product",
 }

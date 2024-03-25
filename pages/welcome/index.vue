@@ -68,7 +68,7 @@
               </div>
             </div>
             <div class="step-title-text">
-              监控信号源
+              {{ $t("welcome_index_step-title-text_2") }}
             </div>
           </div>
           <div class="step-content" :class="{'step-content-border': welcomeStep > 3}">

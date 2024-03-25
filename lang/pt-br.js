@@ -193,5 +193,15 @@ export default {
     "robot_message_8": "Bem-vindo ao Taurion, seu co-piloto de criptografia de IA.",
     "robot_message_9": "Reduzir o ruído do mercado para você",
     "robot_message_10": "Encontre sua próxima oportunidade",
-    "robot_message_11": "Aproveite sua jornada"
+    "robot_message_11": "Aproveite sua jornada",
+    // 新增 2024-03-25
+    "welcome_index_step-title-text_2":"Fonte de sinal de monitoramento",
+    "popularRecommendations":"Recomendações populares",
+    "youCanAsk":"Você pode me perguntar assim",
+    "youCanAsk1":"Dados de teste de preço ETH, a serem fornecidos por produto",
+    "youCanAsk2":"Dados de teste de preço ETH, a serem fornecidos por produto",
+    "youCanAsk3":"Dados de teste de preço ETH, a serem fornecidos por produto",
+    "youCanAsk4":"Dados de teste de preço ETH, a serem fornecidos por produto",
+    "youCanAsk5":"Dados de teste de preço ETH, a serem fornecidos por produto",
+    "youCanAsk6":"Dados de teste de preço ETH, a serem fornecidos por produto",
 }

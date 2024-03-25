@@ -196,5 +196,15 @@ export default {
     "robot_message_8": "欢迎来到 Taurion，您的加密货币 AI 副驾驶。",
     "robot_message_9": "为您减少市场噪音",
     "robot_message_10": "找到您的下一个机会",
-    "robot_message_11": "享受您的旅程"
+    "robot_message_11": "享受您的旅程",
+    // 新增 2024-03-25
+    "welcome_index_step-title-text_2":"监控信号源",
+    "popularRecommendations":"热门推荐",
+    "youCanAsk":"你可以这样问我",
+    "youCanAsk1":"ETH价格-测试数据，待产品提供",
+    "youCanAsk2":"ETH价格-测试数据，待产品提供",
+    "youCanAsk3":"ETH价格-测试数据，待产品提供",
+    "youCanAsk4":"ETH价格-测试数据，待产品提供",
+    "youCanAsk5":"ETH价格-测试数据，待产品提供",
+    "youCanAsk6":"ETH价格-测试数据，待产品提供",
 }

@@ -245,7 +245,7 @@ export default {
       if (!this.message || !this.conversationId) return
       // 上一条消息未处理完，不发送
       if (this.messageStatus === 'loading' || this.messageStatus === 'concat') {
-        return this.$toast.warning('请等待上一条消息处理完毕')
+        return false
       }
 
       this.$store.dispatch('chat/sendUserMessage', {text: this.message})
@@ -291,7 +291,7 @@ export default {
             layers: [
               {
                 type: lastMsg.needPushHotCoin ? "HOT_COINS" : "MONITORING_SIGNAL",
-                title: '热门推荐',
+                title: this.$t("popularRecommendations"),
                 data: {
                   coins: this.$store.state.coin.coinList,
                   datas: this.$store.state.monitor.searchMonitor?.records
@@ -299,9 +299,9 @@ export default {
               },
               {
                 type: "YOU_CAN_ASK",
-                title: '您可以问我',
+                title: this.$t("youCanAsk"),
                 data: {
-                  questions: ['BTC价格-测试数据，待产品提供', 'ETH价格-测试数据，待产品提供', 'BTC走势-测试数据，待产品提供']
+                  questions: lastMsg.needPushHotCoin ? [this.$t('youCanAsk1'), this.$t('youCanAsk2'), this.$t('youCanAsk3')] : [this.$t('youCanAsk4'), this.$t('youCanAsk5'), this.$t('youCanAsk6')]
                 }
               }
             ],
