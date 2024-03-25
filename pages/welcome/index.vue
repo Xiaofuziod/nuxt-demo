@@ -107,7 +107,6 @@
         </div>
       </div>
     </div>
-    <div class="welcome-back orb-canvas"></div>
   </div>
 </template>
 
@@ -225,16 +224,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
-.welcome-back{
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-
-}
-
 
 @mixin afterBg {
   content: '';

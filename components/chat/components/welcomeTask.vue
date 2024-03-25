@@ -213,7 +213,7 @@ export default {
   font-family: Avenir;
   font-weight: 500;
   font-size: 13px;
-  text-transform: capitalize;
+  //text-transform: capitalize;
   margin-top: 14px;
   display: table;
 }
