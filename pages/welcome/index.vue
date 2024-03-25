@@ -172,7 +172,7 @@ export default {
     }
   },
   mounted() {
-    this.videoEnded()
+    // this.videoEnded()
   },
   methods: {
     welcomeOver() {

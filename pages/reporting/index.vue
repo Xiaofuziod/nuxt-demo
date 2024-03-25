@@ -112,6 +112,7 @@ export default {
   },
   methods: {
     handleClick(item) {
+      if (item.coinId === this.coinId) return
       this.coinId = item.coinId
       this.list = []
       this.loadData()
