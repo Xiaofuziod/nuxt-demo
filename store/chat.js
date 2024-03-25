@@ -18,6 +18,7 @@ export const state = () => ({
   lastUserQuestion: null,
   messageStatus: null, // loading concat success error
   wList: [],
+  pageName: '', // 页面名称 welcome  report monitor
   robot: {
     avatar: robotAvatar,
     text: '',
@@ -67,11 +68,13 @@ export const mutations = {
   setMessageStatus(state, status) {
     state.messageStatus = status
   },
+  setPageName(state, pageName) {
+    state.pageName = pageName
+  }
 }
 
 export const actions = {
   updateLang({commit, rootState}, showWelcome = false) {
-    commit('setWlist', rootState.lang.t)
     if (showWelcome) {
       const arr = getWelcomeList(rootState.lang.t)
       arr.forEach((item) => {
@@ -90,6 +93,8 @@ export const actions = {
         }
       })
       commit('setWelcomeList', arr)
+    } else {
+      commit('setWlist', rootState.lang.t)
     }
   },
   async fetchEarlierMessages({commit}, showWelcome = false) {
@@ -146,20 +151,22 @@ export const actions = {
     clearTimeout(timer)
     timer = setTimeout(() => {
       commit('setMessageStatus', 'success')
-      commit('setRobot', {text: rootState.lang.t("robot_message_4")})
+      if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang.t("robot_message_4")})
     }, 10 * 1000)
 
     if (!message.more) {
-      commit('setRobot', {text: rootState.lang.t("robot_message_4")})
+      if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang.t("robot_message_4")})
     }
-    // 五分钟没有操作，机器人会自动问候
-    clearTimeout(timer2)
-    timer2 = setInterval(() => {
-      commit('setRobot', {
-        text: state.wlist[Math.floor(Math.random() * state.wlist.length)]
-      })
-    }, 300 * 1000)
 
+    if (state.pageName !== 'welcome') {
+      // 五分钟没有操作，机器人会自动问候
+      clearTimeout(timer2)
+      timer2 = setInterval(() => {
+        commit('setRobot', {
+          text: state.wlist[Math.floor(Math.random() * state.wlist.length)]
+        })
+      }, 300 * 1000)
+    }
   },
   // 发送用户消息 只用传入 text 和 context
   sendUserMessage({commit, state, rootState}, message) {
@@ -189,19 +196,22 @@ export const actions = {
     // 消息状态更改为loading
     commit('setMessageStatus', 'loading')
 
-    // 根据用户的问题，获取机器人的回答
-    let text = rootState.lang.t['robot_message_5']
-    if (JSON.stringify(message).includes('FOCUS') || JSON.stringify(message).includes('SIGNAL_SOURCE')) {
-      text = rootState.lang.t['robot_message_6']
+    if (state.pageName !== 'welcome') {
+      // 根据用户的问题，获取机器人的回答
+      let text = rootState.lang.t['robot_message_5']
+      if (JSON.stringify(message).includes('FOCUS') || JSON.stringify(message).includes('SIGNAL_SOURCE')) {
+        text = rootState.lang.t['robot_message_6']
+      }
+      commit('setRobot', {text})
+
+      // 如果五分钟没有收到回复，认为机器人掉线了
+
+      clearTimeout(timer3)
+      timer3 = setTimeout(() => {
+        commit('setRobot', {text: rootState.lang.t['robot_message_7']})
+      }, 300 * 1000)
+
     }
-    commit('setRobot', {text})
-
-    // 如果五分钟没有收到回复，认为机器人掉线了
-
-    clearTimeout(timer3)
-    timer3 = setTimeout(() => {
-      commit('setRobot', {text: rootState.lang.t['robot_message_7']})
-    }, 300 * 1000)
 
 
     // commit('setLastUserQuestion', message)

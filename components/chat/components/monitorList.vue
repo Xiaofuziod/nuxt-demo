@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     userMonitorList() {
-      return this.$store.state.monitor.userMonitorList
+      return this.$store.state.monitor.userMonitor?.records.map(monitor => monitor.id)
     }
   },
   data() {
@@ -40,6 +40,8 @@ export default {
   },
   methods: {
     addMonitor(card) {
+      console.log(this.userMonitorList, card.id)
+      if (this.userMonitorList?.includes(card.id + '')) return
       this.$store.dispatch('monitor/addUserMonitor', [card.id]);
     },
   }

@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="step-title-text">
-            <span>{{ $t("welcome_index_span_1") }}</span> {{ welcomeIndex }} - {{ welcomeStep }}
+            <span>{{ $t("welcome_index_span_1") }} </span>
           </div>
         </div>
         <!--第二步-->
@@ -153,12 +153,16 @@ export default {
     },
     welcomeStep() {
       if (this.welcomeIndex < 5) {
+        this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[0]})
         return 1
-      } else if (this.welcomeIndex < 10) {
+      } else if (this.welcomeIndex < 9) {
+        this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[1]})
         return 2
       } else if (this.welcomeIndex < 15) {
+        this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[2]})
         return 3
       } else {
+        this.$store.commit('chat/setRobot', {text: welcomeRobotMsgList[3]})
         return 4
       }
     }
@@ -172,7 +176,11 @@ export default {
     }
   },
   mounted() {
-    // this.videoEnded()
+    this.$store.commit('chat/setPageName', 'welcome')
+    if (this.$route.query.mode === 'dev') {
+      this.hideVideo = true
+      this.videoEnded()
+    }
   },
   methods: {
     welcomeOver() {
@@ -418,7 +426,7 @@ export default {
     margin-left: 13px;
     min-height: 60px;
     box-sizing: border-box;
-    padding: 31px;
+    padding: 20px 24px;
   }
 
   .add-text {
