@@ -5,8 +5,8 @@
       <img :src="user.avatar" v-if="user.avatar || MonitorAvator" alt="">
     </div>
     <div>
-      <div class="saywteri2473 ellipsis">{{ user.account }}</div>
-      <div class="wtewteri247">{{ user.nickname || user.account }}</div>
+      <div class="saywteri2473 ellipsis">{{ user.nickname || user.account }}</div>
+      <div class="wtewteri247">已服务99天</div>
     </div>
   </div>
 </template>
