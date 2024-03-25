@@ -1,6 +1,11 @@
 <template>
   <div class="typewriter">
-    <span v-for="(item,index) in displayedTextList"
+    <span v-if="highlightList.length < 1">
+      {{ displayedText }}
+    </span>
+    <span
+        v-else
+        v-for="(item,index) in displayedTextList"
           :class="{'highlight': highlightList?.includes(index)}"
           :i="index"
           :key="index">{{ item }}</span>
