@@ -73,30 +73,32 @@ export const mutations = {
 }
 
 export const actions = {
-  updateLang({commit, rootState}) {
-    const arr = getWelcomeList(rootState.lang.t)
-    arr.forEach((item) => {
-      if (item.highlightWordList) {
-        let indexList = []
-        const text = item.text || item.desc
-        item.highlightWordList.forEach(word => {
-          const index = text.indexOf(word)
-          if (index > -1) {
-            for (let i = index; i < index + word.length; i++) {
-              indexList.push(i)
-            }
-          }
-        })
-        item.highlightList = indexList
-      }
-    })
-    commit('setWelcomeList', arr)
+  updateLang({commit, rootState}, showWelcome = false) {
     commit('setWlist', rootState.lang.t)
+    if (showWelcome) {
+      const arr = getWelcomeList(rootState.lang.t)
+      arr.forEach((item) => {
+        if (item.highlightWordList) {
+          let indexList = []
+          const text = item.text || item.desc
+          item.highlightWordList.forEach(word => {
+            const index = text.indexOf(word)
+            if (index > -1) {
+              for (let i = index; i < index + word.length; i++) {
+                indexList.push(i)
+              }
+            }
+          })
+          item.highlightList = indexList
+        }
+      })
+      commit('setWelcomeList', arr)
+    }
   },
   async fetchEarlierMessages({commit}, showWelcome = false) {
     try {
       const oldestSeqNo = this.state.chat.messageList.length === 0 ? -1 : this.state.chat.messageList[0].seqNo;
-      const res = await this.$axios.get(getChatMessageList, {params: {size: 10, oldestSeqNo}});
+      const res = await this.$axios.get(getChatMessageList, {params: {size: showWelcome ? 1 : 10, oldestSeqNo}});
       if (res && res.data && res.data.data) {
         if (!showWelcome) {
           commit('prependMessages', res.data.data.messages)
@@ -114,6 +116,7 @@ export const actions = {
   welcomeToNext({commit, state}) {
     commit('setWelcomeIndex', state.welcomeIndex + 1)
     commit('addMessage', state.welcomeList[state.welcomeIndex])
+    console.log(state.welcomeList[state.welcomeIndex])
 
   },
   updateWelcomeList({commit, state}, ids) {

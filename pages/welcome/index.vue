@@ -8,24 +8,28 @@
         <!--第一步-->
         <div class="step-title">
           <div class="step-title-icon">
-            <img class="img-rotate" v-if="welcomeIndex < 5" src="@/assets/imgs/chat/step-loading.svg" alt="">
-            <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
+            <span class="step-loading style-2" v-if="welcomeStep < 2"></span>
+            <div class='btn-container' v-else>
+              <button class='btn btn--shockwave is-active'></button>
+            </div>
           </div>
           <div class="step-title-text">
-            <span>{{ $t("welcome_index_span_1") }}</span>
+            <span>{{ $t("welcome_index_span_1") }}</span> {{ welcomeIndex }} - {{welcomeStep}}
           </div>
         </div>
         <!--第二步-->
-        <template v-if="welcomeIndex > 5">
+        <template v-if="welcomeStep >= 2">
           <div class="step-line"/>
           <div class="step-title">
             <div class="step-title-icon">
-              <img class="img-rotate" v-if="welcomeIndex < 9" src="@/assets/imgs/chat/step-loading.svg" alt="">
-              <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
+              <span class="step-loading style-2" v-if="welcomeStep < 3"></span>
+              <div class='btn-container' v-else>
+                <button class='btn btn--shockwave is-active'></button>
+              </div>
             </div>
             <div class="step-title-text">{{ $t("welcome_index_step-title-text_1") }}</div>
           </div>
-          <div class="step-content step-content-border">
+          <div class="step-content" :class="{'step-content-border': welcomeStep > 3}">
             <div class="add-monitoring-cards">
               <small-coin-card
                   v-for="monitor in userCoinList"
@@ -44,22 +48,26 @@
               </div>
             </template>
 
-            <div class="add-text" @click="handleClick('coin')">{{ $t("welcome_index_add-text_1") }}</div>
+            <div class="add-text"
+                 v-if="welcomeIndex > 5"
+                 @click="handleClick('coin')">{{ $t("welcome_index_add-text_1") }}</div>
           </div>
         </template>
 
         <!--第三步-->
-        <template v-if="welcomeIndex > 9">
+        <template v-if="welcomeStep >= 3">
           <div class="step-title">
             <div class="step-title-icon">
-              <img class="img-rotate" v-if="welcomeIndex < 12" src="@/assets/imgs/chat/step-loading.svg" alt="">
-              <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
+              <span class="step-loading style-2" v-if="welcomeStep < 4"></span>
+              <div class='btn-container' v-else>
+                <button class='btn btn--shockwave is-active'></button>
+              </div>
             </div>
             <div class="step-title-text">
               监控信号源
             </div>
           </div>
-          <div class="step-content step-content-border">
+          <div class="step-content" :class="{'step-content-border': welcomeStep > 3}">
             <div class="add-monitoring-cards">
               <small-monitor-card
                   v-for="monitor in userMonitorList"
@@ -82,13 +90,15 @@
           </div>
         </template>
         <!--第四步-->
-        <div class="step-title" v-if="welcomeIndex > 12">
+        <div class="step-title"  v-if="welcomeStep >= 4">
           <div class="step-title-icon">
-            <img class="img-rotate" v-if="welcomeIndex < 14" src="@/assets/imgs/chat/step-loading.svg" alt="">
-            <img v-else src="@/assets/imgs/chat/finish.svg" alt="">
+            <span class="step-loading style-2" v-if="welcomeStep < 5"></span>
+            <div class='btn-container' v-else>
+              <button class='btn btn--shockwave is-active'></button>
+            </div>
           </div>
           <div class="step-title-text">
-            {{ $t('Welcome_step-title-text_1')}}
+            {{ $t('Welcome_step-title-text_1') }}
           </div>
         </div>
       </div>
@@ -102,6 +112,14 @@ import AddCoin from "~/components/report/addCoin.vue";
 import AddMonitor from "~/components/monitor/addMonitoring.vue";
 import SmallCoinCard from "@/components/report/smallMonitorCard.vue";
 import SmallMonitorCard from "@/components/chat/components/smallMonitorCard.vue";
+
+// 欢迎页 机器人头部文案
+const welcomeRobotMsgList = [
+  'Welcome to Taurion, your crypto AI co-pilot.',
+  "Reduce market noise for you",
+  "Find your next opportunity",
+  "Enjoy your journey",
+]
 
 export default {
   components: {
@@ -126,6 +144,17 @@ export default {
     },
     welcomeIndex() {
       return this.$store.state.chat.welcomeIndex;
+    },
+    welcomeStep() {
+      if (this.welcomeIndex < 5) {
+        return 1
+      } else if (this.welcomeIndex < 9) {
+        return 2
+      } else if (this.welcomeIndex < 12) {
+        return 3
+      } else {
+        return 4
+      }
     }
   },
   data() {
@@ -153,6 +182,128 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+
+@mixin afterBg {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+}
+
+.btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.btn {
+  width: 18px;
+  height: 18px;
+  background: #00FEB5;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 0.8rem;
+  border: none;
+  padding: 0;
+  position: relative;
+  outline: none;
+}
+
+// Shockwave
+.btn--shockwave.is-active {
+  animation: shockwaveJump 1s ease-out forwards;
+
+  &:after {
+  @include afterBg;
+    animation: shockwave 1s .65s ease-out forwards;
+  }
+
+  &:before {
+  @include afterBg;
+    animation: shockwave 1s .5s ease-out forwards;
+  }
+}
+
+@keyframes shockwaveJump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.08);
+  }
+  50% {
+    transform: scale(0.98);
+  }
+  55% {
+    transform: scale(1.02);
+  }
+  60% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shockwave {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), inset 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  95% {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0), inset 0 0 30px rgba(0, 0, 0, 0);
+  }
+  100% {
+    transform: scale(2.25);
+
+  }
+}
+
+
+.step-loading {
+  display: inline-block;
+  border-width: 10px;
+  border-radius: 50%;
+
+  -webkit-animation: spin 1s linear infinite;
+  -moz-animation: spin 1s linear infinite;
+  -o-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+}
+
+.style-2 {
+  border-style: double;
+  border-color: #00FEB5 transparent;
+}
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+
+@-o-keyframes spin {
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
 
 .show-more {
   cursor: pointer;
@@ -211,6 +362,7 @@ export default {
     height: 60px;
     background-color: rgba(255, 255, 255, 0.2);
     margin-left: 13px;
+    border-left-color: transparent;
   }
 
   .step-content-border {
@@ -255,6 +407,9 @@ export default {
     height: 26px;
     border-radius: 26px;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     img {
       width: 24px;

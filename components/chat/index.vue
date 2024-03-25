@@ -154,7 +154,6 @@ export default {
   mounted() {
     // 初始化语言
     this.initLang()
-
     this.$socket.on('chat', this.onWebsocketReceiveMessage);
     this.$socket.on('connect', this.onWebsocketConnect);
     //  第一次进入页面，发送欢迎语
@@ -186,11 +185,10 @@ export default {
       this.inputKeyDown()
     })
 
-
   },
   methods: {
     initLang() {
-      this.$store.dispatch('chat/updateLang')
+      this.$store.dispatch('chat/updateLang', this.showWelcome)
     },
     handleScroll(e) {
       if (this.showWelcome) return
@@ -305,7 +303,7 @@ export default {
                 type: "YOU_CAN_ASK",
                 title: '您可以问我',
                 data: {
-                  questions: ['BTC价格', 'ETH价格', 'BTC走势']
+                  questions: ['BTC价格-测试数据，待产品提供', 'ETH价格-测试数据，待产品提供', 'BTC走势-测试数据，待产品提供']
                 }
               }
             ],
