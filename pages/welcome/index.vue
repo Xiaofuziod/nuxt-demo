@@ -467,7 +467,7 @@ export default {
 .welcome-page {
   width: 100vw;
   height: cale(100vh - 88px);
-  background: rgba(5, 15, 33, .5);
+  //background: rgba(5, 15, 33, .5);
   overflow-y: hidden;
   overflow-x: auto;
   padding-top: 12px;
