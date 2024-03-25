@@ -17,7 +17,7 @@
           <div class="desc-1">
             {{ monitorSummary.summary }}
           </div>
-          <div class="title">‼️ {{ $t("SECTIONOFMEETING")}}</div>
+          <div class="title">‼️ {{ $t("SECTIONOFMEETING") }}</div>
           <template v-for="(chapter, index) in monitorSummary.chapters">
             <div class="desc-1">{{ chapter.title }}</div>
             <div class="desc-2">
@@ -78,6 +78,9 @@ export default {
     monitorSummary() {
       return this.$store.state.monitor.monitorSummary
     },
+    messageList() {
+      return this.$store.state.chat.messageList
+    }
   },
   mounted() {
     this.fetchMonitorDetail(this.$route.query.id); // 假设sourceId是你要查询的监控的ID
@@ -85,6 +88,7 @@ export default {
   watch: {
     monitorDetail(val) {
       if (val) {
+        console.log('监控详情', val)
         this.senMessage()
       }
     }
@@ -107,6 +111,11 @@ export default {
       this.$store.dispatch('monitor/fetchMonitorContent', {sourceId})
     },
     senMessage() {
+      const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'SIGNAL_SOURCE')
+      if (sourceList.length > 0) {
+        const ids = sourceList.map(item => item.context?.hook?.id + '')
+        if (ids.includes(this.monitorDetail.id + '')) return
+      }
       //   自动发一条消息到聊天
       this.$store.dispatch('chat/sendUserMessage', {
         text: this.monitorDetail.title,
@@ -191,12 +200,15 @@ export default {
   background: rgba(38, 64, 64, 0.2);
   backdrop-filter: blur(200px);
   position: relative;
+
   .right {
     width: 515px;
   }
+
   .left {
     flex: 1;
     padding: 34px 40px;
+
     .content {
       padding-top: 31px;
       text-align: left;
@@ -247,6 +259,7 @@ export default {
       padding-left: 20px;
       flex: 1;
       text-align: left;
+
       .author {
         color: rgba(255, 255, 255, 0.60);
         font-family: Avenir;
