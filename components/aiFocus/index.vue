@@ -29,17 +29,19 @@
 
         <div class="list-item-content">
           <div class="list-item-title">{{ item.title }}</div>
-          <div class="list-item-icon" @click="handleClick(item)">
-            <img src="@/static/images/chat/ai2.svg" alt="">
-<!--            <button class="button">-->
-<!--              <span class="default">-->
-<!--                <img src="@/static/images/chat/ai2.svg" alt="">-->
-<!--              </span>-->
-<!--              <span class="success"></span>-->
-<!--              <div class="left"></div>-->
-<!--              <div class="right"></div>-->
-<!--            </button>-->
-          </div>
+          <button class="button">
+              <span class="default">
+                <img src="@/static/images/chat/ai2.svg" alt="">
+              </span>
+            <span class="success"></span>
+            <div class="left"></div>
+            <div class="right"></div>
+          </button>
+<!--          -->
+<!--          <div class="list-item-icon" @click="handleClick(item)">-->
+<!--            <img src="@/static/images/chat/ai2.svg" alt="">-->
+<!--            -->
+<!--          </div>-->
         </div>
       </div>
 
@@ -262,11 +264,10 @@ export default {
   cursor: pointer;
   position: relative;
   border: 0;
-  padding: 8px 0;
-  min-width: 60px;
+  padding-top: 5px;
+  min-width: 57px;
   text-align: center;
   margin: 0;
-  line-height: 24px;
   font-family: inherit;
   font-weight: 500;
   font-size: 14px;
@@ -445,11 +446,10 @@ html {
         }
 
         .list-item-icon {
-          width: 36px;
-          height: 36px;
-          border-radius: 70px;
-          background: rgba(138, 173, 188, 0.1);
-          backdrop-filter: blur(100px);
+          width: 57px;
+          height: 28px;
+          border-radius: 4px;
+          background: #CEB864;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -457,6 +457,7 @@ html {
 
           img {
             width: 18px;
+            margin-top: 5px;
           }
         }
       }

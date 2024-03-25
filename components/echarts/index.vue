@@ -143,15 +143,11 @@ export default {
         yAxis: {
           type: 'value',
           position: 'left',
-          // axisLine: {
-          //   show: true, // 显示轴线
-          //   lineStyle: {
-          //     color: '#rgba(128, 251, 241, 1)' // 设置轴线的颜色
-          //   }
-          // },
           splitLine: {
             lineStyle: {
-              type: 'dashed' // 这里可以是 'dashed' 或 'dotted'
+              type: 'dashed', // 这里可以是 'dashed' 或 'dotted'
+              color: 'rgba(103, 229, 173, .1)'
+
             }
           }
         },
