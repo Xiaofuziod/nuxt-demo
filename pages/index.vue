@@ -46,12 +46,13 @@
       </div>
       <div class="banner-5">
         <div class="title1">{{ $t("pages_index_title1_5") }}</div>
-        <div class="partner" style="margin-left: 57px"><img src="~/assets/imgs/partner1.png" alt=""></div>
-        <div class="partner"><img src="~/assets/imgs/partner2.png" alt=""></div>
-        <div class="partner"><img src="~/assets/imgs/partner3.png" alt=""></div>
-        <div class="partner" style="margin-left: 167px"><img src="~/assets/imgs/partner1.png" alt=""></div>
-        <div class="partner"><img src="~/assets/imgs/partner2.png" alt=""></div>
-        <div class="partner"><img src="~/assets/imgs/partner3.png" alt=""></div>
+<!--        <div class="partner" style="margin-left: 57px"><img src="~/assets/imgs/partner1.png" alt=""></div>-->
+<!--        <div class="partner"><img src="~/assets/imgs/partner2.png" alt=""></div>-->
+<!--        <div class="partner"><img src="~/assets/imgs/partner3.png" alt=""></div>-->
+<!--        <div class="partner" style="margin-left: 167px"><img src="~/assets/imgs/partner1.png" alt=""></div>-->
+<!--        <div class="partner"><img src="~/assets/imgs/partner2.png" alt=""></div>-->
+<!--        <div class="partner"><img src="~/assets/imgs/partner3.png" alt=""></div>-->
+        <DirectionAwareHoverEffect/>
       </div>
       <app-footer/>
     </div>
@@ -59,10 +60,11 @@
 </template>
 <script>
 import UserPop from "@/components/pageui/userPop.vue";
+import DirectionAwareHoverEffect from "@/components/pageui/DirectionAwareHoverEffect.vue";
 
 export default {
   name: 'Home',
-  components: {UserPop},
+  components: {DirectionAwareHoverEffect, UserPop},
   data() {
     return {
       banner4Visible1: false,
@@ -87,15 +89,15 @@ export default {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setTimeout(() => {this.banner4Visible1 = true;},200)
+          setTimeout(() => {this.banner4Visible1 = true;},100)
           setTimeout(() => {this.banner4Visible2 = true;},1200)
           setTimeout(() => {this.banner4Visible3 = true;},2200)
           setTimeout(() => {this.banner4Visible4 = true;},3200)
         }
       });
-    }, { threshold: 0.3 }); // threshold 表示元素有10%出现在视口中时触发
+    }, { threshold: 0.1 });
 
-    const element = this.$el.querySelector('.banner-4'); // 或者直接使用 user-pop 的 class 或 id
+    const element = this.$el.querySelector('.banner-4');
     observer.observe(element);
   }
 }
@@ -344,35 +346,6 @@ export default {
       line-height: 85px;
       text-transform: capitalize;
       color: #CEB864;
-    }
-
-    .partner {
-      width: 322.8px;
-      height: 322.8px;
-
-      margin: 10px;
-      overflow: hidden;
-      position: relative;
-      z-index: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      img {
-        width: 300px;
-      }
-
-      &:after {
-        background: rgba(153, 188, 138, 0.1);
-        content: '';
-        position: absolute;
-        width: 375px;
-        height: 683px;
-        transform: rotate(45deg);
-        left: -67px;
-        top: -135px;
-        z-index: -1;
-      }
     }
   }
 }
