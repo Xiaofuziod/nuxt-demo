@@ -6,7 +6,7 @@
     </div>
     <div>
       <div class="saywteri2473 ellipsis">{{ user.nickname || user.account }}</div>
-      <div class="wtewteri247">已服务{{ servedDays }}天</div>
+      <div class="wtewteri247">{{$t('servedDaysBefore')}}  {{ servedDays }}  {{$t('servedDaysAfter')}}</div>
     </div>
   </div>
 </template>

@@ -83,6 +83,7 @@ export const getWelcomeList = (t) => [
     canSkip: true,
     finish: false,
     desc: t["welcome_desc_11"],
+    highlightWordList: [t["welcome_desc_11_1"], t["welcome_desc_11_2"]],
     id: 11,
   },
   {

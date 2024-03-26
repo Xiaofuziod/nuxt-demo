@@ -92,6 +92,8 @@ export default {
     "welcome_taskText_10": "接下来,让我们先完成第二项准备工作",
     "welcome_title_11": "添加监控",
     "welcome_desc_11": "Taurion会作为你的AI分身，对于你的监控内容总结关键要点，并帮助你进一步理解关键信息。",
+    "welcome_desc_11_1": "总结关键要点",
+    "welcome_desc_11_2": "进一步理解关键信息",
     "welcome_text_12": "你可以通过向我提问或自行搜索来快速增加监控",
     "welcome_text_12_1": "向我提问",
     "welcome_text_12_2": "自行搜索",
@@ -213,4 +215,6 @@ export default {
     "youCanAsk5":"ETH价格-测试数据，待产品提供",
     "youCanAsk6":"ETH价格-测试数据，待产品提供",
     "report-empty-text":"缺少自选，AI无法为您生成焦点报告",
+    "servedDaysBefore": "Taurion已服务",
+    "servedDaysAfter": "天",
 }
