@@ -71,7 +71,7 @@
               @remove="remove(monitor.id)"
           />
         </div>
-        <taurion-btn  @click="addMonitor" text="确认"  active-color="rgba(206, 184, 100, 1)"/>
+        <taurion-btn  @click="addMonitor" :text="$t('Save')"  active-color="rgba(206, 184, 100, 1)"/>
       </div>
       <!-- 其余代码 -->
     </div>
@@ -248,7 +248,7 @@ export default {
   height: 48px;
   line-height: 48px;
   margin-top: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   padding: 15px 20px;
   color: #fff;
 }
@@ -280,7 +280,7 @@ export default {
   text-transform: capitalize;
   color: #CEB864;
   margin-bottom: 12px;
-
+  margin-top: 20px;
 }
 .monitoring-cards {
   display: flex;

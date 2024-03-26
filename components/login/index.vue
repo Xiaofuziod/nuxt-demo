@@ -3,8 +3,8 @@
     <template #header>
       <div class="header-box">
         <div class="login-title" v-if="step === 1">
-          <span :class="{'active': type === 'login' }" @click="type = 'login'">{{ $t("Login_span_1") }}</span>
-          <span :class="{'active': type === 'register'}" @click="type = 'register'">{{ $t("Login_span_2") }}</span>
+          <span :class="{'active': type === 'register'}" @click="type = 'register'">{{ $t("Login_span_1") }}</span>
+          <span :class="{'active': type === 'login' }" @click="type = 'login'">{{ $t("Login_span_2") }}</span>
         </div>
         <div class="back-icon" v-else @click="stepBack">
           <img src="@/assets/imgs/login/back.svg" alt="">
@@ -21,7 +21,7 @@
                                                               v-if="type === 'login'">{{ $t('ForgotPassword') }}</span>
           </div>
           <div class="login-input-box">
-            <input class="login-input" :placeholder="$t('EnterYourPassword')" v-model="password"
+            <input class="login-input" :placeholder="$t(type === 'login' ? 'EnterYourPassword' : 'EnterLimit')" v-model="password"
                    :type="isPassword  ? 'password' : 'text'">
             <img src="@/assets/imgs/login/paw.svg" v-if="isPassword" alt="" @click="isPassword = !isPassword">
             <img src="@/assets/imgs/login/paw2.svg" v-else alt="" @click="isPassword = !isPassword">
@@ -72,7 +72,7 @@
 
         <!--修改密码输入电子邮箱-->
         <div class="login-content" v-if="step === 31">
-          <div class="login-content-title">{{ $t('EnterYourEmail') }}</div>
+          <div class="login-content-title">{{ $t('ResetEnterYourEmail') }}</div>
           <div class="login-content-desc2">{{ $t('ReceiveAVerification') }}</div>
           <div class="input-label">{{ $t('Email') }}</div>
           <input class="login-input" :placeholder="$t('ResetEmailTips')" style="margin-bottom: 8px" v-model="email"

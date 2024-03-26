@@ -2,7 +2,7 @@
   <div class="page-content-wrapper">
     <div class="page-content">
       <div class="left">
-        <breadcrumb-navigation/>
+        <breadcrumb-navigation @click="goList"/>
         <div class="left-header">
           <img :src="monitorDetail?.logo || bianPic" class="left-header-img" alt="">
           <div class="right-content">
@@ -27,7 +27,7 @@
 
         </div>
         <div v-show="activeTab === '1'" v-if="monitorContent" class="content">
-          <audio-player v-if="monitorContent?.link" :audio-src="monitorContent?.link"/>
+          <audio-player style="margin-top: 10px;margin-bottom: 10px" v-if="monitorContent?.link" :audio-src="monitorContent?.link"/>
           <div class="box-wrapper">
             <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
               <template #default="{ items }">
@@ -109,6 +109,10 @@ export default {
       this.$store.dispatch('monitor/fetchMonitorDetail', sourceId)
       this.$store.dispatch('monitor/fetchMonitorSummary', sourceId)
       this.$store.dispatch('monitor/fetchMonitorContent', {sourceId})
+    },
+    goList() {
+      const lan = this.$i18n.locale === "en" ? '/' : `/${this.$i18n.locale}`
+      this.$router.push(`${lan}/monitoring`);
     },
     senMessage() {
       const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'SIGNAL_SOURCE')
@@ -210,7 +214,7 @@ export default {
     padding: 34px 40px;
 
     .content {
-      padding-top: 31px;
+      padding-top: 1px;
       text-align: left;
       overflow: scroll;
       width: 577px;

@@ -2,8 +2,8 @@
   <div class="card" >
     <img class="card-img" :src="card?.logo || bianPic" alt="">
     <div class="card-header">
-      <h3 class="title1">{{ card?.title }}</h3>
-      <h3 class="title2">{{ card?.author }}</h3>
+      <h3 class="title1">{{ card?.author }}</h3>
+      <h3 class="title2">{{ card?.title }}</h3>
       <p class="timestamp">{{ card?.time }}</p>
 <!--      <p class="other">{{ card?.status }}</p>-->
     </div>

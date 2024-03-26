@@ -35,15 +35,15 @@
           <span v-if="$i18n.locale === 'zh'">ZH</span>
           <div class="lang-setting">
             <div class="lang-setting-content">
-              <div class="option-item" @click.stop="changeLanguage('en')">English</div>
-              <div class="option-item" @click.stop="changeLanguage('pt-br')">Português Brasil</div>
-              <div class="option-item" @click.stop="changeLanguage('zh')">中文</div>
+              <div class="option-item" :class="$i18n.locale === 'en' ? 'active':''" @click.stop="changeLanguage('en')">English</div>
+              <div class="option-item" :class="$i18n.locale === 'pt-br' ? 'active':''" @click.stop="changeLanguage('pt-br')">Português Brasil</div>
+              <div class="option-item" :class="$i18n.locale === 'zh' ? 'active':''" @click.stop="changeLanguage('zh')">中文</div>
             </div>
           </div>
         </div>
         <div v-if="!userLoggedIn" class="login-btn" @click="showLogin">{{ $t("AppHeader_index_login-btn_1") }}</div>
         <div v-else class="user-profile">
-          <img src="~/assets/imgs/user.svg" alt="">
+          <img :src="user.avatar" alt="">
 
           <!--        账户操作-->
           <div class="user-setting">
@@ -118,6 +118,9 @@ export default {
     }
   },
   computed: {
+    user() {
+      return this.$store.state.user.userInfo
+    },
     routepath() {
       return this.$route.path
     },
@@ -302,8 +305,14 @@ nav {
 
 .lang-btn {
   position: relative;
-  color: rgba(206, 184, 100, 1);
+  color: #CEB864;
   font-family: Avenir;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: capitalize;
+
   &:hover .lang-setting {
     display: block;
   }
@@ -312,7 +321,7 @@ nav {
 .lang-setting {
   position: absolute;
   top: 0;
-  right: -50px;
+  right: -60px;
   border-radius: 16px;
   z-index: 10;
   padding-top: 60px;
@@ -321,11 +330,13 @@ nav {
   .lang-setting-content {
     background: rgba(38, 64, 64, 0.30);
     backdrop-filter: blur(100px);
+    padding: 10px 20px;
     border-radius: 16px;
     overflow: hidden;
     .option-item {
       color: #FFF;
       font-family: Avenir;
+      width: 120px;
       font-size: 12px;
       font-style: normal;
       font-weight: 400;
@@ -334,15 +345,18 @@ nav {
       cursor: pointer;
       padding: 8px 12px;
       border-bottom: 1px solid rgba(140, 180, 189, 0.12);
-      width: 120px;
+      &.active {
+        color: #CEB864;
+      }
       &:hover {
-        background: rgba(65, 110, 110, 0.5);
+        //background: rgba(65, 110, 110, 0.5);
+        color: #CEB864;
       }
       &:first-child {
-        padding-top: 12px;
+        //padding-top: 12px;
       }
       &:last-child {
-        padding-bottom: 12px;
+        //padding-bottom: 12px;
         border-bottom: none
       }
     }

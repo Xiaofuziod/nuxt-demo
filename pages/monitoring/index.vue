@@ -86,7 +86,8 @@ export default {
       this.$store.commit('monitor/setLoading', false)
     },
     goDetail(id) {
-      this.$router.push(`/monitoring/detail?id=${id}`);
+      const lan = this.$i18n.locale === "en" ? '/' : `/${this.$i18n.locale}`
+      this.$router.push(`${lan}/monitoring/detail?id=${id}`);
     },
     mapTabToStatus(tab) {
       switch (tab) {
@@ -216,7 +217,7 @@ export default {
       .add-monitoring {
         width: 152px;
         height: 22px;
-        color: rgba(140, 180, 189, 1);
+        color: rgba(206, 184, 100, 1);
         font-weight: 500;
         font-size: 16px;
         text-transform: capitalize;

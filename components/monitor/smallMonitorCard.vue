@@ -3,7 +3,6 @@
     <img class="card-img" :src="card?.logo || bianPic" alt="">
     <div class="card-header">
       <h3 class="title1">{{ card?.title }}</h3>
-      <h3 class="title2">{{ card?.author }}</h3>
 <!--      <p class="timestamp">{{ card?.time }}</p>-->
       <!--      <p class="other">{{ card?.status }}</p>-->
     </div>
@@ -37,7 +36,7 @@ export default {
 </script>
 <style scoped lang="less">
 .card {
-  width: 131px;
+  width: 144px;
   height: 34px;
   padding: 6px;
   display: flex;
@@ -64,12 +63,15 @@ export default {
 
   .card-header {
     padding-left: 4px;
-    width: 68px;
+    width: 78px;
     .title1 {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 5px;
-      line-height: 8px;
-      height: 8px;
+      color: #FFF;
+      font-family: Avenir;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 800;
+      height: 22px;
+      line-height: 22px;
       width: 100%;
       // 超出省略
       overflow: hidden;

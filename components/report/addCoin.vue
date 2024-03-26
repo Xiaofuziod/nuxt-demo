@@ -186,7 +186,7 @@ export default {
   height: 48px;
   line-height: 48px;
   margin-top: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   padding: 15px 20px;
   color: #fff;
 }
@@ -218,7 +218,7 @@ export default {
   text-transform: capitalize;
   color: #CEB864;
   margin-bottom: 12px;
-
+  margin-top: 20px;
 }
 .monitoring-cards {
   display: flex;

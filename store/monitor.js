@@ -68,7 +68,7 @@ export const actions = {
     },
     async fetchUnstartMonitorList({commit}, payload) {
         try {
-            const {page, size, status, searchName} = {page: 1, size: 6, status: 1, searchName: '', ...(payload || {})}
+            const {page, size, status, searchName} = {page: 1, size: 4, status: 1, searchName: '', ...(payload || {})}
             const res = await this.$axios.get(`${monitorApi.getMonitorList}?searchName=${searchName}&page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
                 commit('setUnstartMonitors', res.data.data.records);
