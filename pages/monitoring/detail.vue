@@ -112,7 +112,7 @@ export default {
     },
     goList() {
       const lan = this.$i18n.locale === "en" ? '/' : `/${this.$i18n.locale}`
-      this.$router.push(`${lan}/monitoring`);
+      this.$router.push(`${lan}monitoring`);
     },
     senMessage() {
       const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'SIGNAL_SOURCE')
