@@ -31,7 +31,6 @@ export const mutations = {
     state.messageList.push(message)
   },
   setWelcomeList(state, list) {
-    console.log('setWelcomeList', list)
     state.welcomeList = list
   },
   setWlist(state, t) {
@@ -59,9 +58,6 @@ export const mutations = {
   },
   setFinished(state, isFinished) {
     state.isFinished = isFinished
-  },
-  setLastUserQuestion(state, question) {
-    state.lastUserQuestion = question
   },
   setRobot(state, robot) {
     state.robot = {...state.robot, ...robot}
@@ -105,7 +101,6 @@ export const actions = {
       if (res && res.data && res.data.data) {
         if (!showWelcome) {
           const messages = formatMessages(res.data.data.messages)
-          console.log(messages)
           commit('prependMessages', messages)
           commit('setFinished', res.data.data.messages.length < 1)
         }
@@ -123,7 +118,6 @@ export const actions = {
     commit('addMessage', state.welcomeList[state.welcomeIndex])
   },
   updateWelcomeList({commit, state}, ids) {
-    console.log('updateWelcomeList', ids)
     const list = state.welcomeList.filter(item => !ids.includes(item.id))
     commit('setWelcomeList', list)
   },
@@ -131,6 +125,9 @@ export const actions = {
     commit('clearMessageList')
   },
   pushAIMessage({commit, state, rootState}, message) {
+    // 收到消息后，清除回复超时的定时器
+    clearTimeout(timer3)
+    // 如果是追加消息，就把上一条消息的内容和当前消息的内容合并
     let lastMsg = state.messageList[state.messageList.length - 1]
     if ((lastMsg && lastMsg.seqNo === message.seqNo && lastMsg.source === message.source) || lastMsg.loading) {
       const newMsg = {
@@ -143,9 +140,9 @@ export const actions = {
     } else {
       commit('addMessage', message)
     }
-
     // 消息状态更改为success
     commit('setMessageStatus', message.more ? 'concat' : 'success')
+
     // 临时解决方案，如果机器人回答了，5秒后关闭，自动认为回答完毕
     clearTimeout(timer)
     timer = setTimeout(() => {
@@ -153,17 +150,16 @@ export const actions = {
       if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang?.t("robot_message_4")})
     }, 5 * 1000)
 
+
     if (!message.more) {
+    // 欢迎页的头部文案部是单独逻辑
       if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang?.t("robot_message_4")})
     }
-
+    // 五分钟没有操作，机器人会自动问候 欢迎页除外
     if (state.pageName !== 'welcome') {
-      // 五分钟没有操作，机器人会自动问候
       clearTimeout(timer2)
       timer2 = setInterval(() => {
-        commit('setRobot', {
-          text: state.wlist[Math.floor(Math.random() * state.wlist.length)]
-        })
+        commit('setRobot', {text: state.wlist[Math.floor(Math.random() * state.wlist.length)]})
       }, 300 * 1000)
     }
   },
@@ -179,9 +175,11 @@ export const actions = {
       context: message.context
     }
 
-    this.$socket.emit('chat', para)
+    // this.$socket.emit('chat', para)
 
     commit('addMessage', para)
+
+    // 追加一个loading的消息
     commit('addMessage', {
       conversationId: state.conversationId,
       seqNo: nextSeqNo + 1,
@@ -196,21 +194,21 @@ export const actions = {
     commit('setMessageStatus', 'loading')
 
     if (state.pageName !== 'welcome') {
-      // 根据用户的问题，获取机器人的回答
+      // 根据用户的问题，获取机器人状态语
       let text = rootState.lang.t['robot_message_5']
+      // ai focus 和 source 是特殊的机器人状态语
       if (JSON.stringify(message).includes('FOCUS') || JSON.stringify(message).includes('SIGNAL_SOURCE')) {
         text = rootState.lang.t['robot_message_6']
       }
+      // 更新机器人状态语
       commit('setRobot', {text})
 
       // 如果五分钟没有收到回复，认为机器人掉线了
-
       clearTimeout(timer3)
       timer3 = setTimeout(() => {
         commit('setRobot', {text: rootState.lang.t['robot_message_7']})
-      }, 300 * 1000)
+        commit('setMessageStatus', 'error')
+      }, 30 * 1000)
     }
-
-    // commit('setLastUserQuestion', message)
   },
 }

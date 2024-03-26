@@ -115,7 +115,7 @@ export default {
   mounted() {
     this.loadData()
     this.$store.dispatch('coin/fetchUserCoinList')
-    this.$store.commit('chat/setPageName', 'welcome')
+    this.$store.commit('chat/setPageName', 'report')
   },
   methods: {
     handleClick(item) {

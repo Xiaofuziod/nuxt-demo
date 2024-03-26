@@ -56,12 +56,14 @@
                        :message="item"/>
           <!--文本内容-->
           <template v-if="item.text && !(item.context && item.context.hook) || item.loading">
+            <!--用户的文字内容-->
             <div class="text-message-box1" v-if="item.source === 'USER'">
               <div class="text-message">
                 {{ item.text }}
               </div>
             </div>
             <div class="text-message-box2" v-else>
+              <!--欢迎页专用文本渲染-->
               <div class="text-message-v2 text-message-v3"
                    v-if="item.source === 'T-brain'">
                 <Typewriter @writerOver="writerOver"
@@ -76,7 +78,12 @@
                   <div class="dot"></div>
                 </div>
               </div>
+              <!--机器人文本渲染-->
               <div class="text-message-v2" v-else>{{ item.text }}</div>
+              <!--异常提示-->
+              <img class="error-image"
+                   v-if="messageStatus === 'error' && lastMessage.seqNo === item.seqNo"
+                   @click="messageErrorClick(item)" src="@/assets/imgs/error.svg" alt="">
             </div>
           </template>
           <!--定制卡片内容-->
@@ -154,6 +161,9 @@ export default {
     robot() {
       return this.$store.state.chat.robot
     },
+    lastMessage() {
+      return this.messageList[this.messageList.length - 1];
+    },
     messageStatus() {
       return this.$store.state.chat.messageStatus
     },
@@ -186,6 +196,10 @@ export default {
     })
   },
   methods: {
+    messageErrorClick(item) {
+      console.log('messageErrorClick', item)
+      this.$toast.error('消息发送失败，请重试')
+    },
     initLang() {
       this.$store.dispatch('chat/updateLang', this.showWelcome)
     },
@@ -362,6 +376,7 @@ export default {
 .loading-container {
   text-align: center;
   transition: height 0.3s;
+
   img {
     width: 30px;
   }
@@ -593,7 +608,16 @@ export default {
     .text-message-box2 {
       width: 100%;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: flex-start;
+
+      .error-image {
+        width: 24px;
+        height: 24px;
+        margin-left: 12px;
+        margin-top: 14px;
+        cursor: pointer;
+      }
     }
 
     .text-message-box1 {
@@ -629,7 +653,6 @@ export default {
       font-weight: 500;
       font-size: 13px;
       margin-top: 14px;
-      //display: table;
       white-space: pre-line;
     }
 
