@@ -205,5 +205,6 @@ export default {
     "youCanAsk3": "ETH price-test data, to be provided by product",
     "youCanAsk4": "ETH price-test data, to be provided by product",
     "youCanAsk5": "ETH price-test data, to be provided by product",
-    "youCanAsk6": "ETH price-test data, to be provided by product"
+    "youCanAsk6": "ETH price-test data, to be provided by product",
+    "report-empty-text":"Lack of self-selection, AI cannot generate focus report for you",
 }

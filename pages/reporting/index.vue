@@ -47,11 +47,10 @@
             </div>
             <span class="top-account">{{ user.nickname || user.account }}</span>
           </template>
-
         </div>
         <!--      资讯-->
         <div class="focus-list-box">
-          <list-container>
+          <list-container v-show="followList.length">
             <!--      图表-->
             <template v-if="coinId">
               <my-echarts ref="echart"></my-echarts>
@@ -62,6 +61,12 @@
               </div>
             </div>
           </list-container>
+
+          <div class="center-box empty-box" v-if="!loading && !followList.length">
+            <img src="@/assets/imgs/empty.svg" alt="">
+            <span>{{ $t("report-empty-text") }}</span>
+          </div>
+
         </div>
       </div>
       <div class="right">
@@ -95,7 +100,8 @@ export default {
       showDelete: false,
       list: [],
       coinId: '',
-      coinData: {}
+      coinData: {},
+      loading: true
     }
   },
   computed: {
@@ -131,6 +137,7 @@ export default {
       this.$store.dispatch('coin/removeFollow', item.id)
     },
     loadData() {
+      this.loading = true
       this.$axios.get(analysisCoin, {params: {id: this.coinId}}).then(res => {
         if (res.data.data) {
           let obj = res.data.data
@@ -150,12 +157,44 @@ export default {
         } else {
           console.log('no data')
         }
+      }).finally(() => {
+        this.loading = false
       })
     },
   }
 }
 </script>
 <style lang="less" scoped>
+
+
+.center-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+
+.empty-box {
+  max-width: 80%;
+  margin: 0 auto;
+  flex-direction: column;
+  color: rgba(140, 180, 189, 0.60);
+  font-family: Avenir;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+  text-align: center;
+
+  img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 8px;
+  }
+}
 
 .item-active {
   background: linear-gradient(90deg, rgba(172, 241, 216, 0.12) 0%, rgba(172, 241, 216, 0.00) 100%);

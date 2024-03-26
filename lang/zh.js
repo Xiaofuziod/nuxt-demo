@@ -206,4 +206,5 @@ export default {
     "youCanAsk4":"ETH价格-测试数据，待产品提供",
     "youCanAsk5":"ETH价格-测试数据，待产品提供",
     "youCanAsk6":"ETH价格-测试数据，待产品提供",
+    "report-empty-text":"缺少自选，AI无法为您生成焦点报告",
 }

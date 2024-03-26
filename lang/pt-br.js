@@ -206,4 +206,5 @@ export default {
     "youCanAsk4":"Dados de teste de preço ETH, a serem fornecidos por produto",
     "youCanAsk5":"Dados de teste de preço ETH, a serem fornecidos por produto",
     "youCanAsk6":"Dados de teste de preço ETH, a serem fornecidos por produto",
+    "report-empty-text":"Falta de autosseleção, a IA não pode gerar um relatório de foco para você",
 }
