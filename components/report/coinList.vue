@@ -93,7 +93,10 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    .name { width: 356px}
+    .name { width: 356px;
+      text-align: left;
+      padding-left: 55px;
+    }
     .price { width: 95px}
     .time { width: 95px}
     .option { width: 50px}

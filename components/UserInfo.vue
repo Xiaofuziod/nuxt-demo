@@ -1,20 +1,21 @@
 <template>
   <div class="Rectangle82"
-  :class="{'rect-active':isActive}">
+       :class="{'rect-active':isActive}">
     <div class="Ellipse245">
       <img :src="user.avatar" v-if="user.avatar || MonitorAvator" alt="">
     </div>
     <div>
       <div class="saywteri2473 ellipsis">{{ user.nickname || user.account }}</div>
-      <div class="wtewteri247">已服务99天</div>
+      <div class="wtewteri247">已服务{{ servedDays }}天</div>
     </div>
   </div>
 </template>
 <script>
 import MonitorAvator from '@/assets/imgs/monitorAvator.svg'
+
 export default {
   name: 'UserInfo',
-  props:{
+  props: {
     isActive: {
       type: Boolean,
       default: true
@@ -26,7 +27,15 @@ export default {
   computed: {
     user() {
       return this.$store.state.user.userInfo
-    }
+    },
+    servedDays() {
+      if(!this.user.createTime) return 0
+      const createTime = new Date(this.user.createTime);
+      const now = new Date();
+      const diff = now - createTime;
+      const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+      return Math.max(diffDays, 99);
+    },
   },
 
 }
@@ -44,6 +53,7 @@ export default {
   cursor: pointer;
 
   border-left: 3px solid transparent;
+
   .Ellipse245 {
     width: 42px;
     height: 42px;
@@ -76,7 +86,7 @@ export default {
   }
 }
 
-.rect-active{
+.rect-active {
   border-left-color: #ACF1D8;
   background: linear-gradient(90deg, rgba(172, 241, 216, 0.12) 0%, rgba(172, 241, 216, 0.00) 100%);
 }

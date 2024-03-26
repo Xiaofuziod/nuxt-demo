@@ -67,7 +67,7 @@ export default {
     .title1 {
       color: #FFF;
       font-family: Avenir;
-      font-size: 10px;
+      font-size: 12px;
       font-style: normal;
       font-weight: 800;
       height: 22px;
@@ -96,7 +96,7 @@ export default {
 
     .other {
       color: rgba(255, 255, 255, 0.6);
-      font-size: 10px;
+      font-size: 12px;
     }
   }
 }
