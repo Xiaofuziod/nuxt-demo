@@ -98,7 +98,7 @@ export default {
       this.echartsInit()
       this.loading = false
     }
-    console.log(this.formatPrice(0.000000000058))
+    console.log(this.formatPrice(0.000000000058999999))
   },
   methods: {
     formatPrice,
