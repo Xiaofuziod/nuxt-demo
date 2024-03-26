@@ -29,12 +29,12 @@ export default {
       return this.$store.state.user.userInfo
     },
     servedDays() {
-      if(!this.user.createTime) return 0
+      if(!this.user.createTime) return ''
       const createTime = new Date(this.user.createTime);
       const now = new Date();
       const diff = now - createTime;
       const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-      return Math.max(diffDays, 99);
+      return diffDays + 1
     },
   },
 
