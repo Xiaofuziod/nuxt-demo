@@ -20,19 +20,19 @@
           <div class="returns-top">
             <div class="returns-btn">
               <btn class="btn" type="returns">
-                <img class="img1" src="@/static/images/chat/up.svg" alt="" v-if="item.data.returns > 0">
+                <img class="img1" src="@/static/images/chat/up.svg" alt="" v-if="item.data?.returns > 0">
                 <img class="img1" src="@/static/images/chat/down.svg" alt="" v-else>
                 <div class="returns-btn-text"
-                     :class="{ 'positive': item.data.returns > 0, 'negative': item.data.returns < 0}"
-                >{{ item.data.returns > 0 ? $t('StrongBullish') : $t('StrongBearish') }}
+                     :class="{ 'positive': item.data?.returns > 0, 'negative': item.data?.returns < 0}"
+                >{{ item.data?.returns > 0 ? $t('StrongBullish') : $t('StrongBearish') }}
                 </div>
               </btn>
             </div>
 
             <div class="coin-name">
-              <img :src="item.data.coin.logo" class="coin-logo" :alt="item.data.coin.logo">
-              <span class="name">{{ item.data.coin.name }}</span>
-              <span class="coin-symbol">{{ item.data.coin.symbol }}</span>
+              <img :src="item.data?.coin?.logo" class="coin-logo" :alt="item.data?.coin?.logo">
+              <span class="name">{{ item.data?.coin?.name }}</span>
+              <span class="coin-symbol">{{ item.data?.coin?.symbol }}</span>
             </div>
           </div>
 
@@ -40,7 +40,7 @@
             Positive Developments
           </div>
           <ul class="returns-list">
-            <li v-for="reason of item.data.advantages">
+            <li v-for="reason of item.data?.advantages">
               {{ reason }}
             </li>
           </ul>
@@ -48,14 +48,14 @@
             Potential Concerns
           </div>
           <ul class="returns-list">
-            <li v-for="reason of item.data.disadvantages">
+            <li v-for="reason of item.data?.disadvantages">
               {{ reason }}
             </li>
           </ul>
           <div class="returns-title">
             conclusion
           </div>
-          <p class="returns-conclusion">{{ item.data.conclusion }}</p>
+          <p class="returns-conclusion">{{ item.data?.conclusion }}</p>
         </div>
       </div>
 
