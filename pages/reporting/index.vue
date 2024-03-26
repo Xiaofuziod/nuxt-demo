@@ -39,7 +39,7 @@
             <div class="pic">
               <img :src="coinData.icon" v-if="coinData.icon" alt="">
             </div>
-            {{ coinData.name }}
+            <span class="top-account">{{ coinData.name }}</span>
           </template>
           <template v-else>
             <div class="pic">

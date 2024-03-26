@@ -148,12 +148,12 @@ export const actions = {
 
     // 消息状态更改为success
     commit('setMessageStatus', message.more ? 'concat' : 'success')
-    // 临时解决方案，如果机器人回答了，10秒后关闭
+    // 临时解决方案，如果机器人回答了，5秒后关闭，自动认为回答完毕
     clearTimeout(timer)
     timer = setTimeout(() => {
       commit('setMessageStatus', 'success')
       if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang?.t("robot_message_4")})
-    }, 10 * 1000)
+    }, 5 * 1000)
 
     if (!message.more) {
       if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang?.t("robot_message_4")})
@@ -190,7 +190,7 @@ export const actions = {
       source: "ASSISTANT",
       context: null,
       language: this.$i18n.locale,
-      text: '',
+      text: ' ',
       layers: [],
       loading: true
     })
@@ -212,7 +212,7 @@ export const actions = {
         commit('setRobot', {text: rootState.lang.t['robot_message_7']})
       }, 300 * 1000)
     }
-    
+
     // commit('setLastUserQuestion', message)
   },
 }

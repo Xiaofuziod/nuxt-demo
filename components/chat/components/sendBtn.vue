@@ -1,16 +1,22 @@
 <template>
-  <button :class="{'loading': loading}" type="submit">
+  <button :class="{'loading': sendLoading}" type="submit">
     <img class="img1" src="@/static/images/chat/send3.svg" alt="">
   </button>
 </template>
 <script>
 export default {
   name: 'SendBtn',
-  computed: {
-    loading() {
-      return this.$store.state.chat.messageStatus === 'loading' || this.$store.state.chat.messageStatus === 'concat'
+  props: {
+    sendLoading: {
+      type: Boolean,
+      default: false
     }
   },
+  // computed: {
+  //   loading() {
+  //     return this.$store.state.chat.messageStatus === 'loading' || this.$store.state.chat.messageStatus === 'concat'
+  //   }
+  // },
 }
 </script>
 <style scoped lang="less">
