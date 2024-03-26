@@ -14,7 +14,6 @@
           <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
             {{ coin.change?.toFixed(2) }}%
           </div>
-          <!--          <img src="@/assets/imgs/chat/tips.svg" alt="">-->
         </div>
         <div class="select-row">
           <div v-for="(item,index) in selectList" :key="index"
@@ -213,7 +212,7 @@ export default {
     },
     reload(coinId) {
       this.coinId = coinId
-      this.loadData({value: '1m'})
+      this.loadData({value: '1d'})
     }
   }
 }
@@ -246,12 +245,6 @@ export default {
   display: flex;
   align-items: center;
   padding: 12px 40px;
-
-  img {
-    width: 10px;
-    height: 10px;
-    margin-left: 8px;
-  }
 }
 
 
