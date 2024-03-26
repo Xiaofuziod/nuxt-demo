@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'topSticky':message.type === 'task' && !message.finish}">
+  <div>
     <div class="text-message-v2" v-if="message.type === 'taskStart' || message.type === 'taskFinish' ">
       {{ message.taskText }}
       <div class="start-btn-box" v-if="message.startBtnShow">
@@ -11,9 +11,9 @@
       </div>
     </div>
 
-    <div class="text-message-v2"
+    <div class="text-message-v2 task-box"
          v-if="message.type === 'task' && !message.finish"
-         style="position: relative;background: rgb(8,20,38);">
+         style="position: relative;margin-top: 23px">
       <div class="task-tip">
         <btn>
           <img src="@/assets/imgs/chat/task.svg" alt="">
@@ -73,8 +73,16 @@ export default {
     userCoinList() {
       return this.$store.state.coin.userCoinList
     },
+    userMonitorList() {
+      return this.$store.state.monitor.userMonitor?.records || []
+    },
     finishBtnDisable() {
-      return this.message.searchType === 'coin' ? this.userCoinList.length === 0 : false
+      if (this.message.searchType === 'coin') {
+        return this.userCoinList.length === 0
+      }
+      if (this.message.searchType === 'monitor') {
+        return this.userMonitorList.length === 0
+      }
     },
     messageList() {
       return this.$store.state.chat.messageList
@@ -89,6 +97,7 @@ export default {
   },
   methods: {
     async task2Finish(val) {
+      if (this.finishBtnDisable && !val) return
       // 如果是跳过的，则需要删除 欢迎文案中的
       // 16 , 17 ,18 跳过的文案
       //  13. 14 非跳过的文案
@@ -108,13 +117,14 @@ export default {
       })
       await this.$store.dispatch('chat/welcomeToNext')
     },
-    startBtnClick() {
+    async startBtnClick() {
       const idx = this.messageList.findIndex(item => item.id === this.message.id)
       this.$store.commit('chat/updateMessage', {
         index: idx,
         message: {...this.message, startBtnShow: false}
       })
-      this.$store.dispatch('chat/welcomeToNext')
+      await this.$store.dispatch('chat/welcomeToNext')
+      await this.$emit('goBottom')
     },
     showSelect() {
       if (this.message.searchType === 'coin') {

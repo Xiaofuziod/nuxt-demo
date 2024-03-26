@@ -77,7 +77,7 @@ export default {
     "welcome_text_2": "I'm Taurion AI, your financial assitant and housekeeper.",
     "welcome_text_3": "I have a powerful brain that can help you analyze huge amounts of information and answer any of your financial questions.",
     "welcome_text_4": "I'd be honored to be your 'financial co-pilot'.",
-    "welcome_text_5": "Now, let's start with the first task.",
+    "welcome_text_5": "You can ask me any questions about finance and I will try my best to help you answer them.",
     "welcome_taskText_6": "Now, let's start with the first task.",
     "welcome_title_7": "Add Cryptocurrencies",
     "welcome_desc_7": "Once added, Taurion will generate a daily market focus of your assets to help you reduce market noise",

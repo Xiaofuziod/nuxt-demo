@@ -46,7 +46,9 @@
             </div>
           </div>
           <!--欢迎的任务-->
-          <welcomeTask v-if="showWelcome && item.source === 'T-brain'" :message="item"/>
+          <welcomeTask v-if="showWelcome && item.source === 'T-brain'"
+                       @goBottom="scrollToBottom"
+                       :message="item"/>
           <!--文本内容-->
           <template v-if="item.text && !(item.context && item.context.hook)">
             <div class="text-message-box1" v-if="item.source === 'USER'">
@@ -263,8 +265,8 @@ export default {
         console.log(`ignore message from other conversation:`, data)
         return
       }
-      this.scrollToBottom()
       this.$store.dispatch('chat/pushAIMessage', msg)
+      this.scrollToBottom()
     },
     writerOver() {
       const lastMsg = this.messageList[this.messageList.length - 1]
@@ -278,6 +280,7 @@ export default {
             }, lastMsg.sleep)
           } else {
             this.$store.dispatch('chat/welcomeToNext')
+            console.log('welcomeIndex', this.$store.state.chat.welcomeIndex)
             this.scrollToBottom()
           }
         }
@@ -291,7 +294,7 @@ export default {
             layers: [
               {
                 type: lastMsg.needPushHotCoin ? "HOT_COINS" : "MONITORING_SIGNAL",
-                title:  lastMsg.needPushHotCoin ?this.$t("TOPCRYPTOCURRENCIES") : this.$t("TOPSIGNALSOURCE"),
+                title: lastMsg.needPushHotCoin ? this.$t("TOPCRYPTOCURRENCIES") : this.$t("TOPSIGNALSOURCE"),
                 data: {
                   coins: this.$store.state.coin.coinList,
                   datas: this.$store.state.monitor.searchMonitor?.records
@@ -308,7 +311,11 @@ export default {
             more: false,
           }
           this.$store.dispatch('chat/pushWelcomeMessage', para)
-          this.scrollToBottom()
+          this.$nextTick(() => {
+            let box = document.querySelectorAll('.task-box')
+            const top = box[box.length - 1].offsetTop
+            this.scrollToBottom(top - 30)
+          })
         }
         if (lastMsg.over) {
           setTimeout(() => {
@@ -317,11 +324,12 @@ export default {
         }
       }
     },
-    scrollToBottom() {
+    scrollToBottom(topVale) {
+      console.log(topVale)
       this.$nextTick(() => {
         const messagesContainer = this.$refs.messagesContainer;
         messagesContainer.scrollTo({
-          top: messagesContainer.scrollHeight,
+          top: topVale || messagesContainer.scrollHeight,
           behavior: 'smooth'
         })
       });
@@ -332,11 +340,11 @@ export default {
     this.$socket.off('connect', this.onWebsocketConnect);
   },
   watch: {
-    msgLength(newValue, oldValue) {
-      if (newValue - oldValue < 5) {
-        this.scrollToBottom()
-      }
-    }
+    // msgLength(newValue, oldValue) {
+    //   if (newValue - oldValue < 5) {
+    //     this.scrollToBottom()
+    //   }
+    // }
   }
 }
 </script>

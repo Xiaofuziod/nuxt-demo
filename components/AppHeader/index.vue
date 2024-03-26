@@ -113,7 +113,8 @@ export default {
     logout() {
       this.$localStorage.removeItem('token')
       this.userLoggedIn = false
-      this.$router.replace("/")
+      this.$store.dispatch('chat/clearMessageList')
+      window.location.href = '/'
     }
   },
   computed: {

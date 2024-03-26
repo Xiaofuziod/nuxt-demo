@@ -13,11 +13,13 @@
           <div class="step-title-icon">
             <span class="step-loading style-2" v-if="welcomeStep < 2"></span>
             <div class='btn-container' v-else>
-              <button class='btn btn--shockwave is-active'></button>
+              <button class='btn btn--shockwave is-active'>
+                <img class="step-finish-img" src="@/assets/imgs/chat/finish.svg" alt="">
+              </button>
             </div>
           </div>
           <div class="step-title-text">
-            <span>{{ $t("welcome_index_span_1") }} </span>
+            <span>{{ $t("welcome_index_span_1") }} </span> {{welcomeIndex}} - {{welcomeStep}}
           </div>
         </div>
         <!--第二步-->
@@ -88,7 +90,9 @@
                 {{ $t("Collapse") }}<img src="@/assets/imgs/chat/up.svg" alt="">
               </div>
             </template>
-            <div class="add-text" @click="handleClick('monitor')">
+            <div class="add-text"
+                 v-if="welcomeIndex > 9"
+                 @click="handleClick('monitor')">
               {{ $t("welcome_index_add-text_1") }}
             </div>
           </div>
@@ -96,7 +100,7 @@
         <!--第四步-->
         <div class="step-title" v-if="welcomeStep >= 4">
           <div class="step-title-icon">
-            <span class="step-loading style-2" v-if="isOver"></span>
+            <span class="step-loading style-2" v-if="!isOver"></span>
             <div class='btn-container' v-else>
               <button class='btn btn--shockwave is-active'></button>
             </div>
@@ -151,7 +155,7 @@ export default {
       } else if (this.welcomeIndex < 9) {
         this.$store.commit('chat/setRobot', {text: this.$t('robot_message_9')})
         return 2
-      } else if (this.welcomeIndex < 15) {
+      } else if (this.welcomeIndex < 14) {
         this.$store.commit('chat/setRobot', {text: this.$t('robot_message_10')})
         return 3
       } else {
@@ -217,6 +221,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+.step-finish-img{
+  width: 18px;
+  height: 18px;
+}
 
 @mixin afterBg {
   content: '';
@@ -455,12 +464,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    img {
-      width: 24px;
-      height: 24px;
-      border-radius: 24px;
-    }
+    //
+    //img {
+    //  width: 24px;
+    //  height: 24px;
+    //  border-radius: 24px;
+    //}
   }
 }
 

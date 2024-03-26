@@ -78,7 +78,7 @@ export default {
     "welcome_text_2": "Eu sou o T-brain, seu assistente financeiro de IA.",
     "welcome_text_3": "Eu tenho um cérebro poderoso que pode te ajudar a analisar grandes quantidades de informação e responder qualquer uma das suas perguntas financeiras.",
     "welcome_text_4": "Eu ficaria honrado em ser seu 'co-piloto financeiro'.",
-    "welcome_text_5": "Agora, vamos começar com a primeira tarefa.",
+    "welcome_text_5": "Você pode me fazer qualquer pergunta sobre finanças e farei o possível para ajudá-lo a respondê-las.",
     "welcome_taskText_6": "Agora, vamos começar com a primeira tarefa.",
     "welcome_title_7": "Adicionar Criptomoedas",
     "welcome_desc_7": "Uma vez adicionadas, o Taurion irá gerar um foco de mercado diário dos seus ativos para ajudá-lo a reduzir o ruído do mercado",

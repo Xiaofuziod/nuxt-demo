@@ -123,7 +123,7 @@
             {{$t('INTRODUCTION')}}
           </div>
           <div class="returns-desc">
-            24h内，社区讨论热度增加，多位Kol和新闻发布利好观点，较多新闻也解释出利好的信号，按照历史趋势，高热度且持续利好，是涨幅初期的一种关键表现
+            {{ item.description}}
           </div>
           <div class="returns-title">
             {{$t('MARKET')}}
