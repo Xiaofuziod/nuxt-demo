@@ -65,27 +65,23 @@ export default {
           value: '1d'
         },
         {
-          name: '1M',
-          value: '1m'
+          name: '7D',
+          value: '7d'
         },
         {
-          name: '3M',
-          value: '3m'
+          name: '1M',
+          value: '1m'
         },
         {
           name: '1Y',
           value: '1y'
         },
         {
-          name: '5Y',
-          value: '5y'
-        },
-        {
           name: 'ALL',
           value: 'all'
         }
       ],
-      activeKey: '1m',
+      activeKey: '1d',
       coinId: 10
     }
   },
@@ -98,7 +94,6 @@ export default {
       this.echartsInit()
       this.loading = false
     }
-    console.log(this.formatPrice(0.000000000058999999))
   },
   methods: {
     formatPrice,
