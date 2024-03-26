@@ -17,7 +17,7 @@
     </div>
 
     <div class="chat-content" ref="messagesContainer" @scroll="handleScroll">
-      <div class="loading-container" v-if="isLoading">
+      <div class="loading-container" v-if="isLoading && !showWelcome">
         <dot-carousel/>
       </div>
       <div class="chat-padding">
@@ -62,8 +62,11 @@
               </div>
             </div>
             <div class="text-message-box2" v-else>
-              <div class="text-message-v2 text-message-v3" v-if="item.source === 'T-brain'">
-                <Typewriter @writerOver="writerOver" :highlightList="item.highlightList" :text="item.text"/>
+              <div class="text-message-v2 text-message-v3"
+                   v-if="item.source === 'T-brain'">
+                <Typewriter @writerOver="writerOver"
+                            :typingSpeed="typingSpeed"
+                            :highlightList="item.highlightList" :text="item.text"/>
               </div>
               <!--loading 内容-->
               <div class="text-message-v2" v-else-if="item.loading">
@@ -122,10 +125,13 @@ export default {
       welcomeInputDisable: false,
       isViewingHistory: false,
       mode: 'production',
-      isLoading: true,
+      isLoading: false,
     }
   },
   computed: {
+    typingSpeed() {
+      return this.$i18n.locale === 'zh' ? 80 : 30
+    },
     conversationId() {
       return this.$store.state.chat.conversationId
     },
@@ -144,9 +150,6 @@ export default {
     },
     isFinished() {
       return this.$store.state.chat.isFinished
-    },
-    msgLength() {
-      return this.messageList.length
     },
     robot() {
       return this.$store.state.chat.robot
@@ -227,6 +230,7 @@ export default {
       this.isLoading = true
       const previousHeight = this.$refs.messagesContainer?.scrollHeight;
       await this.$store.dispatch('chat/fetchEarlierMessages', this.showWelcome)
+      this.isLoading = false
       if (this.$refs.messagesContainer) {
         // 插入后，调整滚动位置
         this.$nextTick(() => {
@@ -234,7 +238,7 @@ export default {
           this.$refs.messagesContainer.scrollTop += currentHeight - previousHeight;
         });
       }
-      this.isLoading = false
+
     },
     onWebsocketReceiveMessage(data) {
       this.getMessage(data);

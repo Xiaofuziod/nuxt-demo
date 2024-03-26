@@ -121,8 +121,6 @@ export const actions = {
   welcomeToNext({commit, state}) {
     commit('setWelcomeIndex', state.welcomeIndex + 1)
     commit('addMessage', state.welcomeList[state.welcomeIndex])
-    console.log(state.welcomeList[state.welcomeIndex])
-
   },
   updateWelcomeList({commit, state}, ids) {
     console.log('updateWelcomeList', ids)
