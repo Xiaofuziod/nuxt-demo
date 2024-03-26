@@ -93,6 +93,8 @@ export default {
     "welcome_title_11": "添加监控",
     "welcome_desc_11": "Taurion会作为你的AI分身，对于你的监控内容总结关键要点，并帮助你进一步理解关键信息。",
     "welcome_text_12": "你可以通过向我提问或自行搜索来快速增加监控",
+    "welcome_text_12_1": "向我提问",
+    "welcome_text_12_2": "自行搜索",
     "welcome_text_16": "虽然你选择了跳过这个任务",
     "welcome_text_17": "但别忘了，我是有这个强大的监控功能的哦～",
     "welcome_text_18": "看来你已经迫不及待想体验 Taurion 了",

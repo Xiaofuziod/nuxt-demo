@@ -90,6 +90,7 @@ export const getWelcomeList = (t) => [
     source: "T-brain",
     autoNext: false,
     needPushHotMonitor: true,
+    highlightWordList: [t["welcome_text_12_1"], t["welcome_text_12_2"]],
     id: 12,
   },
   {

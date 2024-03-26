@@ -92,6 +92,8 @@ export default {
     "welcome_title_11": "Add Monitoring",
     "welcome_desc_11": "Taurion acts as your AI avatar, summarizing key points from monitored content to help you better understand critical information.",
     "welcome_text_12": "You can quickly add surveillance by asking me questions or search.",
+    "welcome_text_12_1": "asking me questions",
+    "welcome_text_12_2": "search",
     "welcome_text_16": "Although you chose to skip",
     "welcome_text_17": "But don't forget, I do have this powerful surveillance function",
     "welcome_text_18": "I see you can't wait to explore Taurion.",
