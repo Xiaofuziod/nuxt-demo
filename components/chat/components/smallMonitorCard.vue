@@ -2,7 +2,7 @@
   <div class="card">
     <img class="card-img" :src="card?.logo || bianPic" alt="">
     <div class="card-header">
-      <h3 class="title2">{{ card?.author }}</h3>
+      <h3 class="title2">{{ card?.title }}</h3>
     </div>
     <img class="option-img" @click="$emit('remove')" src="@/assets/imgs/close.svg" alt="">
   </div>

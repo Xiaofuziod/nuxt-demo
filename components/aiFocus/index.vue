@@ -99,10 +99,10 @@ export default {
           }
         },
       }
-      this.$store.dispatch('chat/sendUserMessage', para)
-
-      item.trigger = 1
-      this.$emit('read', item.id)
+      setTimeout(() => {
+        this.$store.dispatch('chat/sendUserMessage', para)
+        item.trigger = 1
+      }, 1000)
     },
     animate() {
       document.querySelectorAll('.button').forEach(button => {

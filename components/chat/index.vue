@@ -3,7 +3,7 @@
     <div class="chat-top">
       <div class="chat-top-left">
         <div class="chat-top-image">
-          <div class="mic">
+          <div class="mic" :class="{'sendLoading':sendLoading}">
             <img class="mic-icon" :src="robot.avatar" alt="" v-if="robot.avatar">
             <div class="mic-shadow"></div>
           </div>
@@ -17,8 +17,13 @@
     </div>
 
     <div class="chat-content" ref="messagesContainer" @scroll="handleScroll">
+      <div class="loading-container" v-if="isLoading && !showWelcome">
+        <dot-carousel/>
+      </div>
       <div class="chat-padding">
-        <template v-for="(item,index) in messageList">
+        <template v-for="(item) in messageList">
+          <!-- 消息时间-->
+          <div class="message-time" v-if="item.displayTime">{{ item.displayTime }}</div>
           <!--AI焦点-->
           <div class="text-message-box1"
                v-if="item.context && item.context.hook && item.context.hook.type === 'FOCUS'">
@@ -50,35 +55,32 @@
                        @goBottom="scrollToBottom"
                        :message="item"/>
           <!--文本内容-->
-          <template v-if="item.text && !(item.context && item.context.hook)">
+          <template v-if="item.text && !(item.context && item.context.hook) || item.loading">
             <div class="text-message-box1" v-if="item.source === 'USER'">
               <div class="text-message">
                 {{ item.text }}
               </div>
             </div>
             <div class="text-message-box2" v-else>
-              <div class="text-message-v2 text-message-v3" v-if="item.source === 'T-brain'">
-                <Typewriter @writerOver="writerOver" :highlightList="item.highlightList" :text="item.text"/>
+              <div class="text-message-v2 text-message-v3"
+                   v-if="item.source === 'T-brain'">
+                <Typewriter @writerOver="writerOver"
+                            :typingSpeed="typingSpeed"
+                            :highlightList="item.highlightList" :text="item.text"/>
               </div>
-              <div class="text-message-v2" v-else>{{ item.text }}</div>
-            </div>
-          </template>
-          <!--loading 内容-->
-          <template v-if="item.loading">
-            <div class="text-message-box2">
-              <div class="text-message-v2">
+              <!--loading 内容-->
+              <div class="text-message-v2" v-else-if="item.loading">
                 <div class="chat-bubble">
                   <div class="dot"></div>
                   <div class="dot"></div>
                   <div class="dot"></div>
                 </div>
               </div>
+              <div class="text-message-v2" v-else>{{ item.text }}</div>
             </div>
           </template>
           <!--定制卡片内容-->
           <chat-card :layers="item.layers" :seq-no="item.seqNo" v-if="item.layers && item.layers.length > 0"/>
-          <!--          消息时间-->
-          <div class="message-time" v-if="item.displayTime">{{ item.displayTime }}</div>
         </template>
       </div>
     </div>
@@ -88,7 +90,7 @@
              :placeholder="$t('Robot_message_ask')"
              :disabled="disableInput">
       <div class="send-btn" @click="sendMessage">
-        <send-btn/>
+        <send-btn :sendLoading="sendLoading"/>
       </div>
     </div>
 
@@ -123,9 +125,13 @@ export default {
       welcomeInputDisable: false,
       isViewingHistory: false,
       mode: 'production',
+      isLoading: false,
     }
   },
   computed: {
+    typingSpeed() {
+      return this.$i18n.locale === 'zh' ? 80 : 30
+    },
     conversationId() {
       return this.$store.state.chat.conversationId
     },
@@ -145,15 +151,15 @@ export default {
     isFinished() {
       return this.$store.state.chat.isFinished
     },
-    msgLength() {
-      return this.messageList.length
-    },
     robot() {
       return this.$store.state.chat.robot
     },
     messageStatus() {
       return this.$store.state.chat.messageStatus
-    }
+    },
+    sendLoading() {
+      return this.$store.state.chat.messageStatus === 'loading' || this.$store.state.chat.messageStatus === 'concat'
+    },
   },
   mounted() {
     // 初始化语言
@@ -221,8 +227,10 @@ export default {
       //   更一般的做法应该是先获取对话列表，然后用户点击哪个对话，再根据点击对话的 id 来拉取历史消息。
 
       // 获取历史消息之前的滚动条高度
+      this.isLoading = true
       const previousHeight = this.$refs.messagesContainer?.scrollHeight;
       await this.$store.dispatch('chat/fetchEarlierMessages', this.showWelcome)
+      this.isLoading = false
       if (this.$refs.messagesContainer) {
         // 插入后，调整滚动位置
         this.$nextTick(() => {
@@ -230,7 +238,7 @@ export default {
           this.$refs.messagesContainer.scrollTop += currentHeight - previousHeight;
         });
       }
-      this.isLoading = false
+
     },
     onWebsocketReceiveMessage(data) {
       this.getMessage(data);
@@ -349,6 +357,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+
+.loading-container {
+  text-align: center;
+  transition: height 0.3s;
+  img {
+    width: 30px;
+  }
+}
+
 .message-time {
   color: #5D7B86;
   font-family: Avenir;
@@ -384,7 +402,7 @@ export default {
     width: 45px;
     height: 45px;
     background: linear-gradient(160deg, #00FEB5 20.04%, #00FEB5 20.04%, #90FF00 78.21%);
-    animation: circle-size 0.8s linear infinite alternate;
+    //animation: circle-size 0.8s linear infinite alternate;
   }
 
   &-icon {
@@ -432,12 +450,22 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    //transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     border-radius: 100%;
     z-index: 1;
     box-shadow: 2px -5px 6px 3px rgba(30, 83, 95, 0.3), 5px -2px 10px 2px rgba(30, 83, 95, 0.3), -2px -3px 20px 2px rgba(26, 41, 49, 0.3), 5px 1px 3px 2px rgba(30, 83, 95, 0.3), .6px .4px 15px 2px rgba(26, 41, 49, 0.3);
-    animation: shadow-rotate 1.5s linear infinite;
+    //animation: shadow-rotate 1.5s linear infinite;
     transform-origin: center;
+  }
+}
+
+.sendLoading {
+  &::after {
+    animation: circle-size 0.8s linear infinite alternate;
+  }
+
+  &-shadow {
+    animation: shadow-rotate 1.5s linear infinite;
   }
 }
 
@@ -592,6 +620,7 @@ export default {
       max-width: 440px;
       overflow: hidden;
       box-sizing: border-box;
+      min-height: 55px;
       padding: 16px 20px;
       border-radius: 16px;
       color: rgba(255, 255, 255, 1);

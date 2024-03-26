@@ -60,6 +60,7 @@ export default {
   height: 100%;
   overflow: auto;
 }
+
 .loading-container {
   text-align: center;
   img{

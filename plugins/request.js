@@ -1,3 +1,4 @@
+import {getCookie} from '~/utils/cookie'
 export default function ({$axios, redirect}) {
   $axios.onRequest(config => {
     const defaultParams = {}
@@ -8,7 +9,9 @@ export default function ({$axios, redirect}) {
       config.params = config.params ? Object.assign(config.params, defaultParams) : defaultParams
     }
     const token = localStorage.getItem('token')
+    const lang = getCookie('i18n_redirected') || 'en'
     $axios.setHeader('Authorization', 'Bearer ' + token)
+    $axios.setHeader('Language', lang)
   })
 
   $axios.onError(error => {

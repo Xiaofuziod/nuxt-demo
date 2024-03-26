@@ -39,7 +39,7 @@
             <div class="pic">
               <img :src="coinData.icon" v-if="coinData.icon" alt="">
             </div>
-            {{ coinData.name }}
+            <span class="top-account">{{ coinData.name }}</span>
           </template>
           <template v-else>
             <div class="pic">
@@ -50,6 +50,7 @@
         </div>
         <!--      资讯-->
         <div class="focus-list-box">
+          <box-loading :loading="loading && !coinId"/>
           <list-container v-show="followList.length">
             <!--      图表-->
             <template v-if="coinId">
@@ -66,7 +67,6 @@
             <img src="@/assets/imgs/empty.svg" alt="">
             <span>{{ $t("report-empty-text") }}</span>
           </div>
-
         </div>
       </div>
       <div class="right">
@@ -340,9 +340,11 @@ export default {
     flex-direction: column;
 
     .focus-list-box {
+      width: 100%;
       flex: 1;
       overflow: hidden;
       box-sizing: inherit;
+      position: relative;
     }
 
     .focus-list {

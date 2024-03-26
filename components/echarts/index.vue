@@ -14,7 +14,6 @@
           <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
             {{ coin.change?.toFixed(2) }}%
           </div>
-          <!--          <img src="@/assets/imgs/chat/tips.svg" alt="">-->
         </div>
         <div class="select-row">
           <div v-for="(item,index) in selectList" :key="index"
@@ -65,27 +64,23 @@ export default {
           value: '1d'
         },
         {
-          name: '1M',
-          value: '1m'
+          name: '7D',
+          value: '7d'
         },
         {
-          name: '3M',
-          value: '3m'
+          name: '1M',
+          value: '1m'
         },
         {
           name: '1Y',
           value: '1y'
         },
         {
-          name: '5Y',
-          value: '5y'
-        },
-        {
           name: 'ALL',
           value: 'all'
         }
       ],
-      activeKey: '1m',
+      activeKey: '1d',
       coinId: 10
     }
   },
@@ -98,7 +93,6 @@ export default {
       this.echartsInit()
       this.loading = false
     }
-    console.log(this.formatPrice(0.000000000058))
   },
   methods: {
     formatPrice,
@@ -218,7 +212,7 @@ export default {
     },
     reload(coinId) {
       this.coinId = coinId
-      this.loadData({value: '1m'})
+      this.loadData({value: '1d'})
     }
   }
 }
@@ -251,12 +245,6 @@ export default {
   display: flex;
   align-items: center;
   padding: 12px 40px;
-
-  img {
-    width: 10px;
-    height: 10px;
-    margin-left: 8px;
-  }
 }
 
 
