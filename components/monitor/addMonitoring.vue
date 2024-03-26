@@ -149,7 +149,7 @@ export default {
     },
     select(item){
       if(this.selectMonitors.length > 4) {
-        this.$toast.error('同时间最多可添加5个')
+        this.$toast.error(this.$t('addCoin_tips-1'))
       } else {
         const isDuplicate = this.selectMonitors.some((i) => i.id === item.id);
         if (isDuplicate) return
