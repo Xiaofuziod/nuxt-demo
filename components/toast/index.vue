@@ -35,7 +35,7 @@ export default {
 .toast {
   /* 样式设置 */
   position: fixed;
-  top: 40px;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
   padding: 16px 48px;
