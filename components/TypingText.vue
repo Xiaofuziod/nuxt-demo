@@ -6,6 +6,12 @@
           v-if="index < activeIndex"
           class="typing-demo"
           :class="`${(index+1) < activeIndex ? 'finished' :''}`"
+          :style="{
+            fontSize,
+            fontFamily,
+            marginBottom,
+            width
+          }"
       >
         {{ line.text }}
       </div>
@@ -18,6 +24,10 @@
 export default {
   props: {
     lines: Array,
+    fontSize: String,
+    fontFamily: String,
+    marginBottom: String,
+    width: String,
   },
   data() {
     return {

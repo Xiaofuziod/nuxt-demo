@@ -14,11 +14,6 @@
               { text: 'INVESTMENT PRODUCTS' },
         ]"
             />
-<!--            <div class="wrapper">-->
-<!--              <div class="typing-demo">BUILD THE</div>-->
-<!--              <div class="typing-demo">BEST WEB3</div>-->
-<!--              <div class="typing-demo">INVESTMENT PRODUCTS</div>-->
-<!--            </div>-->
           </div>
         </div>
         <img src="~/assets/imgs/home-banner-1.svg" alt="">
@@ -44,44 +39,10 @@
       <div class="banner-4">
         <div class="title1">{{ $t("pages_index_title1_4") }}</div>
         <div class="title2">{{ $t("pages_index_title2_3") }}</div>
-        <div class="user-box position-1">
-          <div class="userinfo">
-            <img src="~/assets/imgs/user-girl-1.png" alt="">
-            <span class="name">{{ $t("pages_index_name_1") }}</span>
-            <span class="phone">{{ $t("pages_index_phone_1") }}</span>
-          </div>
-          <p class="desc">{{ $t("pages_index_desc_1") }}</p>
-          <div class="line"></div>
-        </div>
-        <div class="user-box position-2">
-          <div class="userinfo">
-            <img src="~/assets/imgs/user-girl-2.png" alt="">
-            <span class="name">{{ $t("pages_index_name_1") }}</span>
-            <span class="phone">{{ $t("pages_index_phone_1") }}</span>
-          </div>
-          <p class="desc">{{ $t("pages_index_desc_1") }}</p>
-          <div class="line"></div>
-        </div>
-        <div class="user-box position-3">
-          <div class="userinfo">
-            <img src="~/assets/imgs/user.svg" alt="">
-            <span class="name">{{ $t("pages_index_name_1") }}</span>
-            <span class="phone">{{ $t("pages_index_phone_1") }}</span>
-          </div>
-          <p class="desc">
-            {{ $t("pages_index_desc_1") }}
-          </p>
-        </div>
-        <div class="user-box position-4">
-          <div class="userinfo">
-            <img src="~/assets/imgs/user.svg" alt="">
-            <span class="name">{{ $t("pages_index_name_1") }}</span>
-            <span class="phone">{{ $t("pages_index_phone_1") }}</span>
-          </div>
-          <p class="desc">
-            {{ $t("pages_index_desc_1") }}
-          </p>
-        </div>
+        <user-pop v-if="banner4Visible1" top="155px" left="15px" />
+        <user-pop v-if="banner4Visible2" top="488px" left="962px" />
+        <user-pop v-if="banner4Visible3" top="215px" left="755px" />
+        <user-pop v-if="banner4Visible4" top="472px" left="330px" />
       </div>
       <div class="banner-5">
         <div class="title1">{{ $t("pages_index_title1_5") }}</div>
@@ -97,10 +58,18 @@
   </div>
 </template>
 <script>
+import UserPop from "@/components/pageui/userPop.vue";
+
 export default {
   name: 'Home',
+  components: {UserPop},
   data() {
-    return {}
+    return {
+      banner4Visible1: false,
+      banner4Visible2: false,
+      banner4Visible3: false,
+      banner4Visible4: false,
+    }
   },
   mounted() {
     // 一点登录的逻辑
@@ -114,6 +83,20 @@ export default {
       this.$store.dispatch('user/twitterLogin', this.$route.query)
     }
 
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {this.banner4Visible1 = true;},200)
+          setTimeout(() => {this.banner4Visible2 = true;},1200)
+          setTimeout(() => {this.banner4Visible3 = true;},2200)
+          setTimeout(() => {this.banner4Visible4 = true;},3200)
+        }
+      });
+    }, { threshold: 0.3 }); // threshold 表示元素有10%出现在视口中时触发
+
+    const element = this.$el.querySelector('.banner-4'); // 或者直接使用 user-pop 的 class 或 id
+    observer.observe(element);
   }
 }
 </script>
@@ -341,116 +324,6 @@ export default {
       font-family: aifont;
       font-size: 44px;
       text-transform: capitalize;
-    }
-
-    .user-box {
-      position: absolute;
-      width: 281px;
-      height: 153px;
-      border-radius: 20px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      background: rgba(2, 111, 114, 0.3);
-      backdrop-filter: blur(200px);
-      padding: 17px 20px;
-
-      &.position-1 {
-        top: 155px;
-        left: 15px;
-      }
-
-      &.position-2 {
-        top: 472px;
-        left: 330px;
-      }
-
-      &.position-3 {
-        top: 488px;
-        left: 962px;
-      }
-
-      &.position-4 {
-        top: 212px;
-        left: 755px;
-      }
-
-      .userinfo {
-        display: flex;
-        align-items: end;
-
-        img {
-          width: 40px;
-          height: 40px;
-        }
-
-        .name {
-          width: 64px;
-          height: 27px;
-          font-family: 'Avenir';
-          font-style: normal;
-          font-weight: 900;
-          font-size: 20px;
-          line-height: 27px;
-          color: #E4E6FB;
-          margin: 0 8px;
-        }
-
-        .phone {
-          width: 69px;
-          height: 20px;
-          font-family: 'Avenir';
-          font-style: normal;
-          font-weight: 400;
-          font-size: 15px;
-          line-height: 20px;
-          color: #E4E6FB;
-          opacity: 0.5;
-        }
-
-      }
-
-      .desc {
-        width: 244px;
-        height: 72px;
-        font-family: 'Avenir';
-        margin-top: 8px;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 13px;
-        line-height: 18px;
-        color: #E4E6FB;
-        opacity: 0.5;
-      }
-
-      .line {
-        position: absolute;
-        top: 150px;
-        left: 19px;
-        width: 1px;
-        height: 62px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-
-        &:before {
-          content: '';
-          position: absolute;
-          bottom: -5px;
-          left: -5px;
-          width: 10px;
-          height: 10px;
-          background: rgba(255, 255, 255, 0.08);
-          border-radius: 10px;
-        }
-
-        &:after {
-          content: '';
-          position: absolute;
-          bottom: -3px;
-          left: -3px;
-          width: 6px;
-          height: 6px;
-          background: rgba(56, 110, 113, 1);
-          border-radius: 6px;
-        }
-      }
     }
   }
 
