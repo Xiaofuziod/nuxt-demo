@@ -342,7 +342,6 @@ export default {
     font-weight: 800;
     line-height: normal;
     text-transform: capitalize;
-    max-width: 120px;
     // 超出省略
     overflow: hidden;
     text-overflow: ellipsis;

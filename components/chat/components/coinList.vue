@@ -6,10 +6,13 @@
            class="coin-row">
         <div class="coin-name" v-if="!hideOption">
           <img :src="coin.logo" class="coin-logo" :alt="coin.logo">
-          <span class="name">{{ coin.name }}</span>
+          <span class="name" :style="{'maxWidth': hideOption ? '200px' : 'unset'}">
+            {{ coin.name }}</span>
           <span class="coin-symbol">{{ coin.symbol }}</span>
         </div>
-        <div class="coin-price">${{ formatPrice(coin.currentPrice || coin.price || coin.quotes?.price) }}</div>
+        <div class="coin-price"
+         :class="{'coin-price-1': !hideOption}"
+        >${{ formatPrice(coin.currentPrice || coin.price || coin.quotes?.price) }}</div>
         <div class="coin-change"
              :class="{'positive': (Number(coin.change) || coin.quotes?.percentChange24h) > 0, 'negative': (Number(coin.change) || coin.quotes?.percentChange24h) < 0}">
           {{ (Number(coin.change) || coin.quotes?.percentChange24h)?.toFixed(2) }}%
@@ -113,7 +116,6 @@ export default {
   }
 
   .coin-price {
-    width: 90px;
     color: #FFF;
     font-family: Avenir;
     font-size: 13px;
@@ -124,7 +126,15 @@ export default {
     text-align: right;
     padding: 0 7px;
     overflow: hidden;
+  }
 
+  .coin-price-1 {
+    width: 90px;
+    text-align: right;
+    padding: 0 7px;
+  }
+
+  .coin-price-2{
 
   }
 

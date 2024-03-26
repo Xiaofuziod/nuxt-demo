@@ -3,6 +3,7 @@ import Vue from 'vue';
 import robotAvatar from '@/assets/imgs/user/default.svg'
 
 import {getWelcomeList} from "@/utils/getWelcomeMessage";
+import {formatMessages} from "@/utils/message"
 
 let timer = null  // 机器人回答后，3秒后关闭
 let timer2 = null  // 五分钟没有操作，机器人会自动问候
@@ -103,7 +104,9 @@ export const actions = {
       const res = await this.$axios.get(getChatMessageList, {params: {size: showWelcome ? 1 : 10, oldestSeqNo}});
       if (res && res.data && res.data.data) {
         if (!showWelcome) {
-          commit('prependMessages', res.data.data.messages)
+          const messages = formatMessages(res.data.data.messages)
+          console.log(messages)
+          commit('prependMessages', messages)
           commit('setFinished', res.data.data.messages.length < 1)
         }
         commit('setConversationId', res.data.data.conversationId)
@@ -143,10 +146,8 @@ export const actions = {
       commit('addMessage', message)
     }
 
-
     // 消息状态更改为success
     commit('setMessageStatus', message.more ? 'concat' : 'success')
-
     // 临时解决方案，如果机器人回答了，10秒后关闭
     clearTimeout(timer)
     timer = setTimeout(() => {
@@ -210,10 +211,8 @@ export const actions = {
       timer3 = setTimeout(() => {
         commit('setRobot', {text: rootState.lang.t['robot_message_7']})
       }, 300 * 1000)
-
     }
-
-
+    
     // commit('setLastUserQuestion', message)
-  }
+  },
 }

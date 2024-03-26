@@ -120,13 +120,13 @@
         </div>
         <div class="returns-box">
           <div class="returns-title">
-            {{$t('INTRODUCTION')}}
+            {{ $t('INTRODUCTION') }}
           </div>
           <div class="returns-desc">
-            {{ item.description}}
+            {{ item.description }}
           </div>
           <div class="returns-title">
-            {{$t('MARKET')}}
+            {{ $t('MARKET') }}
           </div>
           <div class="jb-box">
             <div class="jb-box-price">{{ $t('PRICE') }}：</div>
@@ -139,10 +139,10 @@
 
           <template v-if="item.address">
             <div class="returns-title">
-              {{$t('Exchange')}}
+              {{ $t('Exchange') }}
             </div>
             <div class="returns-desc">
-              {{$t('Ethereum')}}：
+              {{ $t('Ethereum') }}：
             </div>
           </template>
 
@@ -156,25 +156,25 @@
                :href="item.links.website[0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
-              {{$t('Website')}}
+              {{ $t('Website') }}
             </a>
             <a class="link-item"
-                 v-if="item.links?.technical_doc && item.links?.technical_doc.length > 0"
-                 :href="item.links?.technical_doc[0]" target="_blank"
+               v-if="item.links?.technical_doc && item.links?.technical_doc.length > 0"
+               :href="item.links?.technical_doc[0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
-              {{$t('Whitepaper')}}
+              {{ $t('Whitepaper') }}
             </a>
             <a class="link-item"
-                 v-if="item.links?.source_code && item.links?.source_code.length > 0"
-                 :href="item.links?.source_code[0]" target="_blank"
+               v-if="item.links?.source_code && item.links?.source_code.length > 0"
+               :href="item.links?.source_code[0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
-              {{$t('GitHub')}}
+              {{ $t('GitHub') }}
             </a>
             <a class="link-item"
-                 v-if="item.links?.twitter  && item.links?.twitter .length > 0"
-                 :href="item.links?.twitter [0]" target="_blank"
+               v-if="item.links?.twitter  && item.links?.twitter .length > 0"
+               :href="item.links?.twitter [0]" target="_blank"
             >
               <img src="@/assets/imgs/chat/link1.svg" alt="">
               X
@@ -190,14 +190,15 @@
       </div>
 
       <!--问答-->
-      <div class="chat-card" v-if="item.type === 'YOU_CAN_ASK'">
+      <div class="chat-card"
+           v-if="item.type === 'YOU_CAN_ASK' && lastMessage.seqNo + '' === seqNo + ''">
         <div class="chat-card-title">
           <img class="img1" src="@/static/images/chat/ai.svg" alt="">
-          {{item.title}}
+          {{ item.title }}
         </div>
         <div class="ask-list">
           <div class="ask-item" v-for="(q,i) in item.data?.questions" :key="i" @click="sendQuestion(q)">
-            {{q}}
+            {{ q }}
             <img class="img1" src="@/static/images/chat/send.svg" alt="">
           </div>
         </div>
@@ -222,10 +223,19 @@ export default {
     layers: {
       type: Array,
       default: () => []
+    },
+    seqNo: {
+      type: Number,
+      default: -1
     }
   },
   data() {
     return {}
+  },
+  computed: {
+    lastMessage() {
+      return this.$store.state.chat.messageList[this.$store.state.chat.messageList.length - 1]
+    }
   },
   methods: {
     goDetail(val) {
@@ -505,6 +515,7 @@ export default {
         height: 28px;
         border-radius: 28px;
         overflow: hidden;
+
         img {
           width: 100%;
           height: 100%;
@@ -527,7 +538,6 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
           }
-
 
 
           img {

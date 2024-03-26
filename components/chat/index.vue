@@ -76,7 +76,9 @@
             </div>
           </template>
           <!--定制卡片内容-->
-          <chat-card :layers="item.layers" v-if="item.layers && item.layers.length > 0"/>
+          <chat-card :layers="item.layers" :seq-no="item.seqNo" v-if="item.layers && item.layers.length > 0"/>
+          <!--          消息时间-->
+          <div class="message-time" v-if="item.displayTime">{{ item.displayTime }}</div>
         </template>
       </div>
     </div>
@@ -172,13 +174,10 @@ export default {
     }
 
     this.mode = this.$route.query.mode || 'production'
-
     // 输入框键盘事件
-
     this.$nextTick(() => {
       this.inputKeyDown()
     })
-
   },
   methods: {
     initLang() {
@@ -186,7 +185,7 @@ export default {
     },
     handleScroll(e) {
       if (this.showWelcome) return
-      const {scrollTop} = e.target;
+      const {scrollTop} = e.target
       if (!this.isLoading && !this.isFinished && scrollTop <= 0) {
         this.isLoading = true
         this.loadEarlierMessages()
@@ -213,7 +212,6 @@ export default {
           that.sendMessage()
         }
       });
-
     },
     async loadEarlierMessages() {
       // 加载历史聊天对话
@@ -314,7 +312,8 @@ export default {
           this.$nextTick(() => {
             let box = document.querySelectorAll('.task-box')
             const top = box[box.length - 1].offsetTop
-            this.scrollToBottom(top - 30)
+            console.log('top', top)
+            this.scrollToBottom(top - 160)
           })
         }
         if (lastMsg.over) {
@@ -350,6 +349,17 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.message-time {
+  color: #5D7B86;
+  font-family: Avenir;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: normal;
+  width: 100%;
+  text-align: center;
+  margin-top: 14px;
+}
 
 .mic {
   &::before,
@@ -371,9 +381,9 @@ export default {
   }
 
   &::after {
-    width: 48px;
-    height: 48px;
-    background-color: #6B9297;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(160deg, #00FEB5 20.04%, #00FEB5 20.04%, #90FF00 78.21%);
     animation: circle-size 0.8s linear infinite alternate;
   }
 
@@ -433,12 +443,12 @@ export default {
 
 @keyframes circle-size {
   from {
-    width: 43px;
-    height: 43px;
+    width: 45px;
+    height: 45px;
   }
   to {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
   }
 }
 

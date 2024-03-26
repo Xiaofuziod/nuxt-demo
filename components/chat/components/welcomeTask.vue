@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div
+      class="task-box"
+      :class="{'topSticky':message.type === 'task' && !message.finish}">
     <div class="text-message-v2" v-if="message.type === 'taskStart' || message.type === 'taskFinish' ">
       {{ message.taskText }}
       <div class="start-btn-box" v-if="message.startBtnShow">
@@ -11,13 +13,13 @@
       </div>
     </div>
 
-    <div class="text-message-v2 task-box"
+    <div class="text-message-v2"
          v-if="message.type === 'task' && !message.finish"
-         style="position: relative;margin-top: 23px">
+         style="position: relative;background: rgb(8,20,38);">
       <div class="task-tip">
         <btn>
-          <img src="@/assets/imgs/chat/task.svg" alt="">
-          {{ message.taskName }}
+          <img style="width: 12px;height: 12px;margin-right: 4px;margin-top: -2px" src="@/assets/imgs/chat/task.svg" alt="">
+          <span>{{ message.taskName }}</span>
         </btn>
       </div>
       <div class="task-title">
@@ -97,7 +99,7 @@ export default {
   },
   methods: {
     async task2Finish(val) {
-      if (this.finishBtnDisable && !val) return
+      if (this.finishBtnDisable || !val) return
       // 如果是跳过的，则需要删除 欢迎文案中的
       // 16 , 17 ,18 跳过的文案
       //  13. 14 非跳过的文案
@@ -143,6 +145,14 @@ export default {
   display: flex;
   align-items: flex-start;
 }
+
+
+.topSticky {
+  position: sticky;
+  top: 10px;
+  z-index: 99;
+}
+
 
 .highlight {
   color: #CEB864;

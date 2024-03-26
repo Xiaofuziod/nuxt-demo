@@ -1,5 +1,4 @@
 import {
-  sendEmail,
   userLogin,
   userRegister,
   changePassword,
@@ -7,6 +6,7 @@ import {
   twitterLogin,
   twitterRedirectUrl, getUserInfo
 } from "~/common/home";
+
 import defaultUserAvatar from "assets/imgs/user.svg";
 
 export const state = () => ({
@@ -15,6 +15,7 @@ export const state = () => ({
 
 export const mutations = {
   setUser(state, user) {
+
     state.userInfo = {...user, avatar: user.avatar || defaultUserAvatar, nickname: user.nickname};
     this.$localStorage.setItem('token', state.userInfo.tokenInfo.tokenValue);
     // times 如果大于0就是首次登陆
