@@ -199,7 +199,7 @@ export default {
     "AppFooter_bottom-link_3": "Contact Us",
     "welcome_index_step-title-text_2": "Add Surveillance",
     "popularRecommendations": "Popular Recommendations",
-    "OPCRYPTOCURRENCIES": 'Popular Assets',
+    "TOPCRYPTOCURRENCIES": 'Popular Assets',
     "TOPSIGNALSOURCE": "Popular Sources",
     "SIGNALSOURCE": "Source",
     "YOUCANASK": "You Can Ask",

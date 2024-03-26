@@ -199,7 +199,7 @@ export default {
     "robot_message_10": "找到您的下一个机会",
     "robot_message_11": "享受您的旅程",
     // 新增 2024-03-25
-    "OPCRYPTOCURRENCIES": '热门加密货币',
+    "TOPCRYPTOCURRENCIES": '热门加密货币',
     "TOPSIGNALSOURCE":	"热门信号源",
     "SIGNALSOURCE":	"信号源"	,
     "YOUCANASK":"你还能提问",

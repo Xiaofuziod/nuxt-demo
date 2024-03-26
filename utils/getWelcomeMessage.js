@@ -78,7 +78,7 @@ export const getWelcomeList = (t) => [
     type: "task",
     taskName: t['SecondTask'],
     autoNext: true,
-    title: t["welcome_title_11"],
+    title: t["addMonitoring_text_1"],
     searchType: 'monitor',
     canSkip: true,
     finish: false,
