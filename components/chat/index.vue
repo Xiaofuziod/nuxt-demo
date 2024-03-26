@@ -17,8 +17,13 @@
     </div>
 
     <div class="chat-content" ref="messagesContainer" @scroll="handleScroll">
+      <div class="loading-container" v-if="isLoading">
+        <dot-carousel/>
+      </div>
       <div class="chat-padding">
         <template v-for="(item) in messageList">
+          <!-- 消息时间-->
+          <div class="message-time" v-if="item.displayTime">{{ item.displayTime }}</div>
           <!--AI焦点-->
           <div class="text-message-box1"
                v-if="item.context && item.context.hook && item.context.hook.type === 'FOCUS'">
@@ -73,8 +78,6 @@
           </template>
           <!--定制卡片内容-->
           <chat-card :layers="item.layers" :seq-no="item.seqNo" v-if="item.layers && item.layers.length > 0"/>
-          <!--          消息时间-->
-          <div class="message-time" v-if="item.displayTime">{{ item.displayTime }}</div>
         </template>
       </div>
     </div>
@@ -119,6 +122,7 @@ export default {
       welcomeInputDisable: false,
       isViewingHistory: false,
       mode: 'production',
+      isLoading: true,
     }
   },
   computed: {
@@ -220,6 +224,7 @@ export default {
       //   更一般的做法应该是先获取对话列表，然后用户点击哪个对话，再根据点击对话的 id 来拉取历史消息。
 
       // 获取历史消息之前的滚动条高度
+      this.isLoading = true
       const previousHeight = this.$refs.messagesContainer?.scrollHeight;
       await this.$store.dispatch('chat/fetchEarlierMessages', this.showWelcome)
       if (this.$refs.messagesContainer) {
@@ -348,6 +353,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+
+.loading-container {
+  text-align: center;
+  transition: height 0.3s;
+  img {
+    width: 30px;
+  }
+}
+
 .message-time {
   color: #5D7B86;
   font-family: Avenir;
