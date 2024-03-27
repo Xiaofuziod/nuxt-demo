@@ -9,7 +9,7 @@
     </div>
     <img class="option-img"
          :class="`${(disable || card.selected) ? 'disable' :''}`"
-         @click="$emit('select')" src="@/assets/imgs/addPlus.svg" alt="">
+         @click="addone()" src="@/assets/imgs/addPlus.svg" alt="">
   </div>
 </template>
 <script >
@@ -33,6 +33,10 @@ export default {
   methods: {
     deleteMonitor(id) {
       this.$store.dispatch('monitor/deleteUserMonitor', id);
+    },
+    addone() {
+      if(this.disable || this.card.selected) return
+      this.$emit('select')
     }
   }
 }

@@ -262,7 +262,7 @@ export default {
   cursor: pointer;
 }
 .add-monitoring-cards {
-  width: 430px;
+  width: 460px;
   display: flex;
   flex-wrap: wrap;
 }
