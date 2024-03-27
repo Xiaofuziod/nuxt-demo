@@ -70,7 +70,6 @@ export default {
   methods: {
     formatPrice,
     select(coin) {
-      console.log(this.selectIdList, coin.id)
       if(this.selectIdList.includes(coin.id) ) return
       this.$emit('select', coin)
     }
@@ -95,7 +94,7 @@ export default {
     align-items: center;
     .name { width: 356px;
       text-align: left;
-      padding-left: 55px;
+      padding-left: 4px;
     }
     .price { width: 95px}
     .time { width: 95px}

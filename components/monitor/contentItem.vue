@@ -2,7 +2,9 @@
   <div class="monitor-content-item">
     <div class="top">
       <div class="user-info">
-        <img :src="segment.user_pic" alt="">
+        <div class="pic">
+          <img :src="segment.user_pic || RobotPic" alt="">
+        </div>
         <p class="author">{{ segment.author }}</p>
       </div>
       <p class="timestamp">{{ segment.time_offset }}</p>
@@ -12,6 +14,7 @@
   </div>
 </template>
 <script >
+import RobotPic from '@/assets/imgs/robot.svg'
 export default {
   name: "MonitorContentItem",
   props: {
@@ -21,6 +24,7 @@ export default {
   },
   data() {
     return {
+      RobotPic
     }
   },
   methods: {
@@ -49,12 +53,19 @@ export default {
     .user-info {
       display: inline-flex;
       align-items: center;
-      img {
+      .pic {
         width: 32px;
         height: 32px;
         border-radius: 32px;
         margin-right: 8px;
+        background: url("@/assets/imgs/robot.svg");
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 32px;
+        }
       }
+
       .author {
         color: #FFF;
         font-family: Avenir;

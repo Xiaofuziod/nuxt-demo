@@ -27,7 +27,7 @@ export default {
 <style scoped lang="less">
 .bread-path {
   font-size: 14px;
-  margin-bottom: 49px;
+  margin-bottom: 40px;
   color: rgba(140, 180, 189, 0.6);
   display: flex;
   align-items: center;

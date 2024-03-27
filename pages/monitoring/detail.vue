@@ -27,7 +27,7 @@
 
         </div>
         <div v-show="activeTab === '1'" v-if="monitorContent" class="content">
-          <audio-player style="margin-top: 10px;margin-bottom: 10px" v-if="monitorContent?.link" :audio-src="monitorContent?.link"/>
+          <audio-player style="margin-top: 10px;margin-bottom: 10px;width: 565px" v-if="monitorContent?.link" :audio-src="monitorContent?.link"/>
           <div class="box-wrapper">
             <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
               <template #default="{ items }">
@@ -216,13 +216,14 @@ export default {
       padding-top: 1px;
       text-align: left;
       overflow: scroll;
-      width: 577px;
+      width: 590px;
       height: calc(100vh - 350px);
 
       .box-wrapper {
-        height: calc(100vh - 470px);
+        height: calc(100vh - 440px);
         margin-top: 12px;
         overflow: scroll;
+        width: 100%;
       }
 
       .title {

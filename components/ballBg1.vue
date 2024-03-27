@@ -35,7 +35,7 @@
   border-radius: 176px 254px 176px 176px;
   background: linear-gradient(266.83deg, rgba(8, 148, 150, 0.6) -5.97%, rgba(3, 114, 54, 0.6) 99.31%);
   filter: blur(153.5px);
-  left: -880px;
+  left: -980px;
   top: 107px;
 }
 

@@ -10,12 +10,12 @@
           <h2 class="h2-title">{{ $t("Monitor_h2-title_2") }}</h2>
           <img class="item-img" src="~/assets/imgs/twiter.svg" alt="">
         </section>
+        <div class="add-monitoring" @click="showAddMonitor">{{ $t("Monitor_add-monitoring_1") }}</div>
       </aside>
       <main class="content">
         <breadcrumb-navigation/>
         <header class="content-header">
           <FilterTabs v-model="activeTab" :tabList="tabs"/>
-          <div class="add-monitoring" @click="showAddMonitor">{{ $t("Monitor_add-monitoring_1") }}</div>
         </header>
         <div class="center-box loading-box" v-if="loading">
           <img src="@/assets/imgs/ZKZg.gif" alt="">
@@ -194,7 +194,18 @@ export default {
         }
       }
     }
-
+    .add-monitoring {
+      width: 152px;
+      height: 22px;
+      color: rgba(206, 184, 100, 1);
+      font-weight: 500;
+      font-size: 16px;
+      text-transform: capitalize;
+      cursor: pointer;
+      position: absolute;
+      bottom: 25px;
+      left: 25px;
+    }
     .monitoring-type {
       margin-top: 40px;
 
@@ -212,16 +223,6 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      .add-monitoring {
-        width: 152px;
-        height: 22px;
-        color: rgba(206, 184, 100, 1);
-        font-weight: 500;
-        font-size: 16px;
-        text-transform: capitalize;
-        cursor: pointer;
-      }
     }
     .loading-box {
       img {
@@ -244,7 +245,7 @@ export default {
       }
     }
     .monitoring-cards {
-      padding: 20px 0;
+      padding: 30px 0 20px 0;
       height: calc(100vh - 265px);
       overflow: hidden;
     }

@@ -3,7 +3,7 @@
     <img class="card-img" :src="card?.logo || bianPic" alt="">
     <div class="card-header">
       <h3 class="title1">{{ card?.author }}</h3>
-      <h3 class="title2">{{ card?.title }}</h3>
+      <h3 class="title2" :title="card?.title">{{ card?.title }}</h3>
       <p class="timestamp">{{ card?.time }}</p>
 <!--      <p class="other">{{ card?.status }}</p>-->
     </div>
@@ -41,12 +41,13 @@ export default {
 .card {
   width: 280px;
   height: 72px;
-  padding: 12px;
+  padding: 6px 12px;
   border-radius: 16px;
   margin: 3px;
   background: rgba(38, 64, 64, 0.2);
   display: inline-flex;
   position: relative;
+  align-items: center;
   .option-img {
     position: absolute;
     top: 26px;
@@ -63,7 +64,6 @@ export default {
     width: 45px;
     height: 45px;
     border-radius: 10px;
-
   }
 
   .card-header {
@@ -83,17 +83,19 @@ export default {
 
     .title2 {
       color: rgba(255, 255, 255, 1);
-      font-size: 15px;
-      line-height: 25px;
+      font-size: 12px;
+      line-height: 15px;
       // 超出省略
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* 定义文本的行数 */
+      -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .timestamp {
       color: rgba(140, 180, 189, 1);
-      font-size: 12px;
+      font-size: 10px;
     }
 
     .other {
