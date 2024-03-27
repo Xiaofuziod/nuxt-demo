@@ -8,7 +8,7 @@
           <img :src="coin.logo" class="coin-logo" :alt="coin.logo">
           <span class="name" :style="{'maxWidth': hideOption ? '200px' : 'unset'}">
             {{ coin.name }}</span>
-          <span class="coin-symbol">{{ coin.symbol }}</span>
+<!--          <span class="coin-symbol">{{ coin.symbol }}</span>-->
         </div>
         <div class="coin-price"
          :class="{'coin-price-1': !hideOption}"
@@ -72,6 +72,8 @@ export default {
 }
 
 .coin-row {
+  width: 400px;
+  box-sizing: content-box;
   display: flex;
   align-items: center;
   margin-bottom: 1em;
