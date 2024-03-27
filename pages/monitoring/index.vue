@@ -86,8 +86,7 @@ export default {
       this.$store.commit('monitor/setLoading', false)
     },
     goDetail(id) {
-      const lan = this.$i18n.locale === "en" ? '/' : `/${this.$i18n.locale}`
-      this.$router.push(`${lan}monitoring/detail?id=${id}`);
+      this.$router.push(this.localeRoute(`/monitoring/detail?id=${id}`));
     },
     mapTabToStatus(tab) {
       switch (tab) {

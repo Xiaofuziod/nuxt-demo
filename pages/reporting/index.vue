@@ -4,7 +4,7 @@
       <div class="report-left">
         <div class="Account">{{ $t("Home_Account_1") }}</div>
         <div @click="handleClick({coinId:''})">
-          <user-info :is-active="!coinId"/>
+          <user-info :is-active="!coinId" :avator="AvatorPic"/>
         </div>
         <div class="Account Selected">{{ $t("Selected") }}{{ followList?.length ? ` (${followList?.length})` : '' }}
           <span style="cursor: pointer"
@@ -92,6 +92,7 @@ import {parseTime} from "~/utils/date";
 import AddCoin from "~/components/report/addCoin.vue";
 import BoxLoading from "@/components/boxLoading.vue";
 import PageLoading from '@/components/pageLoading.vue'
+import AvatorPic from '@/assets/imgs/reportAvator.svg'
 
 export default {
   name: 'Home',
@@ -106,12 +107,13 @@ export default {
   },
   data() {
     return {
+      AvatorPic
       showDelete: false,
       list: [],
       coinId: '',
       coinData: {},
       loading: true,
-      pageLoading: true
+      pageLoading: true,
     }
   },
   computed: {

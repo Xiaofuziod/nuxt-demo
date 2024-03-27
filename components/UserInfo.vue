@@ -2,11 +2,11 @@
   <div class="Rectangle82"
        :class="{'rect-active':isActive}">
     <div class="Ellipse245">
-      <img :src="user.avatar" v-if="user.avatar || MonitorAvator" alt="">
+      <img :src="avator" v-if="user.avatar || MonitorAvator" alt="">
     </div>
     <div>
       <div class="saywteri2473 ellipsis">{{ user.nickname || user.account }}</div>
-      <div class="wtewteri247">{{$t('servedDaysBefore')}}  {{ servedDays }}  {{$t('servedDaysAfter')}}</div>
+      <div class="wtewteri247">{{$t('servedDaysBefore')}}{{ servedDays }}{{$t('servedDaysAfter')}}</div>
     </div>
   </div>
 </template>
@@ -19,6 +19,10 @@ export default {
     isActive: {
       type: Boolean,
       default: true
+    },
+    avator: {
+      type:String,
+      default: MonitorAvator
     }
   },
   data() {

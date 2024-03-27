@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     goHome() {
-      this.$router.push(this.langPath || '/')
+      this.$router.push(this.localeRoute('/'))
     },
     showLogin() {
       this.$refs.loginRef.show()
