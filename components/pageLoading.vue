@@ -85,12 +85,12 @@ export default {
   transform-style: preserve-3d;
   transform-origin: 2em 2em;
   transition: all 1.5s ease-in-out;
-  //animation: fall 3s ease-in-out infinite;
+  animation: fall 3s ease-in-out infinite;
 }
 
 .loading .symbol {
   top: 0;
-  //animation: rotateX 3s ease-in-out infinite;
+  animation: rotateX 3s ease-in-out infinite;
 }
 
 .symbol:nth-child(1) {
