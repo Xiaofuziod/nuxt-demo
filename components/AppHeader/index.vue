@@ -33,7 +33,7 @@
           <span v-if="$i18n.locale === 'en'">EN</span>
           <span v-if="$i18n.locale === 'pt-br'">PT</span>
           <span v-if="$i18n.locale === 'zh'">ZH</span>
-          <div class="lang-setting">
+          <div class="lang-setting"  v-if="!changing">
             <div class="lang-setting-content">
               <div class="option-item" :class="$i18n.locale === 'en' ? 'active':''" @click.stop="changeLanguage('en')">English</div>
               <div class="option-item" :class="$i18n.locale === 'pt-br' ? 'active':''" @click.stop="changeLanguage('pt-br')">Português Brasil</div>
@@ -70,7 +70,8 @@ export default {
     return {
       userLoggedIn: true,
       isVip: false,
-      showUserSetting: false
+      showUserSetting: false,
+      changing: false
     };
   },
   mounted() {
@@ -104,8 +105,12 @@ export default {
     changeNickname() {
       this.$refs.editUsernameRef.show()
     },
-    changeLanguage(lang) {
-      this.$i18n.setLocale(lang);
+    async changeLanguage(lang) {
+      this.$loading.start(this.$t('languageSwitch'));
+      this.changing = true
+      await this.$i18n.setLocale(lang);
+      this.changing = false
+      this.$loading.finish();
       setTimeout(()=>{
         window.location.reload()
       },200)

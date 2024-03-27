@@ -215,5 +215,6 @@ export default {
     "youCanAsk6": "ETH价格-测试数据，待产品提供",
     "report-empty-text": "缺少自选，AI无法为您生成焦点报告",
     "servedDaysBefore": "Taurion已服务",
-    "servedDaysAfter": "天"
+    "servedDaysAfter": "天",
+    "languageSwitch": `语言切换中..`,
 }

@@ -216,5 +216,6 @@ export default {
     "youCanAsk6": "ETH price-test data, to be provided by product",
     "report-empty-text": "Lack of assets, please add assets.",
     "servedDaysBefore": "Taurion has served",
-    "servedDaysAfter": "days"
+    "servedDaysAfter": "days",
+    "languageSwitch": "Language switching",
 }

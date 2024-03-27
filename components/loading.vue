@@ -6,7 +6,7 @@
         <div class="dot"></div>
         <div class="dot"></div>
       </div>
-      Loading
+      {{text || 'Loading'}}
     </div>
   </div>
 </template>
@@ -15,14 +15,21 @@
 export default {
   data() {
     return {
-      show: false
+      show: false,
+      text: ""
     };
   },
   methods: {
-    start() {
+    start(text) {
       this.show = true;
+      this.text = text
     },
     finish() {
+      this.text = ''
+      this.show = false;
+    },
+    end() {
+      this.text = ''
       this.show = false;
     }
   }
