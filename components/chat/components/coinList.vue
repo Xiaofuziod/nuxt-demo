@@ -72,6 +72,8 @@ export default {
 }
 
 .coin-row {
+  width: 400px;
+  box-sizing: content-box;
   display: flex;
   align-items: center;
   margin-bottom: 1em;
