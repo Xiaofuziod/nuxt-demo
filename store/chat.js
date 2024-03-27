@@ -147,13 +147,13 @@ export const actions = {
     clearTimeout(timer)
     timer = setTimeout(() => {
       commit('setMessageStatus', 'success')
-      if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang?.t("robot_message_4")})
+      if (state.pageName !== 'welcome') commit('setRobot', {text: this.$i18n.t("robot_message_4")})
     }, 5 * 1000)
 
 
     if (!message.more) {
-    // 欢迎页的头部文案部是单独逻辑
-      if (state.pageName !== 'welcome') commit('setRobot', {text: rootState.lang?.t("robot_message_4")})
+      // 欢迎页的头部文案部是单独逻辑
+      if (state.pageName !== 'welcome') commit('setRobot', {text: this.$i18n.t("robot_message_4")})
     }
     // 五分钟没有操作，机器人会自动问候 欢迎页除外
     if (state.pageName !== 'welcome') {
@@ -162,6 +162,7 @@ export const actions = {
         commit('setRobot', {text: state.wlist[Math.floor(Math.random() * state.wlist.length)]})
       }, 300 * 1000)
     }
+
   },
   // 发送用户消息 只用传入 text 和 context
   sendUserMessage({commit, state, rootState}, message) {
@@ -175,6 +176,7 @@ export const actions = {
       context: message.context
     }
 
+    console.log(this.$i18n.t('robot_message_5'))
     this.$socket.emit('chat', para)
 
     commit('addMessage', para)
@@ -195,10 +197,10 @@ export const actions = {
 
     if (state.pageName !== 'welcome') {
       // 根据用户的问题，获取机器人状态语
-      let text = rootState.lang.t['robot_message_5']
+      let text = rootState?.lang?.t['robot_message_5']
       // ai focus 和 source 是特殊的机器人状态语
       if (JSON.stringify(message).includes('FOCUS') || JSON.stringify(message).includes('SIGNAL_SOURCE')) {
-        text = rootState.lang.t['robot_message_6']
+        text = rootState?.lang?.t['robot_message_6']
       }
       // 更新机器人状态语
       commit('setRobot', {text})
@@ -206,8 +208,12 @@ export const actions = {
       // 如果五分钟没有收到回复，认为机器人掉线了
       clearTimeout(timer3)
       timer3 = setTimeout(() => {
-        commit('setRobot', {text: rootState.lang.t['robot_message_7']})
+        commit('setRobot', {text: rootState?.lang?.t['robot_message_7']})
         commit('setMessageStatus', 'error')
+        commit('updateMessage', {
+          index: state.messageList.length - 1,
+          message: {...state.messageList[state.messageList.length - 1], text: rootState?.lang?.t['Robot_message_crash']}
+        })
       }, 300 * 1000)
     }
   },

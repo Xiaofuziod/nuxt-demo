@@ -1,4 +1,4 @@
-export function formatPrice(input) {
+export function formatPrice(input,len = 4) {
   if (!input) return ''
   const priceNum = Number(input)
   if (priceNum >= 1) {
@@ -33,8 +33,8 @@ export function formatPrice(input) {
       let zerosBeforeFirstNonZero = result.substring(0, firstNonZeroIndex);
       let afterFirstNonZero = result.substring(firstNonZeroIndex);
       let nonZeroDigits = afterFirstNonZero.replace(/\.|\D/g, ''); // 移除除数字外的字符
-      if (nonZeroDigits.length > 4) {
-        nonZeroDigits = nonZeroDigits.substring(0, 4);
+      if (nonZeroDigits.length > len) {
+        nonZeroDigits = nonZeroDigits.substring(0, len);
       }
       const decimalIndex = afterFirstNonZero.indexOf('.');
       if (decimalIndex !== -1) {

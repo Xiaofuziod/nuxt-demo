@@ -137,9 +137,9 @@ export default {
           }
         },
         grid: {
-          right: "5%",
+          right: "0%",
           top: "5%",
-          left: `${priceLength + 8}%`,
+          left: `${priceLength * 1.2 + 8}%`,
           bottom: "5%"
         },
         xAxis: {
@@ -219,14 +219,17 @@ export default {
         }
         market.forEach(item => {
           this.xData.push(item[0])
-          this.yData.push(formatPrice(item[1]))
+          this.yData.push(formatPrice(item[1], 2))
         })
         let lowestPrice = Math.min(...this.yData)
         let highestPrice = Math.max(...this.yData)
         this.adjustedLowestPrice = lowestPrice * 0.9
         this.adjustedHighestPrice = this.formatPrice(highestPrice * 1.1)
+        this.adjustedHighestPrice = this.adjustedHighestPrice.toString().substring(0, highestPrice.toString().length)
+        this.adjustedLowestPrice = this.adjustedLowestPrice.toString().substring(0, lowestPrice.toString().length)
 
-        console.log('this.adjustedLowestPrice', this.adjustedLowestPrice, 'this.adjustedHighestPrice', this.adjustedHighestPrice)
+        console.log(this.adjustedLowestPrice, this.adjustedHighestPrice)
+
         this.echartsInit()
         this.loading = false
       } catch (e) {
