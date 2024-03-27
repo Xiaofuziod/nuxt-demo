@@ -129,7 +129,7 @@ export default {
   }
 
   .coin-price-1 {
-    width: 90px;
+    width: 120px;
     text-align: right;
     padding: 0 7px;
   }
