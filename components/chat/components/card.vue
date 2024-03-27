@@ -115,7 +115,7 @@
       <!--简报-->
       <div class="chat-card" v-if="item.type === 'COIN_INTRODUCTION'">
         <div class="chat-card-title">
-          <img class="img1" src="@/static/images/chat/s4.svg" alt="">
+          <img class="img1" src="@/static/images/chat/s5.svg" alt="">
           {{ item.title }}
         </div>
         <div class="returns-box">
