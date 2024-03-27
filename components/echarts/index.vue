@@ -140,7 +140,7 @@ export default {
           right: "0%",
           top: "5%",
           left: `${priceLength * 1.2 + 10}%`,
-          bottom: "5%"
+          bottom: "8%"
         },
         xAxis: {
           type: 'category',
