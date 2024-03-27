@@ -139,7 +139,7 @@ export default {
         grid: {
           right: "0%",
           top: "5%",
-          left: `${priceLength * 1.2 + 8}%`,
+          left: `${priceLength * 1.2 + 10}%`,
           bottom: "5%"
         },
         xAxis: {
@@ -162,6 +162,9 @@ export default {
               color: 'rgba(103, 229, 173, .1)'
 
             }
+          },
+          axisLabel:{
+            fontsize: 8,
           }
         },
         // dataZoom: [
@@ -223,13 +226,13 @@ export default {
         })
         let lowestPrice = Math.min(...this.yData)
         let highestPrice = Math.max(...this.yData)
-        this.adjustedLowestPrice = lowestPrice * 0.9
-        this.adjustedHighestPrice = this.formatPrice(highestPrice * 1.1)
-        this.adjustedHighestPrice = this.adjustedHighestPrice.toString().substring(0, highestPrice.toString().length)
-        this.adjustedLowestPrice = this.adjustedLowestPrice.toString().substring(0, lowestPrice.toString().length)
-
+        this.adjustedLowestPrice = this.formatPrice(lowestPrice * 0.9,2)
+        this.adjustedHighestPrice = this.formatPrice(highestPrice * 1.1,2)
+        if (this.adjustedLowestPrice > 10 || this.adjustedHighestPrice > 10) {
+          this.adjustedLowestPrice = parseInt(this.adjustedLowestPrice)
+          this.adjustedHighestPrice = parseInt(this.adjustedHighestPrice)
+        }
         console.log(this.adjustedLowestPrice, this.adjustedHighestPrice)
-
         this.echartsInit()
         this.loading = false
       } catch (e) {
