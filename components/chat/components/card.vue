@@ -7,7 +7,7 @@
           <img class="img1" src="@/static/images/chat/hot.svg" alt="">
           {{ item.title }}
         </div>
-        <monitor-list :list="item.data?.datas"/>
+        <monitor-list :list="item.data?.sources"/>
       </div>
 
       <!--预测相关-->
