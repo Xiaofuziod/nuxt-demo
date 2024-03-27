@@ -190,7 +190,7 @@ export default {
       this.isOver = true
       setTimeout(() => {
         this.$store.dispatch('chat/clearMessageList')
-        this.$router.replace('/reporting')
+        this.$router.replace(this.localeRoute('/reporting'))
       }, 3000)
     },
     videoEnded() {
