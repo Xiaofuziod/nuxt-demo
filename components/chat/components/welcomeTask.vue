@@ -18,7 +18,8 @@
          style="position: relative;background: rgb(8,20,38);">
       <div class="task-tip">
         <btn>
-          <img style="width: 12px;height: 12px;margin-right: 4px;margin-top: -2px" src="@/assets/imgs/chat/task.svg" alt="">
+          <img style="width: 12px;height: 12px;margin-right: 4px;margin-top: -2px" src="@/assets/imgs/chat/task.svg"
+               alt="">
           <span>{{ message.taskName }}</span>
         </btn>
       </div>
@@ -39,7 +40,7 @@
         <div class="start-btn" @click="showSelect">
           <btn2 type="2">{{ $t("welcomeTask_btn_3") }}</btn2>
         </div>
-        <div class="start-btn" @click="task2Finish">
+        <div class="start-btn" @click="task2Finish()">
           <btn :disable="finishBtnDisable">
             <span style="padding-left: 5px">{{ $t("welcomeTask_btn_2") }}</span>
           </btn>
@@ -94,12 +95,13 @@ export default {
     if (this.message.type === 'task') {
       setTimeout(() => {
         this.$store.dispatch('chat/welcomeToNext')
-      }, 1000)
+        this.$emit('goBottom')
+      }, 500)
     }
   },
   methods: {
     async task2Finish(val) {
-      if (this.finishBtnDisable || !val) return
+      if (this.finishBtnDisable && !val) return
       // 如果是跳过的，则需要删除 欢迎文案中的
       // 16 , 17 ,18 跳过的文案
       //  13. 14 非跳过的文案
@@ -160,8 +162,16 @@ export default {
 
 .topSticky {
   position: sticky;
-  top: 10px;
+  top: 0px;
   z-index: 99;
+
+  .task-title {
+    margin-top: 15px;
+  }
+
+  .task-tip {
+    top: -1px;
+  }
 }
 
 .task-title {

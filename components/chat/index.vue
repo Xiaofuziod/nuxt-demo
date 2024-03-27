@@ -300,7 +300,6 @@ export default {
             }, lastMsg.sleep)
           } else {
             this.$store.dispatch('chat/welcomeToNext')
-            console.log('welcomeIndex', this.$store.state.chat.welcomeIndex)
             this.scrollToBottom()
           }
         }
@@ -334,8 +333,7 @@ export default {
           this.$nextTick(() => {
             let box = document.querySelectorAll('.task-box')
             const top = box[box.length - 1].offsetTop
-            console.log('top', top)
-            this.scrollToBottom(top - 160)
+            this.scrollToBottom(top - 150)
           })
         }
         if (lastMsg.over) {
@@ -346,7 +344,6 @@ export default {
       }
     },
     scrollToBottom(topVale) {
-      console.log(topVale)
       this.$nextTick(() => {
         const messagesContainer = this.$refs.messagesContainer;
         messagesContainer.scrollTo({
