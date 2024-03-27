@@ -129,7 +129,8 @@ export default {
   }
 
   .coin-price-1 {
-    width: 120px;
+    //width: 120px;
+    flex: 1;
     text-align: right;
     padding: 0 7px;
   }
@@ -139,7 +140,6 @@ export default {
   }
 
   .coin-change {
-    width: 60px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
