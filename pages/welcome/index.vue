@@ -29,7 +29,9 @@
             <div class="step-title-icon">
               <span class="step-loading style-2" v-if="welcomeStep < 3"></span>
               <div class='btn-container' v-else>
-                <button class='btn btn--shockwave is-active'></button>
+                <button class='btn btn--shockwave is-active'>
+                  <img class="step-finish-img" src="@/assets/imgs/chat/finish.svg" alt="">
+                </button>
               </div>
             </div>
             <div class="step-title-text">{{ $t("welcome_index_step-title-text_1") }}</div>
@@ -66,7 +68,9 @@
             <div class="step-title-icon">
               <span class="step-loading style-2" v-if="welcomeStep < 4"></span>
               <div class='btn-container' v-else>
-                <button class='btn btn--shockwave is-active'></button>
+                <button class='btn btn--shockwave is-active'>
+                  <img class="step-finish-img" src="@/assets/imgs/chat/finish.svg" alt="">
+                </button>
               </div>
             </div>
             <div class="step-title-text">
@@ -102,7 +106,9 @@
           <div class="step-title-icon">
             <span class="step-loading style-2" v-if="!isOver"></span>
             <div class='btn-container' v-else>
-              <button class='btn btn--shockwave is-active'></button>
+              <button class='btn btn--shockwave is-active'>
+                <img class="step-finish-img" src="@/assets/imgs/chat/finish.svg" alt="">
+              </button>
             </div>
           </div>
           <div class="step-title-text">

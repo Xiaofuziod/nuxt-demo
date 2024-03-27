@@ -175,7 +175,7 @@ export const actions = {
       context: message.context
     }
 
-    // this.$socket.emit('chat', para)
+    this.$socket.emit('chat', para)
 
     commit('addMessage', para)
 
@@ -208,7 +208,7 @@ export const actions = {
       timer3 = setTimeout(() => {
         commit('setRobot', {text: rootState.lang.t['robot_message_7']})
         commit('setMessageStatus', 'error')
-      }, 30 * 1000)
+      }, 300 * 1000)
     }
   },
 }

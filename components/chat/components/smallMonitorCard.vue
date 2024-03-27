@@ -68,11 +68,10 @@ export default {
     .title2 {
       color: #FFF;
       font-family: Avenir;
-      font-size: 8px;
+      font-size: 12px;
       font-style: normal;
       font-weight: 800;
       line-height: normal;
-      text-transform: capitalize;
       margin: 1px 0;
       // 超出省略
       overflow: hidden;
