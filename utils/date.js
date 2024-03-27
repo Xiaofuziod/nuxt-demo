@@ -21,20 +21,20 @@ export function parseTime(timeStr) {
   let day = date.getDate();
   let hours = date.getHours();
   let minutes = date.getMinutes();
-  let seconds = date.getSeconds();
+  // let seconds = date.getSeconds();
 
 // 格式化月份、日期、小时、分钟和秒
   month = month < 10 ? `0${month}` : month;
   day = day < 10 ? `0${day}` : day;
   hours = hours < 10 ? `0${hours}` : hours;
   minutes = minutes < 10 ? `0${minutes}` : minutes;
-  seconds = seconds < 10 ? `0${seconds}` : seconds;
+  // seconds = seconds < 10 ? `0${seconds}` : seconds;
 
   // 返回结果
   return {
     isToday,
     weekDay,
     date: `${month}/${day}`,
-    time: `${hours}:${minutes}:${seconds}`,
+    time: `${hours}:${minutes}`,
   };
 }

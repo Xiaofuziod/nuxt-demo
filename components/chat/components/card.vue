@@ -125,15 +125,15 @@
           <div class="returns-desc">
             {{ item.description }}
           </div>
-          <div class="returns-title">
-            {{ $t('MARKET') }}
-          </div>
-          <div class="jb-box">
-            <div class="jb-box-price">{{ $t('PRICE') }}：</div>
-            <coin-list :coinList="[item.coin]" :hideOption="true"/>
-          </div>
+<!--          <div class="returns-title">-->
+<!--            {{ $t('MARKET') }}-->
+<!--          </div>-->
+<!--          <div class="jb-box">-->
+<!--            <div class="jb-box-price">{{ $t('PRICE') }}：</div>-->
+<!--            <coin-list :coinList="[item.coin]" :hideOption="true"/>-->
+<!--          </div>-->
           <div style="margin-bottom: 10px">
-            <my-echarts from="chat" :list="item.market"/>
+            <my-echarts from="chat" :list="item.market" :coinPrice="item.coin"/>
           </div>
 
 

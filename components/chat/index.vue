@@ -416,7 +416,7 @@ export default {
   &::after {
     width: 45px;
     height: 45px;
-    background: linear-gradient(160deg, #00FEB5 20.04%, #00FEB5 20.04%, #90FF00 78.21%);
+    //background: linear-gradient(160deg, #00FEB5 20.04%, #00FEB5 20.04%, #90FF00 78.21%);
     //animation: circle-size 0.8s linear infinite alternate;
   }
 
@@ -468,7 +468,6 @@ export default {
     transform: translate(-50%, -50%);
     border-radius: 100%;
     z-index: 1;
-    box-shadow: 2px -5px 6px 3px rgba(30, 83, 95, 0.3), 5px -2px 10px 2px rgba(30, 83, 95, 0.3), -2px -3px 20px 2px rgba(26, 41, 49, 0.3), 5px 1px 3px 2px rgba(30, 83, 95, 0.3), .6px .4px 15px 2px rgba(26, 41, 49, 0.3);
     //animation: shadow-rotate 1.5s linear infinite;
     transform-origin: center;
   }
@@ -479,7 +478,8 @@ export default {
     animation: circle-size 0.8s linear infinite alternate;
   }
 
-  &-shadow {
+  .mic-shadow {
+    box-shadow: 2px -5px 6px 3px rgba(30, 83, 95, 0.3), 5px -2px 10px 2px rgba(30, 83, 95, 0.3), -2px -3px 20px 2px rgba(26, 41, 49, 0.3), 5px 1px 3px 2px rgba(30, 83, 95, 0.3), .6px .4px 15px 2px rgba(26, 41, 49, 0.3);
     animation: shadow-rotate 1.5s linear infinite;
   }
 }

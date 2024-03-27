@@ -35,7 +35,7 @@ export const actions = {
     try {
       const res = await this.$axios.get(getFollowList);
       if (res && res.data && res.data.data) {
-        commit('setUserCoinList', res.data.data);
+        commit('setUserCoinList', res.data.data || []);
       }
     } catch (e) {
       console.error('fetchCoinList error:', e);

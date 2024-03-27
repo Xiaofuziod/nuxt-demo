@@ -3,26 +3,27 @@
     <box-loading :loading="loading"/>
 
     <div :style="{opacity: loading?0:1}">
-      <template v-if="from !== 'chat'">
-        <div class="coin-name">
-          <img :src="coin.logo" v-if="coin.logo" class="coin-logo" :alt="coin.logo">
-          <span class="name">{{ coin.name }}</span>
-          <span class="coin-symbol">{{ coin.symbol }}</span>
+      <div class="coin-name">
+        <img :src="coin.logo" v-if="coin.logo" class="coin-logo" :alt="coin.logo">
+        <span class="name">{{ coin.name }}</span>
+        <span class="coin-symbol">{{ coin.symbol }}</span>
+      </div>
+      <div class="coin-price-box"
+           :class="{'coin-price-box-chat': from === 'chat'}"
+           v-if="coin.currentPrice || coinPrice.price">
+        <div class="coin-price">${{ formatPrice(coin.currentPrice || coinPrice.price) }}</div>
+        <div class="coin-change"
+             :class="{'positive': (coin.change || coinPrice.change) > 0, 'negative': (coin.change || coinPrice.change) < 0}">
+          {{ (coin.change || coinPrice.change)?.toFixed(2) }}%
         </div>
-        <div class="coin-price-box">
-          <div class="coin-price">${{ formatPrice(coin.currentPrice) }}</div>
-          <div class="coin-change" :class="{'positive': coin.change > 0, 'negative': coin.change < 0}">
-            {{ coin.change?.toFixed(2) }}%
-          </div>
+      </div>
+      <div class="select-row" v-if="from !== 'chat'">
+        <div v-for="(item,index) in selectList" :key="index"
+             :class="{'active': activeKey === item.value}" @click="loadData(item)"
+        >
+          {{ item.name }}
         </div>
-        <div class="select-row">
-          <div v-for="(item,index) in selectList" :key="index"
-               :class="{'active': activeKey === item.value}" @click="loadData(item)"
-          >
-            {{ item.name }}
-          </div>
-        </div>
-      </template>
+      </div>
 
       <div
           ref="myChart"
@@ -50,6 +51,15 @@ export default {
     list: {
       type: Array,
       default: () => []
+    },
+    coinPrice: {
+      type: Object,
+      default: () => {
+        return {
+          price: 0,
+          change: 0
+        }
+      }
     }
   },
   data() {
@@ -58,6 +68,8 @@ export default {
       yData: [],
       coin: {},
       loading: false,
+      adjustedLowestPrice: 0,
+      adjustedHighestPrice: 0,
       selectList: [
         {
           name: '1D',
@@ -115,7 +127,7 @@ export default {
           // 自定义提示框的内容格式器
           formatter: function (params) {
             let params0 = params[0]
-            return '$'+ params0.value + '<br>' + params0.name;
+            return '$' + params0.value + '<br>' + params0.name;
           },
           backgroundColor: 'rgba(38, 64, 64)',
           borderWidth: 0,
@@ -128,16 +140,22 @@ export default {
           right: "5%",
           top: "5%",
           left: `${priceLength + 8}%`,
-          bottom: "14%"
+          bottom: "5%"
         },
         xAxis: {
           type: 'category',
           boundaryGap: false,
           data: this.xData,
+          axisLabel: {
+            show: false // 只隐藏 X 轴的标签
+          }
         },
         yAxis: {
           type: 'value',
           position: 'left',
+          min: this.adjustedLowestPrice, // 设置最小值为调整后的最低价
+          max: this.adjustedHighestPrice, // 设置最大值为调整后的最高价
+          splitNumber: 5, // 划分为 5 档
           splitLine: {
             lineStyle: {
               type: 'dashed', // 这里可以是 'dashed' 或 'dotted'
@@ -203,6 +221,12 @@ export default {
           this.xData.push(item[0])
           this.yData.push(formatPrice(item[1]))
         })
+        let lowestPrice = Math.min(...this.yData)
+        let highestPrice = Math.max(...this.yData)
+        this.adjustedLowestPrice = lowestPrice * 0.9
+        this.adjustedHighestPrice = this.formatPrice(highestPrice * 1.1)
+
+        console.log('this.adjustedLowestPrice', this.adjustedLowestPrice, 'this.adjustedHighestPrice', this.adjustedHighestPrice)
         this.echartsInit()
         this.loading = false
       } catch (e) {
@@ -245,6 +269,10 @@ export default {
   display: flex;
   align-items: center;
   padding: 12px 40px;
+}
+
+.coin-price-box-chat {
+  padding-left: 0;
 }
 
 

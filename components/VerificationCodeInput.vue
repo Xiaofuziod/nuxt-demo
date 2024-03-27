@@ -8,6 +8,7 @@
         v-model="inputs[index]"
         @input="handleInput(index)"
         @paste="handlePaste"
+        @keydown.delete="handleDelete(index)"
         ref="inputRefs"
         class="verification-input"
     />
@@ -30,6 +31,12 @@ export default {
       // 如果所有输入框都有值，发起验证请求
       if (this.inputs.every(input => input)) {
         this.validateCode();
+      }
+    },
+    handleDelete(index) {
+      // 如果当前输入框没有值，并且不是第一个输入框，移动到上一个输入框
+      if (!this.inputs[index] && index > 0) {
+        this.$refs.inputRefs[index - 1].focus();
       }
     },
     handlePaste(event) {

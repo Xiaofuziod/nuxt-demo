@@ -6,16 +6,20 @@
         <div @click="handleClick({coinId:''})">
           <user-info :is-active="!coinId"/>
         </div>
-        <div class="Account Selected">{{ $t("Selected") }}{{ followList.length ? ` (${followList.length})` : '' }}
+        <div class="Account Selected">{{ $t("Selected") }}{{ followList?.length ? ` (${followList?.length})` : '' }}
           <span style="cursor: pointer"
-                v-if="followList.length > 0"
+                v-if="followList && followList?.length > 0"
                 @click="showDelete = !showDelete">{{
               showDelete ? $t("OK") : $t("Edit")
             }}</span>
         </div>
         <!--    自选币  -->
         <div class="Frame580">
-          <div class="item" v-for="item in followList" :key="item.id"
+          <img v-if="followList && followList?.length < 1" class="empty-image" src="@/assets/imgs/report/empty.png"
+               alt="">
+          <div class="item"
+               :style="{opacity: followList && followList.length > 0 ? 1 : 0}"
+               v-for="item in followList" :key="item.id"
                :class="{ 'item-active': item.coinId === coinId}"
                @click="handleClick(item)">
             <div class="item-left">
@@ -23,7 +27,9 @@
               <div class="Bitcoin ellipsis">{{ item.name }}</div>
               <div class="BTC">{{ item.symbol }}</div>
             </div>
-            <img class="delete-icon" v-if="showDelete" src="@/assets/imgs/report/delete.svg" @click="deleteFollow(item)"
+            <img class="delete-icon"
+                 v-if="showDelete" src="@/assets/imgs/report/delete.svg"
+                 @click.stop="deleteFollow(item)"
                  alt="">
           </div>
         </div>
@@ -73,6 +79,7 @@
         <ChatIndex/>
       </div>
     </div>
+    <PageLoading :show="pageLoading"/>
   </div>
 </template>
 <script>
@@ -84,6 +91,7 @@ import MyEcharts from "~/components/echarts/index.vue";
 import {parseTime} from "~/utils/date";
 import AddCoin from "~/components/report/addCoin.vue";
 import BoxLoading from "@/components/boxLoading.vue";
+import PageLoading from '@/components/pageLoading.vue'
 
 export default {
   name: 'Home',
@@ -93,7 +101,8 @@ export default {
     AIFocus,
     ListContainer,
     MyEcharts,
-    BoxLoading
+    BoxLoading,
+    PageLoading
   },
   data() {
     return {
@@ -101,7 +110,8 @@ export default {
       list: [],
       coinId: '',
       coinData: {},
-      loading: true
+      loading: true,
+      pageLoading: true
     }
   },
   computed: {
@@ -159,6 +169,9 @@ export default {
         }
       }).finally(() => {
         this.loading = false
+        setTimeout(() => {
+          this.pageLoading = false
+        }, 1000)
       })
     },
   }
@@ -208,6 +221,11 @@ export default {
   overflow-y: auto;
   margin-left: -8px;
   position: relative;
+
+  .empty-image {
+    width: 226px;
+    margin-top: 30px;
+  }
 
   .delete-icon {
     width: 16px;
@@ -302,7 +320,8 @@ export default {
       cursor: pointer;
       position: absolute;
       left: 24px;
-      bottom: 30px;
+      bottom: 25px;
+      padding-top: 5px;
     }
 
     .Account {

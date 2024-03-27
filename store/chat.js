@@ -1,6 +1,6 @@
 import {getChatMessageList} from "@/common/home";
 import Vue from 'vue';
-import robotAvatar from '@/assets/imgs/user/default.svg'
+import robotAvatar from '@/assets/imgs/user/default.png'
 
 import {getWelcomeList} from "@/utils/getWelcomeMessage";
 import {formatMessages} from "@/utils/message"

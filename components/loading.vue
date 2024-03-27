@@ -1,8 +1,12 @@
 <template>
   <div class="loading-overlay" v-show="show">
     <div class="loading-content">
-      <img  class="loading-img" src="@/assets/imgs/ZKZg.gif" >
-      <span>LOADING</span>
+      <div class="chat-bubble">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      Loading
     </div>
   </div>
 </template>
@@ -25,7 +29,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -35,22 +39,64 @@ export default {
   z-index: 9999;
   .loading-content {
     position: relative;
-    margin: 240px auto;
-    width: 180px;
-    height: 180px;
-    border-radius: 20px;
-    background: rgba(0, 0, 0, 0.16);
+    margin: 84px auto;
+    width: 200px;
+    height: 50px;
+    border-radius: 8px;
+    background: rgba(138, 173, 188, 0.10);
+    backdrop-filter: blur(108.94999694824219px);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    color: #fff;
-    font-size: 16px;
-    font-family: aifont;
+    color: #8CB4BD;
+
+    font-family: Avenir;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
   }
-  .loading-img {
-    width: 30px;
-    margin-bottom: 10px;
+
+
+  /* 聊天气泡的基本样式 */
+  .chat-bubble {
+    display: flex;
+    gap: 7px; /* 点之间的间隔 */
+    padding: 6px;
+    margin-right: 10px;
   }
+
+  /* 点的基本样式 */
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(217, 217, 217, 0.2);
+    border-radius: 50%;
+    animation: blink 1.5s infinite; /* 应用动画 */
+  }
+
+  /* 定义动画 */
+  @keyframes blink {
+    0%, 100% {
+      background-color: rgba(217, 217, 217, 0.2);
+    }
+    50% {
+      background-color: #D9D9D9;
+    }
+  }
+
+  /* 为每个点设置不同的动画延迟，实现轮流变色的效果 */
+  .dot:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .dot:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+
+  .dot:nth-child(3) {
+    animation-delay: 0.8s;
+  }
+
 }
 </style>
