@@ -58,7 +58,8 @@ export default {
         height: 32px;
         border-radius: 32px;
         margin-right: 8px;
-        background: url("@/assets/imgs/robot.svg");
+        background: url("@/assets/imgs/robot.svg") no-repeat;
+        background-size: 100% 100%;
         img {
           width: 32px;
           height: 32px;
