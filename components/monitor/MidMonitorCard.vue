@@ -8,7 +8,7 @@
 <!--      <p class="other">{{ card?.status }}</p>-->
     </div>
     <img class="option-img"
-         :class="`${disable ? 'disable' :''}`"
+         :class="`${(disable || card.selected) ? 'disable' :''}`"
          @click="$emit('select')" src="@/assets/imgs/addPlus.svg" alt="">
   </div>
 </template>
