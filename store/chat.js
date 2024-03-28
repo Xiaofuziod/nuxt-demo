@@ -180,7 +180,7 @@ export const actions = {
       source: "ASSISTANT",
       context: null,
       language: this.$i18n.locale,
-      text: ' ',
+      text: '',
       layers: [],
       loading: true
     })
