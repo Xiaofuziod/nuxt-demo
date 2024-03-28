@@ -21,7 +21,7 @@
       <div class="banner-slide banner-slide-1">
         <div class="banner-left" :style="slideStyle1.left">
           <div class="title1">Analysis</div>
-          <div class="title2">Taurion GPT</div>
+          <div class="title2">Taurion AI</div>
           <div class="desc">Provide real-time AI-refined reports with
             prompts to enhance your decision-making efficiency.
           </div>
