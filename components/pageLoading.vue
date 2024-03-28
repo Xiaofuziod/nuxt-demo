@@ -159,17 +159,17 @@ export default {
 
 .symbol div:nth-child(2) {
   transform: rotateY(90deg) translateZ(2em);
-  background-color: #A0A0A0;
+  background-color: #53776E;
 }
 
 .symbol div:nth-child(3) {
   transform: rotateY(180deg) translateZ(2em);
-  background-color: #D0D0D0;
+  background-color: #38514D;
 }
 
 .symbol div:nth-child(4) {
   transform: rotateY(-90deg) translateZ(2em);
-  background-color: #A0A0A0;
+  background-color: #53776E;
 }
 
 .symbol div:nth-child(5) {

@@ -180,7 +180,7 @@ export const actions = {
       source: "ASSISTANT",
       context: null,
       language: this.$i18n.locale,
-      text: ' ',
+      text: '',
       layers: [],
       loading: true
     })
@@ -211,7 +211,7 @@ export const actions = {
             loading: false
           }
         })
-      }, 6 * 1000)
+      }, 300 * 1000)
     }
   },
 }

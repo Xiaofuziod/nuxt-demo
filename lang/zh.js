@@ -5,7 +5,7 @@ export default {
     "AppFooter_a_1": "社区",
     "AppFooter_a_2": "常见问题",
     "AppFooter_a_3": "如何工作",
-    "AppFooter_green_1": "TRAURION。",
+    "AppFooter_green_1": "TAURION。",
     "AppFooter_bottom-link_1": "隐私政策",
     "AppFooter_bottom-link_2": "条款协议",
     "breadcrumb_ai-font_1": "分身",

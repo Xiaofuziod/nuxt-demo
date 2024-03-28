@@ -5,7 +5,7 @@ export default {
     "AppFooter_a_1": "Community",
     "AppFooter_a_2": "FAQ",
     "AppFooter_a_3": "How it work",
-    "AppFooter_green_1": "TRAURION.",
+    "AppFooter_green_1": "TAURION.",
     "AppFooter_bottom-link_1": "Privacy Policy",
     "AppFooter_bottom-link_2": "Terms & Condition",
     "breadcrumb_ai-font_1": "AGENT",

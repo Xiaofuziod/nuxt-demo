@@ -288,6 +288,10 @@ export default {
         console.log(`ignore message from other conversation:`, data)
         return
       }
+      if (msg.text === '' && msg.layers.length === 0) {
+        console.log('ignore empty message:', data)
+        return
+      }
       this.$store.dispatch('chat/pushAIMessage', msg)
       this.scrollToBottom()
     },
