@@ -212,4 +212,5 @@ export default {
     "minuteAgo": `minute ago`,
     "hourAgo": `hour ago`,
     "networkError": 'Network Error',
+    "getDataErrorTips" : "Failed to get data",
 }

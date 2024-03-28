@@ -3,14 +3,19 @@
     <audio ref="player"
            @timeupdate="updateProgress"
            @loadedmetadata="metadataLoaded"
+           @waiting="showLoading"
+           @playing="hideLoading"
+           @seeking="showLoading"
+           @seeked="hideLoading"
     >
       <source :src="audioSrc" type="audio/mpeg"/>
       Your browser does not support the audio element.
     </audio>
     <div class="controls">
-      <img class="play-btn" src="@/assets/imgs/audioplayer/pause.svg" @click="togglePlay" v-if="isPlaying" alt="">
-      <img class="play-btn" src="@/assets/imgs/audioplayer/play.svg" @click="togglePlay" v-else alt="">
-      <input class="range-slider" type="range" min="0" :max="duration" step="0.1" :value="currentTime"
+      <img class="play-btn" src="@/assets/imgs/audioplayer/pause.svg" @click="togglePlay" v-if="isPlaying && !isLoading" alt="">
+      <img class="play-btn" src="@/assets/imgs/audioplayer/play.svg" @click="togglePlay" v-if="!isPlaying && !isLoading" alt="">
+      <img class="play-btn" src="@/assets/imgs/ZKZg.gif" v-if="isLoading" alt="">
+      <input class="range-slider" type="range" min="0" :max="duration" step="0.1" :value="currentTime" :disabled="isLoading"
              :style="{ '--progress-percentage': ((currentTime / duration) * 100) + '%' }"
              @input="seekAudio"/>
       <div class="time">{{ currentTimeFormatted }} / {{ durationFormatted }}</div>
@@ -19,6 +24,7 @@
 </template>
 
 <script>
+
 export default {
   name: "audioPlayer",
   props: {
@@ -31,9 +37,13 @@ export default {
       isPlaying: false,
       currentTime: 0,
       duration: 0,
+      isLoading: false, // 新增加载状态
     };
   },
   computed: {
+    loading() {
+      return loading
+    },
     currentTimeFormatted() {
       return this.formatTime(this.currentTime);
     },
@@ -48,6 +58,12 @@ export default {
     });
   },
   methods: {
+    showLoading() {
+      this.isLoading = true;
+    },
+    hideLoading() {
+      this.isLoading = false;
+    },
     metadataLoaded() {
       this.duration = this.$refs.player.duration;
       this.updateProgress();
@@ -69,6 +85,7 @@ export default {
       this.duration = this.$refs.player.duration;
     },
     seekAudio(event) {
+      if (this.isLoading) return
       const audio = this.$refs.player;
       audio.currentTime = event.target.value;
       if (this.isPlaying) {
@@ -109,6 +126,7 @@ export default {
     width: 24px;
     height: 24px;
     margin-right: 9px;
+    cursor: pointer;
   }
   .time {
     margin-left: 9px;

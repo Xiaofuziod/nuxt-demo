@@ -233,7 +233,7 @@ export default {
         this.echartsInit()
         this.loading = false
       } catch (e) {
-        this.$toast.error('获取数据失败')
+        this.$toast.error(this.$t('getDataErrorTips'))
         this.loading = false
       }
     },
