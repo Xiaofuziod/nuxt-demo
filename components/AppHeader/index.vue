@@ -119,7 +119,7 @@ export default {
       this.$localStorage.removeItem('token')
       this.userLoggedIn = false
       this.$store.dispatch('chat/clearMessageList')
-      this.$router.replace('/')
+      this.$router.replace(this.localeRoute('/'))
     }
   },
   computed: {

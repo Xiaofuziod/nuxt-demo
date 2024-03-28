@@ -3,20 +3,20 @@
     <div class="container">
       <div class="banner-1">
         <div class="banner-left">
-          <div class="title1">{{ $t("MONITORING") }}</div>
-          <div class="title2">{{ $t("pages_index_title2_1") }}</div>
-          <div class="banner-1-btn"></div>
+          <div class="title1">YOUR CRYPTO</div>
+          <div class="title2">AI CO-PILOT</div>
           <div class="desc-code">
             <typing-text
+                font-size="29px"
+                margin-bottom="12px"
+                width="20ch"
                 :lines="[
-              { text: 'BUILD        THE  ' },
-              { text: 'BEST   WEB3' },
-              { text: 'INVESTMENT PRODUCTS' },
-        ]"
+              { text: 'SIMPLE, EFFICIENT,' },
+              { text: 'BARRIER FREE ' }        ]"
             />
           </div>
         </div>
-        <img src="~/assets/imgs/home-banner-1.svg" alt="">
+        <home-banner1/>
       </div>
       <div class="banner-2">
         <div class="banner-left">
@@ -46,12 +46,6 @@
       </div>
       <div class="banner-5">
         <div class="title1">{{ $t("pages_index_title1_5") }}</div>
-<!--        <div class="partner" style="margin-left: 57px"><img src="~/assets/imgs/partner1.png" alt=""></div>-->
-<!--        <div class="partner"><img src="~/assets/imgs/partner2.png" alt=""></div>-->
-<!--        <div class="partner"><img src="~/assets/imgs/partner3.png" alt=""></div>-->
-<!--        <div class="partner" style="margin-left: 167px"><img src="~/assets/imgs/partner1.png" alt=""></div>-->
-<!--        <div class="partner"><img src="~/assets/imgs/partner2.png" alt=""></div>-->
-<!--        <div class="partner"><img src="~/assets/imgs/partner3.png" alt=""></div>-->
         <DirectionAwareHoverEffect/>
       </div>
       <app-footer/>
@@ -61,10 +55,11 @@
 <script>
 import UserPop from "@/components/pageui/userPop.vue";
 import DirectionAwareHoverEffect from "@/components/pageui/DirectionAwareHoverEffect.vue";
+import HomeBanner1 from "@/components/pageui/homeBanner1.vue";
 
 export default {
   name: 'Home',
-  components: {DirectionAwareHoverEffect, UserPop},
+  components: {HomeBanner1, DirectionAwareHoverEffect, UserPop},
   data() {
     return {
       banner4Visible1: false,
@@ -125,29 +120,30 @@ export default {
     overflow: hidden;
     display: flex;
     justify-content: space-between;
-
-    .desc-code {
-    }
     .banner-left {
       padding: 181px 0 101px 64px;
-
+      .desc-code {
+        margin-top: 117px;
+      }
       .title1 {
         width: 595px;
-        height: 100px;
-        color: rgba(255, 255, 255, 1);
         font-family: aifont;
-        font-size: 61.1px;
-        line-height: 120px;
         text-transform: capitalize;
+        color: #FFF;
+        font-size: 78px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 100px;
       }
 
       .title2 {
         color: rgba(206, 184, 100, 1);
-        font-size: 118px;
         width: 595px;
         height: 100px;
         font-family: aifont;
-        line-height: 120px;
+        font-size: 80px;
+        font-style: normal;
+        line-height: 100px;
         text-transform: capitalize;
       }
 
@@ -236,6 +232,7 @@ export default {
         margin-top: 47px;
       }
     }
+
   }
 
   .banner-3 {
