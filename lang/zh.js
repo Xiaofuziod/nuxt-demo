@@ -221,4 +221,5 @@ export default {
     "minuteAgo": `分钟前`,
     "hourAgo": `小时前`,
     "networkError": `网络错误`,
+    "getDataErrorTips" : "获取数据失败",
 }

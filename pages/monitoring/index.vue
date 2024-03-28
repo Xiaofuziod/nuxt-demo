@@ -1,5 +1,5 @@
 <template>
-  <div class="monitor-slide">
+  <div class="monitor-slide" >
     <div class="monitor-wrapper">
       <aside class="sidebar">
         <section class="profile">
@@ -35,6 +35,7 @@
         </div>
       </main>
     </div>
+    <PageLoading :show="pageLoading"/>
   </div>
 
 </template>
@@ -45,6 +46,7 @@ export default {
   data() {
     return {
       activeTab: "ALL",
+      pageLoading: true,
       tabs: [
         {label: this.$t('ALL'), key: 'ALL'},
         {label: this.$t('FINISHED'), key: 'FINISHED'},
@@ -84,6 +86,7 @@ export default {
         page: 1
       });
       this.$store.commit('monitor/setLoading', false)
+      this.pageLoading = false
     },
     goDetail(id) {
       this.$router.push(this.localeRoute(`/monitoring/detail?id=${id}`));
