@@ -102,6 +102,7 @@ export default {
         this.xData.push(item[0])
         this.yData.push(formatPrice(item[1]))
       })
+      this.initPrice()
       this.echartsInit()
       this.loading = false
     }
@@ -139,7 +140,7 @@ export default {
         grid: {
           right: "0%",
           top: "5%",
-          left: `${priceLength * 1.2 + 10}%`,
+          left: `${priceLength * 1.2 + (this.from === 'chat' ? 5 : 10)}%`,
           bottom: "8%"
         },
         xAxis: {
@@ -148,22 +149,26 @@ export default {
           data: this.xData,
           axisLabel: {
             show: false // 只隐藏 X 轴的标签
-          }
+          },
+          axisTick: {
+            show: false // 隐藏 X 轴的刻度
+          },
         },
         yAxis: {
           type: 'value',
           position: 'left',
           min: this.adjustedLowestPrice, // 设置最小值为调整后的最低价
           max: this.adjustedHighestPrice, // 设置最大值为调整后的最高价
-          splitNumber: 5, // 划分为 5 档
+          interval: (this.adjustedHighestPrice - this.adjustedLowestPrice) / 5, // 设置间隔
+          // splitNumber: 5, // 划分为 5 档
           splitLine: {
             lineStyle: {
               type: 'dashed', // 这里可以是 'dashed' 或 'dotted'
               color: 'rgba(103, 229, 173, .1)'
-
             }
           },
-          axisLabel:{
+          axisLabel: {
+            show:true,
             fontsize: 8,
           }
         },
@@ -224,15 +229,7 @@ export default {
           this.xData.push(item[0])
           this.yData.push(formatPrice(item[1], 2))
         })
-        let lowestPrice = Math.min(...this.yData)
-        let highestPrice = Math.max(...this.yData)
-        this.adjustedLowestPrice = this.formatPrice(lowestPrice * 0.9,2)
-        this.adjustedHighestPrice = this.formatPrice(highestPrice * 1.1,2)
-        if (this.adjustedLowestPrice > 10 || this.adjustedHighestPrice > 10) {
-          this.adjustedLowestPrice = parseInt(this.adjustedLowestPrice)
-          this.adjustedHighestPrice = parseInt(this.adjustedHighestPrice)
-        }
-        console.log(this.adjustedLowestPrice, this.adjustedHighestPrice)
+        this.initPrice()
         this.echartsInit()
         this.loading = false
       } catch (e) {
@@ -243,6 +240,16 @@ export default {
     reload(coinId) {
       this.coinId = coinId
       this.loadData({value: '1d'})
+    },
+    initPrice() {
+      let lowestPrice = Math.min(...this.yData)
+      let highestPrice = Math.max(...this.yData)
+      this.adjustedLowestPrice = this.formatPrice(lowestPrice * 0.9, 2)
+      this.adjustedHighestPrice = this.formatPrice(highestPrice * 1.1, 2)
+      if (this.adjustedLowestPrice > 10 || this.adjustedHighestPrice > 10) {
+        this.adjustedLowestPrice = parseInt(this.adjustedLowestPrice)
+        this.adjustedHighestPrice = parseInt(this.adjustedHighestPrice)
+      }
     }
   }
 }

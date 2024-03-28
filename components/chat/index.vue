@@ -62,6 +62,7 @@
                 {{ item.text }}
               </div>
             </div>
+            <!--系统文案-->
             <div class="text-message-box2" v-else>
               <!--欢迎页专用文本渲染-->
               <div class="text-message-v2 text-message-v3"
@@ -79,7 +80,9 @@
                 </div>
               </div>
               <!--机器人文本渲染-->
-              <div class="text-message-v2" v-else>{{ item.text }}</div>
+              <div class="text-message-v2"
+                   v-else-if="!item.error || (item.error && lastMessage.seqNo === item.seqNo)">{{ item.text }}
+              </div>
               <!--异常提示-->
               <img class="error-image"
                    v-if="messageStatus === 'error' && lastMessage.seqNo === item.seqNo"
@@ -198,7 +201,7 @@ export default {
   methods: {
     messageErrorClick(item) {
       console.log('messageErrorClick', item)
-      this.$toast.error('消息发送失败，请重试')
+      this.$toast.error(item.error || this.$t("networkError"))
     },
     initLang() {
       this.$store.dispatch('chat/updateLang', this.showWelcome)
@@ -316,7 +319,7 @@ export default {
                 title: lastMsg.needPushHotCoin ? this.$t("TOPCRYPTOCURRENCIES") : this.$t("TOPSIGNALSOURCE"),
                 data: {
                   coins: this.$store.state.coin.coinList,
-                  datas: this.$store.state.monitor.searchMonitor?.records
+                  sources: this.$store.state.monitor.searchMonitor?.records
                 }
               },
               {
@@ -356,13 +359,6 @@ export default {
   beforeDestroy() {
     this.$socket.off('chat', this.onWebsocketReceiveMessage);
     this.$socket.off('connect', this.onWebsocketConnect);
-  },
-  watch: {
-    // msgLength(newValue, oldValue) {
-    //   if (newValue - oldValue < 5) {
-    //     this.scrollToBottom()
-    //   }
-    // }
   }
 }
 </script>
@@ -659,8 +655,7 @@ export default {
 
 
     .focus-box {
-      width: 277px;
-      //height: 62px;
+      max-width: 440px;
       border-radius: 16px;
       background: rgba(140, 180, 189, 0.1);
       position: relative;

@@ -218,4 +218,8 @@ export default {
     "servedDaysBefore": "Taurion has served",
     "servedDaysAfter": "days",
     "languageSwitch": "Language switching",
+    "secondAgo": `second ago`,
+    "minuteAgo": `minute ago`,
+    "hourAgo": `hour ago`,
+    "networkError": `Network error, please try again later`,
 }

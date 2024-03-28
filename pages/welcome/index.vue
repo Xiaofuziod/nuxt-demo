@@ -180,6 +180,8 @@ export default {
   },
   mounted() {
     this.$store.commit('chat/setPageName', 'welcome')
+    this.$store.dispatch('chat/clearMessageList')
+    this.$store.commit('chat/setWelcomeIndex', 0)
     if (this.$route.query.mode === 'dev') {
       this.hideVideo = true
       this.videoEnded()
@@ -191,7 +193,7 @@ export default {
       setTimeout(() => {
         this.$store.dispatch('chat/clearMessageList')
         this.$router.replace(this.localeRoute('/reporting'))
-      }, 3000)
+      }, 2000)
     },
     videoEnded() {
       console.log('video ended', this.$store.state.chat.welcomeIndex)

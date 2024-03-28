@@ -222,6 +222,7 @@ export default {
   max-height: calc(100% - 220px);
   overflow-y: auto;
   margin-left: -8px;
+  overflow-x: hidden;
   position: relative;
 
   .empty-image {

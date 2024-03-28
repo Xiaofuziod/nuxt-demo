@@ -208,4 +208,8 @@ export default {
     "youCanAsk6":"Dados de teste de preço ETH, a serem fornecidos por produto",
     "report-empty-text":"Falta de autosseleção, a IA não pode gerar um relatório de foco para você",
     "languageSwitch": "Language switching",
+    "secondAgo": `second ago`,
+    "minuteAgo": `minute ago`,
+    "hourAgo": `hour ago`,
+    "networkError": 'Network Error',
 }

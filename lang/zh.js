@@ -217,4 +217,8 @@ export default {
     "servedDaysBefore": "Taurion已服务",
     "servedDaysAfter": "天",
     "languageSwitch": `语言切换中..`,
+    "secondAgo": `秒前`,
+    "minuteAgo": `分钟前`,
+    "hourAgo": `小时前`,
+    "networkError": `网络错误`,
 }

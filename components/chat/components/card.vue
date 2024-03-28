@@ -35,26 +35,26 @@
             </div>
           </div>
 
-          <div class="returns-title">
-            Positive Developments
-          </div>
-          <ul class="returns-list">
+<!--          <div class="returns-title">-->
+<!--            Positive Developments-->
+<!--          </div>-->
+          <ul class="returns-list" v-if="item.data?.returns > 0">
             <li v-for="reason of item.data?.advantages">
               {{ reason }}
             </li>
           </ul>
-          <div class="returns-title">
-            Potential Concerns
-          </div>
-          <ul class="returns-list">
+<!--          <div class="returns-title">-->
+<!--            Potential Concerns-->
+<!--          </div>-->
+          <ul class="returns-list" v-else>
             <li v-for="reason of item.data?.disadvantages">
               {{ reason }}
             </li>
           </ul>
-          <div class="returns-title">
-            conclusion
-          </div>
-          <p class="returns-conclusion">{{ item.data?.conclusion }}</p>
+<!--          <div class="returns-title">-->
+<!--            conclusion-->
+<!--          </div>-->
+<!--          <p class="returns-conclusion">{{ item.data?.conclusion }}</p>-->
         </div>
       </div>
 
@@ -117,6 +117,7 @@
           <img class="img1" src="@/static/images/chat/s5.svg" alt="">
           {{ item.title }}
         </div>
+        <coin-list :coinList="[item.coin]"/>
         <div class="returns-box">
           <div class="returns-title">
             {{ $t('INTRODUCTION') }}
@@ -124,9 +125,9 @@
           <div class="returns-desc">
             {{ item.description }}
           </div>
-<!--          <div class="returns-title">-->
-<!--            {{ $t('MARKET') }}-->
-<!--          </div>-->
+          <div class="returns-title">
+            {{ $t('MARKET') }}
+          </div>
 <!--          <div class="jb-box">-->
 <!--            <div class="jb-box-price">{{ $t('PRICE') }}：</div>-->
 <!--            <coin-list :coinList="[item.coin]" :hideOption="true"/>-->

@@ -20,9 +20,9 @@
            :style="{'opacity': item.trigger === 1 ? 0.4 : 1}"
            :key="item.id + '-' + index">
         <div class="list-item-top">
-          <div class="list-item-top1">{{ item.lastUpdatedDate?.split(' ')[1] }}</div>
+          <div class="list-item-top1">{{ timeDescription(item.createdDate)}}</div>
           <div class="list-item-top2">
-            <img v-if="item.coverPhotoUrl" :src="item.coverPhotoUrl" alt="">
+            <img v-if="item.icon" :src="item.icon" alt="">
           </div>
           <div class="list-item-top3">{{ item.symbol }}</div>
         </div>
@@ -104,6 +104,34 @@ export default {
         item.trigger = 1
       }, 1000)
     },
+    timeDescription(inputTime) {
+      if (!inputTime) return '';
+      const now = new Date();
+      const inputDate = new Date(inputTime);
+      const deltaSeconds = Math.floor((now - inputDate) / 1000);
+      const deltaMinutes = Math.floor(deltaSeconds / 60);
+      const deltaHours = Math.floor(deltaMinutes / 60);
+
+      // 格式化时间为 HH:MM:SS
+      function formatTime(date) {
+        return date.toTimeString().split(' ')[0];
+      }
+
+      if (inputDate.toDateString() === now.toDateString()) {
+        // 如果是今天
+        if (deltaSeconds < 60) {
+          return `${deltaSeconds} ${this.$t('secondAgo')}`;
+        } else if (deltaMinutes < 60) {
+          return `${deltaMinutes} ${this.$t('minuteAgo')}`;
+        } else {
+          return `${deltaHours} ${this.$t('hourAgo')}`;
+        }
+      } else {
+        // 如果是今天之前
+        return formatTime(inputDate);
+      }
+    },
+
     animate() {
       document.querySelectorAll('.button').forEach(button => {
         let getVar = variable => getComputedStyle(button).getPropertyValue(variable);
@@ -411,7 +439,7 @@ html {
           color: rgba(255, 255, 255, 0.4);
           font-family: Avenir-Roman;
           font-size: 10px;
-          text-transform: capitalize;
+          //text-transform: capitalize;
         }
 
         .list-item-top2 {
