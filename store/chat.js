@@ -211,7 +211,7 @@ export const actions = {
             loading: false
           }
         })
-      }, 6 * 1000)
+      }, 300 * 1000)
     }
   },
 }
