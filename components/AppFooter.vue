@@ -9,23 +9,23 @@
       <!-- Navigation area -->
       <nav v-if="userLoggedIn">
         <ul>
-          <li ><a href="/reporting">{{ $t("AppFooter_a_1") }}</a></li>
-          <li><a href="/monitoring">{{ $t("AppFooter_a_2") }}</a></li>
-          <li><a href="/monitoring">{{ $t("AppFooter_a_3") }}</a></li>
+<!--          <li ><a href="/reporting">{{ $t("AppFooter_a_1") }}</a></li>-->
+<!--          <li><a href="/monitoring">{{ $t("AppFooter_a_2") }}</a></li>-->
+<!--          <li><a href="/monitoring">{{ $t("AppFooter_a_3") }}</a></li>-->
         </ul>
       </nav>
 
       <!-- User action area -->
       <div class="user-actions">
-        <div class="x-btn base-icon-btn">
+        <a class="x-btn base-icon-btn" href="https://twitter.com/TaurionLab" >
           <img src="~/assets/imgs/x.svg" alt="Get Premium" />
-        </div>
-        <div class="facebook-btn base-icon-btn">
+        </a>
+        <a class="facebook-btn base-icon-btn" href="https://discord.gg/2rfu26pVtS">
           <img src="~/assets/imgs/facebook.svg" alt="User profile" />
-        </div>
-        <div class="ins-btn base-icon-btn">
+        </a>
+        <a class="ins-btn base-icon-btn" href="https://t.me/Taurion">
           <img src="~/assets/imgs/ins.svg" alt="User profile" />
-        </div>
+        </a>
       </div>
     </div>
     <div class="footer-box-2">

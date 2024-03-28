@@ -10,7 +10,8 @@
             fontSize,
             fontFamily,
             marginBottom,
-            width
+            width,
+            color
           }"
       >
         {{ line.text }}
@@ -28,6 +29,7 @@ export default {
     fontFamily: String,
     marginBottom: String,
     width: String,
+    color: String,
   },
   data() {
     return {
