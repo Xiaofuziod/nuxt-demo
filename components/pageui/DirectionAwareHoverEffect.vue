@@ -1,12 +1,11 @@
 <template>
-  <div class="container">
+  <div class="slide-container">
     <div class="container">
       <ul>
-        <li v-for="i in 6" :key="i" @mouseover="update($event, 'in', i)" @mouseout="update($event, 'out', i)">
-          <div class="partner"><img src="~/assets/imgs/partner2.png" alt=""></div>
+        <li v-for="(item, i) in list" :key="i" @mouseover="update($event, 'in', i)" @mouseout="update($event, 'out', i)">
+          <div class="partner"><img :src="item.pic" alt=""></div>
           <div class="info">
-            <h3>Single-origin coffee whatever</h3>
-            <p>Williamsburg tofu polaroid, 90's Bushwick irony locavore ethnic meh messenger bag Truffaut jean shorts.</p>
+            <p>CoinMarketCap is the world's most informative crypto asset price tracking website. Its mission is to provide unbiased, high-quality and accurate information to inform user decisions.</p>
           </div>
         </li>
       </ul>
@@ -15,8 +14,26 @@
 </template>
 
 <script>
+import b1 from '@/assets/imgs/bannerfooter/1.svg'
+import b2 from '@/assets/imgs/bannerfooter/2.svg'
+import b3 from '@/assets/imgs/bannerfooter/3.svg'
+import b4 from '@/assets/imgs/bannerfooter/4.svg'
+import b5 from '@/assets/imgs/bannerfooter/5.svg'
+import b6 from '@/assets/imgs/bannerfooter/6.svg'
 export default {
   name: 'DirectionAwareHoverEffect',
+  data() {
+    return {
+      list: [
+        { pic :b1},
+        { pic :b2},
+        { pic :b3},
+        { pic :b4},
+        { pic :b5},
+        { pic :b6},
+      ]
+    }
+  },
   methods: {
     update(event, prefix, index) {
       const directions = { 0: 'top', 1: 'right', 2: 'bottom', 3: 'left' };
@@ -48,7 +65,9 @@ export default {
 @wet-asphalt: #34495E;
 @midnight-blue: #2C3E50;
 @clouds: #ECF0F1;
-
+.slide-container {
+  padding-left: 55px;
+}
 /* the important bits */
 li {
   perspective: 400px;
@@ -64,9 +83,19 @@ li {
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 4px;
   pointer-events: none;
-  background-color: rgba(red(@turquoise), green(@turquoise), blue(@turquoise), 0.9);
+  border-radius: 32px;
+  background: #8CB4BD;
+  backdrop-filter: blur(103.42799377441406px);
+  color: #081E36;
+
+  font-family: Avenir;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: capitalize;
+  padding: 64px 40px;
 }
 
 .in-top .info {
@@ -152,8 +181,8 @@ ul {
 li {
   position: relative;
   float: left;
-  width: 320px;
-  height: 320px;
+  width: 345px;
+  height: 345px;
   margin: 5px;
   padding: 0;
   list-style: none;
@@ -163,9 +192,11 @@ li {
   align-items: center;
   justify-content: center;
   .partner {
-    width: 322.8px;
-    height: 322.8px;
-
+    width: 345px;
+    height: 345px;
+    border-radius: 32px;
+    background: rgba(153, 188, 138, 0.10);
+    backdrop-filter: blur(103.42799377441406px);
     margin: 10px;
     overflow: hidden;
     position: relative;
@@ -175,19 +206,7 @@ li {
     justify-content: center;
 
     img {
-      width: 300px;
-    }
-
-    &:after {
-      background: rgba(153, 188, 138, 0.1);
-      content: '';
-      position: absolute;
-      width: 375px;
-      height: 683px;
-      transform: rotate(45deg);
-      left: -67px;
-      top: -135px;
-      z-index: -1;
+      width: 120px;
     }
   }
   a {
@@ -195,18 +214,6 @@ li {
     vertical-align: top;
     text-decoration: none;
     border-radius: 4px;
-  }
-
-  h3 {
-    margin: 0;
-    font-size: 16px;
-    color: rgba(red(#fff), green(#fff), blue(#fff), 0.1);
-  }
-
-  p {
-    font-size: 12px;
-    line-height: 1.5;
-    color: rgba(red(#fff), green(#fff), blue(#fff), 0.2);
   }
 
   .normal {
@@ -217,13 +224,12 @@ li {
     box-shadow: inset 0 2px 20px darken(@clouds, 2);
     text-align: center;
     font-size: 50px;
-    line-height: 320px;
+    line-height: 345px;
   }
 }
 
 
 .container {
-  width: 1198px;
   margin: 0 auto;
 }
 

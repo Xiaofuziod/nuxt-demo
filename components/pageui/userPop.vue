@@ -1,27 +1,24 @@
 <template>
   <div class="user-box"
-       :style="{top, left}">
+       :style="info.style">
     <div class="userinfo">
       <img src="~/assets/imgs/user-girl-1.png" alt="">
-      <span class="name">{{ $t("pages_index_name_1") }}</span>
-      <span class="phone">{{ $t("pages_index_phone_1") }}</span>
+      <span class="name">{{ info.name }}</span>
+      <span class="phone">{{ info.title}}</span>
     </div>
     <p class="desc">
       <typing-text
           font-size="13px"
           font-family="Avenir"
           margin-bottom="1px"
-          width="32ch"
-          :lines="[
-                { text: 'If someone loves you, it is your fantasy,' },
-                { text: 'love them back unconditionally' },
-                { text: 'not only because they love you' },
-                { text: 'but because is no way no way' }
-          ]"
+          width="33ch"
+          color="rgba(255,255,255,0.5)"
+          :lines="info.lines"
       />
     </p>
-    <div class="line"></div>
-    <pulse-pin class="local"/>
+    <div class="line">
+      <pulse-pin class="local"/>
+    </div>
   </div>
 </template>
 
@@ -32,11 +29,8 @@ export default {
   name: 'userPop',
   components: {PulsePin},
   props: {
-    top: {
-      type: String
-    },
-    left: {
-      type: String
+    info: {
+      type: Object
     }
   }
 }
@@ -65,7 +59,6 @@ export default {
     }
 
     .name {
-      width: 64px;
       height: 27px;
       font-family: 'Avenir';
       font-style: normal;
@@ -77,12 +70,11 @@ export default {
     }
 
     .phone {
-      width: 69px;
       height: 20px;
       font-family: 'Avenir';
       font-style: normal;
       font-weight: 400;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 20px;
       color: #E4E6FB;
       opacity: 0.5;
@@ -105,17 +97,18 @@ export default {
 
   .line {
     position: absolute;
-    top: 150px;
+    bottom: -62px;
     left: 19px;
     width: 1px;
     height: 62px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    .local {
+      position: absolute;
+      bottom: -20px;
+      left: 4px;
+    }
   }
-  .local {
-    position: absolute;
-    top: 200px;
-    left: 24px;
-  }
+
 }
 @keyframes scaleIn {
   0% {
