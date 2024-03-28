@@ -27,7 +27,8 @@
 
         </div>
         <div v-show="activeTab === '1'" v-if="monitorContent" class="content">
-          <audio-player style="margin-top: 10px;margin-bottom: 10px;width: 565px" v-if="monitorContent?.link" :audio-src="monitorContent?.link"/>
+          <audio-player style="margin-top: 10px;margin-bottom: 10px;width: 565px" v-if="monitorContent?.link"
+                        :audio-src="monitorContent?.link"/>
           <div class="box-wrapper">
             <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
               <template #default="{ items }">
@@ -80,17 +81,22 @@ export default {
     },
     messageList() {
       return this.$store.state.chat.messageList
+    },
+    combinedData() {
+      return this.monitorDetail?.id && this.$store.state.chat.conversationId
     }
   },
   mounted() {
     this.fetchMonitorDetail(this.$route.query.id); // 假设sourceId是你要查询的监控的ID
   },
   watch: {
-    monitorDetail(val) {
-      if (val) {
-        console.log('监控详情', val)
-        this.senMessage()
-      }
+    combinedData: {
+      handler(val) {
+        if (val) {
+          this.senMessage()
+        }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -122,6 +128,7 @@ export default {
       //   自动发一条消息到聊天
       this.$store.dispatch('chat/sendUserMessage', {
         text: this.monitorDetail.title,
+        conversationId: this.$store.state.chat.conversationId,
         context: {
           hook: {
             type: "SIGNAL_SOURCE",

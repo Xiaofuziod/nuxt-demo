@@ -158,16 +158,17 @@ export const actions = {
     }
   },
   // 发送用户消息 只用传入 text 和 context
-  sendUserMessage({commit, state}, message) {
+  async sendUserMessage({commit, state}, message) {
     const nextSeqNo = state.messageList.length === 0 ? 0 : state.messageList[state.messageList.length - 1].seqNo + 1
     const para = {
-      conversationId: state.conversationId,
+      conversationId: state.conversationId || message.conversationId,
       seqNo: nextSeqNo,
       source: "USER",
       language: this.$i18n.locale,
       text: message.text,
       context: message.context
     }
+    console.log('sendUserMessage', para)
 
     this.$socket.emit('chat', para)
 
