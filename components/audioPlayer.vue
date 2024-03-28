@@ -88,9 +88,9 @@ export default {
 <style scoped lang="less">
 @thumb-height: 0px;
 @thumb-width: @thumb-height;
-@track-height: 8px;
+@track-height: 10px;
 @played-color: rgba(140, 180, 189, 1);;
-@unplayed-color: rgba(140, 180, 189, 0);
+@unplayed-color: rgba(140, 180, 189, 0.2);
 @backgroup-color: rgba(140, 180, 189, 0.30);
 
 .audio-player {
@@ -128,16 +128,16 @@ export default {
       &:focus {
         outline: none;
       }
-      &:after {
-        content: "";
-        width: 100%;
-        position: absolute;
-        left: 0;
-        background: @backgroup-color;
-        height: 2px;
-        bottom: 0px;
-        pointer-events: none;
-      }
+      //&:after {
+      //  content: "";
+      //  width: 100%;
+      //  position: absolute;
+      //  left: 0;
+      //  background: @backgroup-color;
+      //  height: 2px;
+      //  bottom: 0px;
+      //  pointer-events: none;
+      //}
 
     // Track styles
       &::-webkit-slider-runnable-track {
