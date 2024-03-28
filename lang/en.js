@@ -223,4 +223,5 @@ export default {
     "hourAgo": `hour ago`,
     "networkError": `Network error, please try again later`,
     "getDataErrorTips" : "Failed to get data",
+    "monitoring_span_1": "No Result"
 }

@@ -222,4 +222,5 @@ export default {
     "hourAgo": `小时前`,
     "networkError": `网络错误`,
     "getDataErrorTips" : "获取数据失败",
+    "monitoring_span_1": '暂无数据'
 }
