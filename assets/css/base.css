@@ -50,3 +50,9 @@
     transform-origin: top
   }
 }
+@media (max-height: 900px) {
+  .footer-wrapper {
+    transform: scale(0.9);
+    transform-origin: bottom
+  }
+}
