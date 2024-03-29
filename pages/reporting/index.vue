@@ -61,13 +61,13 @@
         <!--      资讯-->
         <div class="focus-list-box">
           <list-container @loadMore="loadMore"
-                          :isLoading="loading"
-                          v-show="followList.length">
+                          :isLoading="loading">
             <!--      图表-->
             <template v-if="coinId">
               <my-echarts ref="echart"></my-echarts>
             </template>
-            <div class="focus-list" v-if="loading">
+            <!--加载态-->
+            <div class="focus-list" v-if="loading && list.length < 1">
               <SkeletonLoader2/>
             </div>
             <div class="focus-list" v-if="list.length > 0">
@@ -76,6 +76,7 @@
               </div>
             </div>
           </list-container>
+
           <!--空态-->
           <div class="center-box empty-box" v-if="!loading && !list.length">
             <img src="@/assets/imgs/empty.svg" alt="">
@@ -142,6 +143,20 @@ export default {
       return this.$store.state.chat.showWelcomeLoading
     }
   },
+  watch: {
+    followList: {
+      handler(val) {
+        if (!this.coinId) return
+        if (val.length) {
+          const item = val.find(item => item.coinId === this.coinId)
+          if (!item) this.handleClick(val[0])
+        } else {
+          this.handleClick({coinId: ''})
+        }
+      },
+      immediate: true
+    }
+  },
   async mounted() {
     this.loadData()
     await this.$store.dispatch('coin/fetchUserCoinList')
@@ -157,7 +172,7 @@ export default {
       if (item.coinId) {
         this.coinData = item
         this.$nextTick(() => {
-          this.$refs.echart.reload(item.coinId)
+          this.$refs.echart?.reload(item.coinId)
         })
       }
     },
