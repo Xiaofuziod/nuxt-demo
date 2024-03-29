@@ -127,6 +127,7 @@ import AddMonitor from "~/components/monitor/addMonitoring.vue";
 import SmallCoinCard from "@/components/report/smallMonitorCard.vue";
 import SmallMonitorCard from "@/components/chat/components/smallMonitorCard.vue";
 import FullScreenVideoLoader from "@/components/FullScreenVideoLoader.vue";
+import {chatClean} from "@/common/home";
 
 
 export default {
@@ -190,6 +191,7 @@ export default {
   methods: {
     welcomeOver() {
       this.isOver = true
+      this.$axios.get(chatClean)
       setTimeout(() => {
         this.$store.dispatch('chat/clearMessageList')
         this.$store.commit('chat/updateShowWelcomeLoading', true)

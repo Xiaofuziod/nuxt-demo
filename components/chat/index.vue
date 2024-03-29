@@ -11,7 +11,7 @@
         <div class="chat-top-title">{{ robot.text }}</div>
       </div>
       <div class="chat-top-icon" v-if="false">
-        <img class="img1" src="@/static/images/chat/s1.svg" alt="">
+        <img class="img1" src="@/static/images/chat/s1.svg" alt="" @click="clean">
         <img class="img2" src="@/static/images/chat/s3.svg" alt="">
       </div>
     </div>
@@ -117,6 +117,7 @@ import chatCard from "./components/card.vue";
 import welcomeTask from "./components/welcomeTask.vue";
 import SendBtn from "@/components/chat/components/sendBtn.vue";
 import renderedMarkdown from "@/components/renderedMarkdown.vue";
+import {chatClean} from "@/common/home";
 
 export default {
   components: {
@@ -204,6 +205,9 @@ export default {
     })
   },
   methods: {
+    clean() {
+      this.$axios.get(chatClean)
+    },
     messageErrorClick(item) {
       console.log('messageErrorClick', item)
       this.$toast.error(item.error || this.$t("networkError"))
