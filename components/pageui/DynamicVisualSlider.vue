@@ -7,11 +7,15 @@
       <img class="banner-right" src="~/assets/imgs/home-banner-3.svg" alt="">
       <img class="banner-center" src="~/assets/imgs/home-banner-4-center.svg" alt="">
       <img class="banner-right" src="~/assets/imgs/home-banner-4.svg" alt="">
+      <img class="banner-right" src=" ~/assets/imgs/map.png" alt="">
     </div>
       <swiper ref="swper" class="swiper" :options="swiperOption" @slideChange="onSlideChange">
         <swiper-slide>
+          <banner1/>
+        </swiper-slide>/
+        <swiper-slide>
           <div class="banner-slide banner-slide-1">
-            <div class="inner" v-if="realIndex === 0">
+            <div class="inner" v-if="realIndex === 1">
               <div class="banner-left">
                 <div class="title1">Analysis</div>
                 <div class="title2">Taurion AI</div>
@@ -26,7 +30,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="banner-slide banner-slide-2">
-            <div class="inner"  v-if="realIndex === 1">
+            <div class="inner"  v-if="realIndex === 2">
 
             <div class="banner-left">
               <div class="title1">Execution</div>
@@ -42,7 +46,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="banner-slide banner-slide-3">
-            <div class="inner"  v-if="realIndex === 2">
+            <div class="inner"  v-if="realIndex === 3">
             <div class="banner-left">
               <div class="title1">Ecosystem</div>
               <div class="title2">AI-driven Community</div>
@@ -55,6 +59,12 @@
             </div>
           </div>
         </swiper-slide>
+        <swiper-slide>
+          <banner4 v-if="realIndex === 4"/>
+        </swiper-slide>/
+        <swiper-slide>
+          <banner5/>
+        </swiper-slide>/
 <!--        <div class="swiper-pagination" slot="pagination"></div>-->
       </swiper>
   </div>
@@ -63,11 +73,17 @@
 
 <script>
 import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
+import Banner1 from "@/components/pageui/banner1.vue";
+import Banner4 from "@/components/pageui/banner4.vue";
+import Banner5 from "@/components/pageui/banner5.vue";
 
 export default {
   name: 'DynamicVisualSlider',
   title: 'Mousewheel control',
   components: {
+    Banner5,
+    Banner4,
+    Banner1,
     Swiper,
     SwiperSlide
   },
@@ -146,15 +162,15 @@ export default {
 }
 .swiper-container {
   position: relative;
-  height: 703px;
+  height: calc(100vh - 200px);
   width: 98vw;
 }
 .banner-slide {
-  height: 702.7px;
+  height: calc(100vh - 200px);
   display: flex;align-items: center;
   justify-content: center;
   .inner {
-    height: 702.7px;
+    height: calc(100vh - 200px);
     width: 1225px;
     position: relative;
     overflow: hidden;
