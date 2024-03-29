@@ -288,7 +288,7 @@ export default {
         console.log(`ignore message from other conversation:`, data)
         return
       }
-      if (msg.text === '' && msg.layers.length === 0) {
+      if (msg.text === '' && msg.layers.length === 0 && !!msg.more) {
         console.log('ignore empty message:', data)
         return
       }

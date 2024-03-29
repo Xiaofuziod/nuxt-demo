@@ -64,6 +64,7 @@ export const mutations = {
     state.robot = {...state.robot, ...robot}
   },
   setMessageStatus(state, status) {
+    console.log('setMessageStatus', status)
     state.messageStatus = status
   },
   setPageName(state, pageName) {
