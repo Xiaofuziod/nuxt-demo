@@ -23,7 +23,8 @@ export const state = () => ({
   robot: {
     avatar: robotAvatar,
     text: '',
-  }
+  },
+  showWelcomeLoading: false,
 })
 
 export const mutations = {
@@ -32,6 +33,9 @@ export const mutations = {
   },
   setWelcomeList(state, list) {
     state.welcomeList = list
+  },
+  updateShowWelcomeLoading(state, showWelcomeLoading) {
+    state.showWelcomeLoading = showWelcomeLoading
   },
   setWlist(state, t) {
     state.wlist = [
@@ -64,6 +68,7 @@ export const mutations = {
     state.robot = {...state.robot, ...robot}
   },
   setMessageStatus(state, status) {
+    console.log('setMessageStatus', status)
     state.messageStatus = status
   },
   setPageName(state, pageName) {

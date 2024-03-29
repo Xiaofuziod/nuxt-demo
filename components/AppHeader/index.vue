@@ -118,8 +118,10 @@ export default {
     logout() {
       this.$localStorage.removeItem('token')
       this.userLoggedIn = false
-      this.$store.dispatch('chat/clearMessageList')
-      this.$router.replace(this.localeRoute('/'))
+      // this.$store.dispatch('chat/clearMessageList')
+      // this.$router.replace(this.localeRoute('/'))
+      // console.log(this.localeRoute('/'))
+      window.location.href = "/"
     }
   },
   computed: {

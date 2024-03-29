@@ -160,7 +160,6 @@ export default {
           min: this.adjustedLowestPrice, // 设置最小值为调整后的最低价
           max: this.adjustedHighestPrice, // 设置最大值为调整后的最高价
           interval: (this.adjustedHighestPrice - this.adjustedLowestPrice) / 5, // 设置间隔
-          // splitNumber: 5, // 划分为 5 档
           splitLine: {
             lineStyle: {
               type: 'dashed', // 这里可以是 'dashed' 或 'dotted'
@@ -168,8 +167,17 @@ export default {
             }
           },
           axisLabel: {
-            show:true,
+            show: true,
             fontsize: 8,
+            formatter: function (value) {
+              if (value > 10) {
+                return parseInt(value)
+              } else if (value > 0.1) {
+                return value.toFixed(2)
+              } else {
+                return formatPrice(value, 2)
+              }
+            },
           }
         },
         // dataZoom: [

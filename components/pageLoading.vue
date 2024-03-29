@@ -150,7 +150,6 @@ export default {
   width: 4em;
   height: 4em;
   transform-style: preserve-3d;
-  background-color: white;
 }
 
 .symbol div:nth-child(1) {
@@ -174,12 +173,12 @@ export default {
 
 .symbol div:nth-child(5) {
   transform: rotateX(-90deg) translateZ(2em) rotate(180deg);
-  background-color: #E0E0E0;
+  background-color: #53776E;
 }
 
 .symbol div:nth-child(6) {
   transform: rotateX(90deg) translateZ(2em);
-  background-color: #C0C0C0;
+  background-color: #1C2B2C;
 }
 
 .symbol > div:first-child {

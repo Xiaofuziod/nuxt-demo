@@ -46,7 +46,7 @@ export default {
   z-index: 9999;
   .loading-content {
     position: relative;
-    margin: 84px auto;
+    margin: 30px auto;
     width: 200px;
     height: 50px;
     border-radius: 8px;

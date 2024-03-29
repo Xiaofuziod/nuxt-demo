@@ -4,7 +4,7 @@
       <div class="report-left">
         <div class="Account">{{ $t("Home_Account_1") }}</div>
         <div @click="handleClick({coinId:''})">
-          <user-info :is-active="!coinId" :avator="AvatorPic"/>
+          <user-info :is-active="!coinId" :avator="avatarPic"/>
         </div>
         <div class="Account Selected">{{ $t("Selected") }}{{ followList?.length ? ` (${followList?.length})` : '' }}
           <span style="cursor: pointer"
@@ -15,8 +15,9 @@
         </div>
         <!--    自选币  -->
         <div class="Frame580">
-          <img v-if="followList && followList?.length < 1" class="empty-image" src="@/assets/imgs/report/empty.png"
-               alt="">
+          <div class="item" v-if="followLoading">
+            <SkeletonLoader/>
+          </div>
           <div class="item"
                :style="{opacity: followList && followList.length > 0 ? 1 : 0}"
                v-for="item in followList" :key="item.id"
@@ -32,6 +33,10 @@
                  @click.stop="deleteFollow(item)"
                  alt="">
           </div>
+          <img v-if="!followLoading && followList && followList?.length < 1"
+               v-else
+               class="empty-image" src="@/assets/imgs/report/empty.png"
+               alt="">
         </div>
         <div class="AddaNewCoin" @click="showSelect">{{ $t("Home_AddaNewCoin_1") }}</div>
       </div>
@@ -56,13 +61,15 @@
         </div>
         <!--      资讯-->
         <div class="focus-list-box">
-          <box-loading :loading="loading && !coinId"/>
           <list-container v-show="followList.length">
             <!--      图表-->
             <template v-if="coinId">
               <my-echarts ref="echart"></my-echarts>
             </template>
-            <div class="focus-list" v-if="list.length > 0">
+            <div class="focus-list" v-if="loading">
+              <SkeletonLoader2/>
+            </div>
+            <div class="focus-list" v-else v-if="list.length > 0">
               <div v-for="item in list" :key="item.id">
                 <AIFocus :coin-data="item"/>
               </div>
@@ -79,7 +86,7 @@
         <ChatIndex/>
       </div>
     </div>
-    <PageLoading :show="pageLoading"/>
+    <PageLoading v-if="showWelcomeLoading" :show="pageLoading"/>
   </div>
 </template>
 <script>
@@ -92,8 +99,12 @@ import {parseTime} from "~/utils/date";
 import AddCoin from "~/components/report/addCoin.vue";
 import BoxLoading from "@/components/boxLoading.vue";
 import PageLoading from '@/components/pageLoading.vue'
-import AvatorPic from '@/assets/imgs/reportAvator.svg'
+import avatarPic from '@/assets/imgs/reportAvator.svg'
+import SkeletonLoader from "@/components/report/SkeletonLoader.vue";
+import SkeletonLoader2 from "@/components/report/SkeletonLoader2.vue";
 
+
+let timer = Date.now() + 2 * 1000 * 3
 export default {
   name: 'Home',
   components: {
@@ -103,17 +114,20 @@ export default {
     ListContainer,
     MyEcharts,
     BoxLoading,
-    PageLoading
+    PageLoading,
+    SkeletonLoader,
+    SkeletonLoader2
   },
   data() {
     return {
-      AvatorPic,
+      avatarPic,
       showDelete: false,
       list: [],
       coinId: '',
       coinData: {},
       loading: true,
       pageLoading: true,
+      followLoading: true
     }
   },
   computed: {
@@ -122,11 +136,15 @@ export default {
     },
     user() {
       return this.$store.state.user.userInfo
+    },
+    showWelcomeLoading() {
+      return this.$store.state.chat.showWelcomeLoading
     }
   },
-  mounted() {
+  async mounted() {
     this.loadData()
-    this.$store.dispatch('coin/fetchUserCoinList')
+    await this.$store.dispatch('coin/fetchUserCoinList')
+    this.followLoading = false
     this.$store.commit('chat/setPageName', 'report')
   },
   methods: {
@@ -171,9 +189,12 @@ export default {
         }
       }).finally(() => {
         this.loading = false
-        setTimeout(() => {
-          this.pageLoading = false
-        }, 1000)
+        if (this.showWelcomeLoading) {
+          let num = Date.now() - timer
+          setTimeout(() => {
+            this.pageLoading = false
+          }, num > 0 ? 0 : -num)
+        }
       })
     },
   }

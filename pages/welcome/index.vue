@@ -192,8 +192,9 @@ export default {
       this.isOver = true
       setTimeout(() => {
         this.$store.dispatch('chat/clearMessageList')
+        this.$store.commit('chat/updateShowWelcomeLoading', true)
         this.$router.replace(this.localeRoute('/reporting'))
-      }, 2000)
+      }, 1500)
     },
     videoEnded() {
       console.log('video ended', this.$store.state.chat.welcomeIndex)
@@ -230,7 +231,7 @@ export default {
 
 <style lang="less" scoped>
 
-.step-finish-img{
+.step-finish-img {
   width: 18px;
   height: 18px;
 }
