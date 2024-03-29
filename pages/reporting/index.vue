@@ -15,7 +15,9 @@
         </div>
         <!--    自选币  -->
         <div class="Frame580">
-          <div class="item" v-if="followLoading">
+          <div class="item"
+               v-for="s in 5"
+               v-if="followLoading">
             <SkeletonLoader/>
           </div>
           <div class="item"
