@@ -66,7 +66,9 @@ export default {
 .image-stack {
   position: absolute;
   top: 280px;
-  right: 0;
+  transform: scale(1.1);
+  right: 30px;
+  overflow: visible;
   width: 300px;
   height: 150px; /* This should be the size of the container */
 }

@@ -16,7 +16,7 @@ export default {
       const targetHeight = getComputedStyle(document.querySelector('.swiper-container')).height.split('px')[0]
       if(!targetHeight) return
       const content = document.querySelector('.banner-5'); // 假设内容在这个元素内
-      const contentHeight = content.offsetHeight + 170; // 获取当前内容的高度
+      const contentHeight = content.offsetHeight + 180; // 获取当前内容的高度
       if(contentHeight > targetHeight) {
         const scale = targetHeight / contentHeight; // 计算缩放比例
         // 应用缩放
