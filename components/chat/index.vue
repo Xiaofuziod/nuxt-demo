@@ -37,7 +37,6 @@
               <div class="focus-text">{{ item.text }}</div>
             </div>
           </div>
-
           <!--信号源-->
           <div class="text-message-box1"
                v-if="item.context && item.context.hook && item.context.hook.type === 'SIGNAL_SOURCE'">
@@ -63,7 +62,9 @@
               </div>
             </div>
             <!--系统文案-->
-            <div class="text-message-box2" v-else>
+            <div class="text-message-box2"
+                 :class="`text-message-${item.seqNo}`"
+                 v-else>
               <!--欢迎页专用文本渲染-->
               <div class="text-message-v2 text-message-v3"
                    v-if="item.source === 'T-brain'">
@@ -209,6 +210,7 @@ export default {
     handleScroll(e) {
       if (this.showWelcome) return
       const {scrollTop} = e.target
+      // console.log('scrollTop', scrollTop)
       if (!this.isLoading && !this.isFinished && scrollTop <= 0) {
         this.isLoading = true
         this.loadEarlierMessages()
@@ -258,7 +260,29 @@ export default {
 
     },
     onWebsocketReceiveMessage(data) {
-      this.getMessage(data);
+      let msg = data
+      if (this.mode !== 'dev' && data.layers) {
+        msg.layers = data.layers.filter(layer => layer.type !== 'LOG')
+      }
+      // 修复空数组
+      msg.layers = msg.layers?.filter(l => !!l) || []
+      if (data.conversationId !== this.conversationId) {
+        console.log(`ignore message from other conversation:`, data)
+        return
+      }
+      if (msg.text === '' && msg.layers.length === 0 && !!msg.more) {
+        console.log('ignore empty message:', data)
+        return
+      }
+      this.$store.dispatch('chat/pushAIMessage', msg)
+      this.$nextTick(() => {
+        let box = document.querySelectorAll(`.text-message-${msg.seqNo}`)
+        const top = box[box.length - 1].offsetTop
+        console.log('top', top)
+        this.scrollToBottom(top)
+      })
+
+      // this.scrollToBottom()
     },
     onWebsocketConnect(data) {
       console.log('Connected to socket server', data);
@@ -275,24 +299,6 @@ export default {
 
       this.$store.dispatch('chat/sendUserMessage', {text: this.message})
       this.message = ''
-      this.scrollToBottom()
-    },
-    getMessage(data) {
-      let msg = data
-      if (this.mode !== 'dev' && data.layers) {
-        msg.layers = data.layers.filter(layer => layer.type !== 'LOG')
-      }
-      // 修复空数组
-      msg.layers = msg.layers?.filter(l => !!l) || []
-      if (data.conversationId !== this.conversationId) {
-        console.log(`ignore message from other conversation:`, data)
-        return
-      }
-      if (msg.text === '' && msg.layers.length === 0 && !!msg.more) {
-        console.log('ignore empty message:', data)
-        return
-      }
-      this.$store.dispatch('chat/pushAIMessage', msg)
       this.scrollToBottom()
     },
     writerOver() {
