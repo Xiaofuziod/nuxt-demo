@@ -190,13 +190,11 @@ export default {
   },
   methods: {
     welcomeOver() {
-      this.isOver = true
+      // this.isOver = true
       this.$axios.get(chatClean)
-      setTimeout(() => {
-        this.$store.dispatch('chat/clearMessageList')
-        this.$store.commit('chat/updateShowWelcomeLoading', true)
-        this.$router.replace(this.localeRoute('/reporting'))
-      }, 1500)
+      this.$store.dispatch('chat/clearMessageList')
+      this.$store.commit('chat/updateShowWelcomeLoading', true)
+      this.$router.replace(this.localeRoute('/reporting'))
     },
     videoEnded() {
       console.log('video ended', this.$store.state.chat.welcomeIndex)
