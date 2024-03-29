@@ -67,6 +67,7 @@
         </swiper-slide>/
 <!--        <div class="swiper-pagination" slot="pagination"></div>-->
       </swiper>
+    <app-footer :show="realIndex === 5" />
   </div>
 
 </template>
@@ -104,17 +105,7 @@ export default {
   },
   methods: {
     onSlideChange() {
-      this.disableScroll()
       this.realIndex =  this.$refs.swper.$swiper.activeIndex
-      setTimeout(() => {
-        this.enableScroll()
-      },200)
-    },
-    disableScroll() {
-      document.querySelector('.home-wrapper').style.overflowY = 'hidden';
-    },
-    enableScroll() {
-      document.querySelector('.home-wrapper').style.overflowY = 'scroll';
     },
   }
 }
@@ -162,15 +153,15 @@ export default {
 }
 .swiper-container {
   position: relative;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 80px);
   width: 98vw;
 }
 .banner-slide {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 80px);
   display: flex;align-items: center;
   justify-content: center;
   .inner {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 80px);
     width: 1225px;
     position: relative;
     overflow: hidden;

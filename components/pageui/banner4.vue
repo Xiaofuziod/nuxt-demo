@@ -19,7 +19,22 @@ import pop4 from "@/assets/imgs/userpop/4.svg"
 export default {
   name: 'Banner4',
   components: {UserPop, HomeBanner1},
+  methods: {
+    adjustScale() {
+      const targetHeight = getComputedStyle(document.querySelector('.swiper-container')).height.split('px')[0]
+      if(!targetHeight) return
+      const content = document.querySelector('.banner-4'); // 假设内容在这个元素内
+      const contentHeight = content.offsetHeight + 100; // 获取当前内容的高度
+      if(contentHeight > targetHeight) {
+        const scale = targetHeight / contentHeight; // 计算缩放比例
+        // 应用缩放
+        content.style.transform = `scale(${scale})`;
+        content.style.transformOrigin = 'top'; // 根据需要设置变换原点
+      }
+    }
+  },
   mounted() {
+    this.adjustScale()
     setTimeout(() => {
       this.banner4Visible1 = true;
     }, 100)
@@ -130,8 +145,6 @@ export default {
   align-items: center;
   flex-direction: column;
   position: relative;
-  margin-top: 123px;
-
   .title1 {
     width: 372px;
     height: 68px;

@@ -22,7 +22,25 @@ import HomeBanner1 from "@/components/pageui/homeBanner1.vue";
 
 export default {
   name: 'Banner1',
-  components: {HomeBanner1}
+  components: {HomeBanner1},
+  methods: {
+    adjustScale() {
+      const targetHeight = getComputedStyle(document.querySelector('.swiper-container')).height.split('px')[0]
+      console.log(targetHeight)
+      if(!targetHeight) return
+      const content = document.querySelector('.banner-1'); // 假设内容在这个元素内
+      const contentHeight = content.offsetHeight + 100; // 获取当前内容的高度
+      if(contentHeight > targetHeight) {
+        const scale = targetHeight / contentHeight; // 计算缩放比例
+        // 应用缩放
+        content.style.transform = `scale(${scale})`;
+        content.style.transformOrigin = 'top'; // 根据需要设置变换原点
+      }
+    }
+  },
+  mounted() {
+    this.adjustScale()
+  }
 }
 </script>
 <style lang="less">
