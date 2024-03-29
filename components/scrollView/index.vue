@@ -21,7 +21,7 @@ export default {
   methods: {
     handleScroll(e) {
       const {scrollTop, offsetHeight, scrollHeight} = e.target;
-      if (!this.isFinished && !this.isLoading && scrollTop + offsetHeight >= scrollHeight) {
+      if (!this.isFinished && !this.isLoading && scrollTop + offsetHeight >= scrollHeight - 2) {
         this.$emit('loadMore');
       }
     },

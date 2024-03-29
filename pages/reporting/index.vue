@@ -34,7 +34,6 @@
                  alt="">
           </div>
           <img v-if="!followLoading && followList && followList?.length < 1"
-               v-else
                class="empty-image" src="@/assets/imgs/report/empty.png"
                alt="">
         </div>
@@ -61,7 +60,7 @@
         </div>
         <!--      资讯-->
         <div class="focus-list-box">
-          <list-container v-show="followList.length">
+          <list-container @loadMore="loadMore" v-show="followList.length">
             <!--      图表-->
             <template v-if="coinId">
               <my-echarts ref="echart"></my-echarts>
@@ -69,14 +68,14 @@
             <div class="focus-list" v-if="loading">
               <SkeletonLoader2/>
             </div>
-            <div class="focus-list" v-else v-if="list.length > 0">
+            <div class="focus-list" v-if="list.length > 0">
               <div v-for="item in list" :key="item.id">
                 <AIFocus :coin-data="item"/>
               </div>
             </div>
           </list-container>
-
-          <div class="center-box empty-box" v-if="!loading && !followList.length">
+          <!--空态-->
+          <div class="center-box empty-box" v-if="!loading && !list.length">
             <img src="@/assets/imgs/empty.svg" alt="">
             <span>{{ $t("report-empty-text") }}</span>
           </div>
@@ -86,7 +85,7 @@
         <ChatIndex/>
       </div>
     </div>
-    <PageLoading v-if="showWelcomeLoading" :show="pageLoading"/>
+    <PageLoading v-if="showWelcomeLoading" :show="loading"/>
   </div>
 </template>
 <script>
@@ -125,9 +124,9 @@ export default {
       list: [],
       coinId: '',
       coinData: {},
+      followLoading: true,
       loading: true,
-      pageLoading: true,
-      followLoading: true
+      hasMore: true
     }
   },
   computed: {
@@ -166,9 +165,25 @@ export default {
     deleteFollow(item) {
       this.$store.dispatch('coin/removeFollow', item.id)
     },
+    loadMore() {
+      console.log('loadMore')
+      if (!this.hasMore || this.loading) return
+      this.loadData()
+    },
     loadData() {
       this.loading = true
-      this.$axios.get(analysisCoin, {params: {id: this.coinId}}).then(res => {
+      let time = ''
+      if (this.list.length) {
+        let lastItem = this.list[this.list.length - 1]
+        time = `${lastItem.year}/${lastItem.date}`
+      }
+      this.$axios.get(analysisCoin, {
+        params: {
+          id: this.coinId,
+          time: time,
+          size: 3
+        }
+      }).then(res => {
         if (res.data.data) {
           let obj = res.data.data
           let dateList = Object.keys(obj)
@@ -180,20 +195,22 @@ export default {
               isToday: d.isToday,
               weekDay: d.weekDay,
               time: d.time,
-              list: obj[item]
+              list: obj[item],
+              year: d.year,
             })
           })
-          this.list = newData
+          this.list = this.list.concat(newData)
         } else {
-          console.log('no data')
+          this.hasMore = false
         }
       }).finally(() => {
-        this.loading = false
         if (this.showWelcomeLoading) {
           let num = Date.now() - timer
           setTimeout(() => {
-            this.pageLoading = false
+            this.loading = false
           }, num > 0 ? 0 : -num)
+        } else {
+          this.loading = false
         }
       })
     },
