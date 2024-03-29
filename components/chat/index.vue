@@ -56,14 +56,15 @@
           <!--文本内容-->
           <template v-if="item.text && !(item.context && item.context.hook) || item.loading">
             <!--用户的文字内容-->
-            <div class="text-message-box1" v-if="item.source === 'USER'">
+            <div class="text-message-box1"
+                 :class="`text-message-${item.seqNo}`"
+                 v-if="item.source === 'USER'">
               <div class="text-message">
                 {{ item.text }}
               </div>
             </div>
             <!--系统文案-->
             <div class="text-message-box2"
-                 :class="`text-message-${item.seqNo}`"
                  v-else>
               <!--欢迎页专用文本渲染-->
               <div class="text-message-v2 text-message-v3"
@@ -286,7 +287,7 @@ export default {
       this.$nextTick(() => {
         let box = document.querySelectorAll(`.text-message-${msg.seqNo}`)
         const top = box[box.length - 1].offsetTop
-        console.log('top', top)
+        // console.log('top', top)
         this.scrollToBottom(top)
       })
 
