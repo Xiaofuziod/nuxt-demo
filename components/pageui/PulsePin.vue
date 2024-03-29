@@ -47,7 +47,7 @@ export default {
   width: 30px;
   height: 30px;
   border-radius: 50% 50% 50% 0;
-  background: #026F72;
+  background: #386E71;
   position: absolute;
   transform: rotate(-45deg);
   left: 50%;
@@ -59,10 +59,10 @@ export default {
   animation-delay: 10s; // 3秒后开始动画
   &:after {
     content: '';
-    width: 14px;
-    height: 14px;
-    margin: 8px 0 0 8px;
-    background: #2F2F2F;
+    width: 12px;
+    height: 12px;
+    margin: 9px 0 0 9px;
+    background: #203448;
     position: absolute;
     border-radius: 50%;
   }

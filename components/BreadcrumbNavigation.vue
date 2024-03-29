@@ -1,8 +1,8 @@
 <template>
   <div class="bread-path">
-    <span class="ai-font" @click="$emit('click')">{{ $t("breadcrumb_ai-font_1") }}</span>
-    <span class="split-icon">{{ $t("breadcrumb_split-icon_1") }}</span>
-    <img :src="user.avatar" alt="">
+    <span v-if="user.nickname" class="ai-font" @click="$emit('click')">{{ $t("breadcrumb_ai-font_1") }}</span>
+    <span v-if="user.nickname"  class="split-icon">{{ $t("breadcrumb_split-icon_1") }}</span>
+    <img v-if="user.nickname"  :src="user.avatar" alt="">
     <span>{{user.nickname}}</span>
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
   color: rgba(140, 180, 189, 0.6);
   display: flex;
   align-items: center;
-
+  height: 20px;
   .ai-font {
     font-family: aifontf;
     margin-right: 4px;

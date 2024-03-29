@@ -3,47 +3,52 @@
     <div class="page-content">
       <div class="left">
         <breadcrumb-navigation @click="goList"/>
-        <div class="left-header">
-          <img :src="monitorDetail?.logo || bianPic" class="left-header-img" alt="">
-          <div class="right-content">
-            <div class="author">{{ monitorDetail?.author }}</div>
-            <div class="title">{{ monitorDetail?.title }}</div>
-          </div>
+        <div class="left-header" >
+          <template v-if="!pageLoading">
+            <img  :src="monitorDetail?.logo" class="left-header-img" alt="">
+            <div class="right-content">
+              <div class="author">{{ monitorDetail?.author }}</div>
+              <div class="title">{{ monitorDetail?.title }}</div>
+            </div>
+          </template>
         </div>
         <FilterTabs v-model="activeTab" :tabList="tabs" active-color="rgba(206, 184, 100, 1)"/>
         <!-- 监控详情内容 -->
-        <div v-if="activeTab === '0' && monitorSummary" class="content">
-          <div class="title">✨ {{ $t("SUMMARYOFMEETING") }}</div>
-          <div class="desc-1">
-            {{ monitorSummary.summary }}
-          </div>
-          <div class="title">‼️ {{ $t("SECTIONOFMEETING") }}</div>
-          <template v-for="(chapter, index) in monitorSummary.chapters">
-            <div class="desc-1">{{ chapter.title }}</div>
-            <div class="desc-2">
-              <p>{{ chapter.content }}</p>
+        <template v-if="!pageLoading">
+          <empty-box v-if="activeTab === '0' && !monitorSummary && !pageLoading"/>
+          <div v-if="activeTab === '0' && monitorSummary" class="content">
+            <div class="title">✨ {{ $t("SUMMARYOFMEETING") }}</div>
+            <div class="desc-1">
+              {{ monitorSummary.summary }}
             </div>
-          </template>
-
-        </div>
-        <div v-show="activeTab === '1'" v-if="monitorContent" class="content">
-          <audio-player style="margin-top: 10px;margin-bottom: 10px;width: 565px" v-if="monitorContent?.link"
-                        :audio-src="monitorContent?.link"/>
-          <div class="box-wrapper">
-            <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
-              <template #default="{ items }">
-                <monitor-content-item v-for="(segment, index) in items" :segment="segment" :key="index"/>
-              </template>
-            </InfiniteScroll>
+            <div class="title">‼️ {{ $t("SECTIONOFMEETING") }}</div>
+            <template v-for="(chapter, index) in monitorSummary.chapters">
+              <div class="desc-1">{{ chapter.title }}</div>
+              <div class="desc-2">
+                <p>{{ chapter.content }}</p>
+              </div>
+            </template>
           </div>
-        </div>
+          <div v-show="activeTab === '1'"  class="content">
+            <audio-player style="margin-top: 10px;margin-bottom: 10px;width: 565px" v-if="monitorContent?.link"
+                          :audio-src="monitorContent?.link"/>
+            <div class="box-wrapper" v-if="monitorContent">
+              <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
+                <template #default="{ items }">
+                  <monitor-content-item v-for="(segment, index) in items" :segment="segment" :key="index"/>
+                </template>
+              </InfiniteScroll>
+            </div>
+            <empty-box v-else/>
+          </div>
+        </template>
       </div>
       <div class="right">
         <ChatIndex/>
       </div>
     </div>
+    <MonitorDetailSkeletonLoader :show="pageLoading"/>
   </div>
-
 </template>
 
 <script>
@@ -63,6 +68,7 @@ export default {
       user: 'ta',
       followList: [],
       activeTab: "0",
+      pageLoading: true,
       tabs: [
         {label: this.$t('SUMMARIZE'), key: '0'},
         {label: this.$t('ORIGINAL'), key: '1'},
@@ -70,6 +76,9 @@ export default {
     }
   },
   computed: {
+    pageLoading() {
+      return pageLoading
+    },
     monitorDetail() {
       return this.$store.state.monitor.monitorDetail
     },
@@ -111,10 +120,14 @@ export default {
       }
     },
     // 其他方法保持不变
-    fetchMonitorDetail(sourceId) {
-      this.$store.dispatch('monitor/fetchMonitorDetail', sourceId)
-      this.$store.dispatch('monitor/fetchMonitorSummary', sourceId)
-      this.$store.dispatch('monitor/fetchMonitorContent', {sourceId})
+    async fetchMonitorDetail(sourceId) {
+      this.$store.commit('setMonitorSummary', null);
+      this.$store.commit('setMonitorDetail', null);
+      this.$store.commit('setMonitorContent', null);
+      await this.$store.dispatch('monitor/fetchMonitorDetail', sourceId)
+      await this.$store.dispatch('monitor/fetchMonitorSummary', sourceId)
+      await this.$store.dispatch('monitor/fetchMonitorContent', {sourceId})
+      this.pageLoading = false
     },
     goList() {
       this.$router.push(this.localeRoute(`/monitoring`));
@@ -294,6 +307,7 @@ export default {
 
     .left-header {
       padding-bottom: 28px;
+      min-height: 114px;
       display: flex;
       justify-content: space-between;
       align-items: center;

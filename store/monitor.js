@@ -91,8 +91,8 @@ export const actions = {
         }
     },
     async fetchUserMonitorList({commit, state}, payload) {
+        const {page, size, status} = {page: 1, size: 30, status: state.status, ...(payload || {})}
         try {
-            const {page, size, status} = {page: 1, size: 30, status: state.status, ...(payload || {})}
             commit('setStatus', status)
             const res = await this.$axios.get(`${monitorApi.getUserMonitoringList}?page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
@@ -153,7 +153,6 @@ export const actions = {
             this._vm.$loading.start();
             const res = await this.$axios.get(`${monitorApi.getMonitoringDetail}?sourceId=${sourceId}`);
             if (res && res.data && res.data.ok) {
-                console.log(res.data)
                 commit('setMonitorDetail', res.data.data);
             }
         } catch (e) {

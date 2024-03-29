@@ -222,5 +222,11 @@ export default {
     "hourAgo": `小时前`,
     "networkError": `网络错误`,
     "getDataErrorTips" : "获取数据失败",
-    "monitoring_span_1": '暂无数据'
+    "monitoring_span_1": '暂无数据',
+    "partner1": "CoinMarketCap是世界上最具参考价值的加密资产价格跟踪网站。它的使命是提供不偏不倚的，高质量和准确的信息，为用户决策提供参考。",
+    "partner2":  "BeaconScan不仅仅是一个区块链浏览器，还是ETH 2.0的第一个独立监测服务.",
+    "partner3": "CoinGecko 是一家领先的加密货币信息网站，提供加密货币市场的基本面分析。",
+    "partner4": "X是一个广受欢迎的社交网络.致力于服务公众对话。同时也是Cypto和Web3领域的最重要的信息发布来源",
+    "partner5": "MetaMask 是一个开源的以太坊钱包，能帮助用户方便地管理自己的以太坊数字资",
+    "partner6": "币安是全球最大的数字资产交易所之一，旨在成为区块链生态系统的基础设施服务提供商。"
 }

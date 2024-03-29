@@ -41,6 +41,7 @@ export default {
 
     {src: '@/plugins/socket.io', mode: 'client'},
     {src: '~/plugins/toast.js', mode: 'client'},
+    { src: '~/plugins/vue-awesome-swiper', mode: 'client' },
     {src: '@/plugins/dialog-plugin', mode: 'client'},
     {src: '@/plugins/loading-plugin.js', mode: 'client'},
     {src: '~/plugins/localStorage.js', mode: 'client'},
@@ -87,7 +88,6 @@ export default {
     lazy: true,
     langDir: 'lang/',
     silentTranslationWarn: true,
-    baseUrl: 'xxx',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
