@@ -11,7 +11,7 @@
         <div class="chat-top-title">{{ robot.text }}</div>
       </div>
       <div class="chat-top-icon" v-if="false">
-        <img class="img1" src="@/static/images/chat/s1.svg" alt="">
+        <img class="img1" src="@/static/images/chat/s1.svg" alt="" @click="clean">
         <img class="img2" src="@/static/images/chat/s3.svg" alt="">
       </div>
     </div>
@@ -56,14 +56,15 @@
           <!--文本内容-->
           <template v-if="item.text && !(item.context && item.context.hook) || item.loading">
             <!--用户的文字内容-->
-            <div class="text-message-box1" v-if="item.source === 'USER'">
+            <div class="text-message-box1"
+                 :class="`text-message-${item.seqNo}`"
+                 v-if="item.source === 'USER'">
               <div class="text-message">
                 {{ item.text }}
               </div>
             </div>
             <!--系统文案-->
             <div class="text-message-box2"
-                 :class="`text-message-${item.seqNo}`"
                  v-else>
               <!--欢迎页专用文本渲染-->
               <div class="text-message-v2 text-message-v3"
@@ -82,7 +83,9 @@
               </div>
               <!--机器人文本渲染-->
               <div class="text-message-v2"
-                   v-else-if="!item.error || (item.error && lastMessage.seqNo === item.seqNo)">{{ item.text }}
+                   v-else-if="!item.error || (item.error && lastMessage.seqNo === item.seqNo)">
+<!--                {{ item.text }}-->
+                <renderedMarkdown :content="item.text"/>
               </div>
               <!--异常提示-->
               <img class="error-image"
@@ -114,6 +117,8 @@ import btn from "./components/btn.vue";
 import chatCard from "./components/card.vue";
 import welcomeTask from "./components/welcomeTask.vue";
 import SendBtn from "@/components/chat/components/sendBtn.vue";
+import renderedMarkdown from "@/components/renderedMarkdown.vue";
+import {chatClean} from "@/common/home";
 
 export default {
   components: {
@@ -121,7 +126,8 @@ export default {
     btn,
     chatCard,
     welcomeTask,
-    SendBtn
+    SendBtn,
+    renderedMarkdown
   },
   props: {
     showWelcome: {
@@ -200,6 +206,9 @@ export default {
     })
   },
   methods: {
+    clean() {
+      this.$axios.get(chatClean)
+    },
     messageErrorClick(item) {
       console.log('messageErrorClick', item)
       this.$toast.error(item.error || this.$t("networkError"))
@@ -277,7 +286,7 @@ export default {
       this.$store.dispatch('chat/pushAIMessage', msg)
       this.$nextTick(() => {
         let box = document.querySelectorAll(`.text-message-${msg.seqNo}`)
-        const top = box[box.length - 1].offsetTop
+        const top = box[box.length - 1]?.offsetTop
         console.log('top', top)
         this.scrollToBottom(top)
       })
@@ -656,7 +665,7 @@ export default {
       font-weight: 500;
       font-size: 13px;
       margin-top: 14px;
-      white-space: pre-line;
+      //white-space: pre-line;
     }
 
     .text-message-v3 {

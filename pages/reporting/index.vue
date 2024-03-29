@@ -15,7 +15,9 @@
         </div>
         <!--    自选币  -->
         <div class="Frame580">
-          <div class="item" v-if="followLoading">
+          <div class="item"
+               v-for="s in 5"
+               v-if="followLoading">
             <SkeletonLoader/>
           </div>
           <div class="item"
@@ -34,7 +36,6 @@
                  alt="">
           </div>
           <img v-if="!followLoading && followList && followList?.length < 1"
-               v-else
                class="empty-image" src="@/assets/imgs/report/empty.png"
                alt="">
         </div>
@@ -61,22 +62,25 @@
         </div>
         <!--      资讯-->
         <div class="focus-list-box">
-          <list-container v-show="followList.length">
+          <list-container @loadMore="loadMore"
+                          :isLoading="loading">
             <!--      图表-->
             <template v-if="coinId">
               <my-echarts ref="echart"></my-echarts>
             </template>
-            <div class="focus-list" v-if="loading">
+            <!--加载态-->
+            <div class="focus-list" v-if="loading && list.length < 1">
               <SkeletonLoader2/>
             </div>
-            <div class="focus-list" v-else v-if="list.length > 0">
+            <div class="focus-list" v-if="list.length > 0">
               <div v-for="item in list" :key="item.id">
                 <AIFocus :coin-data="item"/>
               </div>
             </div>
           </list-container>
 
-          <div class="center-box empty-box" v-if="!loading && !followList.length">
+          <!--空态-->
+          <div class="center-box empty-box" v-if="!loading && !list.length">
             <img src="@/assets/imgs/empty.svg" alt="">
             <span>{{ $t("report-empty-text") }}</span>
           </div>
@@ -86,7 +90,7 @@
         <ChatIndex/>
       </div>
     </div>
-    <PageLoading v-if="showWelcomeLoading" :show="pageLoading"/>
+    <PageLoading v-if="showWelcomeLoading" :show="loading"/>
   </div>
 </template>
 <script>
@@ -125,9 +129,9 @@ export default {
       list: [],
       coinId: '',
       coinData: {},
+      followLoading: true,
       loading: true,
-      pageLoading: true,
-      followLoading: true
+      hasMore: true
     }
   },
   computed: {
@@ -139,6 +143,20 @@ export default {
     },
     showWelcomeLoading() {
       return this.$store.state.chat.showWelcomeLoading
+    }
+  },
+  watch: {
+    followList: {
+      handler(val) {
+        if (!this.coinId) return
+        if (val.length) {
+          const item = val.find(item => item.coinId === this.coinId)
+          if (!item) this.handleClick(val[0])
+        } else {
+          this.handleClick({coinId: ''})
+        }
+      },
+      immediate: true
     }
   },
   async mounted() {
@@ -156,7 +174,7 @@ export default {
       if (item.coinId) {
         this.coinData = item
         this.$nextTick(() => {
-          this.$refs.echart.reload(item.coinId)
+          this.$refs.echart?.reload(item.coinId)
         })
       }
     },
@@ -166,9 +184,25 @@ export default {
     deleteFollow(item) {
       this.$store.dispatch('coin/removeFollow', item.id)
     },
+    loadMore() {
+      console.log('loadMore')
+      if (!this.hasMore || this.loading) return
+      this.loadData()
+    },
     loadData() {
       this.loading = true
-      this.$axios.get(analysisCoin, {params: {id: this.coinId}}).then(res => {
+      let time = ''
+      if (this.list.length) {
+        let lastItem = this.list[this.list.length - 1]
+        time = `${lastItem.year}/${lastItem.date}`
+      }
+      this.$axios.get(analysisCoin, {
+        params: {
+          id: this.coinId,
+          time: time,
+          size: 3
+        }
+      }).then(res => {
         if (res.data.data) {
           let obj = res.data.data
           let dateList = Object.keys(obj)
@@ -180,20 +214,22 @@ export default {
               isToday: d.isToday,
               weekDay: d.weekDay,
               time: d.time,
-              list: obj[item]
+              list: obj[item],
+              year: d.year,
             })
           })
-          this.list = newData
+          this.list = this.list.concat(newData)
         } else {
-          console.log('no data')
+          this.hasMore = false
         }
       }).finally(() => {
-        this.loading = false
         if (this.showWelcomeLoading) {
           let num = Date.now() - timer
           setTimeout(() => {
-            this.pageLoading = false
+            this.loading = false
           }, num > 0 ? 0 : -num)
+        } else {
+          this.loading = false
         }
       })
     },

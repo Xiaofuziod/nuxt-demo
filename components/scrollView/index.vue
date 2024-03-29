@@ -1,7 +1,9 @@
 <template>
   <div class="list-container" @scroll="handleScroll">
     <slot></slot>
-    <div v-if="isLoading" class="loading">{{ $t("scrollView_index_loading_1") }}</div>
+    <div class="loading-container" v-if="isLoading">
+      <dot-carousel/>
+    </div>
     <div v-if="isFinished" class="finished">{{ $t("scrollView_index_finished_1") }}</div>
   </div>
 </template>
@@ -21,7 +23,7 @@ export default {
   methods: {
     handleScroll(e) {
       const {scrollTop, offsetHeight, scrollHeight} = e.target;
-      if (!this.isFinished && !this.isLoading && scrollTop + offsetHeight >= scrollHeight) {
+      if (!this.isFinished && !this.isLoading && scrollTop + offsetHeight >= scrollHeight - 2) {
         this.$emit('loadMore');
       }
     },
@@ -30,6 +32,17 @@ export default {
 </script>
 
 <style lang="less">
+
+
+.loading-container {
+  text-align: center;
+  transition: height 0.3s;
+
+  img {
+    width: 30px;
+  }
+}
+
 
 .list-container {
   position: relative;

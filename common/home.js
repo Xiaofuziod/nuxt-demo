@@ -21,4 +21,5 @@ export const getChatMessageList= baseUrl + '/api/chat/list'
 export const updateUserInfo = baseUrl + "/api/system/user/modify"
 
 export const analysisRead = baseUrl + "/api/analysis/read"
+export const chatClean = baseUrl + "/api/chat/clean"
 

@@ -36,5 +36,6 @@ export function parseTime(timeStr) {
     weekDay,
     date: `${month}/${day}`,
     time: `${hours}:${minutes}`,
+    year: `${year}`,
   };
 }

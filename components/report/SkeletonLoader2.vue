@@ -1,7 +1,7 @@
 <template>
   <div class="skeleton-wrapper">
     <div class="skeleton-title1"></div>
-    <div class="skeleton-wrapper-box"></div>
+    <div class="skeleton-wrapper-box" v-for="s in 3"></div>
   </div>
 </template>
 
@@ -12,6 +12,10 @@ export default {
 </script>
 
 <style scoped>
+
+.skeleton-wrapper{
+  margin-bottom: 20px;
+}
 
 
 .skeleton-title1{
@@ -28,6 +32,7 @@ export default {
   background-color: #1C3C43;
   border-radius: 16px;
   padding: 19px 24px 10px 24px;
+  margin-bottom: 20px;
 }
 
 .skeleton-title{

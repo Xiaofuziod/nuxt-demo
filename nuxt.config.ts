@@ -38,12 +38,14 @@ export default {
   plugins: [
     '@/plugins/request',
     '~/plugins/event-bus.js',
+
     {src: '@/plugins/socket.io', mode: 'client'},
     {src: '~/plugins/toast.js', mode: 'client'},
     { src: '~/plugins/vue-awesome-swiper', mode: 'client' },
     {src: '@/plugins/dialog-plugin', mode: 'client'},
     {src: '@/plugins/loading-plugin.js', mode: 'client'},
     {src: '~/plugins/localStorage.js', mode: 'client'},
+    {src: '~/plugins/markdownit.js', mode: 'client'},
     {
       src: '~plugins/echarts',
       ssr: false
@@ -93,5 +95,15 @@ export default {
       fallbackLocale: 'en'
     }
   },
-  build: {}
+  build: {
+    extend(config, { isDev, isClient }) {
+      if (isClient) {
+        config.module.rules.push({
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: "javascript/auto"
+        });
+      }
+    }
+  }
 }
