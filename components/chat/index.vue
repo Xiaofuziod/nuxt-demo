@@ -26,6 +26,7 @@
           <div class="message-time" v-if="item.displayTime">{{ item.displayTime }}</div>
           <!--AI焦点-->
           <div class="text-message-box1"
+               :class="`text-message-${item.seqNo}`"
                v-if="item.context && item.context.hook && item.context.hook.type === 'FOCUS'">
             <div class="focus-box">
               <div class="focus-tip">
@@ -39,6 +40,7 @@
           </div>
           <!--信号源-->
           <div class="text-message-box1"
+               :class="`text-message-${item.seqNo}`"
                v-if="item.context && item.context.hook && item.context.hook.type === 'SIGNAL_SOURCE'">
             <div class="focus-box">
               <div class="focus-tip">
@@ -84,7 +86,7 @@
               <!--机器人文本渲染-->
               <div class="text-message-v2"
                    v-else-if="!item.error || (item.error && lastMessage.seqNo === item.seqNo)">
-<!--                {{ item.text }}-->
+                <!--                {{ item.text }}-->
                 <renderedMarkdown :content="item.text"/>
               </div>
               <!--异常提示-->
@@ -190,7 +192,7 @@ export default {
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
         this.$store.dispatch('coin/fetchCoinList', {size: 5})
-        this.$store.dispatch('monitor/fetchMonitorList', {size: 5})
+        this.$store.dispatch('monitor/fetchMonitorList', {size: 5,status:3})
       }, 3000)
       // 获取消息ID
       this.loadEarlierMessages()
@@ -666,6 +668,7 @@ export default {
       font-size: 13px;
       margin-top: 14px;
       //white-space: pre-line;
+
     }
 
     .text-message-v3 {

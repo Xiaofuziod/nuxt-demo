@@ -185,7 +185,7 @@ export default {
       this.$store.dispatch('coin/removeFollow', item.id)
     },
     loadMore() {
-      console.log('loadMore')
+      console.log('loadMore', this.hasMore, this.loading)
       if (!this.hasMore || this.loading) return
       this.loadData()
     },
@@ -205,9 +205,11 @@ export default {
       }).then(res => {
         if (res.data.data) {
           let obj = res.data.data
+          console.log('obj', obj)
           let dateList = Object.keys(obj)
           let newData = []
           dateList.forEach(item => {
+            if (obj[item].length < 1) return
             const d = parseTime(item)
             newData.push({
               date: d.date,
@@ -281,6 +283,11 @@ export default {
   margin-left: -8px;
   overflow-x: hidden;
   position: relative;
+  -ms-overflow-style: none; /* 针对IE和Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* 隐藏滚动条 */
+  }
 
   .empty-image {
     width: 226px;

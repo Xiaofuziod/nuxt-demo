@@ -48,9 +48,12 @@ export default {
   position: relative;
   overflow-y: auto;
   height: 100%;
+  -ms-overflow-style: none; /* 针对IE和Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* 隐藏滚动条 */
+  }
 }
-.list-container::-webkit-scrollbar {
-  display: none;
-}
+
 
 </style>
