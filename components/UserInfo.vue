@@ -1,27 +1,32 @@
 <template>
   <div class="Rectangle82"
        :class="{'rect-active':isActive}">
-    <div class="Ellipse245">
-      <img :src="avator" v-if="user.avatar || MonitorAvator" alt="">
-    </div>
-    <div>
-      <div class="saywteri2473 ellipsis">{{ user.nickname || user.account }}</div>
-      <div class="wtewteri247">{{$t('servedDaysBefore')}}  {{ servedDays }}  {{$t('servedDaysAfter')}}</div>
-    </div>
+    <SkeletonLoader v-if="!user.nickname"/>
+    <template v-else>
+      <div class="Ellipse245">
+        <img :src="avator" v-if="user.avatar || MonitorAvator" alt="">
+      </div>
+      <div>
+        <div class="saywteri2473 ellipsis">{{ user.nickname || user.account }}</div>
+        <div class="wtewteri247">{{ $t('servedDaysBefore') }} {{ servedDays }} {{ $t('servedDaysAfter') }}</div>
+      </div>
+    </template>
   </div>
 </template>
 <script>
 import MonitorAvator from '@/assets/imgs/monitorAvator.svg'
+import SkeletonLoader from "@/components/report/SkeletonLoader.vue";
 
 export default {
   name: 'UserInfo',
+  components: {SkeletonLoader},
   props: {
     isActive: {
       type: Boolean,
       default: true
     },
     avator: {
-      type:String,
+      type: String,
       default: MonitorAvator
     }
   },
@@ -33,7 +38,7 @@ export default {
       return this.$store.state.user.userInfo
     },
     servedDays() {
-      if(!this.user.createTime) return ''
+      if (!this.user.createTime) return ''
       const createTime = new Date(this.user.createTime);
       const now = new Date();
       const diff = now - createTime;

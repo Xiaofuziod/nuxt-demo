@@ -659,7 +659,7 @@ export default {
 
 
     .focus-box {
-      max-width: 440px;
+      max-width: 400px;
       border-radius: 16px;
       background: rgba(140, 180, 189, 0.1);
       position: relative;

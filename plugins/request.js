@@ -24,7 +24,7 @@ export default function ({$axios, redirect}) {
   $axios.onResponse(response => {
     if (response.data.code === 401) {
       localStorage.removeItem('token')
-      redirect('/?t=login')
+      window.location.href = '/?t=login'
     }
   })
 }

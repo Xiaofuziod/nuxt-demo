@@ -41,8 +41,7 @@
 </template>
 <script>
 import btn from "@/components/chat/components/btn.vue";
-import {gsap} from 'gsap';
-
+import {parseTime} from "@/utils/date";
 
 export default {
   name: 'AIFocus',
@@ -101,11 +100,6 @@ export default {
       const deltaMinutes = Math.floor(deltaSeconds / 60);
       const deltaHours = Math.floor(deltaMinutes / 60);
 
-      // 格式化时间为 HH:MM:SS
-      function formatTime(date) {
-        return date.toTimeString().split(' ')[0];
-      }
-
       if (inputDate.toDateString() === now.toDateString()) {
         // 如果是今天
         if (deltaSeconds < 60) {
@@ -117,7 +111,7 @@ export default {
         }
       } else {
         // 如果是今天之前
-        return formatTime(inputDate);
+        return parseTime(inputDate).time;
       }
     }
   }
