@@ -60,7 +60,9 @@
         </div>
         <!--      资讯-->
         <div class="focus-list-box">
-          <list-container @loadMore="loadMore" v-show="followList.length">
+          <list-container @loadMore="loadMore"
+                          :isLoading="loading"
+                          v-show="followList.length">
             <!--      图表-->
             <template v-if="coinId">
               <my-echarts ref="echart"></my-echarts>
