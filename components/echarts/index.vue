@@ -140,7 +140,7 @@ export default {
         grid: {
           right: "0%",
           top: "5%",
-          left: `${priceLength * 1.3 + (this.from === 'chat' ? 7 : 10)}%`,
+          left: `${priceLength * 1.35 + (this.from === 'chat' ? 7 : 10)}%`,
           bottom: "8%"
         },
         xAxis: {
