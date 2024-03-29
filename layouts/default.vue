@@ -1,14 +1,19 @@
 <template>
   <div class="main">
-    <AppHeader></AppHeader>
-    <div class="page-container">
+    <template v-if="isFullPage">
       <nuxt/>
-    </div>
-    <div class="footer">
-    </div>
-    <glob-dialog/>
+    </template>
+    <template v-else>
+      <AppHeader></AppHeader>
+      <div class="page-container">
+        <nuxt/>
+      </div>
+      <div class="footer">
+      </div>
+      <glob-dialog/>
 
-    <ball-bg1/>
+      <ball-bg1/>
+    </template>
   </div>
 </template>
 <script>
@@ -21,10 +26,18 @@ export default {
     AppHeader
   },
   data() {
-    return {};
+    return {
+      fullPage: ['privacy', 'terms']
+    };
   },
   beforeCreate() {
+    console.log(this.$route.path)
     this.$store.commit('lang/setTranslate', this.$i18n.messages[this.$i18n.locale])
+  },
+  computed: {
+    isFullPage() {
+      return ['privacy', 'terms'].findIndex(item => this.$route.path.includes(item)) > -1
+    }
   },
   mounted() {
     //更新语言

@@ -17,13 +17,13 @@
 
       <!-- User action area -->
       <div class="user-actions">
-        <a class="x-btn base-icon-btn" href="https://twitter.com/TaurionLab" >
+        <a class="x-btn base-icon-btn" href="https://twitter.com/TaurionLab"  target="_blank">
           <img src="~/assets/imgs/x.svg" alt="Get Premium" />
         </a>
-        <a class="facebook-btn base-icon-btn" href="https://discord.gg/2rfu26pVtS">
+        <a class="facebook-btn base-icon-btn" href="https://discord.gg/2rfu26pVtS" target="_blank">
           <img src="~/assets/imgs/facebook.svg" alt="User profile" />
         </a>
-        <a class="ins-btn base-icon-btn" href="https://t.me/Taurion">
+        <a class="ins-btn base-icon-btn" href="https://t.me/Taurion" target="_blank">
           <img src="~/assets/imgs/ins.svg" alt="User profile" />
         </a>
       </div>
@@ -33,8 +33,8 @@
         © 2024 <span class="green">{{ $t("AppFooter_green_1") }}</span> ALL RIGHTS RESERVED.
       </div>
       <div class="right">
-        <div class="bottom-link">{{ $t("AppFooter_bottom-link_1") }}</div>
-        <div class="bottom-link">{{ $t("AppFooter_bottom-link_2") }}</div>
+        <a class="bottom-link" :href="privacyLink" target="_blank">{{ $t("AppFooter_bottom-link_1") }}</a>
+        <a class="bottom-link" :href="termsLink" target="_blank">{{ $t("AppFooter_bottom-link_2") }}</a>
       </div>
     </div>
   </footer>
@@ -51,9 +51,12 @@ export default {
   methods: {
   },
   computed: {
-    routepath() {
-      return this.$route.path
-    }
+    privacyLink() {
+      return this.localeRoute('/privacy').fullPath
+    },
+    termsLink() {
+      return this.localeRoute('/terms').fullPath
+    },
   }
 };
 </script>
@@ -66,6 +69,22 @@ footer {
   flex-direction: column;
   margin-top: 123px;
   padding-bottom: 67px;
+  a {
+    color: inherit; /* 文本颜色继承自父元素 */
+    text-decoration: none; /* 去除下划线 */
+    background-color: transparent; /* 背景色透明 */
+    -webkit-text-decoration-skip: objects; /* Chrome, Safari, Opera 等浏览器支持的优化，避免下划线穿过文字 */
+    font-family: inherit; /* 字体继承自父元素 */
+    font-size: inherit; /* 字号继承自父元素 */
+    border: none; /* 去除边框 */
+    cursor: pointer; /* 鼠标悬停时显示指针图标 */
+    padding: 0; /* 去除内边距 */
+    margin: 0; /* 去除外边距 */
+  }
+  a:hover,
+  a:active {
+    text-decoration: underline;
+  }
   .footer-box {
     display: flex;
     justify-content: space-between;

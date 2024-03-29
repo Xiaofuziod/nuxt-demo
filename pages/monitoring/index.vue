@@ -13,28 +13,30 @@
         <div class="add-monitoring" @click="showAddMonitor">{{ $t("Monitor_add-monitoring_1") }}</div>
       </aside>
       <main class="content">
-        <breadcrumb-navigation/>
+        <breadcrumb-navigation />
         <header class="content-header">
           <FilterTabs v-model="activeTab" :tabList="tabs"/>
         </header>
-        <div class="center-box loading-box" v-if="loading">
-          <img src="@/assets/imgs/ZKZg.gif" alt="">
-        </div>
-        <div class="center-box empty-box" v-if="!loading && !userMonitorsRecords.length">
-          <img src="@/assets/imgs/empty.svg" alt="">
-          <span>{{ $t("monitoring_span_1") }}</span>
-        </div>
-        <div class="monitoring-cards" v-if="!loading && userMonitorsRecords.length">
-          <infinite-scroll  :loadData="loadData" :initData="userMonitorsRecords">
-            <template #default="{ items }">
-              <monitor-card v-for="(item, index) in items" :key="index" :card="item" show-action
-                            @click="goDetail(item.id)"/>
-            </template>
-          </infinite-scroll>
-        </div>
+        <template  v-if="!pageLoading">
+          <div class="center-box loading-box" v-if="loading" >
+            <img src="@/assets/imgs/ZKZg.gif" alt="">
+          </div>
+          <div class="center-box empty-box" v-if="!loading && !userMonitorsRecords.length">
+            <img src="@/assets/imgs/empty.svg" alt="">
+            <span>{{ $t("monitoring_span_1") }}</span>
+          </div>
+          <div class="monitoring-cards" v-if="!loading && userMonitorsRecords.length">
+            <infinite-scroll  :loadData="loadData" :initData="userMonitorsRecords">
+              <template #default="{ items }">
+                <monitor-card v-for="(item, index) in items" :key="index" :card="item" show-action
+                              @click="goDetail(item.id)"/>
+              </template>
+            </infinite-scroll>
+          </div>
+        </template>
       </main>
     </div>
-    <PageLoading :show="pageLoading"/>
+    <MonitorSkeletonLoader :show="pageLoading"/>
   </div>
 
 </template>

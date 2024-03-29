@@ -1,7 +1,7 @@
 <template>
   <div class="Rectangle82"
        :class="{'rect-active':isActive}">
-    <SkeletonLoader v-if="!user.nickname"/>
+    <SkeletonLoader v-if="!user.account"/>
     <template v-else>
       <div class="Ellipse245">
         <img :src="avator" v-if="user.avatar || MonitorAvator" alt="">

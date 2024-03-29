@@ -85,7 +85,6 @@ export default {
     lazy: true,
     langDir: 'lang/',
     silentTranslationWarn: true,
-    baseUrl: 'xxx',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
