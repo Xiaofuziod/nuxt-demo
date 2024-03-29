@@ -43,7 +43,9 @@
         </div>
         <div v-if="!userLoggedIn" class="login-btn" @click="showLogin">{{ $t("AppHeader_index_login-btn_1") }}</div>
         <div v-else class="user-profile">
-          <img :src="user.avatar" alt="">
+          <div class="user-profile-img">
+            <img :src="user.avatar" v-if="user.avatar" alt="">
+          </div>
 
           <!--        账户操作-->
           <div class="user-setting">
@@ -247,7 +249,17 @@ nav {
   justify-content: center;
   cursor: pointer;
   position: relative;
-
+  .user-profile-img {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    background: #1C3C43;
+    img {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+    }
+  }
   &::after {
     content: '';
     display: block;
@@ -260,11 +272,7 @@ nav {
     background: #8CB4BD;
   }
 
-  img {
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
-  }
+
 
   &:hover .user-setting {
     display: block;
