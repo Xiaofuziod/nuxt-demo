@@ -139,6 +139,7 @@ html {
 
 .focus-item {
   box-sizing: border-box;
+  margin-bottom: 20px;
 
   .list {
     width: 305px;
