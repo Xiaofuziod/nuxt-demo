@@ -34,9 +34,9 @@ export default {
     },
     cardClick() {
       if (this.card.status === 1) {
-        this.$toast.warning('The activity you are monitoring has not yet concluded.')
+        this.$toast.warning(this.$t('monitoringConcluded'))
       } else if(this.card.status === 7) {
-        this.$toast.warning('The activity you are monitoring has canceled.')
+        this.$toast.warning(this.$t('monitoringCanceled'))
       } else {
         this.$emit('click')
       }
