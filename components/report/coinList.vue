@@ -109,6 +109,7 @@ export default {
 .coin-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 1em;
   .coin-name {
     width: 356px;
@@ -145,7 +146,7 @@ export default {
     }
   }
   .coin-price {
-    width: 90px;
+    min-width: 90px;
     color: #FFF;
     font-family: Avenir;
     font-size: 13px;
