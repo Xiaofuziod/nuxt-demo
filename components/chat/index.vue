@@ -286,8 +286,8 @@ export default {
       this.$store.dispatch('chat/pushAIMessage', msg)
       this.$nextTick(() => {
         let box = document.querySelectorAll(`.text-message-${msg.seqNo}`)
-        const top = box[box.length - 1].offsetTop
-        // console.log('top', top)
+        const top = box[box.length - 1]?.offsetTop
+        console.log('top', top)
         this.scrollToBottom(top)
       })
 
