@@ -5,7 +5,7 @@
         <li v-for="(item, i) in list" :key="i" @mouseover="update($event, 'in', i)" @mouseout="update($event, 'out', i)">
           <div class="partner"><img :src="item.pic" alt=""></div>
           <div class="info">
-            <p>CoinMarketCap is the world's most informative crypto asset price tracking website. Its mission is to provide unbiased, high-quality and accurate information to inform user decisions.</p>
+            <p>{{item.text}}</p>
           </div>
         </li>
       </ul>
@@ -14,23 +14,23 @@
 </template>
 
 <script>
-import b1 from '@/assets/imgs/bannerfooter/1.svg'
-import b2 from '@/assets/imgs/bannerfooter/2.svg'
-import b3 from '@/assets/imgs/bannerfooter/3.svg'
-import b4 from '@/assets/imgs/bannerfooter/4.svg'
-import b5 from '@/assets/imgs/bannerfooter/5.svg'
-import b6 from '@/assets/imgs/bannerfooter/6.svg'
+import b1 from '@/assets/imgs/bannerfooter/1.png'
+import b2 from '@/assets/imgs/bannerfooter/2.png'
+import b3 from '@/assets/imgs/bannerfooter/img10.png'
+import b4 from '@/assets/imgs/bannerfooter/img16.png'
+import b5 from '@/assets/imgs/bannerfooter/img18.png'
+import b6 from '@/assets/imgs/bannerfooter/img20.png'
 export default {
   name: 'DirectionAwareHoverEffect',
   data() {
     return {
       list: [
-        { pic :b1},
-        { pic :b2},
-        { pic :b3},
-        { pic :b4},
-        { pic :b5},
-        { pic :b6},
+        { pic :b1, text: this.$t('partner1')},
+        { pic :b2, text: this.$t('partner2')},
+        { pic :b3, text: this.$t('partner3')},
+        { pic :b4, text: this.$t('partner4')},
+        { pic :b5, text: this.$t('partner5')},
+        { pic :b6, text: this.$t('partner6')}
       ]
     }
   },
@@ -66,7 +66,7 @@ export default {
 @midnight-blue: #2C3E50;
 @clouds: #ECF0F1;
 .slide-container {
-  padding-left: 55px;
+  padding-left: 65px;
 }
 /* the important bits */
 li {
@@ -197,7 +197,6 @@ li {
     border-radius: 32px;
     background: rgba(153, 188, 138, 0.10);
     backdrop-filter: blur(103.42799377441406px);
-    margin: 10px;
     overflow: hidden;
     position: relative;
     z-index: 0;
@@ -206,7 +205,6 @@ li {
     justify-content: center;
 
     img {
-      width: 120px;
     }
   }
   a {

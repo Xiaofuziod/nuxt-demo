@@ -40,6 +40,7 @@ export default {
     '~/plugins/event-bus.js',
     {src: '@/plugins/socket.io', mode: 'client'},
     {src: '~/plugins/toast.js', mode: 'client'},
+    { src: '~/plugins/vue-awesome-swiper', mode: 'client' },
     {src: '@/plugins/dialog-plugin', mode: 'client'},
     {src: '@/plugins/loading-plugin.js', mode: 'client'},
     {src: '~/plugins/localStorage.js', mode: 'client'},

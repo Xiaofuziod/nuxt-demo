@@ -18,39 +18,7 @@
         </div>
         <home-banner1/>
       </div>
-      <div class="banner-slide banner-slide-1">
-        <div class="banner-left" :style="slideStyle1.left">
-          <div class="title1">Analysis</div>
-          <div class="title2">Taurion AI</div>
-          <div class="desc">Provide real-time AI-refined reports with
-            prompts to enhance your decision-making efficiency.
-          </div>
-        </div>
-        <img class="banner-center" src="~/assets/imgs/home-banner-2-center.svg" :style="slideStyle1.center" alt="">
-        <img class="banner-right" src="~/assets/imgs/home-banner-2.svg" :style="slideStyle1.right" alt="">
-      </div>
-      <div class="banner-slide banner-slide-2">
-        <div class="banner-left" :style="slideStyle2.left">
-          <div class="title1">Execution</div>
-          <div class="title2">Taurion Agent</div>
-          <div class="desc">Let Taurion be your agent, handling tedious
-            trading steps for you and increase your trading bandwidth.
-          </div>
-        </div>
-        <img class="banner-center" src="~/assets/imgs/home-banner-3-center.svg" :style="slideStyle2.center" alt="">
-        <img class="banner-right" src="~/assets/imgs/home-banner-3.svg" :style="slideStyle2.right" alt="">
-      </div>
-      <div class="banner-slide banner-slide-3">
-        <div class="banner-left" :style="slideStyle3.left">
-          <div class="title1">Ecosystem</div>
-          <div class="title2">AI-driven Community</div>
-          <div class="desc">AI-native info flow model where everyone can generate and share portfolios by prompts,
-            and earn profits.
-          </div>
-        </div>
-        <img class="banner-center" src="~/assets/imgs/home-banner-4-center.svg" :style="slideStyle3.center" alt="">
-        <img class="banner-right" src="~/assets/imgs/home-banner-4.svg" :style="slideStyle3.right" alt="">
-      </div>
+      <DynamicVisualSlider/>
       <div class="banner-4">
         <div class="title1">feedback</div>
         <div class="title2">from our Community</div>
@@ -71,7 +39,11 @@
 import UserPop from "@/components/pageui/userPop.vue";
 import DirectionAwareHoverEffect from "@/components/pageui/DirectionAwareHoverEffect.vue";
 import HomeBanner1 from "@/components/pageui/homeBanner1.vue";
-
+import pop1 from "@/assets/imgs/userpop/1.svg"
+import pop2 from "@/assets/imgs/userpop/2.svg"
+import pop3 from "@/assets/imgs/userpop/3.svg"
+import pop4 from "@/assets/imgs/userpop/4.svg"
+import DynamicVisualSlider from "@/components/pageui/DynamicVisualSlider.vue";
 const bannerStyles = {
   bannerLeftY: 100, // 初始从下到上的偏移量
   bannerLeftOpacity: 0, // 初始透明度
@@ -87,7 +59,7 @@ const transferStyle = (bannerStyles) => {
 }
 export default {
   name: 'Home',
-  components: {HomeBanner1, DirectionAwareHoverEffect, UserPop},
+  components: {DynamicVisualSlider, HomeBanner1, DirectionAwareHoverEffect, UserPop},
   data() {
     return {
       banner4Visible1: false,
@@ -99,7 +71,7 @@ export default {
       slideStyle3: transferStyle(bannerStyles),
       userPops: [
         {
-          pic: '',
+          pic: pop1,
           name: 'Michael T.',
           title: 'Engineer',
           style: {
@@ -118,7 +90,7 @@ export default {
           ]
         },
         {
-          pic: '',
+          pic: pop2,
           name: 'Alexander H.',
           title: 'Student',
           style: {
@@ -135,7 +107,7 @@ export default {
           ]
         },
         {
-          pic: '',
+          pic: pop3,
           name: 'Валерия',
           title: 'Indie maker',
           style: {
@@ -154,7 +126,7 @@ export default {
           ]
         },
         {
-          pic: '',
+          pic: pop4,
           name: 'José Silva',
           title: 'Sales',
           style: {
@@ -251,6 +223,7 @@ export default {
   .banner-1 {
     width: 1244px;
     height: 702.7px;
+    margin: auto;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -312,81 +285,10 @@ export default {
     }
   }
 
-
-  .banner-slide {
-    width: 1244px;
-    height: 702.7px;
-    margin-top: 123px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .banner-right {
-      width: 310px;
-    }
-
-    .banner-center {
-      width: 357px;
-    }
-
-    .banner-left {
-      padding: 104px 0 101px 124px;
-      position: relative;
-      width: 520px;
-
-      .title1 {
-        width: 595px;
-        height: 85px;
-        color: rgba(206, 184, 100, 1);
-        font-family: aifont;
-        font-size: 72px;
-        line-height: 120px;
-        text-transform: capitalize;
-      }
-
-      .title2 {
-        color: rgba(217, 217, 217, 1);
-        font-size: 56px;
-        width: 595px;
-        height: 94px;
-        font-family: aifont;
-        line-height: 120px;
-        text-transform: capitalize;
-      }
-
-      .desc {
-        top: 1252px;
-        left: 160px;
-        width: 500px;
-        height: 132px;
-        opacity: 0.5;
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 24px;
-        margin-top: 47px;
-      }
-    }
-
-    &.banner-slide-3 {
-      .title2 {
-        font-size: 38px;
-      }
-
-      .banner-center {
-        width: 390px;
-      }
-
-      .banner-right {
-        width: 280px;
-      }
-    }
-
-  }
-
   .banner-4 {
     width: 1198.3px;
     height: 799.57px;
+    margin: auto;
     background: url(~/assets/imgs/map.png) no-repeat no-repeat;
     background-size: 100%;
     background-position: bottom;
@@ -418,6 +320,7 @@ export default {
   .banner-5 {
     display: flex;
     flex-wrap: wrap;
+    margin: auto;
     width: 1198.3px;
     margin-top: 123px;
     align-items: center;

@@ -213,4 +213,10 @@ export default {
     "hourAgo": `hour ago`,
     "networkError": 'Network Error',
     "getDataErrorTips" : "Failed to get data",
+    "partner1": "CoinMarketCap is the world's most informative crypto asset price tracking website. Its mission is to provide unbiased, high-quality and accurate information to inform user decisions.",
+    "partner2":  "BeaconScan is more than just a blockchain browser, it's the first standalone monitoring service for ETH 2.0",
+    "partner3": "CoinGecko is a leading cryptocurrency information website that provides fundamental analysis of the cryptocurrency market.",
+    "partner4": "X is a popular social network. Dedicated to serving public dialog. It is also the most important source of information on Cypto and Web3.",
+    "partner5": "MetaMask is an open source ethereum wallet that helps users conveniently manage their ethereum digital capital",
+    "partner6": "Binance is one of the largest digital asset exchanges in the world, aiming to become an infrastructure service provider for the blockchain ecosystem."
 }

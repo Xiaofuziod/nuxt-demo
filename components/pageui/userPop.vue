@@ -2,7 +2,7 @@
   <div class="user-box"
        :style="info.style">
     <div class="userinfo">
-      <img src="~/assets/imgs/user-girl-1.png" alt="">
+      <img :src="info.pic" alt="">
       <span class="name">{{ info.name }}</span>
       <span class="phone">{{ info.title}}</span>
     </div>
