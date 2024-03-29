@@ -175,7 +175,7 @@ export default {
               } else if (value > 0.1) {
                 return value.toFixed(2)
               } else {
-                return formatPrice(value, 2)
+                return formatPrice(value, 1)
               }
             },
           }
@@ -235,7 +235,7 @@ export default {
         }
         market.forEach(item => {
           this.xData.push(item[0])
-          this.yData.push(formatPrice(item[1], 2))
+          this.yData.push(formatPrice(item[1], 4))
         })
         this.initPrice()
         this.echartsInit()
