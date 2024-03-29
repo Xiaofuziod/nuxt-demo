@@ -20,18 +20,17 @@
         <div class="center-box loading-box" v-if="loading">
           <img src="@/assets/imgs/ZKZg.gif" alt="">
         </div>
-        <div class="monitoring-cards" v-if="!loading">
+        <div class="center-box empty-box" v-if="!loading && !userMonitorsRecords.length">
+          <img src="@/assets/imgs/empty.svg" alt="">
+          <span>{{ $t("monitoring_span_1") }}</span>
+        </div>
+        <div class="monitoring-cards" v-if="!loading && userMonitorsRecords.length">
           <infinite-scroll  :loadData="loadData" :initData="userMonitorsRecords">
             <template #default="{ items }">
               <monitor-card v-for="(item, index) in items" :key="index" :card="item" show-action
                             @click="goDetail(item.id)"/>
             </template>
-
           </infinite-scroll>
-          <div class="center-box empty-box" v-if="!userMonitorsRecords.length">
-            <img src="@/assets/imgs/empty.svg" alt="">
-            <span>{{ $t("addMonitoring_span_1") }}</span>
-          </div>
         </div>
       </main>
     </div>
@@ -244,6 +243,7 @@ export default {
       text-transform: capitalize;
       img {
         width: 64.757px;
+        margin-bottom: 6px;
         height: 76.972px;
       }
     }
