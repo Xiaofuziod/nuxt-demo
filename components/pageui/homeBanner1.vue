@@ -39,9 +39,9 @@ export default {
 @rotate3: 7deg;
 @rotate4: -10deg;
 @rotate5: -12deg;
-@rotate6: -15deg;
+@rotate6: 6deg;
 
-@translateY-hover: -20px;
+@translateY-hover: -10px;
 
 // Generate animation keyframes using a mixin
 .generate-keyframes(@name, @rotateValue) {
@@ -94,7 +94,7 @@ export default {
   top: 110px;
   left: -140px;
   z-index: 5;
-  animation: baloon-2 3s infinite alternate;
+  animation: baloon-2 3.5s infinite alternate;
   transform: rotate(@rotate2);
   animation-delay: 1s;
   img {
@@ -142,8 +142,8 @@ export default {
 }
 .image-6 {
   width: 330px;
-  top: -129px;
-  left: 162px;
+  top: 96px;
+  left: 182px;
   z-index: 2;
   animation: baloon-6 3s infinite alternate;
   animation-delay: 2.8s;
