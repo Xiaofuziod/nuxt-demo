@@ -40,7 +40,7 @@ export default {
 </script>
 <style lang="less">
 
-.mk-box{
+.mk-box {
   p {
     color: #FFF;
     font-family: Avenir;
@@ -48,7 +48,16 @@ export default {
     font-style: normal;
     font-weight: 500;
     line-height: 1.5;
+  }
+  p,ul,ol {
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 
+  ul, ol {
+    padding-left: 15px;
   }
 }
 

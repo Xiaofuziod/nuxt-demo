@@ -113,7 +113,7 @@ export default {
       // 找到容器
       let myChart = this.$echarts.init(this.$refs.myChart)
 
-      let priceLength = this.yData[0].toString().length
+      let priceLength = this.adjustedLowestPrice.toString().length
 
       // 开始渲染
       myChart.setOption({
