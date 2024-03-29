@@ -64,7 +64,7 @@ export default {
     "welcome_index_add-text_1": "+ Adicionar",
     "Monitor_h2-title_2": "Tipo",
     "Monitor_h2-title_1": "Agente",
-    "Monitor_add-monitoring_1": "+ Adicionar Vigilância",
+    "Monitor_add-monitoring_1": "+ Adicionar",
     "twitter_back-btn_1": "voltar para casa",
     "google_back-btn_1": "voltar para casa",
     "Selected": "Portfólio",
