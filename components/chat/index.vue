@@ -82,7 +82,9 @@
               </div>
               <!--机器人文本渲染-->
               <div class="text-message-v2"
-                   v-else-if="!item.error || (item.error && lastMessage.seqNo === item.seqNo)">{{ item.text }}
+                   v-else-if="!item.error || (item.error && lastMessage.seqNo === item.seqNo)">
+<!--                {{ item.text }}-->
+                <renderedMarkdown :content="item.text"/>
               </div>
               <!--异常提示-->
               <img class="error-image"
@@ -114,6 +116,7 @@ import btn from "./components/btn.vue";
 import chatCard from "./components/card.vue";
 import welcomeTask from "./components/welcomeTask.vue";
 import SendBtn from "@/components/chat/components/sendBtn.vue";
+import renderedMarkdown from "@/components/renderedMarkdown.vue";
 
 export default {
   components: {
@@ -121,7 +124,8 @@ export default {
     btn,
     chatCard,
     welcomeTask,
-    SendBtn
+    SendBtn,
+    renderedMarkdown
   },
   props: {
     showWelcome: {
@@ -656,7 +660,7 @@ export default {
       font-weight: 500;
       font-size: 13px;
       margin-top: 14px;
-      white-space: pre-line;
+      //white-space: pre-line;
     }
 
     .text-message-v3 {
