@@ -315,6 +315,7 @@ nav {
 
 
 .lang-btn {
+  position: relative;
   color: #CEB864;
   font-family: Avenir;
   font-size: 14px;
