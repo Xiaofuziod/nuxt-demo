@@ -59,6 +59,9 @@ export default {
   ul, ol {
     padding-left: 15px;
   }
+  a {
+    color: #8CB4BD;
+  }
 }
 
 </style>

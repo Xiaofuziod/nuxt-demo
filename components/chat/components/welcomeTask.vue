@@ -142,6 +142,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.task-box{
+  width: 440px;
+}
 .text-message-box2 {
   width: 100%;
   display: flex;

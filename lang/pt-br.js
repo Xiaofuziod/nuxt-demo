@@ -218,5 +218,10 @@ export default {
     "partner3": "CoinGecko is a leading cryptocurrency information website that provides fundamental analysis of the cryptocurrency market.",
     "partner4": "X is a popular social network. Dedicated to serving public dialog. It is also the most important source of information on Cypto and Web3.",
     "partner5": "MetaMask is an open source ethereum wallet that helps users conveniently manage their ethereum digital capital",
-    "partner6": "Binance is one of the largest digital asset exchanges in the world, aiming to become an infrastructure service provider for the blockchain ecosystem."
+    "partner6": "Binance is one of the largest digital asset exchanges in the world, aiming to become an infrastructure service provider for the blockchain ecosystem.",
+    tabName1: "Previsão e Análise",
+    tabName2: "Boas razões",
+    tabName3: "Risco",
+    tabName4: "motivos negativos",
+    tabName5: "Oportunidade",
 }

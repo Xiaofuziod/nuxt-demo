@@ -243,6 +243,10 @@ nav {
 }
 
 .user-profile {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  box-sizing: content-box;
   padding-left: 32px;
   display: flex;
   align-items: center;
@@ -319,6 +323,11 @@ nav {
 
 
 .lang-btn {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-sizing: content-box;
   position: relative;
   color: #CEB864;
   font-family: Avenir;

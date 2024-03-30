@@ -3,7 +3,7 @@
     <div class="chat-top">
       <div class="chat-top-left">
         <div class="chat-top-image">
-          <div class="mic" :class="{'sendLoading':sendLoading}">
+          <div class="mic" :class="{'sendLoading':sendLoading || showWelcome}">
             <img class="mic-icon" :src="robot.avatar" alt="" v-if="robot.avatar">
             <div class="mic-shadow"></div>
           </div>
@@ -101,7 +101,9 @@
       </div>
     </div>
 
-    <div class="input-box" :class="{'input-disable':disableSend}">
+    <div class="input-box"
+         v-show="!disableInput"
+         :class="{'input-disable':disableSend}">
       <input type="text" id="chatInput" v-model="message"
              :placeholder="$t('Robot_message_ask')"
              :disabled="disableInput">
@@ -579,7 +581,7 @@ export default {
     width: 461px;
     height: 56px;
     border-radius: 8px;
-    border: 0.4px solid rgba(140, 180, 189, 0.3);
+    //border: 0.4px solid rgba(140, 180, 189, 0.3);
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -587,6 +589,7 @@ export default {
     padding: 9px;
     margin-top: 10px;
     margin-left: 24px;
+    border:1px solid #8CB4BD;
 
     //.send-btn {
     //  width: 48px;
@@ -597,13 +600,14 @@ export default {
       display: block;
       flex: 1;
       height: 100%;
-      border: none;
       outline: none;
+      border: none;
       background-color: transparent;
       color: rgba(255, 255, 255, 1);
       font-family: Avenir;
       font-weight: 500;
       font-size: 13px;
+
     }
   }
 

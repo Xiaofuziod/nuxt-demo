@@ -34,27 +34,36 @@
               <span class="coin-symbol">{{ item.data?.coin?.symbol }}</span>
             </div>
           </div>
-
-<!--          <div class="returns-title">-->
-<!--            Positive Developments-->
-<!--          </div>-->
-          <ul class="returns-list" v-if="item.data?.returns > 0">
-            <li v-for="reason of item.data?.advantages">
-              {{ reason }}
-            </li>
-          </ul>
-<!--          <div class="returns-title">-->
-<!--            Potential Concerns-->
-<!--          </div>-->
-          <ul class="returns-list" v-else>
-            <li v-for="reason of item.data?.disadvantages">
-              {{ reason }}
-            </li>
-          </ul>
-<!--          <div class="returns-title">-->
-<!--            conclusion-->
-<!--          </div>-->
-<!--          <p class="returns-conclusion">{{ item.data?.conclusion }}</p>-->
+          <Tabs :tabList="getTabList(item)"
+                :activeTab="activeTab || tabList[0]"
+                @tabChanged="tabChanged"></Tabs>
+          <div v-if="activeTab.name === 'tab1'">
+            <p class="returns-conclusion">{{ item.data?.conclusion }}</p>
+          </div>
+          <div v-if="activeTab.name === 'tab2'">
+            <ul class="returns-list" v-if="item.data?.returns > 0">
+              <li v-for="reason of item.data?.advantages">
+                {{ reason }}
+              </li>
+            </ul>
+            <ul class="returns-list" v-else>
+              <li v-for="reason of item.data?.disadvantages">
+                {{ reason }}
+              </li>
+            </ul>
+          </div>
+          <div v-if="activeTab.name === 'tab3'">
+            <ul class="returns-list" v-if="item.data?.returns > 0">
+              <li v-for="reason of item.data?.disadvantages">
+                {{ reason }}
+              </li>
+            </ul>
+            <ul class="returns-list" v-else>
+              <li v-for="reason of item.data?.advantages">
+                {{ reason }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -128,10 +137,10 @@
           <div class="returns-title">
             {{ $t('MARKET') }}
           </div>
-<!--          <div class="jb-box">-->
-<!--            <div class="jb-box-price">{{ $t('PRICE') }}：</div>-->
-<!--            <coin-list :coinList="[item.coin]" :hideOption="true"/>-->
-<!--          </div>-->
+          <!--          <div class="jb-box">-->
+          <!--            <div class="jb-box-price">{{ $t('PRICE') }}：</div>-->
+          <!--            <coin-list :coinList="[item.coin]" :hideOption="true"/>-->
+          <!--          </div>-->
           <div style="margin-bottom: 10px">
             <my-echarts from="chat" :list="item.market" :coinPrice="item.coin"/>
           </div>
@@ -211,13 +220,15 @@ import coinList from "@/components/chat/components/coinList.vue";
 import monitorList from "@/components/chat/components/monitorList.vue";
 import Btn from "@/components/chat/components/btn.vue";
 import MyEcharts from "@/components/echarts/index.vue";
+import Tabs from "@/components/tabs/index.vue";
 
 export default {
   components: {
     Btn,
     coinList,
     monitorList,
-    MyEcharts
+    MyEcharts,
+    Tabs,
   },
   props: {
     layers: {
@@ -230,7 +241,10 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      activeTab: {name: 'tab1'},
+      tabList: []
+    }
   },
   computed: {
     lastMessage() {
@@ -238,6 +252,27 @@ export default {
     }
   },
   methods: {
+    tabChanged(tab) {
+      this.activeTab = tab
+    },
+    getTabList(item) {
+      let list = []
+      if (item.data?.returns > 0) {
+        list = [
+          {name: 'tab1', title: this.$t('tabName1')},
+          {name: 'tab2', title: this.$t('tabName2')},
+          {name: 'tab3', title: this.$t('tabName3')}
+        ]
+      } else {
+        list = [
+          {name: 'tab1', title: this.$t('tabName1')},
+          {name: 'tab2', title: this.$t('tabName4')},
+          {name: 'tab3', title: this.$t('tabName5')}
+        ]
+      }
+      this.tabList = list
+      return list
+    },
     goDetail(val) {
       console.log(val)
       if (!val.link) return
@@ -322,6 +357,7 @@ export default {
 
 .returns-box {
   margin-bottom: 14px;
+  min-width: 396px;
 
   .returns-top {
     display: flex;
@@ -445,7 +481,7 @@ export default {
     cursor: pointer;
     border-radius: 8px;
     border: 0.4px solid rgba(140, 180, 189, 0.3);
-    color: #5D7B86;
+    color: #FFFFFF;
     font-family: Avenir;
     font-size: 13px;
     font-weight: 350;

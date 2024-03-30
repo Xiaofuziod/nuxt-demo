@@ -113,7 +113,7 @@ export default {
       // 找到容器
       let myChart = this.$echarts.init(this.$refs.myChart)
 
-      let priceLength = this.adjustedLowestPrice.toString().length
+      let priceLength = this.adjustedHighestPrice.toString().length
 
       // 开始渲染
       myChart.setOption({
@@ -174,8 +174,10 @@ export default {
                 return parseInt(value)
               } else if (value > 0.1) {
                 return value.toFixed(2)
-              } else {
+              } else if (value >0) {
                 return formatPrice(value, 1)
+              } else {
+                return 0
               }
             },
           }
@@ -257,6 +259,8 @@ export default {
       if (this.adjustedLowestPrice > 10 || this.adjustedHighestPrice > 10) {
         this.adjustedLowestPrice = parseInt(this.adjustedLowestPrice)
         this.adjustedHighestPrice = parseInt(this.adjustedHighestPrice)
+      } else if (this.adjustedLowestPrice < 0.0001) {
+        this.adjustedLowestPrice = 0
       }
     }
   }

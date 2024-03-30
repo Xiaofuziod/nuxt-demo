@@ -93,6 +93,9 @@ export default {
     },
     combinedData() {
       return this.monitorDetail?.id && this.$store.state.chat.conversationId
+    },
+    messageStatus() {
+      return this.$store.state.chat.messageStatus
     }
   },
   mounted() {
@@ -133,10 +136,13 @@ export default {
       this.$router.push(this.localeRoute(`/monitoring`));
     },
     senMessage() {
-      const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'SIGNAL_SOURCE')
-      if (sourceList.length > 0) {
-        const ids = sourceList.map(item => item.context?.hook?.id + '')
-        if (ids.includes(this.monitorDetail.id + '')) return
+      // const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'SIGNAL_SOURCE')
+      // if (sourceList.length > 0) {
+      //   const ids = sourceList.map(item => item.context?.hook?.id + '')
+      //   if (ids.includes(this.monitorDetail.id + '')) return
+      // }
+      if (this.messageStatus === 'loading' || this.messageStatus === 'concat') {
+        return false
       }
       //   自动发一条消息到聊天
       this.$store.dispatch('chat/sendUserMessage', {

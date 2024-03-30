@@ -64,6 +64,9 @@ export default {
   computed: {
     messageList() {
       return this.$store.state.chat.messageList
+    },
+    messageStatus() {
+      return this.$store.state.chat.messageStatus
     }
   },
   data() {
@@ -73,10 +76,13 @@ export default {
   },
   methods: {
     handleClick(item) {
-      const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'FOCUS')
-      if (sourceList.length > 0) {
-        const ids = sourceList.map(item => item.context?.hook?.id + '')
-        if (ids.includes(item.id + '')) return
+      // const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'FOCUS')
+      // if (sourceList.length > 0) {
+      //   const ids = sourceList.map(item => item.context?.hook?.id + '')
+      //   if (ids.includes(item.id + '')) return
+      // }
+      if (this.messageStatus === 'loading' || this.messageStatus === 'concat') {
+        return false
       }
       const para = {
         text: item.title,
@@ -87,10 +93,8 @@ export default {
           }
         },
       }
-      setTimeout(() => {
-        this.$store.dispatch('chat/sendUserMessage', para)
-        item.trigger = 1
-      }, 1000)
+      this.$store.dispatch('chat/sendUserMessage', para)
+      item.trigger = 1
     },
     timeDescription(inputTime) {
       if (!inputTime) return '';
