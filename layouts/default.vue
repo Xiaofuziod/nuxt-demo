@@ -30,22 +30,40 @@ export default {
     };
   },
   beforeCreate() {
-    console.log(this.$route.path)
     this.$store.commit('lang/setTranslate', this.$i18n.messages[this.$i18n.locale])
   },
   computed: {
     isFullPage() {
       return ['privacy', 'terms', 'mobile'].findIndex(item => this.$route.path.includes(item)) > -1
+    },
+    isMobile() {
+      const userAgent = navigator.userAgent;
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+      return isMobile
     }
   },
   mounted() {
+    this.checkDeviceAndRedirect()
     //更新语言
     const token = this.$localStorage.getItem('token')
     if (token) {
       this.$store.dispatch('user/getUserInfo')
     }
   },
-  methods: {}
+  methods: {
+    checkDeviceAndRedirect() {
+      const currentPath = this.$route.path;
+      // 移动设备且当前路径不包含 '/mobile'
+      if (this.isMobile && !currentPath.includes('/mobile')) {
+        this.$router.push(this.localeRoute(`/mobile`));
+      }
+
+      // 非移动设备且当前路径包含 '/mobile'
+      if (!this.isMobile && currentPath.includes('/mobile')) {
+        this.$router.push(this.localeRoute(`/`));
+      }
+    }
+  }
 }
 </script>
 
