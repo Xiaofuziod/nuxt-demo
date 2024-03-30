@@ -11,7 +11,7 @@
           font-size="13px"
           font-family="Avenir"
           margin-bottom="1px"
-          width="33ch"
+          width="36ch"
           color="rgba(255,255,255,0.5)"
           :lines="info.lines"
       />
@@ -56,6 +56,7 @@ export default {
     img {
       width: 40px;
       height: 40px;
+      border-radius: 40px;
     }
 
     .name {

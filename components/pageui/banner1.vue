@@ -1,20 +1,22 @@
 <template>
-  <div class="banner-1">
-    <div class="banner-left">
-      <div class="title1">YOUR CRYPTO</div>
-      <div class="title2">AI CO-PILOT</div>
-      <div class="desc-code">
-        <typing-text
-            font-size="29px"
-            margin-bottom="12px"
-            width="20ch"
-            :lines="[
+  <div class="b-wrapper">
+    <div class="banner-1">
+      <div class="banner-left">
+        <div class="title1">YOUR CRYPTO</div>
+        <div class="title2">AI CO-PILOT</div>
+        <div class="desc-code">
+          <typing-text
+              font-size="29px"
+              margin-bottom="12px"
+              width="20ch"
+              :lines="[
               { text: 'SIMPLE, EFFICIENT,' },
               { text: 'BARRIER FREE ' }        ]"
-        />
+          />
+        </div>
       </div>
+      <home-banner1/>
     </div>
-    <home-banner1/>
   </div>
 </template>
 <script>
@@ -26,10 +28,9 @@ export default {
   methods: {
     adjustScale() {
       const targetHeight = getComputedStyle(document.querySelector('.swiper-container')).height.split('px')[0]
-      console.log(targetHeight)
       if(!targetHeight) return
       const content = document.querySelector('.banner-1'); // 假设内容在这个元素内
-      const contentHeight = content.offsetHeight + 100; // 获取当前内容的高度
+      const contentHeight = content.offsetHeight + 10; // 获取当前内容的高度
       if(contentHeight > targetHeight) {
         const scale = targetHeight / contentHeight; // 计算缩放比例
         // 应用缩放
@@ -44,6 +45,11 @@ export default {
 }
 </script>
 <style lang="less">
+.b-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
 .banner-1 {
   width: 1244px;
   height: 702.7px;
