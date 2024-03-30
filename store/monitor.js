@@ -153,10 +153,20 @@ export const actions = {
             this._vm.$loading.start();
             const res = await this.$axios.get(`${monitorApi.getMonitoringDetail}?sourceId=${sourceId}`);
             if (res && res.data && res.data.ok) {
-                commit('setMonitorDetail', res.data.data);
+                commit('setMonitorDetail', res.data.data)
+                return {
+                    state: 'success',
+                    data: res.data.data,
+                }
+            } else {
+                throw res.data.msg
             }
         } catch (e) {
-            console.error('fetchMonitorDetail error:', e);
+            console.log('fetchMonitorDetail error:', e)
+            return {
+                state: 'error',
+                data: e,
+            }
         } finally {
             this._vm.$loading.finish();
         }
@@ -168,7 +178,7 @@ export const actions = {
                 commit('setMonitorSummary', res.data.data);
             }
         } catch (e) {
-            console.error('fetchMonitorSummary error:', e);
+            console.log('fetchMonitorSummary error:', e);
         }
     },
     async fetchMonitorContent({commit}, payload) {
