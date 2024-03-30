@@ -26,10 +26,12 @@
             <span>{{ $t("monitoring_span_1") }}</span>
           </div>
           <div class="monitoring-cards" v-if="!loading && userMonitorsRecords.length">
-            <infinite-scroll  :loadData="loadData" :initData="userMonitorsRecords">
+            <infinite-scroll  :loadData="loadData" :initData="userMonitorsRecords" :init-next="userMonitors?.hasNext">
               <template #default="{ items }">
-                <monitor-card v-for="(item, index) in items" :key="index" :card="item" show-action
-                              @click="goDetail(item.id)"/>
+                <div style="width: 814px">
+                  <monitor-card v-for="(item, index) in items" :key="index" :card="item" show-action
+                                @click="goDetail(item.id)"/>
+                </div>
               </template>
             </infinite-scroll>
           </div>
