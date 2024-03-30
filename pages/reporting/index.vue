@@ -77,13 +77,16 @@
                 <AIFocus :coin-data="item"/>
               </div>
             </div>
+
+            <!--空态-->
+            <div class="empty-box"
+                 :style="{'margin-top': coinId ? '10px' : '100px'}"
+                 v-if="!loading && !list.length">
+              <img src="@/assets/imgs/empty.svg" alt="">
+              <span>{{ $t("report-empty-text") }}</span>
+            </div>
           </list-container>
 
-          <!--空态-->
-          <div class="center-box empty-box" v-if="!loading && !list.length">
-            <img src="@/assets/imgs/empty.svg" alt="">
-            <span>{{ $t("report-empty-text") }}</span>
-          </div>
         </div>
       </div>
       <div class="right">
@@ -205,8 +208,11 @@ export default {
       }).then(res => {
         if (res.data.data) {
           let obj = res.data.data
-          console.log('obj', obj)
           let dateList = Object.keys(obj)
+          if (dateList.length < 1) {
+            this.hasMore = false
+            return
+          }
           let newData = []
           dateList.forEach(item => {
             if (obj[item].length < 1) return
@@ -262,6 +268,9 @@ export default {
   line-height: normal;
   text-transform: capitalize;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
     width: 100px;
