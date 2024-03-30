@@ -11,7 +11,6 @@
       <div class="footer">
       </div>
       <glob-dialog/>
-
       <ball-bg1/>
     </template>
   </div>
@@ -36,7 +35,7 @@ export default {
   },
   computed: {
     isFullPage() {
-      return ['privacy', 'terms'].findIndex(item => this.$route.path.includes(item)) > -1
+      return ['privacy', 'terms', 'mobile'].findIndex(item => this.$route.path.includes(item)) > -1
     }
   },
   mounted() {

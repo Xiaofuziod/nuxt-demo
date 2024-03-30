@@ -48,7 +48,11 @@ export default {
   background: rgba(138, 173, 188, 0.10);
   backdrop-filter: blur(108.94999694824219px);
 }
-
+@media (max-width: 450px) {
+  .toast {
+    padding: 16px;
+  }
+}
 .toast img {
   /* 图标样式 */
   width: 24px;
