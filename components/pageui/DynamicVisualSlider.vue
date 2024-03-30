@@ -7,7 +7,7 @@
       <img class="banner-right" src="~/assets/imgs/home-banner-3.svg" alt="">
       <img class="banner-center" src="~/assets/imgs/home-banner-4-center.svg" alt="">
       <img class="banner-right" src="~/assets/imgs/home-banner-4.svg" alt="">
-      <img class="banner-right" src=" ~/assets/imgs/map.png" alt="">
+      <img class="banner-right" src="@/assets/imgs/map.png" alt="">
     </div>
       <swiper ref="swper" class="swiper" :options="swiperOption" @slideChange="onSlideChange">
         <swiper-slide>

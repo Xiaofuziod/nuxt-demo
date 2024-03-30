@@ -237,4 +237,8 @@ export default {
   tabName3: "Risco",
   tabName4: "motivos negativos",
   tabName5: "Oportunidade",
+    "MobileLunch": "Launch Taurion！",
+    "mobile-home": "Home",
+    "pcOnly": "For PC use only",
+    "noPermission": "No permission",
 }

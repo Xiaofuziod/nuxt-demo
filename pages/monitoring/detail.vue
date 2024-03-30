@@ -127,7 +127,10 @@ export default {
       this.$store.commit('setMonitorSummary', null);
       this.$store.commit('setMonitorDetail', null);
       this.$store.commit('setMonitorContent', null);
-      await this.$store.dispatch('monitor/fetchMonitorDetail', sourceId)
+      const res = await this.$store.dispatch('monitor/fetchMonitorDetail', sourceId)
+      if(res.state === "error") {
+        this.$toast.error(res.data)
+      }
       await this.$store.dispatch('monitor/fetchMonitorSummary', sourceId)
       await this.$store.dispatch('monitor/fetchMonitorContent', {sourceId})
       this.pageLoading = false

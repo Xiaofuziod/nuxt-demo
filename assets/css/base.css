@@ -43,16 +43,20 @@
   width: 100%;
   height: 100%;
 }
+a {
+  color: inherit; /* 文本颜色继承自父元素 */
+  text-decoration: none; /* 去除下划线 */
+  background-color: transparent; /* 背景色透明 */
+  -webkit-text-decoration-skip: objects; /* Chrome, Safari, Opera 等浏览器支持的优化，避免下划线穿过文字 */
+  font-family: inherit; /* 字体继承自父元素 */
+  font-size: inherit; /* 字号继承自父元素 */
+  border: none; /* 去除边框 */
+  cursor: pointer; /* 鼠标悬停时显示指针图标 */
+  padding: 0; /* 去除内边距 */
+  margin: 0; /* 去除外边距 */
+}
+a:hover,
+a:active {
+  text-decoration: underline;
+}
 
-@media (max-width: 1300px) {
-  .banner-1 ,.banner-slide,.banner-4,.banner-5{
-    transform: scale(0.9);
-    transform-origin: top
-  }
-}
-@media (max-height: 900px) {
-  .footer-wrapper {
-    transform: scale(0.9);
-    transform-origin: bottom
-  }
-}
