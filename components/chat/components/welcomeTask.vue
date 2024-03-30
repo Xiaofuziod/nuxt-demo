@@ -144,6 +144,10 @@ export default {
 <style lang="less" scoped>
 .task-box{
   width: 440px;
+
+  .text-message-v2{
+    width: 100%;
+  }
 }
 .text-message-box2 {
   width: 100%;
