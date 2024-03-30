@@ -21,15 +21,7 @@
 
       <!-- User action area -->
       <div class="user-actions">
-        <!--        <div class="vip-btn base-icon-btn" v-if="userLoggedIn && !isVip">-->
-        <!--          <img src="~/assets/imgs/vip.svg" alt="Get Premium"/>-->
-        <!--          GET PREMIUM-->
-        <!--        </div>-->
-<!--        <div class="x-btn base-icon-btn" v-if="!userLoggedIn">-->
-<!--          <img src="~/assets/imgs/x.svg" alt="Get Premium"/>-->
-<!--        </div>-->
         <div class="lang-btn base-icon-btn">
-<!--          <img v-else src="~/assets/imgs/lang.svg"  alt="User profile"/>-->
           <span v-if="$i18n.locale === 'en'">EN</span>
           <span v-if="$i18n.locale === 'pt-br'">PT</span>
           <span v-if="$i18n.locale === 'zh'">ZH</span>
@@ -323,12 +315,6 @@ nav {
 
 
 .lang-btn {
-  height: 48px;
-  width: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-sizing: content-box;
-  position: relative;
   color: #CEB864;
   font-family: Avenir;
   font-size: 14px;
