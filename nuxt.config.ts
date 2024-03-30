@@ -72,9 +72,9 @@ export default {
     port: 9898, // default: 3000
     host: '0.0.0.0' // default: localhost
   },
-  router: {
-    middleware: ['redirect-mobile']
-  },
+  // router: {
+  //   middleware: ['redirect-mobile']
+  // },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
