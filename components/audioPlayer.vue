@@ -24,7 +24,7 @@
 </template>
 
 <script>
-
+import Hls from 'hls.js';
 export default {
   name: "audioPlayer",
   props: {
@@ -51,7 +51,13 @@ export default {
       return this.formatTime(this.duration);
     }
   },
+  watch: {
+    audioSrc(newSrc) {
+      this.setupHLS(newSrc);
+    }
+  },
   mounted() {
+    this.setupHLS(this.audioSrc);
     this.$refs.player.addEventListener('loadeddata', () => {
       this.updateDuration();
       this.updateProgress();
@@ -83,6 +89,23 @@ export default {
     },
     updateDuration() {
       this.duration = this.$refs.player.duration;
+    },
+    setupHLS(src) {
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(src);
+        hls.attachMedia(this.$refs.player);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          this.hideLoading();
+          this.$refs.player.play().catch(error => console.error('Auto-play failed', error));
+        });
+      } else if (this.$refs.player.canPlayType('application/vnd.apple.mpegurl')) {
+        this.$refs.player.src = src;
+        this.$refs.player.addEventListener('loadedmetadata', this.hideLoading);
+        this.$refs.player.play().catch(error => console.error('Auto-play failed', error));
+      } else {
+        console.error("HLS not supported");
+      }
     },
     seekAudio(event) {
       if (this.isLoading) return

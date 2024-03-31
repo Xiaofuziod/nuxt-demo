@@ -63,7 +63,7 @@ export default {
       // target: 'http://localhost:4000',
       pathRewrite: {
         '^/api': '' // 删除url中的/api
-      }
+      },
     }
   },
   components: true,

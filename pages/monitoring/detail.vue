@@ -2,7 +2,8 @@
   <div class="page-content-wrapper">
     <div class="page-content">
       <div class="left">
-        <breadcrumb-navigation @click="goList"/>
+        <breadcrumb-navigation v-if="!pageLoading" @click="goList"/>
+        <div style="height: 50px" v-else></div>
         <div class="left-header" >
           <template v-if="!pageLoading">
             <img  :src="monitorDetail?.logo" class="left-header-img" alt="">
@@ -30,8 +31,10 @@
             </template>
           </div>
           <div v-show="activeTab === '1'"  class="content">
+
             <audio-player style="margin-top: 10px;margin-bottom: 10px;width: 565px" v-if="monitorContent?.link"
-                          :audio-src="monitorContent?.link"/>
+                                      :audio-src="monitorContent?.link"
+            />
             <div class="box-wrapper" v-if="monitorContent">
               <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
                 <template #default="{ items }">
@@ -76,9 +79,6 @@ export default {
     }
   },
   computed: {
-    pageLoading() {
-      return pageLoading
-    },
     monitorDetail() {
       return this.$store.state.monitor.monitorDetail
     },
@@ -133,7 +133,9 @@ export default {
       }
       await this.$store.dispatch('monitor/fetchMonitorSummary', sourceId)
       await this.$store.dispatch('monitor/fetchMonitorContent', {sourceId})
-      this.pageLoading = false
+      setTimeout(() => {
+        this.pageLoading = false
+      },1000)
     },
     goList() {
       this.$router.push(this.localeRoute(`/monitoring`));

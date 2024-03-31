@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="`${card.status === 1 ? 'disable' : ''}`" @click="cardClick()">
+  <div class="card" :class="`${card.status === 1 ? 'disable' : ''}`" @click="cardClick(card.id)">
     <img class="card-img" :src="card?.logo || bianPic" alt="">
     <div class="card-header">
       <h3 class="title1">{{ card?.author }}</h3>
@@ -32,13 +32,13 @@ export default {
     deleteMonitor(id) {
       this.$store.dispatch('monitor/deleteUserMonitor', id);
     },
-    cardClick() {
+    cardClick(id) {
       if (this.card.status === 1) {
         this.$toast.warning(this.$t('monitoringConcluded'))
       } else if(this.card.status === 7) {
         this.$toast.warning(this.$t('monitoringCanceled'))
       } else {
-        this.$emit('click')
+        this.$router.push(this.localeRoute(`/monitoring/detail?id=${id}`));
       }
     }
   }
