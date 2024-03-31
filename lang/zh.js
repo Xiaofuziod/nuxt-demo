@@ -258,5 +258,21 @@ export default {
     "InvalidTitle": "Taurion解析失败",
     "ParsingFailed": "解析失败",
     "CanceledDesc": "主持人已取消",
-    "today": "今天"
+    "today": "今天",
+    "DynamicVisualSlider_title1_1": "分析",
+    "DynamicVisualSlider_title1_2": "生态系统",
+    "DynamicVisualSlider_title1_3": "执行",
+    "DynamicVisualSlider_title2_1": "AI 驱动的社区",
+    "DynamicVisualSlider_title2_2": "Taurion AI",
+    "DynamicVisualSlider_title2_3": "Taurion 代理",
+    "DynamicVisualSlider_desc_1": "一个 AI 原生信息流模型，每个人都可以通过提示生成和分享投资组合，并获得利润。",
+    "DynamicVisualSlider_desc_2": "让 Taurion 成为你的代理，为你处理繁琐的交易步骤并增加你的交易带宽。",
+    "DynamicVisualSlider_desc_3": "提供实时的 AI 精炼报告与提示，以增强你的决策效率。",
+    "Banner5_title1_1": "我们的 AI 从最佳实践中学习",
+    "Banner4_title1_1": "反馈",
+    "Banner4_title2_1": "来自我们的社区",
+    "Banner1_title1_1": "你的加密货币",
+    "Banner1_title2_1": "AI 副驾驶",
+    "MobileBanner1_title1_1": "你的加密货币",
+    "MobileBanner1_title2_1": "AI 副驾驶"
 }

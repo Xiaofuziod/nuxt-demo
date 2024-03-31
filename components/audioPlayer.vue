@@ -91,6 +91,7 @@ export default {
       this.duration = this.$refs.player.duration;
     },
     setupHLS(src) {
+      if(!src.includes('m3u8')) return
       if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(src);

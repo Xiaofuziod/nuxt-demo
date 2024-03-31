@@ -1,8 +1,8 @@
 <template>
     <div class="banner-wrapper">
       <div class="banner-content">
-        <div class="title1">YOUR CRYPTO</div>
-        <div class="title2">AI CO-PILOT</div>
+        <div class="title1">{{ $t("MobileBanner1_title1_1") }}</div>
+        <div class="title2">{{ $t("MobileBanner1_title2_1") }}</div>
         <div class="desc-code">
           <typing-text
               font-size="16px"

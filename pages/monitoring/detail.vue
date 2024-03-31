@@ -46,8 +46,8 @@
           </div>
           <div v-show="activeTab === '1'" class="content">
 
-            <audio-player style="margin-top: 10px;margin-bottom: 10px;width: 565px" v-if="monitorContent?.link"
-                          :audio-src="monitorContent?.link"
+            <audio-player style="margin-top: 10px;margin-bottom: 10px;width: 565px" v-if="monitorContent?.link || monitorContent?.m3u8"
+                          :audio-src="monitorContent?.m3u8 || monitorContent?.link"
             />
             <div class="box-wrapper" v-if="monitorContent">
               <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
