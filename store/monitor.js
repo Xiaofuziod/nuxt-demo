@@ -10,8 +10,8 @@ export const state = () => ({
     monitorSummary: null,
     monitorContent: null,
     addMonitorShow: false,
-    loading:false,
-    status:''
+    loading: false,
+    status: ''
 });
 
 export const mutations = {
@@ -19,13 +19,13 @@ export const mutations = {
         state.searchMonitor = data;
     },
     setStatus(state, status) {
-      state.status = status
+        state.status = status
     },
     setUnstartMonitors(state, list) {
         state.unstartMonitors = list;
     },
     setLoading(state, bool) {
-      state.loading = bool
+        state.loading = bool
     },
     setFinishMonitors(state, list) {
         state.finishMonitors = list;
@@ -50,18 +50,22 @@ export const mutations = {
 
 export const actions = {
     async fetchMonitorList({commit,}, payload) {
+        console.log(2323232)
         try {
+            console.log(2323232)
             const {page, size, status, searchName} = {page: 1, size: 20, status: '', searchName: '', ...(payload || {})}
 
             const res = await this.$axios.get(`${monitorApi.getMonitorList}?searchName=${searchName}&page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
-                console.log({page, size, ...res.data.data})
                 commit('setSearchMonitor', {page, size, ...res.data.data});
+                return res.data.data
+            } else if (page === 1) {
+                commit('setSearchMonitor', {page: 0, size, records: [], has_next: false});
             } else {
-                commit('setSearchMonitor', {page:0, size, records:[], hasNext: false});
+                return {records: [], has_next: false}
             }
         } catch (e) {
-            commit('setSearchMonitor', {page:0, size, records:[], hasNext: false});
+            commit('setSearchMonitor', {page: 0, size, records: [], hasNext: false});
             console.error('fetchMonitorList error:', e);
         } finally {
         }
@@ -97,12 +101,15 @@ export const actions = {
             const res = await this.$axios.get(`${monitorApi.getUserMonitoringList}?page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
                 commit('setUserMonitor', {page, size, ...res.data.data});
+                return res.data.data
+            } else if (page === 1) {
+                commit('setUserMonitor', {page: 0, size, records: [], hasNext: false});
+                return res.data.data
             } else {
-                commit('setUserMonitor', {page:0, size, records:[], hasNext: false});
+                return {records: [], hasNext: false}
             }
-            return res.data.data
         } catch (e) {
-            commit('setUserMonitor', {page:0, size, records:[], hasNext: false});
+            commit('setUserMonitor', {page: 0, size, records: [], hasNext: false});
             console.error('fetchUserMonitorList error:', e);
         } finally {
         }
@@ -133,7 +140,7 @@ export const actions = {
             return false;
         }
     },
-    async deleteUserMonitor({dispatch,commit}, sourceId) {
+    async deleteUserMonitor({dispatch, commit}, sourceId) {
         try {
             this._vm.$loading.start();
             const res = await this.$axios.get(`${monitorApi.deleteUserMonitoring}?sourceId=${sourceId}`);

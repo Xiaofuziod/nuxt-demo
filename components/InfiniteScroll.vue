@@ -16,17 +16,22 @@ export default {
     },
     initData: {
       type: Array,
+    },
+    initNext: {
+      type: Boolean
     }
   },
   data() {
     return {
       items: [],
       isLoading: false,
-      hasNext: true, // 判断是否还有更多数据
+      hasNext: false, // 判断是否还有更多数据
     };
   },
   mounted() {
     this.items =  this.initData || []
+    this.hasNext = this.initNext || false
+    console.log('this.hasNext', this.hasNext)
   },
   methods: {
     async loadMoreItems() {
@@ -39,7 +44,6 @@ export default {
         this.items = this.items.concat(data);
         this.hasNext = hasNext; // 根据加载的数据更新hasNext状态
       } catch (error) {
-        console.error("Error loading items:", error);
         // 处理加载错误（可选）
       } finally {
         this.isLoading = false;
@@ -47,7 +51,7 @@ export default {
     },
     checkBottom() {
       const container = this.$el;
-      if (container.scrollHeight - container.scrollTop <= container.clientHeight + 1) { // +1 为了容错
+      if (container.scrollHeight - container.scrollTop <= container.clientHeight + 2) { // +1 为了容错
         this.loadMoreItems();
       }
     }
@@ -58,7 +62,8 @@ export default {
 <style scoped>
 .infinite-scroll-container {
   height: 100%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .loading-container {

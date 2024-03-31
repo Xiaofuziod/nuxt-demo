@@ -1,29 +1,18 @@
 import Vue from 'vue';
 import Loading from '~/components/loading.vue';
-import PageLoading from '@/components/pageLoadingGloba.vue'
 Vue.component('Loading', Loading);
-Vue.component('pageLoading', PageLoading);
 
+export default (context) => {
+    // 从插件上下文解构 store
+    const { store } = context;
 
-const LoadingPlugin = {
-    install(Vue, options) {
-        const VueLoading = new Vue({
-            render: h => h(Loading)
-        }).$mount();
+    // 创建 Vue 实例，传递 Vuex store
+    const LoadingInstance = new Vue({
+        store, // 将 Vuex store 传递给 Vue 实例
+        render: h => h(Loading),
+    }).$mount();
 
-        document.body.appendChild(VueLoading.$el);
-
-        Vue.prototype.$loading = VueLoading.$children[0];
-
-        const pageLoading = new Vue({
-            render: h => h(PageLoading)
-        }).$mount();
-
-        document.body.appendChild(pageLoading.$el);
-        Vue.prototype.$pageLoading = pageLoading.$children[0];
-    }
+    // 将实例挂载到 DOM
+    document.body.appendChild(LoadingInstance.$el);
+    Vue.prototype.$loading = LoadingInstance.$children[0];
 };
-
-Vue.use(LoadingPlugin);
-
-export default LoadingPlugin;

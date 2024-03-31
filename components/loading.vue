@@ -6,7 +6,7 @@
         <div class="dot"></div>
         <div class="dot"></div>
       </div>
-      {{text || 'Loading'}}
+      {{text || langt['loading_span_1']}}
     </div>
   </div>
 </template>
@@ -18,6 +18,11 @@ export default {
       show: false,
       text: ""
     };
+  },
+  computed:{
+    langt() {
+      return this.$store.state.lang.t
+    }
   },
   methods: {
     start(text) {

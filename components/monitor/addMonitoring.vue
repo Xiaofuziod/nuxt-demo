@@ -3,6 +3,7 @@
     <div class="monitor-wrapper">
       <div class="monitor-header">
         <p class="text">{{ $t("addMonitoring_text_1") }}</p>
+        <p class="text">{{  }}</p>
         <img class="header-close-btn" @click.stop="close()" src="@/assets/imgs/close.svg">
       </div>
       <div class="search-section">
@@ -48,14 +49,16 @@
         </template>
         <template v-if="searchQuery && !loading && monitorList.length">
           <div class="monitoring-cards">
-            <infinite-scroll  :loadData="loadData" :initData="monitorList">
+            <infinite-scroll style="height: 280px;" :loadData="loadData" :initData="monitorList" :init-next="$store.state.monitor.searchMonitor?.has_next">
               <template #default="{ items }">
-                <mid-monitor-card
-                    v-for="monitor in items"
-                    :key="monitor.id"
-                    :card="monitor"
-                    :disable="selectIdList.includes(monitor.id)"
-                    @select="select(monitor)"/>
+                <div style="width: 580px">
+                  <mid-monitor-card
+                      v-for="monitor in items"
+                      :key="monitor.id"
+                      :card="monitor"
+                      :disable="selectIdList.includes(monitor.id)"
+                      @select="select(monitor)"/>
+                </div>
               </template>
 
             </infinite-scroll>
@@ -99,6 +102,9 @@ export default {
     monitorList() {
       return this.$store.state.monitor.searchMonitor?.records || []
     },
+    hasNext() {
+      return this.$store.state.monitor.searchMonitor?.has_next
+    },
     unstartMonitors() {
       return this.$store.state.monitor.unstartMonitors
     },
@@ -130,10 +136,11 @@ export default {
       });
     },
     async loadData() {
-      const {has_next, records} = await this.$store.dispatch('monitor/fetchUserMonitorList', {
+      console.log('loadData')
+      const {has_next, records} = await this.$store.dispatch('monitor/fetchMonitorList', {
         status: this.mapTabToStatus(this.activeTab),
         searchName: this.searchQuery,
-        page: (this.$store.state.monitor.searchMonitor.page || 0) +1
+        page: (this.$store.state.monitor.searchMonitor.page || 0) + 1
       })
       return {
         hasNext: has_next,
@@ -201,7 +208,7 @@ export default {
   height: 326px;
   padding-bottom: 20px;
   overflow-y: scroll;
-  width: 594px;
+  width: 600px;
   .monitor-search-title {
     color: rgba(140, 180, 189, 0.60);
     font-family: Avenir;
