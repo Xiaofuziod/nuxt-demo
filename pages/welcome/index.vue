@@ -194,7 +194,7 @@ export default {
       this.$axios.get(chatClean)
       this.$store.dispatch('chat/clearMessageList')
       this.$store.commit('chat/updateShowWelcomeLoading', true)
-      this.$router.replace(this.localeRoute('/reporting'))
+      this.$router.replace('/reporting')
     },
     videoEnded() {
       console.log('video ended', this.$store.state.chat.welcomeIndex)

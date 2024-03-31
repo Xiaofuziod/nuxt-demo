@@ -52,7 +52,7 @@
             </div>
           </div>
           <!--欢迎的任务-->
-          <welcomeTask v-if="showWelcome && item.source === 'T-brain'"
+          <welcomeTask v-if="showWelcome && item.source === 'T-brain' && item.type"
                        @goBottom="scrollToBottom"
                        :message="item"/>
           <!--文本内容-->

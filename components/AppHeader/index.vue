@@ -9,11 +9,11 @@
       <!-- Navigation area -->
       <nav v-if="userLoggedIn && !routepath.includes('welcome')">
         <ul>
-          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" :href="`${langPath}/reporting`">
+          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" :href="`/reporting`">
             <span>{{$t("REPORTING")}}</span>
           </a>
           </li>
-          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" :href="`${langPath}/monitoring`">
+          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" :href="`/monitoring`">
             <span>{{$t("MONITORING")}}</span></a>
           </li>
         </ul>
@@ -113,8 +113,6 @@ export default {
       this.$localStorage.removeItem('token')
       this.userLoggedIn = false
       // this.$store.dispatch('chat/clearMessageList')
-      // this.$router.replace(this.localeRoute('/'))
-      // console.log(this.localeRoute('/'))
       window.location.href = "/"
     }
   },

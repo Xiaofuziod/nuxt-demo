@@ -5,7 +5,19 @@
       <div class="card-header">
         <h3 class="title1">{{ card?.author }}</h3>
         <h3 class="title2">{{ card?.title }}</h3>
-        <p class="timestamp">{{ card?.time || card.start }}</p>
+        <p class="timestamp" v-if="card?.status === 1">
+          <img src="@/assets/imgs/card/date.svg" alt="">
+          <span>{{ $t("unStarted") }}, {{ formatData(card?.time) }}</span>
+        </p>
+        <p class="timestamp" v-else-if="card?.status === 5">
+          <img src="@/assets/imgs/card/fire.svg"
+               alt=""><span>{{ $t("Completed") }}, {{ card?.heat }}{{ $t("heatAfter") }}</span>
+        </p>
+        <p class="timestamp" v-else><img src="@/assets/imgs/card/date.svg" alt="">
+          <span>{{
+              formatData(card?.time || card.start)
+            }}</span></p>
+        <!--        <p class="timestamp">{{ card?.time || card.start }}</p>-->
       </div>
       <img class="option-img"
            :style="{'opacity': userMonitorList?.includes(card.id + '') ? 0.4 : 1}"
@@ -16,6 +28,7 @@
 </template>
 <script>
 import bianPic from '@/assets/imgs/bian.png'
+import {formatTimeBasedOnRule} from "@/utils/formatTimeBasedOnRule";
 
 export default {
   name: "MidMonitorCard",
@@ -39,6 +52,9 @@ export default {
     }
   },
   methods: {
+    formatData (time) {
+      return formatTimeBasedOnRule(time, this.$t("today"))
+    },
     addMonitor(card) {
       console.log(this.userMonitorList, card.id)
       if (this.userMonitorList?.includes(card.id + '')) return
@@ -106,13 +122,27 @@ export default {
     }
 
     .timestamp {
-      color: #8CB4BD;
+      color: #CEB864;
       font-family: Avenir;
+      display: inline-flex;
+      align-items: center;
+      width: 100%;
+      overflow: visible;
+      text-wrap: nowrap;
+
       font-size: 12px;
       font-style: normal;
       font-weight: 400;
-      line-height: normal;
-      text-transform: capitalize;
+
+      span {
+        display: inline-block;
+      }
+
+      img {
+        margin-right: 2px;
+        margin-top: -2px;
+      }
+
     }
   }
 }

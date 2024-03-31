@@ -56,10 +56,10 @@ export default {
   },
   computed: {
     privacyLink() {
-      return this.localeRoute('/privacy').fullPath
+      return "/privacy"
     },
     termsLink() {
-      return this.localeRoute('/terms').fullPath
+      return '/terms'
     },
   }
 };
