@@ -223,14 +223,14 @@ export default {
     timer4 = setInterval(() => {
       const uid = uuid()
       console.log('ping', uid)
-      this.$socket.emit('ping', uid)
+      this.$socket.emit('ping-taurion', uid)
       timer5 = setTimeout(() => {
         console.log('socket reconnect')
         this.$socket.connect()
       }, 10 * 1000)
     }, 5 * 1000)
 
-    this.$socket.on('pong', (e) => {
+    this.$socket.on('pong-taurion', (e) => {
       console.log('pong', e)
       clearTimeout(timer5)
     })
