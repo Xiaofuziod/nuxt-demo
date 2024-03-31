@@ -166,7 +166,7 @@ nav {
   }
   .right {
     display: flex;
-    width: 350px;
+    width: 550px;
     justify-content: right;
     .bottom-link {
       margin-left: 50px;
