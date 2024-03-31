@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 
 // 初始化 WebSocket 连接
 const token = localStorage.getItem('token')
-const socket = io("https://api-test.taurion.ai?token=" + token, {
+const socket = io("https://api.taurion.ai?token=" + token, {
   autoConnect: !!token, // 初始时不自动连接
 });
 
