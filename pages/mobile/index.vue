@@ -103,7 +103,7 @@ export default {
         textArea.select();
         try {
           document.execCommand('copy');
-          this.$toast.success('copy success')
+          this.$toast.success(this.$t('CopySuccess'))
         } catch (err) {
           console.error('Failed to copy text: ', err);
         }

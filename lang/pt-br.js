@@ -278,5 +278,6 @@ export default {
     "MobileBanner1_title1_1": "SEU CRIPTO",
     "MobileBanner1_title2_1": "COPILOTO DE IA",
     "SLOGAN_1":"Simples, Eficiente, ",
-    "SLOGAN_2":"Sem barreiras "
+    "SLOGAN_2":"Sem barreiras ",
+    "CopySuccess": "sucesso de cópia"
 }

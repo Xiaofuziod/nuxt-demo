@@ -276,5 +276,6 @@ export default {
     "MobileBanner1_title1_1": "你的加密货币",
     "MobileBanner1_title2_1": "AI 副驾驶",
     "SLOGAN_1":"简单，高效，",
-    "SLOGAN_2":"无门槛"
+    "SLOGAN_2":"无门槛",
+    "CopySuccess": "复制成功"
 }

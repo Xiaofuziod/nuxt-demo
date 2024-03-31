@@ -277,5 +277,6 @@ export default {
     "MobileBanner1_title1_1": `YOUR CRYPTO`,
     "MobileBanner1_title2_1": `AI CO-PILOT`,
     "SLOGAN_1":"SIMPLE, EFFICIENT,",
-    "SLOGAN_2":"BARRIER FREE "
+    "SLOGAN_2":"BARRIER FREE ",
+    "CopySuccess": "copy success"
 }

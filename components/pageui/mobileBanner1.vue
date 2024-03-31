@@ -1,17 +1,19 @@
 <template>
     <div class="banner-wrapper">
       <div class="banner-content">
-        <div class="title1">{{ $t("MobileBanner1_title1_1") }}</div>
-        <div class="title2">{{ $t("MobileBanner1_title2_1") }}</div>
-        <div class="desc-code">
-          <typing-text
-              font-size="16px"
-              margin-bottom="12px"
-              width="20ch"
-              :lines="[
+        <div>
+          <div class="title1">{{ $t("MobileBanner1_title1_1") }}</div>
+          <div class="title2">{{ $t("MobileBanner1_title2_1") }}</div>
+          <div class="desc-code">
+            <typing-text
+                font-size="16px"
+                margin-bottom="12px"
+                width="20ch"
+                :lines="[
               { text: $t(`SLOGAN_1`)},
               { text: $t(`SLOGAN_2`)}]"
-          />
+            />
+          </div>
         </div>
       </div>
     </div>
