@@ -92,7 +92,8 @@
               <!--异常提示-->
               <img class="error-image"
                    v-if="messageStatus === 'error' && item.source !== 'T-brain' && lastMessage.seqNo === item.seqNo"
-                   @click="messageErrorClick(item)" src="@/assets/imgs/error.svg" alt="">
+                   @click="messageErrorClick(item)"
+                   src="@/assets/imgs/error.svg" alt="">
             </div>
           </template>
           <!--定制卡片内容-->
@@ -220,6 +221,7 @@ export default {
     this.$bus.$on('GO_CHAT_BOTTOM', () => {
       this.scrollToBottom()
     })
+
     count = 0
 
     clearInterval(timer4)
@@ -240,6 +242,10 @@ export default {
     }, 5 * 1000)
 
     this.$socket.on('pong-taurion', (e) => {
+      console.log('pong-taurion', e)
+      clearTimeout(timer5)
+    })
+    this.$socket.on('pong', (e) => {
       console.log('pong', e)
       clearTimeout(timer5)
     })
@@ -393,7 +399,6 @@ export default {
           this.$nextTick(() => {
             let box = document.querySelectorAll('.task-box')
             const top = box[box.length - 1].offsetTop
-            console.log('top', top)
             this.scrollToBottom(top)
           })
         }
@@ -406,7 +411,7 @@ export default {
     },
     scrollToBottom(topVale) {
       this.$nextTick(() => {
-        console.log('scrollToBottom', topVale)
+        // console.log('scrollToBottom', topVale)
         const messagesContainer = this.$refs.messagesContainer;
         messagesContainer.scrollTo({
           top: topVale || messagesContainer.scrollHeight,
