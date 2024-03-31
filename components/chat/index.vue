@@ -249,8 +249,10 @@ export default {
       this.$axios.get(chatClean)
     },
     messageErrorClick(item) {
-      // console.log('messageErrorClick', item)
       this.$toast.error(item.error || this.$t("networkError"))
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
     },
     initLang() {
       this.$store.dispatch('chat/updateLang', this.showWelcome)
