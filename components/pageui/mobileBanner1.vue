@@ -9,8 +9,8 @@
               margin-bottom="12px"
               width="20ch"
               :lines="[
-              { text: 'SIMPLE, EFFICIENT,' },
-              { text: 'BARRIER FREE ' }        ]"
+              { text: $t(`SLOGAN_1`)},
+              { text: $t(`SLOGAN_2`)}]"
           />
         </div>
       </div>

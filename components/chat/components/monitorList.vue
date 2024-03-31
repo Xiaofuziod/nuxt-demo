@@ -11,7 +11,7 @@
         </p>
         <p class="timestamp" v-else-if="card?.status === 5">
           <img src="@/assets/imgs/card/fire.svg"
-               alt=""><span>{{ $t("Completed") }}, {{ card?.heat }}{{ $t("heatAfter") }}</span>
+               alt=""><span>{{ $t("Completed") }}, {{ card?.heat }}  {{ $t("heatAfter") }}</span>
         </p>
         <p class="timestamp" v-else><img src="@/assets/imgs/card/date.svg" alt="">
           <span>{{

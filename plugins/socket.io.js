@@ -4,17 +4,25 @@ import Vue from 'vue';
 import io from 'socket.io-client';
 
 // 初始化 WebSocket 连接
-const token = localStorage.getItem('token')
-const socket = io("https://api.taurion.ai?token=" + token, {
+let token = localStorage.getItem('token')
+let socket = io("https://api.taurion.ai?token=" + token, {
   autoConnect: !!token, // 初始时不自动连接
 });
 
 // 尝试重新连接
 function reconnect() {
   if (!socket.connected) {
+    token = localStorage.getItem('token')
+    socket = io("https://api.taurion.ai?token=" + token, {
+      autoConnect: !!token, // 初始时不自动连接
+    });
     socket.connect();
   } else {
     socket.disconnect();
+    token = localStorage.getItem('token')
+    socket = io("https://api.taurion.ai?token=" + token, {
+      autoConnect: !!token, // 初始时不自动连接
+    });
     socket.connect();
   }
 }

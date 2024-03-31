@@ -55,10 +55,10 @@
         </swiper-slide>
         <swiper-slide>
           <banner4 v-if="realIndex === 4"/>
-        </swiper-slide>/
+        </swiper-slide>
         <swiper-slide>
           <banner5/>
-        </swiper-slide>/
+        </swiper-slide>
         <swiper-slide class="footer-slide">
           <app-footer/>
         </swiper-slide>

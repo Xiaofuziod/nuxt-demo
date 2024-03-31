@@ -4,6 +4,7 @@ import robotAvatar from '@/assets/imgs/user/default.png'
 
 import {getWelcomeList} from "@/utils/getWelcomeMessage";
 import {formatMessages} from "@/utils/message"
+import uuid from "@/utils/uuid";
 
 let timer = null  // 机器人回答后，3秒后关闭
 let timer2 = null  // 五分钟没有操作，机器人会自动问候
@@ -33,6 +34,9 @@ export const mutations = {
   },
   setWelcomeList(state, list) {
     state.welcomeList = list
+  },
+  updatePongValue(state, value) {
+    state.pongValue = value
   },
   updateShowWelcomeLoading(state, showWelcomeLoading) {
     state.showWelcomeLoading = showWelcomeLoading
@@ -68,7 +72,6 @@ export const mutations = {
     state.robot = {...state.robot, ...robot}
   },
   setMessageStatus(state, status) {
-    console.log('setMessageStatus', status)
     state.messageStatus = status
   },
   setPageName(state, pageName) {
