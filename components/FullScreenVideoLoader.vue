@@ -1,7 +1,7 @@
 <template>
   <div class="video-container" :style="{opacity: videoEnded ? 0 : 1}">
     <video ref="videoPlayer" @ended="endend" autoplay muted
-           src="https://pub-722766a33ba84f52a544b00c7e383773.r2.dev/test2.mp4"></video>
+           src="https://pub-722766a33ba84f52a544b00c7e383773.r2.dev/output.webm"></video>
   </div>
 </template>
 
