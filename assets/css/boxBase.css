@@ -79,6 +79,7 @@
                 text-overflow: ellipsis;
             }
             .time1 {
+                padding-top: 3px;
                 img {
                     margin-right: 2px;
                 }
