@@ -91,7 +91,7 @@
               </div>
               <!--异常提示-->
               <img class="error-image"
-                   v-if="messageStatus === 'error' && lastMessage.seqNo === item.seqNo"
+                   v-if="messageStatus === 'error' && item.source !== 'T-brain' && lastMessage.seqNo === item.seqNo"
                    @click="messageErrorClick(item)" src="@/assets/imgs/error.svg" alt="">
             </div>
           </template>
@@ -123,7 +123,11 @@ import welcomeTask from "./components/welcomeTask.vue";
 import SendBtn from "@/components/chat/components/sendBtn.vue";
 import renderedMarkdown from "@/components/renderedMarkdown.vue";
 import {chatClean} from "@/common/home";
+import uuid from "@/utils/uuid";
 
+
+let timer4 = null
+let timer5 = null
 export default {
   components: {
     Typewriter,
@@ -143,6 +147,7 @@ export default {
     return {
       message: '',
       socketSessionId: '',
+      pingId: '',
       welcomeInputDisable: false,
       isViewingHistory: false,
       mode: 'production',
@@ -211,6 +216,23 @@ export default {
 
     this.$bus.$on('GO_CHAT_BOTTOM', () => {
       this.scrollToBottom()
+    })
+
+
+    clearInterval(timer4)
+    timer4 = setInterval(() => {
+      const uid = uuid()
+      console.log('ping', uid)
+      this.$socket.emit('ping', uid)
+      timer5 = setTimeout(() => {
+        console.log('socket reconnect')
+        this.$socket.connect()
+      }, 10 * 1000)
+    }, 5 * 1000)
+
+    this.$socket.on('pong', (e) => {
+      console.log('pong', e)
+      clearTimeout(timer5)
     })
   },
   methods: {
@@ -362,7 +384,8 @@ export default {
           this.$nextTick(() => {
             let box = document.querySelectorAll('.task-box')
             const top = box[box.length - 1].offsetTop
-            this.scrollToBottom(top - 150)
+            console.log('top', top)
+            this.scrollToBottom(top)
           })
         }
         if (lastMsg.over) {
@@ -374,6 +397,7 @@ export default {
     },
     scrollToBottom(topVale) {
       this.$nextTick(() => {
+        console.log('scrollToBottom', topVale)
         const messagesContainer = this.$refs.messagesContainer;
         messagesContainer.scrollTo({
           top: topVale || messagesContainer.scrollHeight,

@@ -55,7 +55,7 @@ export default {
         this.$refs.Parsing.showBox = true
       }
       if (this.card.status === 5) {
-        this.$router.push(`/monitoring/detail?id=${this.card.id}`);
+        this.$router.push(this.localeRoute(`/monitoring/detail?id=${this.card.id}`));
       }
       if (this.card.status === 6) {
         this.$refs.invalid.showBox = true

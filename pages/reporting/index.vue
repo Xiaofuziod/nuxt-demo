@@ -155,7 +155,8 @@ export default {
   },
   watch: {
     followList: {
-      handler(val) {
+      handler(val, oldVal) {
+        if (!oldVal) return
         if (val.length && !!this.coinId) {
           const item = val.find(item => item.coinId === this.coinId)
           if (!item) this.handleClick(val[0])
@@ -167,7 +168,7 @@ export default {
     }
   },
   async mounted() {
-    this.loadData()
+    // this.loadData()
     await this.$store.dispatch('coin/fetchUserCoinList')
     this.followLoading = false
     this.$store.commit('chat/setPageName', 'report')
@@ -195,6 +196,7 @@ export default {
     },
     loadMore() {
       if (!this.hasMore || this.loading) return
+      console.log('has more')
       this.queryParams.page++
       this.loadData()
     },
