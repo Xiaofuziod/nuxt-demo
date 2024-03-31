@@ -1,5 +1,5 @@
 
-const baseUrl = process.env.NODE_ENV === 'development' ? 'api' : 'https://54.207.113.59'
+const baseUrl = process.env.NODE_ENV === 'development' ? 'api' : 'http://54.207.113.59'
 export const sendEmail = baseUrl + '/api/auth/base/sendMessage'
 export const userLogin = baseUrl + '/api/auth/login/dologin'
 export const userRegister = baseUrl + '/api/auth/login/register'

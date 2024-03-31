@@ -58,7 +58,8 @@ export default {
   },
   proxy: {
     '/api': {
-      target: 'https://api-test.taurion.ai',
+      // target: 'https://api-test.taurion.ai',
+      target: 'http://54.207.113.59',
       // target: 'https://54.207.113.59',
       // target: 'http://localhost:4000',
       pathRewrite: {

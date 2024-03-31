@@ -3,8 +3,8 @@
 import io from 'socket.io-client';
 
 const token = localStorage.getItem('token')
-const socket = io("https://api-test.taurion.ai?token=" + token, {
-  reconnectionAttempts: 15,
+const socket = io("http://54.207.113.59?token=" + token, {
+  reconnectionAttempts: 50,
 }); // 确保这里的 URL 指向你的服务端地址
 
 export default (context, inject) => {
