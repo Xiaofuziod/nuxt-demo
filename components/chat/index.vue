@@ -212,6 +212,11 @@ export default {
     this.$bus.$on('GO_CHAT_BOTTOM', () => {
       this.scrollToBottom()
     })
+    this.$store.dispatch('chat/sendPingMessage')
+
+    this.$socket.on('pong', (e) => {
+      console.log('pong',e)
+    })
   },
   methods: {
     clean() {

@@ -8,6 +8,7 @@ import {formatMessages} from "@/utils/message"
 let timer = null  // 机器人回答后，3秒后关闭
 let timer2 = null  // 五分钟没有操作，机器人会自动问候
 let timer3 = null  // 五分钟没有收到回复，认为机器人掉线了
+let timer4 = null  // ping pang
 
 export const state = () => ({
   conversationId: null,
@@ -99,6 +100,13 @@ export const actions = {
     } else {
       commit('setWlist', rootState.lang.t)
     }
+  },
+  sendPingMessage() {
+    clearInterval(timer4)
+    timer4 = setInterval(() => {
+      console.log('ping')
+      this.$socket.emit('ping', 'ping')
+    }, 3 * 1000)
   },
   async fetchEarlierMessages({commit}, showWelcome = false) {
     try {
