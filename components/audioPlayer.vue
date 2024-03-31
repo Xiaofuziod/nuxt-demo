@@ -62,7 +62,6 @@ export default {
       this.updateDuration();
       this.updateProgress();
       setTimeout(() => {
-        this.$refs.player.seeking(0)
         this.$refs.player.audio.pause();
       },1000)
     });
