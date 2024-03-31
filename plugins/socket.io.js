@@ -11,20 +11,13 @@ let socket = io("https://api.taurion.ai?token=" + token, {
 
 // 尝试重新连接
 function reconnect() {
-  if (!socket.connected) {
-    token = localStorage.getItem('token')
-    socket = io("https://api.taurion.ai?token=" + token, {
-      autoConnect: !!token, // 初始时不自动连接
-    });
-    socket.connect();
-  } else {
-    socket.disconnect();
-    token = localStorage.getItem('token')
-    socket = io("https://api.taurion.ai?token=" + token, {
-      autoConnect: !!token, // 初始时不自动连接
-    });
-    socket.connect();
-  }
+  socket.disconnect();
+  token = localStorage.getItem('token')
+  console.log('开始重连')
+  socket = io("https://api.taurion.ai?token=" + token, {
+    autoConnect: !!token, // 初始时不自动连接
+  });
+  socket.connect();
 }
 
 const SocketPlugin = {
