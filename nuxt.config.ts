@@ -82,7 +82,7 @@ export default {
     '@nuxtjs/i18n',
   ],
   i18n: {
-    // strategy: 'no_prefix',
+    strategy: 'no_prefix',
     locales: [
       {code: 'en', iso: 'en', file: 'en.js'},
       {code: 'zh', iso: 'zh', file: 'zh.js'},
