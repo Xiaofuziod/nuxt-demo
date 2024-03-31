@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="preview-load">
-      <img class="banner-center" src="~/assets/imgs/home-banner-2-center.svg">
+      <img class="banner-center" src="~/assets/imgs/home-banner-2-center.png">
       <img class="banner-right" src="~/assets/imgs/home-banner-2.svg" alt="">
       <img class="banner-center" src="~/assets/imgs/home-banner-3-center.svg" alt="">
       <img class="banner-right" src="~/assets/imgs/home-banner-3.svg" alt="">
@@ -17,13 +17,11 @@
           <div class="banner-slide banner-slide-1">
             <div class="inner" v-if="realIndex === 1">
               <div class="banner-left">
-                <div class="title1">Analysis</div>
-                <div class="title2">Taurion AI</div>
-                <div class="desc">Provide real-time AI-refined reports with
-                  prompts to enhance your decision-making efficiency.
-                </div>
+                <div class="title1">{{ $t("DynamicVisualSlider_title1_1") }}</div>
+                <div class="title2">{{ $t("DynamicVisualSlider_title2_1") }}</div>
+                <div class="desc">{{ $t("DynamicVisualSlider_desc_1") }}</div>
               </div>
-              <img class="banner-center" src="~/assets/imgs/home-banner-2-center.svg">
+              <img class="banner-center" src="~/assets/imgs/home-banner-2-center.png">
               <img class="banner-right" src="~/assets/imgs/home-banner-2.svg" alt="">
             </div>
           </div>
@@ -33,11 +31,9 @@
             <div class="inner"  v-if="realIndex === 2">
 
             <div class="banner-left">
-              <div class="title1">Execution</div>
-              <div class="title2">Taurion Agent</div>
-              <div class="desc">Let Taurion be your agent, handling tedious
-                trading steps for you and increase your trading bandwidth.
-              </div>
+              <div class="title1">{{ $t("DynamicVisualSlider_title1_2") }}</div>
+              <div class="title2">{{ $t("DynamicVisualSlider_title2_2") }}</div>
+              <div class="desc">{{ $t("DynamicVisualSlider_desc_2") }}</div>
             </div>
             <img class="banner-center" src="~/assets/imgs/home-banner-3-center.svg" alt="">
             <img class="banner-right" src="~/assets/imgs/home-banner-3.svg" alt="">
@@ -48,11 +44,9 @@
           <div class="banner-slide banner-slide-3">
             <div class="inner"  v-if="realIndex === 3">
             <div class="banner-left">
-              <div class="title1">Ecosystem</div>
-              <div class="title2">AI-driven Community</div>
-              <div class="desc">AI-native info flow model where everyone can generate and share portfolios by prompts,
-                and earn profits.
-              </div>
+              <div class="title1">{{ $t("DynamicVisualSlider_title1_3") }}</div>
+              <div class="title2">{{ $t("DynamicVisualSlider_title2_3") }}</div>
+              <div class="desc">{{ $t("DynamicVisualSlider_desc_3") }}</div>
             </div>
             <img class="banner-center" src="~/assets/imgs/home-banner-4-center.svg" alt="">
             <img class="banner-right" src="~/assets/imgs/home-banner-4.svg" alt="">

@@ -1,6 +1,6 @@
 <template>
   <div class="banner-5">
-    <div class="title1">Our AI Learns from the Best</div>
+    <div class="title1">{{ $t("Banner5_title1_1") }}</div>
     <DirectionAwareHoverEffect/>
   </div>
 </template>

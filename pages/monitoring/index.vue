@@ -13,7 +13,8 @@
         <div class="add-monitoring" @click="showAddMonitor">{{ $t("Monitor_add-monitoring_1") }}</div>
       </aside>
       <main class="content">
-        <breadcrumb-navigation />
+        <breadcrumb-navigation  v-if="!pageLoading" />
+        <div style="height: 50px" v-else></div>
         <header class="content-header">
           <FilterTabs v-model="activeTab" :tabList="tabs"/>
         </header>
@@ -53,6 +54,7 @@ export default {
         {label: this.$t('ALL'), key: 'ALL'},
         {label: this.$t('FINISHED'), key: 'FINISHED'},
         {label: this.$t('UNFINISHED'), key: 'UNFINISHED'},
+        {label: this.$t('CANCEL'), key: 'CANCEL'},
       ]
     }
   },
@@ -95,9 +97,11 @@ export default {
         case 'ALL':
           return '';
         case 'FINISHED':
-          return 3; // 根据你的状态定义调整
+          return 3;
         case 'UNFINISHED':
-          return 1; // 根据你的状态定义调整
+          return 1;
+        case 'CANCEL':
+          return 4;
         default:
           return 0;
       }
@@ -136,7 +140,6 @@ export default {
   text-align: left;
   border-radius: 31px;
   background: rgba(38, 64, 64, 0.20);
-  backdrop-filter: blur(100px);
   position: relative;
   display: inline-flex;
   z-index: 2;

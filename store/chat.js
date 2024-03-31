@@ -122,6 +122,7 @@ export const actions = {
   welcomeToNext({commit, state}) {
     commit('setWelcomeIndex', state.welcomeIndex + 1)
     commit('addMessage', state.welcomeList[state.welcomeIndex])
+    console.log('welcomeToNext', state.messageList)
   },
   updateWelcomeList({commit, state}, ids) {
     const list = state.welcomeList.filter(item => !ids.includes(item.id))
@@ -216,7 +217,7 @@ export const actions = {
             loading: false
           }
         })
-      }, 300 * 1000)
+      }, 35 * 1000)
     }
   },
 }

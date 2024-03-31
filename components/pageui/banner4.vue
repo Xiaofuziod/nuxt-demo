@@ -1,7 +1,7 @@
 <template>
   <div class="banner-4">
-    <div class="title1">feedback</div>
-    <div class="title2">from our Community</div>
+    <div class="title1">{{ $t("Banner4_title1_1") }}</div>
+    <div class="title2">{{ $t("Banner4_title2_1") }}</div>
     <user-pop v-if="banner4Visible1" :info="userPops[0]"/>
     <user-pop v-if="banner4Visible2" :info="userPops[1]"/>
     <user-pop v-if="banner4Visible3" :info="userPops[2]"/>

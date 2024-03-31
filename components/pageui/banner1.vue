@@ -2,8 +2,8 @@
   <div class="b-wrapper">
     <div class="banner-1">
       <div class="banner-left">
-        <div class="title1">YOUR CRYPTO</div>
-        <div class="title2">AI CO-PILOT</div>
+        <div class="title1">{{ $t("Banner1_title1_1") }}</div>
+        <div class="title2">{{ $t("Banner1_title2_1") }}</div>
         <div class="desc-code">
           <typing-text
               font-size="29px"
@@ -58,7 +58,18 @@ export default {
   overflow: hidden;
   display: flex;
   justify-content: space-between;
-
+  background: rgba(11, 14, 12, 0.3);
+  backdrop-filter: blur(50px);
+  clip-path: polygon(
+      60px 0, /* 上左 */
+      calc(100% - 20px) 0, /* 上右 */
+      100% 20px, /* 右上 */
+      100% calc(100% - 60px), /* 右下 */
+      calc(100% - 60px) 100%, /* 下右 */
+      20px 100%, /* 下左 */
+      0 calc(100% - 20px), /* 左下 */
+      0 60px /* 左上 */
+  );
   .banner-left {
     padding: 181px 0 101px 64px;
 
@@ -99,19 +110,6 @@ export default {
     .desc-img {
       height: 96px;
     }
-  }
-
-  &:after {
-    background: rgba(11, 14, 12, 0.3);
-    backdrop-filter: blur(100px);
-    content: '';
-    position: absolute;
-    width: 1427px;
-    height: 1468px;
-    transform: rotate(45deg);
-    left: 5px;
-    top: -375px;
-    z-index: -1;
   }
 }
 

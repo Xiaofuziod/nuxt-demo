@@ -1,0 +1,111 @@
+.tops-box-wrapper {
+    position: fixed;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    cursor: default;
+    left: 0;
+    background: rgba(0, 0, 0, 0.50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .inner {
+        display: inline-flex;
+        padding: 24px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        border-radius: 32px;
+        background: #0f191f;
+        width: 455px;
+        height: 322px;
+        position: relative;
+        .close-icon {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            cursor: pointer;
+        }
+        .titleinner {
+            color: #FFF;
+            font-family: Avenir;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: normal;
+            text-transform: capitalize;
+        }
+        .detail-box {
+            padding: 15px 22px 15px 20px;
+            width: 366px;
+            height: 110px;
+            gap: 10px;
+            border-radius: 16px;
+            background: rgba(38, 64, 64, 0.20);
+            margin-top: 20px;
+            margin-bottom: 40px;
+            .title1 {
+                display: inline-flex;
+                align-items: center;
+                img {
+                    margin-right: 3px;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 16px;
+                }
+                color: rgba(255, 255, 255, 0.60);
+                font-family: Avenir;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                text-transform: capitalize;
+            }
+            .title2 {
+                color: #FFF;
+                font-family: Avenir;
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 800;
+                text-transform: capitalize;
+                text-wrap: normal;
+                line-height: 23px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* 定义文本的行数 */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .time1 {
+                padding-top: 3px;
+                img {
+                    margin-right: 2px;
+                }
+                display: inline-flex;
+                align-items: center;
+                font-size: 12px;
+                color: #CEB864;
+            }
+        }
+        .btn {
+            display: flex;
+            width: 330px;
+            padding: 14px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-radius: 8px;
+            background: #CEB864;
+            color: #000;
+            font-family: Avenir;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: normal;
+            text-transform: capitalize;
+            cursor: pointer;
+        }
+    }
+}

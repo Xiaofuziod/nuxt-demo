@@ -32,7 +32,7 @@
               <div class="focus-tip">
                 <btn cursor="default">
                   <img src="@/static/images/chat/s2.svg" alt="">
-                  <div>{{ $t("chat_index_div_1") }}</div>
+                  <div>{{ $t("AI_FOCUS") }}</div>
                 </btn>
               </div>
               <div class="focus-text">{{ item.text }}</div>
@@ -52,7 +52,7 @@
             </div>
           </div>
           <!--欢迎的任务-->
-          <welcomeTask v-if="showWelcome && item.source === 'T-brain'"
+          <welcomeTask v-if="showWelcome && item.source === 'T-brain' && item.type"
                        @goBottom="scrollToBottom"
                        :message="item"/>
           <!--文本内容-->

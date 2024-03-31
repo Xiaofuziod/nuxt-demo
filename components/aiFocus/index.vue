@@ -13,14 +13,14 @@
       <div class="focus">
         <btn>
           <img src="@/static/images/chat/s2.svg" alt="">
-          <span>{{ $t("AIFocus_span_1") }}</span>
+          <span>{{ $t("AI_FOCUS") }}</span>
         </btn>
       </div>
       <div class="list-item" v-for="(item,index) in coinData.list"
            :style="{'opacity': item.trigger === 1 ? 0.4 : 1}"
            :key="item.id + '-' + index">
         <div class="list-item-top">
-          <div class="list-item-top1">{{ timeDescription(item.createdDate) }}</div>
+          <div class="list-item-top1">{{ timeDescription(item.lastUpdatedDate) }}</div>
           <div class="list-item-top2">
             <img v-if="item.icon" :src="item.icon" alt="">
           </div>
