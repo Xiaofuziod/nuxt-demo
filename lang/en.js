@@ -234,7 +234,7 @@ export default {
     "partner6": "Binance is one of the largest digital asset exchanges in the world, aiming to become an infrastructure service provider for the blockchain ecosystem.",
     "tabName1": "Prediction & Analysis",
     "tabName2": "Positive Points",
-    "tabName3": "Potential Concerns",
+    "tabName3": "Risk",
     "tabName4": "Negative Points",
     "tabName5": "Opportunity",
     "monitoringConcluded": "The activity you are monitoring has not yet concluded.",
