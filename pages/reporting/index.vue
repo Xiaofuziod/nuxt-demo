@@ -92,7 +92,7 @@
         <ChatIndex/>
       </div>
     </div>
-    <PageLoading v-if="showWelcomeLoading" :show="loading"/>
+    <PageLoading v-if="showWelcomeLoading" :show="pageLoading"/>
   </div>
 </template>
 <script>
@@ -134,6 +134,7 @@ export default {
       followLoading: true,
       loading: true,
       hasMore: true,
+      pageLoading: true,
       queryParams: {
         id: '',
         page: 1,
@@ -155,12 +156,11 @@ export default {
   watch: {
     followList: {
       handler(val) {
-        if (!this.coinId) return
-        if (val.length) {
+        if (val.length && !!this.coinId) {
           const item = val.find(item => item.coinId === this.coinId)
           if (!item) this.handleClick(val[0])
         } else {
-          this.handleClick({coinId: ''})
+          this.handleClick({coinId: '', force: true})
         }
       },
       immediate: true
@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     handleClick(item) {
-      if (item.coinId === this.coinId) return
+      if (item.coinId === this.coinId && !item.force) return
       this.coinId = item.coinId
       this.queryParams.id = item.coinId
       this.queryParams.page = 1
@@ -207,13 +207,12 @@ export default {
           this.hasMore = false
         }
       }).finally(() => {
+        this.loading = false
         if (this.showWelcomeLoading) {
           let num = Date.now() - timer
           setTimeout(() => {
-            this.loading = false
+            this.pageLoading = false
           }, num > 0 ? 0 : -num)
-        } else {
-          this.loading = false
         }
       })
     },
