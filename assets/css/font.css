@@ -24,6 +24,18 @@
     font-style: normal;
 }
 @font-face {
+    font-family: 'Avenir-Heavy';
+    src: url('~assets/fonts/Avenir-Heavy-05.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Avenir-Book';
+    src: url('~assets/fonts/Avenir-Book-01.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
     font-family: 'Gruppe F';
     src: url('~assets/fonts/Gruppe F.ttf') format('truetype');
     font-weight: normal;
