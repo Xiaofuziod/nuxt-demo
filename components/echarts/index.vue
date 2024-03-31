@@ -140,7 +140,7 @@ export default {
         grid: {
           right: "0%",
           top: "5%",
-          left: `${priceLength * 1.35 + (this.from === 'chat' ? 7 : 10)}%`,
+          left: `${priceLength * 1.35 + (this.from === 'chat' ? 7 : 11)}%`,
           bottom: "8%"
         },
         xAxis: {
@@ -310,10 +310,8 @@ export default {
   line-height: normal;
   text-transform: capitalize;
   text-align: right;
-  padding: 0 7px;
+  padding-right: 7px;
   overflow: hidden;
-
-
 }
 
 .coin-change {

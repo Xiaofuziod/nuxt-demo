@@ -177,6 +177,7 @@ export default {
     "SUN": "SUN",
     "AI_FOCUS": "AI ANALYSIS",
     "report_empty": "Missing asset. I can't generate a report for you",
+    "report-empty-text2": "There is no market insight for the current asset, please add other assets",
     "Answer": "Anticipate",
     "StrongBullish": "Bullish Signal",
     "StrongBearish": "Bearish Signal",
