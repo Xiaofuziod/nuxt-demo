@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="preview-load">
-      <img class="banner-center" src="~/assets/imgs/home-banner-2-center.svg">
+      <img class="banner-center" src="~/assets/imgs/home-banner-2-center.png">
       <img class="banner-right" src="~/assets/imgs/home-banner-2.svg" alt="">
       <img class="banner-center" src="~/assets/imgs/home-banner-3-center.svg" alt="">
       <img class="banner-right" src="~/assets/imgs/home-banner-3.svg" alt="">
@@ -23,7 +23,7 @@
                   prompts to enhance your decision-making efficiency.
                 </div>
               </div>
-              <img class="banner-center" src="~/assets/imgs/home-banner-2-center.svg">
+              <img class="banner-center" src="~/assets/imgs/home-banner-2-center.png">
               <img class="banner-right" src="~/assets/imgs/home-banner-2.svg" alt="">
             </div>
           </div>
