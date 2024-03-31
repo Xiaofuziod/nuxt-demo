@@ -52,12 +52,13 @@ export default {
   margin-bottom: 20px;
   cursor: pointer;
   font-size: 12px;
-  font-family: Arial, sans-serif;
+  font-family: Avenir;
   color: rgba(255, 255, 255, 0.50);
   margin-right: 24px;
 }
 
 .tabs > *.active {
+  font-family: Avenir;
   font-weight: bold;
   color: #CEB864;
   position: relative;
