@@ -258,4 +258,5 @@ export default {
     "InvalidTitle":"Taurion解析失败",
     "ParsingFailed":"解析失败",
     "CanceledDesc":"主持人已取消",
+    "today":"今天",
 }

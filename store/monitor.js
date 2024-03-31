@@ -1,4 +1,5 @@
 import * as monitorApi from "~/common/monitoring";
+import {formatTimeBasedOnRule} from "@/utils/formatTimeBasedOnRule";
 
 export const state = () => ({
     // monitorList: [],
@@ -49,14 +50,18 @@ export const mutations = {
 };
 
 export const actions = {
-    async fetchMonitorList({commit,}, payload) {
-        console.log(2323232)
+    async fetchMonitorList({commit, rootState}, payload) {
         try {
-            console.log(2323232)
             const {page, size, status, searchName} = {page: 1, size: 20, status: '', searchName: '', ...(payload || {})}
 
             const res = await this.$axios.get(`${monitorApi.getMonitorList}?searchName=${searchName}&page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
+                res.data.data.records = res.data.data.records.map(item => {
+                    return {
+                        ...item,
+                        time: formatTimeBasedOnRule(item.time, rootState.lang.t['today'])
+                    }
+                })
                 commit('setSearchMonitor', {page, size, ...res.data.data});
                 return res.data.data
             } else if (page === 1) {
@@ -70,11 +75,17 @@ export const actions = {
         } finally {
         }
     },
-    async fetchUnstartMonitorList({commit}, payload) {
+    async fetchUnstartMonitorList({commit, rootState}, payload) {
         try {
             const {page, size, status, searchName} = {page: 1, size: 4, status: 1, searchName: '', ...(payload || {})}
             const res = await this.$axios.get(`${monitorApi.getMonitorList}?searchName=${searchName}&page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
+                res.data.data.records = res.data.data.records.map(item => {
+                    return {
+                        ...item,
+                        time: formatTimeBasedOnRule(item.time, rootState.lang.t['today'])
+                    }
+                })
                 commit('setUnstartMonitors', res.data.data.records);
             }
         } catch (e) {
@@ -82,11 +93,17 @@ export const actions = {
         } finally {
         }
     },
-    async fetchFinishMonitorList({commit}, payload) {
+    async fetchFinishMonitorList({commit, rootState}, payload) {
         try {
             const {page, size, status, searchName} = {page: 1, size: 6, status: 3, searchName: '', ...(payload || {})}
             const res = await this.$axios.get(`${monitorApi.getMonitorList}?searchName=${searchName}&page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
+                res.data.data.records = res.data.data.records.map(item => {
+                    return {
+                        ...item,
+                        time: formatTimeBasedOnRule(item.time, rootState.lang.t['today'])
+                    }
+                })
                 commit('setFinishMonitors', res.data.data.records);
             }
         } catch (e) {
@@ -94,12 +111,18 @@ export const actions = {
         } finally {
         }
     },
-    async fetchUserMonitorList({commit, state}, payload) {
+    async fetchUserMonitorList({commit, state, rootState}, payload) {
         const {page, size, status} = {page: 1, size: 30, status: state.status, ...(payload || {})}
         try {
             commit('setStatus', status)
             const res = await this.$axios.get(`${monitorApi.getUserMonitoringList}?page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
+                res.data.data.records = res.data.data.records.map(item => {
+                    return {
+                        ...item,
+                        time: formatTimeBasedOnRule(item.time, rootState.lang.t['today'])
+                    }
+                })
                 commit('setUserMonitor', {page, size, ...res.data.data});
                 return res.data.data
             } else if (page === 1) {

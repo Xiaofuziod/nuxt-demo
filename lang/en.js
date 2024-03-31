@@ -259,4 +259,5 @@ export default {
     "InvalidTitle":"Taurion Parsing failed",
     "ParsingFailed":"Parsing failed",
     "CanceledDesc":"The host has canceled",
+    "today":"Today",
 }
