@@ -61,7 +61,10 @@ export default {
     this.$refs.player.addEventListener('loadeddata', () => {
       this.updateDuration();
       this.updateProgress();
-      this.$refs.player.audio.pause();
+      setTimeout(() => {
+        this.$refs.player.seeking(0)
+        this.$refs.player.audio.pause();
+      },1000)
     });
   },
   methods: {
