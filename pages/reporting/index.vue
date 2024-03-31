@@ -167,7 +167,7 @@ export default {
     }
   },
   async mounted() {
-    this.loadData()
+    // this.loadData()
     await this.$store.dispatch('coin/fetchUserCoinList')
     this.followLoading = false
     this.$store.commit('chat/setPageName', 'report')
