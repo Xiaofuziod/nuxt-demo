@@ -59,7 +59,7 @@ export const mutations = {
     state.messageList = []
   },
   updateMessage(state, {index, message}) {
-    console.log('updateMessage', index, message)
+    // console.log('updateMessage', index, message)
     Vue.set(state.messageList, index, message);
   },
   setConversationId(state, conversationId) {
@@ -125,7 +125,6 @@ export const actions = {
   welcomeToNext({commit, state}) {
     commit('setWelcomeIndex', state.welcomeIndex + 1)
     commit('addMessage', state.welcomeList[state.welcomeIndex])
-    console.log('welcomeToNext', state.messageList)
   },
   updateWelcomeList({commit, state}, ids) {
     const list = state.welcomeList.filter(item => !ids.includes(item.id))
@@ -205,22 +204,22 @@ export const actions = {
       }
       // 更新机器人状态语
       commit('setRobot', {text})
-
-      // 如果五分钟没有收到回复，认为机器人掉线了
-      clearTimeout(timer3)
-      timer3 = setTimeout(() => {
-        commit('setRobot', {text: this.$i18n.t('robot_message_7')})
-        commit('setMessageStatus', 'error')
-        commit('updateMessage', {
-          index: state.messageList.length - 1,
-          message: {
-            ...state.messageList[state.messageList.length - 1],
-            text: this.$i18n.t("Robot_message_crash"),
-            error: this.$i18n.t("networkError"),
-            loading: false
-          }
-        })
-      }, 35 * 1000)
     }
+    // 如果五分钟没有收到回复，认为机器人掉线了
+    clearTimeout(timer3)
+    timer3 = setTimeout(() => {
+      console.log('机器人掉线了')
+     if (state.pageName !== 'welcome') commit('setRobot', {text: this.$i18n.t('robot_message_7')})
+      commit('setMessageStatus', 'error')
+      commit('updateMessage', {
+        index: state.messageList.length - 1,
+        message: {
+          ...state.messageList[state.messageList.length - 1],
+          text: this.$i18n.t("Robot_message_crash"),
+          error: this.$i18n.t("networkError"),
+          loading: false
+        }
+      })
+    }, 35 * 1000)
   },
 }
