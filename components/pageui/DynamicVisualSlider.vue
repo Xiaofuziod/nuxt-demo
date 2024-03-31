@@ -59,9 +59,11 @@
         <swiper-slide>
           <banner5/>
         </swiper-slide>/
+        <swiper-slide class="footer-slide">
+          <app-footer/>
+        </swiper-slide>
 <!--        <div class="swiper-pagination" slot="pagination"></div>-->
       </swiper>
-    <app-footer :show="realIndex === 5" />
   </div>
 
 </template>
@@ -84,9 +86,10 @@ export default {
   },
   data() {
     return {
+      showFooter: false,
       swiperOption: {
         direction: 'vertical',
-        slidesPerView: 1,
+        slidesPerView: 'auto',
         speed: 1000,
         spaceBetween: 30,
         mousewheel: {
@@ -139,7 +142,12 @@ export default {
     opacity: 1;
   }
 }
-
+.footer-slide {
+  height: 200px; // 设置app-footer幻灯片的高度为200px
+  .app-footer {
+    height: 100%; // 确保app-footer填充整个幻灯片
+  }
+}
 .preview-load {
   position: fixed;
   top: -10000px;

@@ -71,19 +71,10 @@ footer {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: fixed;
   bottom: 20px;
   height: 100px;
-  left: 0;
   width: 100vw;
   z-index: 3;
-  transform: translateY(120%) scale(0.3); /* 初始状态：隐藏在视图下方 */
-  transition: transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1); /* 贝塞尔缓动效果 */
-  animation-delay: 3s;
-  will-change: transform; /* 提示浏览器该属性将会变化，可能有助于性能优化 */
-  &.footer-visible {
-    transform: translateY(0) scale(0.9); /* 动画结束状态：完全可见 */
-  }
   .footer-box {
     display: flex;
     justify-content: space-between;
