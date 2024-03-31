@@ -9,11 +9,11 @@
       <!-- Navigation area -->
       <nav v-if="userLoggedIn && !routepath.includes('welcome')">
         <ul>
-          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" :href="`/reporting`">
+          <li><a :class="`${routepath.includes('reporting') ? 'active' : ''}`" :href="`${langPath}/reporting`">
             <span>{{$t("REPORTING")}}</span>
           </a>
           </li>
-          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" :href="`/monitoring`">
+          <li><a :class="`${routepath.includes('monitoring') ? 'active' : ''}`" :href="`${langPath}/monitoring`">
             <span>{{$t("MONITORING")}}</span></a>
           </li>
         </ul>

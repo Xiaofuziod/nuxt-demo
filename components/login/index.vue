@@ -149,13 +149,15 @@ export default {
       this.showLoading = false
       this.$toast.success(this.$t('LoginSuccess'))
       this.hide()
-      this.$router.replace('/reporting')
+      this.$reconnectSocket();
+      this.$router.replace(this.localeRoute('/reporting'))
     });
     this.$bus.$on("REGISTER_SUCCESS", () => {
       this.showLoading = false
       this.$toast.success(this.$t('RegistrationSuccess'))
       this.hide()
-      this.$router.replace('/welcome')
+      this.$reconnectSocket();
+      this.$router.replace(this.localeRoute('/welcome'))
     });
     this.$bus.$on('LOGON_FAIL', () => {
       this.showLoading = false

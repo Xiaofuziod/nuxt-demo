@@ -268,13 +268,13 @@ export default {
     "DynamicVisualSlider2_title1_2": "Taurion IA",
     "DynamicVisualSlider2_desc_1": "Deixe o Taurion ser seu agente, lidando com etapas de negociação tediosas para você e aumentando sua largura de banda de negociação.",
     "DynamicVisualSlider3_title1_1": "Ecossistema",
-    "DynamicVisualSlider3_title1_2": "Comunidade Impulsionada por IA",
+    "DynamicVisualSlider3_title1_2": "Comunidade por IA",
     "DynamicVisualSlider3_desc_1": "Modelo de fluxo de informações nativo de IA onde todos podem gerar e compartilhar portfólios por comandos, e obter lucros.",
-    "Banner5_title1_1": "Nossa IA Aprende com os Melhores",
+    "Banner5_title1_1": "IA Aprende com os Melhores",
     "Banner4_title1_1": "feedback",
-    "Banner4_title2_1": "de nossa Comunidade",
+    "Banner4_title2_1": "nossa Comunidade",
     "Banner1_title1_1": "SEU CRIPTO",
-    "Banner1_title2_1": "COPILOTO DE IA",
+    "Banner1_title2_1": "Taurion IA",
     "MobileBanner1_title1_1": "SEU CRIPTO",
     "MobileBanner1_title2_1": "COPILOTO DE IA"
 }

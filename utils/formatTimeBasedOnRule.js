@@ -1,6 +1,5 @@
-function formatTimeBasedOnRule(utcTimeString, today) {
+export function formatTimeBasedOnRule(utcTimeString, today) {
     const utcDate = new Date(utcTimeString + 'Z');
-
     // Get the current date and time
     const now = new Date();
 

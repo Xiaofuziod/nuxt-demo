@@ -46,10 +46,11 @@
             margin-top: 20px;
             margin-bottom: 40px;
             .title1 {
-                display: inline-flex;
                 align-items: center;
+                position: relative;
+                display: inline-block;
                 img {
-                    margin-right: 3px;
+                    left: 0;
                     width: 16px;
                     height: 16px;
                     border-radius: 16px;
