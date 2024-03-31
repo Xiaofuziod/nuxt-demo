@@ -9,9 +9,6 @@ import uuid from "@/utils/uuid";
 let timer = null  // 机器人回答后，3秒后关闭
 let timer2 = null  // 五分钟没有操作，机器人会自动问候
 let timer3 = null  // 五分钟没有收到回复，认为机器人掉线了
-let timer4 = null  // ping pang
-
-let timer5 = null  // pong，3秒后关闭
 
 export const state = () => ({
   conversationId: null,
@@ -29,7 +26,6 @@ export const state = () => ({
     text: '',
   },
   showWelcomeLoading: false,
-  pongValue: null
 })
 
 export const mutations = {
@@ -106,13 +102,6 @@ export const actions = {
     } else {
       commit('setWlist', rootState.lang.t)
     }
-  },
-  sendPingMessage() {
-    clearInterval(timer4)
-    timer4 = setInterval(() => {
-      const uid = uuid()
-      this.$socket.emit('ping', uid)
-    }, 3 * 1000)
   },
   async fetchEarlierMessages({commit}, showWelcome = false) {
     try {
