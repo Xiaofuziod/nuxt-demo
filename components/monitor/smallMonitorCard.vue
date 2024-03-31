@@ -73,7 +73,6 @@ export default {
       height: 22px;
       line-height: 22px;
       width: 100%;
-      // 超出省略
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

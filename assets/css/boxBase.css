@@ -20,7 +20,7 @@
         border-radius: 32px;
         background: #0f191f;
         width: 455px;
-        height: 322px;
+        height: 332px;
         position: relative;
         .close-icon {
             position: absolute;
@@ -62,6 +62,9 @@
                 font-weight: 400;
                 line-height: normal;
                 text-transform: capitalize;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             .title2 {
                 color: #FFF;

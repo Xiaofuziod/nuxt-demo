@@ -327,7 +327,7 @@ export default {
       .title {
         color: #FFF;
         font-family: Avenir;
-        width: 430px;
+        width: 400px;
         font-size: 20px;
         font-style: normal;
         font-weight: 800;
