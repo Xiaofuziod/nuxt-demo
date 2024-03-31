@@ -219,7 +219,7 @@ export default {
     groupByDate(items) {
       const groupedList = this.list;
       items.forEach((item) => {
-        const d = parseTime(item?.createdDate)
+        const d = parseTime(item?.lastUpdatedDate)
         if (groupedList.every((group) => group.date !== d.date)) {
           groupedList.push({
             date: d.date,
