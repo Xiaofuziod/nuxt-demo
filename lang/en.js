@@ -254,7 +254,7 @@ export default {
     "ParsingTitle": "Taurion Is Analyzing",
     "viewReplay": "View Replay",
     "Completed": "Completed",
-    "heatAfter": "views",
+    "heatAfter": "tuned in",
     "Invalid": "Invalid",
     "InvalidTitle": "Taurion Analysis Failed",
     "ParsingFailed": "Analysis failed",

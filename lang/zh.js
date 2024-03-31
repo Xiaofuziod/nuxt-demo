@@ -253,7 +253,7 @@ export default {
     "ParsingTitle": "Taurion正在解析",
     "viewReplay": "查看回放",
     "Completed": "已结束",
-    "heatAfter": "人观看",
+    "heatAfter": "人收听",
     "Invalid": "已失效",
     "InvalidTitle": "Taurion解析失败",
     "ParsingFailed": "解析失败",
