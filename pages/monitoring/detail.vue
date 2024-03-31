@@ -4,12 +4,26 @@
       <div class="left">
         <breadcrumb-navigation v-if="!pageLoading" @click="goList"/>
         <div style="height: 50px" v-else></div>
-        <div class="left-header" >
+        <div class="left-header">
           <template v-if="!pageLoading">
-            <img  :src="monitorDetail?.logo" class="left-header-img" alt="">
+            <img :src="monitorDetail?.logo" class="left-header-img" alt="">
             <div class="right-content">
+              <a :href="monitorDetail?.link" class="link-btn" target="_blank">
+                <img src="@/assets/imgs/card/linKbtn.svg"  alt="">
+              </a>
               <div class="author">{{ monitorDetail?.author }}</div>
               <div class="title">{{ monitorDetail?.title }}</div>
+              <div class="desc">
+                <p class="time">
+                  <img src="@/assets/imgs/card/fire.svg" alt="">
+                  <span>{{ monitorDetail?.heat }}{{ $t("heatAfter") }}</span>
+                </p>
+                <p class="time">
+                  <img src="@/assets/imgs/card/date.svg" alt="">
+                  <span>{{ monitorDetail?.time }}</span>
+                </p>
+              </div>
+
             </div>
           </template>
         </div>
@@ -30,10 +44,10 @@
               </div>
             </template>
           </div>
-          <div v-show="activeTab === '1'"  class="content">
+          <div v-show="activeTab === '1'" class="content">
 
             <audio-player style="margin-top: 10px;margin-bottom: 10px;width: 565px" v-if="monitorContent?.link"
-                                      :audio-src="monitorContent?.link"
+                          :audio-src="monitorContent?.link"
             />
             <div class="box-wrapper" v-if="monitorContent">
               <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
@@ -128,14 +142,14 @@ export default {
       this.$store.commit('setMonitorDetail', null);
       this.$store.commit('setMonitorContent', null);
       const res = await this.$store.dispatch('monitor/fetchMonitorDetail', sourceId)
-      if(res.state === "error") {
+      if (res.state === "error") {
         this.$toast.error(res.data)
       }
       await this.$store.dispatch('monitor/fetchMonitorSummary', sourceId)
       await this.$store.dispatch('monitor/fetchMonitorContent', {sourceId})
       setTimeout(() => {
         this.pageLoading = false
-      },1000)
+      }, 1000)
     },
     goList() {
       this.$router.push(this.localeRoute(`/monitoring`));
@@ -295,7 +309,7 @@ export default {
       padding-left: 20px;
       flex: 1;
       text-align: left;
-
+      position: relative;
       .author {
         color: rgba(255, 255, 255, 0.60);
         font-family: Avenir;
@@ -305,15 +319,34 @@ export default {
         line-height: normal;
         text-transform: capitalize;
       }
-
+      .link-btn {
+        position: absolute;
+        right: 0;
+        top: 30px;
+      }
       .title {
         color: #FFF;
         font-family: Avenir;
+        width: 430px;
         font-size: 20px;
         font-style: normal;
         font-weight: 800;
         line-height: normal;
         text-transform: capitalize;
+      }
+      .desc {
+        display: inline-flex;
+        align-items: center;
+        font-size: 12px;
+        color: #CEB864;
+        .time {
+          display: inline-flex;
+          align-items: center;
+          img {
+            margin-right: 4px;
+          }
+          margin-right: 20px;
+        }
       }
     }
 

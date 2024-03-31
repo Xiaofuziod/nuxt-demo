@@ -178,11 +178,12 @@ export const actions = {
             this._vm.$loading.finish();
         }
     },
-    async fetchMonitorDetail({commit}, sourceId) {
+    async fetchMonitorDetail({commit,rootState}, sourceId) {
         try {
             this._vm.$loading.start();
             const res = await this.$axios.get(`${monitorApi.getMonitoringDetail}?sourceId=${sourceId}`);
             if (res && res.data && res.data.ok) {
+                res.data.data.time = formatTimeBasedOnRule(res.data.data.time, rootState.lang.t['today'])
                 commit('setMonitorDetail', res.data.data)
                 return {
                     state: 'success',
