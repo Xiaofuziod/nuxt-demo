@@ -1,8 +1,8 @@
 <template>
   <div class="home-wrapper" ref="homeWrapper">
-    <div class="container">
-      <DynamicVisualSlider/>
-    </div>
+<!--    <div class="container">-->
+<!--      <DynamicVisualSlider/>-->
+<!--    </div>-->
   </div>
 </template>
 <script>

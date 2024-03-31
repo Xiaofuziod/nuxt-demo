@@ -88,7 +88,7 @@ export default {
       {code: 'zh', iso: 'zh', file: 'zh.js'},
       {code: 'pt-br', iso: 'pt-br', file: 'pt-br.js'},
     ],
-    strategy: 'no_prefix',
+    // strategy: 'no_prefix',
     defaultLocale: 'en',
     lazy: true,
     langDir: 'lang/',
