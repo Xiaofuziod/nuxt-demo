@@ -12,7 +12,7 @@
       <swiper ref="swper" class="swiper" :options="swiperOption" @slideChange="onSlideChange">
         <swiper-slide>
           <banner1/>
-        </swiper-slide>/
+        </swiper-slide>
         <swiper-slide>
           <div class="banner-slide banner-slide-1">
             <div class="inner" v-if="realIndex === 1">

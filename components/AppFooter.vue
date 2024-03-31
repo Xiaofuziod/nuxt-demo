@@ -166,8 +166,11 @@ nav {
   }
   .right {
     display: flex;
-    width: 150px;
-    justify-content: space-between;
+    width: 350px;
+    justify-content: right;
+    .bottom-link {
+      margin-left: 50px;
+    }
   }
 }
 </style>
