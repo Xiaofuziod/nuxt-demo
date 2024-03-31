@@ -9,7 +9,7 @@ export function formatTimeBasedOnRule(utcTimeString, today) {
     let formattedTime;
 
     if (currentDate.getTime() === targetDate.getTime()) {
-        formattedTime = today + utcDate.getHours().toString().padStart(2, '0') + ':' + utcDate.getMinutes().toString().padStart(2, '0');
+        formattedTime = today + " " + utcDate.getHours().toString().padStart(2, '0') + ':' + utcDate.getMinutes().toString().padStart(2, '0');
     } else {
         formattedTime = (utcDate.getMonth() + 1).toString().padStart(2, '0') + '/' + utcDate.getDate().toString().padStart(2, '0') + ' ' + utcDate.getHours().toString().padStart(2, '0') + ':' + utcDate.getMinutes().toString().padStart(2, '0');
     }
