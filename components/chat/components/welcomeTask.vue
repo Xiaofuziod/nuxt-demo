@@ -16,7 +16,7 @@
 
     <div class="text-message-v2"
          v-if="message.type === 'task' && !message.finish"
-         style="position: relative;background: rgb(8,20,38);">
+         style="position: relative;background: rgb(8,20,38);width: 440px">
       <div class="task-tip"
            :class="{'topSticky':message.type === 'task' && !message.finish}"
       >
@@ -146,7 +146,8 @@ export default {
 
 <style lang="less" scoped>
 .task-box {
-  width: 440px;
+  display: inline-block;
+  max-width: 440px;
 
   .text-message-v2 {
     width: 100%;
@@ -176,7 +177,7 @@ export default {
 
 .topSticky2{
   position: sticky;
-  top: -85px;
+  top: -100px;
   z-index: 99;
 }
 
