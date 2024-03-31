@@ -91,7 +91,7 @@
               </div>
               <!--异常提示-->
               <img class="error-image"
-                   v-if="messageStatus === 'error' && lastMessage.seqNo === item.seqNo"
+                   v-if="messageStatus === 'error' && item.source !== 'T-brain' && lastMessage.seqNo === item.seqNo"
                    @click="messageErrorClick(item)" src="@/assets/imgs/error.svg" alt="">
             </div>
           </template>
@@ -362,7 +362,8 @@ export default {
           this.$nextTick(() => {
             let box = document.querySelectorAll('.task-box')
             const top = box[box.length - 1].offsetTop
-            this.scrollToBottom(top - 150)
+            console.log('top', top)
+            this.scrollToBottom(top)
           })
         }
         if (lastMsg.over) {
@@ -374,6 +375,7 @@ export default {
     },
     scrollToBottom(topVale) {
       this.$nextTick(() => {
+        console.log('scrollToBottom', topVale)
         const messagesContainer = this.$refs.messagesContainer;
         messagesContainer.scrollTo({
           top: topVale || messagesContainer.scrollHeight,
