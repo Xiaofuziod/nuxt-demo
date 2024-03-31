@@ -17,9 +17,9 @@
           <div class="banner-slide banner-slide-1">
             <div class="inner" v-if="realIndex === 1">
               <div class="banner-left">
-                <div class="title1">{{ $t("DynamicVisualSlider_title1_1") }}</div>
-                <div class="title2">{{ $t("DynamicVisualSlider_title2_1") }}</div>
-                <div class="desc">{{ $t("DynamicVisualSlider_desc_1") }}</div>
+                <div class="title1">{{ $t("DynamicVisualSlider1_title1_1") }}</div>
+                <div class="title2">{{ $t("DynamicVisualSlider1_title1_2") }}</div>
+                <div class="desc">{{ $t("DynamicVisualSlider1_desc_1") }}</div>
               </div>
               <img class="banner-center" src="~/assets/imgs/home-banner-2-center.png">
               <img class="banner-right" src="~/assets/imgs/home-banner-2.svg" alt="">
@@ -31,9 +31,9 @@
             <div class="inner"  v-if="realIndex === 2">
 
             <div class="banner-left">
-              <div class="title1">{{ $t("DynamicVisualSlider_title1_2") }}</div>
-              <div class="title2">{{ $t("DynamicVisualSlider_title2_2") }}</div>
-              <div class="desc">{{ $t("DynamicVisualSlider_desc_2") }}</div>
+              <div class="title1">{{ $t("DynamicVisualSlider2_title1_1") }}</div>
+              <div class="title2">{{ $t("DynamicVisualSlider2_title1_2") }}</div>
+              <div class="desc">{{ $t("DynamicVisualSlider2_desc_1") }}</div>
             </div>
             <img class="banner-center" src="~/assets/imgs/home-banner-3-center.svg" alt="">
             <img class="banner-right" src="~/assets/imgs/home-banner-3.svg" alt="">
@@ -44,9 +44,9 @@
           <div class="banner-slide banner-slide-3">
             <div class="inner"  v-if="realIndex === 3">
             <div class="banner-left">
-              <div class="title1">{{ $t("DynamicVisualSlider_title1_3") }}</div>
-              <div class="title2">{{ $t("DynamicVisualSlider_title2_3") }}</div>
-              <div class="desc">{{ $t("DynamicVisualSlider_desc_3") }}</div>
+              <div class="title1">{{ $t("DynamicVisualSlider3_title1_1") }}</div>
+              <div class="title2">{{ $t("DynamicVisualSlider3_title1_2") }}</div>
+              <div class="desc">{{ $t("DynamicVisualSlider3_desc_1") }}</div>
             </div>
             <img class="banner-center" src="~/assets/imgs/home-banner-4-center.svg" alt="">
             <img class="banner-right" src="~/assets/imgs/home-banner-4.svg" alt="">

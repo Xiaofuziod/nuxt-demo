@@ -20,7 +20,7 @@
         border-radius: 32px;
         background: #0f191f;
         width: 455px;
-        height: 322px;
+        height: 332px;
         position: relative;
         .close-icon {
             position: absolute;
@@ -40,7 +40,6 @@
         .detail-box {
             padding: 15px 22px 15px 20px;
             width: 366px;
-            height: 110px;
             gap: 10px;
             border-radius: 16px;
             background: rgba(38, 64, 64, 0.20);
@@ -61,7 +60,11 @@
                 font-style: normal;
                 font-weight: 400;
                 line-height: normal;
+                width: 330px;
                 text-transform: capitalize;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal;
             }
             .title2 {
                 color: #FFF;
