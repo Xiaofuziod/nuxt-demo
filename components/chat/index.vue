@@ -92,8 +92,7 @@
               <!--异常提示-->
               <img class="error-image"
                    v-if="messageStatus === 'error' && item.source !== 'T-brain' && lastMessage.seqNo === item.seqNo"
-                   @click="messageErrorClick(item)"
-                   src="@/assets/imgs/error.svg" alt="">
+                   @click="messageErrorClick(item)" src="@/assets/imgs/error.svg" alt="">
             </div>
           </template>
           <!--定制卡片内容-->
@@ -221,34 +220,29 @@ export default {
     this.$bus.$on('GO_CHAT_BOTTOM', () => {
       this.scrollToBottom()
     })
-
-    count = 0
-
-    clearInterval(timer4)
-    timer4 = setInterval(() => {
-      const uid = uuid()
-      console.log('ping-taurion', uid)
-      this.$socket.emit('ping-taurion', uid)
-      timer5 = setTimeout(() => {
-        count++
-        console.log('socket reconnect', count)
-        if (count < maxCount) {
-          this.$reconnectSocket()
-        } else {
-          console.log('超过最大重连次数')
-          window.location.reload()
-        }
-      }, 10 * 1000)
-    }, 5 * 1000)
-
-    this.$socket.on('pong-taurion', (e) => {
-      console.log('pong-taurion', e)
-      clearTimeout(timer5)
-    })
-    this.$socket.on('pong', (e) => {
-      console.log('pong', e)
-      clearTimeout(timer5)
-    })
+    // count = 0
+    //
+    // clearInterval(timer4)
+    // timer4 = setInterval(() => {
+    //   const uid = uuid()
+    //   console.log('ping-taurion', uid)
+    //   this.$socket.emit('ping-taurion', uid)
+    //   timer5 = setTimeout(() => {
+    //     count++
+    //     console.log('socket reconnect', count)
+    //     if (count < maxCount) {
+    //       this.$reconnectSocket()
+    //     } else {
+    //       console.log('超过最大重连次数')
+    //       window.location.reload()
+    //     }
+    //   }, 10 * 1000)
+    // }, 5 * 1000)
+    //
+    // this.$socket.on('pong-taurion', (e) => {
+    //   console.log('pong', e)
+    //   clearTimeout(timer5)
+    // })
   },
   methods: {
     clean() {

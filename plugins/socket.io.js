@@ -1,4 +1,3 @@
-
 // plugins/socket.js
 import Vue from 'vue';
 import io from 'socket.io-client';
@@ -12,6 +11,10 @@ let socket = io("https://api.taurion.ai?token=" + token, {
 // 尝试重新连接
 function reconnect() {
   socket.disconnect();
+  connect();
+}
+
+function connect() {
   token = localStorage.getItem('token')
   console.log('开始重连')
   socket = io("https://api.taurion.ai?token=" + token, {
@@ -31,5 +34,6 @@ Vue.use(SocketPlugin);
 
 export default (context, inject) => {
   inject('socket', socket);
+  inject("connectSocket", connect);
   inject('reconnectSocket', reconnect); // 允许通过 nuxt 上下文访问
 };
