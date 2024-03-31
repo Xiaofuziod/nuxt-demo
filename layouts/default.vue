@@ -55,12 +55,12 @@ export default {
       const currentPath = this.$route.path;
       // 移动设备且当前路径不包含 '/mobile'
       if (this.isMobile && !currentPath.includes('/mobile')) {
-        this.$router.push(this.localeRoute(`/mobile`));
+        this.$router.push(`/mobile`);
       }
 
       // 非移动设备且当前路径包含 '/mobile'
       if (!this.isMobile && currentPath.includes('/mobile')) {
-        this.$router.push(this.localeRoute(`/`));
+        this.$router.push(`/`);
       }
     }
   }

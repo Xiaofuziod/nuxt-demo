@@ -152,7 +152,7 @@ export default {
       }, 1000)
     },
     goList() {
-      this.$router.push(this.localeRoute(`/monitoring`));
+      this.$router.push(`/monitoring`);
     },
     senMessage() {
       // const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'SIGNAL_SOURCE')
