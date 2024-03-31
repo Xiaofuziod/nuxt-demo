@@ -16,7 +16,7 @@
               <div class="desc">
                 <p class="time">
                   <img src="@/assets/imgs/card/fire.svg" alt="">
-                  <span>{{ monitorDetail?.heat }}{{ $t("heatAfter") }}</span>
+                  <span> {{ monitorDetail?.heat }} {{ $t("heatAfter") }}</span>
                 </p>
                 <p class="time">
                   <img src="@/assets/imgs/card/date.svg" alt="">

@@ -5,7 +5,7 @@
     </span>
     <span class="time">
       <img src="@/assets/imgs/card/fire.svg" alt="">
-      <span>{{card?.heat}}{{$t("heatAfter")}}</span>
+      <span> {{card?.heat}} {{$t("heatAfter")}}</span>
     </span>
   </p>
 </template>
