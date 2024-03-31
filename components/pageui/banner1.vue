@@ -103,7 +103,6 @@ export default {
 
   &:after {
     background: rgba(11, 14, 12, 0.3);
-    backdrop-filter: blur(100px);
     content: '';
     position: absolute;
     width: 1427px;

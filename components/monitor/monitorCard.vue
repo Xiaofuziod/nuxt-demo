@@ -4,16 +4,28 @@
     <div class="card-header">
       <h3 class="title1">{{ card?.author }}</h3>
       <h3 class="title2">{{ card?.title }}</h3>
-      <p class="timestamp">{{ card?.time }}</p>
+      <un-started ref="unStarted" :card="card" v-if="card?.status === 1"/>
+      <completed :card="card" v-if="card?.status === 5"/>
+      <in-progress  ref="inProgress":card="card" v-if="card?.status === 2"/>
+      <Parsing  ref="Parsing" :card="card" v-if="[3,4].includes(card?.status)"/>
+      <Invalid ref="invalid" :card="card" v-if="card?.status === 6"/>
+      <cancelled :card="card" v-if="card?.status === 7"/>
     </div>
     <img class="remove-btn" src="@/assets/imgs/close.svg" @click.stop="deleteMonitor(card.id)" alt="">
   </div>
 </template>
 <script>
 import bianPic from '@/assets/imgs/bian.png'
+import UnStarted from "~/components/monitor/cardState/unStarted.vue";
+import InProgress from "~/components/monitor/cardState/inProgress.vue";
+import Completed from "~/components/monitor/cardState/completed.vue";
+import Parsing from "~/components/monitor/cardState/parsing.vue";
+import Invalid from "~/components/monitor/cardState/invalid.vue";
+import Cancelled from "~/components/monitor/cardState/Cancelled.vue";
 
 export default {
   name: "monitorCard",
+  components: {Cancelled, Invalid, Parsing, Completed, InProgress, UnStarted},
   props: {
     showAction: {
       type: Boolean,
@@ -32,13 +44,24 @@ export default {
     deleteMonitor(id) {
       this.$store.dispatch('monitor/deleteUserMonitor', id);
     },
-    cardClick(id) {
+    cardClick() {
       if (this.card.status === 1) {
-        this.$toast.warning(this.$t('monitoringConcluded'))
-      } else if(this.card.status === 7) {
-        this.$toast.warning(this.$t('monitoringCanceled'))
-      } else {
-        this.$router.push(this.localeRoute(`/monitoring/detail?id=${id}`));
+        this.$refs.unStarted.showBox = true
+      }
+      if (this.card.status === 2) {
+        this.$refs.inProgress.showBox = true
+      }
+      if ([3, 4].includes(this.card.status)) {
+        this.$refs.Parsing.showBox = true
+      }
+      if (this.card.status === 5) {
+        this.$router.push(this.localeRoute(`/monitoring/detail?id=${this.card.id}`));
+      }
+      if (this.card.status === 6) {
+        this.$refs.invalid.showBox = true
+      }
+      if (this.card.status === 7) {
+          this.$toast.warning(this.$t('monitoringCanceled'))
       }
     }
   }
@@ -95,7 +118,7 @@ export default {
       text-transform: capitalize;
       width: 225px;
       text-wrap: normal;
-      line-height: 25px;
+      line-height: 23px;
 
       display: -webkit-box;
       -webkit-line-clamp: 2; /* 定义文本的行数 */

@@ -4,8 +4,9 @@
     <div class="card-header">
       <h3 class="title1">{{ card?.author }}</h3>
       <h3 class="title2" >{{ card?.title }}</h3>
-      <p class="timestamp">{{ card?.time }}</p>
-<!--      <p class="other">{{ card?.status }}</p>-->
+      <p class="timestamp" v-if="card?.status === 1"><img src="@/assets/imgs/card/date.svg" alt=""><span>{{$t("unStarted")}}, {{ card?.time }}</span></p>
+      <p class="timestamp" v-else-if="card?.status === 5"><img src="@/assets/imgs/card/fire.svg" alt=""><span>{{$t("Completed")}}, {{card?.heat}}{{$t("heatAfter")}}</span></p>
+      <p class="timestamp" v-else><img src="@/assets/imgs/card/date.svg" alt=""><span>{{ card?.time }}</span></p>
     </div>
     <img class="option-img"
          :class="`${(disable || card.selected) ? 'disable' :''}`"
@@ -14,8 +15,11 @@
 </template>
 <script >
 import bianPic from '@/assets/imgs/bian.png'
+import Completed from "~/components/monitor/cardState/completed.vue";
+import UnStarted from "~/components/monitor/cardState/unStarted.vue";
 export default {
   name: "MidMonitorCard",
+  components: {UnStarted, Completed},
   props: {
     disable: {
       type: Boolean,
@@ -98,8 +102,16 @@ export default {
     }
 
     .timestamp {
-      color: rgba(140, 180, 189, 1);
+      color: #CEB864;
       font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      width: 100%;
+      overflow: visible;
+      text-wrap: nowrap;
+      img {
+        margin-right: 2px;
+      }
     }
 
     .other {
