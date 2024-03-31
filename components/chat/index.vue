@@ -128,6 +128,9 @@ import uuid from "@/utils/uuid";
 
 let timer4 = null
 let timer5 = null
+
+const maxCount = 10
+let count = 0
 export default {
   components: {
     Typewriter,
@@ -217,7 +220,7 @@ export default {
     this.$bus.$on('GO_CHAT_BOTTOM', () => {
       this.scrollToBottom()
     })
-
+    count = 0
 
     clearInterval(timer4)
     timer4 = setInterval(() => {
@@ -225,8 +228,14 @@ export default {
       console.log('ping-taurion', uid)
       this.$socket.emit('ping-taurion', uid)
       timer5 = setTimeout(() => {
-        console.log('socket reconnect')
-        this.$reconnectSocket()
+        count++
+        console.log('socket reconnect', count)
+        if (count < maxCount) {
+          this.$reconnectSocket()
+        } else {
+          console.log('超过最大重连次数')
+          window.location.reload()
+        }
       }, 10 * 1000)
     }, 5 * 1000)
 
