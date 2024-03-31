@@ -56,7 +56,7 @@ export const actions = {
 
             const res = await this.$axios.get(`${monitorApi.getMonitorList}?searchName=${searchName}&page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
-                res.data.data.records = res.data.data.records.map(item => {
+                res.data.data.records = res.data.data?.records.map(item => {
                     return {
                         ...item,
                         time: formatTimeBasedOnRule(item.time, rootState.lang.t['today'])
@@ -80,7 +80,7 @@ export const actions = {
             const {page, size, status, searchName} = {page: 1, size: 4, status: 1, searchName: '', ...(payload || {})}
             const res = await this.$axios.get(`${monitorApi.getMonitorList}?searchName=${searchName}&page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
-                res.data.data.records = res.data.data.records.map(item => {
+                res.data.data.records = res.data.data?.records.map(item => {
                     return {
                         ...item,
                         time: formatTimeBasedOnRule(item.time, rootState.lang.t['today'])
@@ -98,7 +98,7 @@ export const actions = {
             const {page, size, status, searchName} = {page: 1, size: 6, status: 3, searchName: '', ...(payload || {})}
             const res = await this.$axios.get(`${monitorApi.getMonitorList}?searchName=${searchName}&page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
-                res.data.data.records = res.data.data.records.map(item => {
+                res.data.data.records = res.data.data?.records.map(item => {
                     return {
                         ...item,
                         time: formatTimeBasedOnRule(item.time, rootState.lang.t['today'])
@@ -117,7 +117,7 @@ export const actions = {
             commit('setStatus', status)
             const res = await this.$axios.get(`${monitorApi.getUserMonitoringList}?page=${page}&size=${size}&status=${status}`);
             if (res && res.data && res.data.ok) {
-                res.data.data.records = res.data.data.records.map(item => {
+                res.data.data.records = res.data.data?.records.map(item => {
                     return {
                         ...item,
                         time: formatTimeBasedOnRule(item.time, rootState.lang.t['today'])
