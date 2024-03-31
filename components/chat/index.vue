@@ -54,7 +54,6 @@
           <!--欢迎的任务-->
           <welcomeTask v-if="showWelcome && item.source === 'T-brain'"
                        @goBottom="scrollToBottom"
-                       :scrollTop="scrollTop"
                        :message="item"/>
           <!--文本内容-->
           <template v-if="item.text && !(item.context && item.context.hook) || item.loading">
@@ -148,7 +147,6 @@ export default {
       isViewingHistory: false,
       mode: 'production',
       isLoading: false,
-      scrollTop: 0,
     }
   },
   computed: {
@@ -196,7 +194,7 @@ export default {
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
         this.$store.dispatch('coin/fetchCoinList', {size: 5})
-        this.$store.dispatch('monitor/fetchMonitorList', {size: 5,status:3})
+        this.$store.dispatch('monitor/fetchMonitorList', {size: 5, status: 3})
       }, 3000)
       // 获取消息ID
       this.loadEarlierMessages()
@@ -209,6 +207,10 @@ export default {
     // 输入框键盘事件
     this.$nextTick(() => {
       this.inputKeyDown()
+    })
+
+    this.$bus.$on('GO_CHAT_BOTTOM', () => {
+      this.scrollToBottom()
     })
   },
   methods: {
@@ -223,11 +225,8 @@ export default {
       this.$store.dispatch('chat/updateLang', this.showWelcome)
     },
     handleScroll(e) {
-      const {scrollTop} = e.target
-      this.scrollTop = scrollTop
-      // console.log(this.scrollTop)
       if (this.showWelcome) return
-      // console.log('scrollTop', scrollTop)
+      const {scrollTop} = e.target
       if (!this.isLoading && !this.isFinished && scrollTop <= 0) {
         this.isLoading = true
         this.loadEarlierMessages()
@@ -386,6 +385,7 @@ export default {
   beforeDestroy() {
     this.$socket.off('chat', this.onWebsocketReceiveMessage);
     this.$socket.off('connect', this.onWebsocketConnect);
+    this.$bus.$off('GO_CHAT_BOTTOM')
   }
 }
 </script>
@@ -593,7 +593,7 @@ export default {
     padding: 9px;
     margin-top: 10px;
     margin-left: 24px;
-    border:1px solid #8CB4BD;
+    border: 1px solid #8CB4BD;
 
     //.send-btn {
     //  width: 48px;

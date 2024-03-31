@@ -59,7 +59,7 @@ export default {
   proxy: {
     '/api': {
       target: 'https://api-test.taurion.ai',
-      // target: 'https://54.179.0.150',
+      // target: 'https://54.207.113.59',
       // target: 'http://localhost:4000',
       pathRewrite: {
         '^/api': '' // 删除url中的/api

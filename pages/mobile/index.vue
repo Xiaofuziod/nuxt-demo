@@ -11,35 +11,35 @@
     </div>
     <div class="mobile-content" v-if="!listShow">
       <mobile-banner1/>
-      <div class="start-btn"  @click="boxShow=true">
+      <div class="start-btn-mobile"  @click="boxShow=true">
         <div class="chat-top-image">
           <img class="mic-icon" src="@/assets/imgs/user/default.png" alt="">
         </div>
         <span class="text">{{$t('MobileLunch')}}</span>
         <img class="go-icon" src="@/assets/imgs/mobile/mobilego.svg" alt="">
       </div>
-      <div class="footer-box">
-        <div class="user-actions">
-          <a class="x-btn base-icon-btn" href="https://twitter.com/TaurionLab"  target="_blank">
-            <img src="~/assets/imgs/x.svg" alt="Get Premium" />
-          </a>
-          <a class="facebook-btn base-icon-btn" href="https://discord.gg/2rfu26pVtS" target="_blank">
-            <img src="~/assets/imgs/facebook.svg" alt="User profile" />
-          </a>
-          <a class="ins-btn base-icon-btn" href="https://t.me/Taurion" target="_blank">
-            <img src="~/assets/imgs/ins.svg" alt="User profile" />
-          </a>
-        </div>
+      <!--      <div class="footer-box">-->
+      <!--        <div class="user-actions">-->
+      <!--          <a class="x-btn base-icon-btn" href="https://twitter.com/TaurionLab"  target="_blank">-->
+      <!--            <img src="~/assets/imgs/x.svg" alt="Get Premium" />-->
+      <!--          </a>-->
+      <!--          <a class="facebook-btn base-icon-btn" href="https://discord.gg/2rfu26pVtS" target="_blank">-->
+      <!--            <img src="~/assets/imgs/facebook.svg" alt="User profile" />-->
+      <!--          </a>-->
+      <!--          <a class="ins-btn base-icon-btn" href="https://t.me/Taurion" target="_blank">-->
+      <!--            <img src="~/assets/imgs/ins.svg" alt="User profile" />-->
+      <!--          </a>-->
+      <!--        </div>-->
 
-        <div class="footer-mobile">
-          © 2024 <span class="green">{{ $t("AppFooter_green_1") }}</span> ALL RIGHTS RESERVED.
-        </div>
-      </div>
+      <!--        <div class="footer-mobile">-->
+      <!--          © 2024 <span class="green">{{ $t("AppFooter_green_1") }}</span> ALL RIGHTS RESERVED.-->
+      <!--        </div>-->
+      <!--      </div>-->
     </div>
     <div class="mobile-option" v-else>
-        <p class="title">{{ $t("mobile-home") }}</p>
-        <a class="bottom-link" :href="privacyLink" target="_blank">{{ $t("AppFooter_bottom-link_1") }}</a>
-        <a class="bottom-link" :href="termsLink" target="_blank">{{ $t("AppFooter_bottom-link_2") }}</a>
+      <p class="title">{{ $t("mobile-home") }}</p>
+      <a class="bottom-link" :href="privacyLink" target="_blank">{{ $t("AppFooter_bottom-link_1") }}</a>
+      <a class="bottom-link" :href="termsLink" target="_blank">{{ $t("AppFooter_bottom-link_2") }}</a>
     </div>
 
 
@@ -139,7 +139,7 @@ export default {
     width: 100vw;
     height: calc(100vh - 68px);
   }
-  .start-btn {
+  .start-btn-mobile {
     width: 310px;
     height: 64px;
     margin-top: 56px;
@@ -167,6 +167,7 @@ export default {
       background: rgba(140, 180, 189, 0.20);
       padding: 8px;
       flex-shrink: 0;
+      position: relative;
       &:after {
         content: " ";
         position: absolute;
@@ -269,7 +270,7 @@ export default {
     flex-direction: column;
     position: relative;
     border-radius: 32px;
-    background: rgba(38, 64, 64, 0.30);
+    background:  #0f1516;
     backdrop-filter: blur(100px);
     padding-top: 50px;
     .close-icon {
@@ -302,7 +303,7 @@ export default {
       width: 100px;
       height: 100px;
       border-radius: 100px;
-      background: rgba(140, 180, 189, 0.20);
+      background: #182325;
       padding: 10px;
       flex-shrink: 0;
       &:after {
@@ -311,14 +312,16 @@ export default {
         width: 120px;
         height: 120px;
         border-radius: 120px;
-        background: rgba(140, 180, 189, 0.20);
+        background: #141d1b;
         top: -10px;
         left: -10px;
+        z-index: -1;
       }
       .mic-icon {
         width: 80px;
         height: 80px;
         border-radius: 48px;
+        z-index: 0;
       }
 
     }

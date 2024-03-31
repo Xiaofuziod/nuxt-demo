@@ -160,6 +160,7 @@ export default {
           }
         },
       })
+      this.$bus.$emit('GO_CHAT_BOTTOM')
     }
   }
 }

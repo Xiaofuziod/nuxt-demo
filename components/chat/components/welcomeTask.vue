@@ -1,9 +1,10 @@
 <template>
-  <div
-      class="task-box"
-      :class="{'topSticky':message.type === 'task' && !message.finish}">
+  <div class="task-box"
+       :class="{'topSticky2':message.type === 'task' && !message.finish}"
+  >
     <div class="text-message-v2" v-if="message.type === 'taskStart' || message.type === 'taskFinish' ">
-      {{ message.taskText }}
+      <div style="padding-left: 20px;padding-top: 16px">{{ message.taskText }}</div>
+
       <div class="start-btn-box" v-if="message.startBtnShow">
         <div class="start-btn" @click="startBtnClick">
           <btn>
@@ -15,8 +16,10 @@
 
     <div class="text-message-v2"
          v-if="message.type === 'task' && !message.finish"
-         style="position: relative;background: rgb(8,20,38);">
-      <div class="task-tip">
+         style="position: relative;background: rgb(8,20,38);width: 440px">
+      <div class="task-tip"
+           :class="{'topSticky':message.type === 'task' && !message.finish}"
+      >
         <btn>
           <img style="width: 12px;height: 12px;margin-right: 4px;margin-top: -2px" src="@/assets/imgs/chat/task.svg"
                alt="">
@@ -142,24 +145,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.task-box{
-  width: 440px;
+.task-box {
+  display: inline-block;
+  max-width: 440px;
 
-  .text-message-v2{
+  .text-message-v2 {
     width: 100%;
   }
 }
+
 .text-message-box2 {
   width: 100%;
   display: flex;
   align-items: flex-start;
-}
-
-
-.topSticky {
-  position: sticky;
-  top: 10px;
-  z-index: 99;
 }
 
 
@@ -175,10 +173,12 @@ export default {
   .task-title {
     margin-top: 15px;
   }
+}
 
-  .task-tip {
-    top: -1px;
-  }
+.topSticky2{
+  position: sticky;
+  top: -100px;
+  z-index: 99;
 }
 
 .task-title {
@@ -188,6 +188,7 @@ export default {
   line-height: 16px;
   margin-top: 10px;
   color: rgba(206, 184, 100, 1);
+  padding-left: 20px;
 
   display: flex;
   align-content: center;
@@ -220,10 +221,7 @@ export default {
   line-height: 15px;
   text-align: left;
   margin-top: 3px;
-  //
-  //span {
-  //  color: #CEB864;
-  //}
+  padding-left: 20px;
 }
 
 .start-btn-box {
@@ -243,23 +241,22 @@ export default {
 
 .text-message-v2 {
   box-sizing: border-box;
-  padding: 16px 20px;
+  //padding: 16px 20px;
+  padding-bottom: 16px;
+  padding-right: 20px;
   border-radius: 16px;
   color: rgba(255, 255, 255, 1);
   border: 2px solid rgba(255, 255, 255, 0.1);
   font-family: Avenir;
   font-weight: 500;
   font-size: 13px;
-  //text-transform: capitalize;
   margin-top: 14px;
   display: table;
 }
 
 .task-tip {
+  display: inline-block;
   height: 25px;
-  position: absolute;
-  top: -12px;
-  left: -1px;
 }
 
 </style>
