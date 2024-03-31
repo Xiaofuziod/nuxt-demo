@@ -80,10 +80,9 @@
 
             <!--空态-->
             <div class="empty-box"
-                 :style="{'margin-top': coinId ? '10px' : '100px'}"
-                 v-if="!loading && !list.length">
+                 v-if="!loading && !list.length && !coinId">
               <img src="@/assets/imgs/empty.svg" alt="">
-              <span>{{ $t("report-empty-text") }}</span>
+              <span>{{ followList.length ? $t("report-empty-text2") : $t("report-empty-text") }}</span>
             </div>
           </list-container>
 
@@ -134,7 +133,12 @@ export default {
       coinData: {},
       followLoading: true,
       loading: true,
-      hasMore: true
+      hasMore: true,
+      queryParams: {
+        id: '',
+        page: 1,
+        size: 10
+      }
     }
   },
   computed: {
@@ -172,6 +176,8 @@ export default {
     handleClick(item) {
       if (item.coinId === this.coinId) return
       this.coinId = item.coinId
+      this.queryParams.id = item.coinId
+      this.queryParams.page = 1
       this.list = []
       this.loadData()
       if (item.coinId) {
@@ -188,45 +194,15 @@ export default {
       this.$store.dispatch('coin/removeFollow', item.id)
     },
     loadMore() {
-      console.log('loadMore', this.hasMore, this.loading)
       if (!this.hasMore || this.loading) return
+      this.queryParams.page++
       this.loadData()
     },
     loadData() {
       this.loading = true
-      let time = ''
-      if (this.list.length) {
-        let lastItem = this.list[this.list.length - 1]
-        time = `${lastItem.year}/${lastItem.date}`
-      }
-      this.$axios.get(analysisCoin, {
-        params: {
-          id: this.coinId,
-          time: time,
-          size: 3
-        }
-      }).then(res => {
-        if (res.data.data) {
-          let obj = res.data.data
-          let dateList = Object.keys(obj)
-          if (dateList.length < 1) {
-            this.hasMore = false
-            return
-          }
-          let newData = []
-          dateList.forEach(item => {
-            if (obj[item].length < 1) return
-            const d = parseTime(item)
-            newData.push({
-              date: d.date,
-              isToday: d.isToday,
-              weekDay: d.weekDay,
-              time: d.time,
-              list: obj[item],
-              year: d.year,
-            })
-          })
-          this.list = this.list.concat(newData)
+      this.$axios.get(analysisCoin, {params: this.queryParams}).then(res => {
+        if (res.data.data && res.data.data.records?.length > 0) {
+          this.list = this.groupByDate(res.data.data.records)
         } else {
           this.hasMore = false
         }
@@ -241,6 +217,25 @@ export default {
         }
       })
     },
+    groupByDate(items) {
+      const groupedList = this.list;
+      items.forEach((item) => {
+        const d = parseTime(item.createdDate)
+        if (groupedList.every((group) => group.date !== d.date)) {
+          groupedList.push({
+            date: d.date,
+            isToday: d.isToday,
+            weekDay: d.weekDay,
+            time: d.time,
+            year: d.year,
+            list: [item],
+          });
+        } else {
+          groupedList.find((group) => group.date === d.date).list.push(item);
+        }
+      });
+      return groupedList;
+    }
   }
 }
 </script>
@@ -258,6 +253,7 @@ export default {
 
 .empty-box {
   max-width: 80%;
+  height: 100%;
   margin: 0 auto;
   flex-direction: column;
   color: rgba(140, 180, 189, 0.60);

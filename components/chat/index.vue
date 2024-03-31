@@ -54,6 +54,7 @@
           <!--欢迎的任务-->
           <welcomeTask v-if="showWelcome && item.source === 'T-brain'"
                        @goBottom="scrollToBottom"
+                       :scrollTop="scrollTop"
                        :message="item"/>
           <!--文本内容-->
           <template v-if="item.text && !(item.context && item.context.hook) || item.loading">
@@ -147,6 +148,7 @@ export default {
       isViewingHistory: false,
       mode: 'production',
       isLoading: false,
+      scrollTop: 0,
     }
   },
   computed: {
@@ -221,8 +223,10 @@ export default {
       this.$store.dispatch('chat/updateLang', this.showWelcome)
     },
     handleScroll(e) {
-      if (this.showWelcome) return
       const {scrollTop} = e.target
+      this.scrollTop = scrollTop
+      // console.log(this.scrollTop)
+      if (this.showWelcome) return
       // console.log('scrollTop', scrollTop)
       if (!this.isLoading && !this.isFinished && scrollTop <= 0) {
         this.isLoading = true

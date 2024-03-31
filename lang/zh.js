@@ -214,6 +214,7 @@ export default {
     "youCanAsk5": "推荐跟ETH相关的space会议",
     "youCanAsk6": "推荐跟BTC相关的space会议",
     "report-empty-text": "缺少自选，AI无法为您生成焦点报告",
+    "report-empty-text2": "当前资产暂无市场洞察，请添加其他资产",
     "servedDaysBefore": "Taurion已服务",
     "servedDaysAfter": "天",
     "languageSwitch": "切换中",

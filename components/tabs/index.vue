@@ -44,30 +44,24 @@ export default {
 }
 
 .tabs > * {
-  margin-right: 20px;
-  padding-bottom: 5px;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  display: inline-flex;
+  padding: 4px 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6px;
+  margin-bottom: 20px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   font-family: Arial, sans-serif;
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.50);
+  margin-right: 24px;
 }
 
 .tabs > *.active {
   font-weight: bold;
-  color: #8cce1e;
+  color: #CEB864;
   position: relative;
-  &:after {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 2px;
-    background-color: #8cce1e;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+  border-radius: 6px;
+  background: rgba(140, 180, 189, 0.10);
 }
 </style>

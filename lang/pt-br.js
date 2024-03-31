@@ -177,6 +177,7 @@ export default {
     "SUN": "DOM",
     "AI_FOCUS": "ANÁLISE DA IA",
     "report_empty": "Falta de ativo. Não posso gerar um relatório para você",
+    "report-empty-text2": "Não há visão de mercado para o ativo atual. Adicione outros ativos",
     "Answer": "Antecipar",
     "StrongBullish": "Sinal de Alta",
     "StrongBearish": "Sinal de Baixa",
