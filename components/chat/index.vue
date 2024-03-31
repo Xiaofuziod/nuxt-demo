@@ -123,7 +123,11 @@ import welcomeTask from "./components/welcomeTask.vue";
 import SendBtn from "@/components/chat/components/sendBtn.vue";
 import renderedMarkdown from "@/components/renderedMarkdown.vue";
 import {chatClean} from "@/common/home";
+import uuid from "@/utils/uuid";
 
+
+let timer4 = null
+let timer5 = null
 export default {
   components: {
     Typewriter,
@@ -143,6 +147,7 @@ export default {
     return {
       message: '',
       socketSessionId: '',
+      pingId: '',
       welcomeInputDisable: false,
       isViewingHistory: false,
       mode: 'production',
@@ -212,10 +217,22 @@ export default {
     this.$bus.$on('GO_CHAT_BOTTOM', () => {
       this.scrollToBottom()
     })
-    this.$store.dispatch('chat/sendPingMessage')
+
+
+    clearInterval(timer4)
+    timer4 = setInterval(() => {
+      const uid = uuid()
+      console.log('ping', uid)
+      this.$socket.emit('ping', uid)
+      timer5 = setTimeout(() => {
+        console.log('socket reconnect')
+        this.$socket.connect()
+      }, 10 * 1000)
+    }, 5 * 1000)
 
     this.$socket.on('pong', (e) => {
-      console.log('pong',e)
+      console.log('pong', e)
+      clearTimeout(timer5)
     })
   },
   methods: {
