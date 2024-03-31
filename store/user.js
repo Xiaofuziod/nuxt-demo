@@ -89,6 +89,7 @@ export const actions = {
   },
   async userRegister({commit}, {account, passwd, captcha}) {
     try {
+      this._vm.$loading.start()
       const res = await this.$axios.post(userRegister, {account, passwd, captcha})
       if (res.data.code === 200) {
         commit('setUser', {...res.data.data, times: 1});
@@ -96,8 +97,10 @@ export const actions = {
         this.$bus.$emit('LOGON_FAIL');
         this._vm.$toast.show({content: res.data.msg, type: 'error'})
       }
+      this._vm.$loading.finish()
     } catch (e) {
       this.$bus.$emit('LOGON_FAIL');
+      this._vm.$loading.finish()
     }
   },
   async changePassword({commit}, {account, passwd, captcha}) {

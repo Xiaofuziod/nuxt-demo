@@ -21,7 +21,8 @@
                                                               v-if="type === 'login'">{{ $t('ForgotPassword') }}</span>
           </div>
           <div class="login-input-box">
-            <input class="login-input" :placeholder="$t(type === 'login' ? 'EnterYourPassword' : 'EnterLimit')" v-model="password"
+            <input class="login-input" :placeholder="$t(type === 'login' ? 'EnterYourPassword' : 'EnterLimit')"
+                   v-model="password"
                    :type="isPassword  ? 'password' : 'text'">
             <img src="@/assets/imgs/login/paw.svg" v-if="isPassword" alt="" @click="isPassword = !isPassword">
             <img src="@/assets/imgs/login/paw2.svg" v-else alt="" @click="isPassword = !isPassword">
@@ -167,9 +168,7 @@ export default {
     validateInputSuccess(captcha) {
       console.log('captcha', captcha)
       if (this.step === 21) {
-        this.$loading.start()
         this.$store.dispatch('user/userRegister', {account: this.email, passwd: this.password, captcha})
-        this.$loading.finish()
       }
       if (this.step === 32) {
         this.changePassword({

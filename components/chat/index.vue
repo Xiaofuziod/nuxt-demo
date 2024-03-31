@@ -225,7 +225,7 @@ export default {
       this.$socket.emit('ping-taurion', uid)
       timer5 = setTimeout(() => {
         console.log('socket reconnect')
-        this.$socket.$reconnectSocket()
+        this.$reconnectSocket()
       }, 10 * 1000)
     }, 5 * 1000)
 
@@ -239,7 +239,7 @@ export default {
       this.$axios.get(chatClean)
     },
     messageErrorClick(item) {
-      console.log('messageErrorClick', item)
+      // console.log('messageErrorClick', item)
       this.$toast.error(item.error || this.$t("networkError"))
     },
     initLang() {
@@ -315,7 +315,7 @@ export default {
       this.$nextTick(() => {
         let box = document.querySelectorAll(`.text-message-${msg.seqNo}`)
         const top = box[box.length - 1]?.offsetTop
-        console.log('top', top)
+        // console.log('top', top)
         this.scrollToBottom(top)
       })
 
