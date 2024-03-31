@@ -222,11 +222,10 @@ export default {
     clearInterval(timer4)
     timer4 = setInterval(() => {
       const uid = uuid()
-      console.log('ping', uid)
       this.$socket.emit('ping-taurion', uid)
       timer5 = setTimeout(() => {
         console.log('socket reconnect')
-        this.$socket.connect()
+        this.$socket.$reconnectSocket()
       }, 10 * 1000)
     }, 5 * 1000)
 
