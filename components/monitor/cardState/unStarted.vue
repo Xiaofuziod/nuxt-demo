@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     goDetail() {
-      this.$router.push(`/monitoring/detail?id=${this.card?.id}`);
+      this.$router.push(this.localeRoute(`/monitoring/detail?id=${this.card?.id}`));
     }
   }
 }
