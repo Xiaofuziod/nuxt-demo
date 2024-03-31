@@ -166,7 +166,7 @@ nav {
   }
   .right {
     display: flex;
-    width: 300px;
+    width: 150px;
     justify-content: space-between;
   }
 }

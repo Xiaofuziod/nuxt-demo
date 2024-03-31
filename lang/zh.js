@@ -270,7 +270,7 @@ export default {
     "DynamicVisualSlider3_desc_1": "一个人工智能原生信息流模型，每个人都可以通过提示生成和分享投资组合，并赚取利润。",
     "Banner5_title1_1": "我们的 AI 从最佳实践中学习",
     "Banner4_title1_1": "反馈",
-    "Banner4_title2_1": "来自我们的社区",
+    "Banner4_title2_1": "",
     "Banner1_title1_1": "你的加密货币",
     "Banner1_title2_1": "AI 副驾驶",
     "MobileBanner1_title1_1": "你的加密货币",
