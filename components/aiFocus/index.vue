@@ -29,7 +29,9 @@
 
         <div class="list-item-content">
           <div class="list-item-title">{{ item.title }}</div>
-          <div class="list-item-icon" @click="handleClick(item)">
+          <div class="list-item-icon"
+               :class="{'list-item-icon-anime': item.showAnime}"
+               @click="handleClick(item)">
             <img src="@/static/images/chat/ai2.svg" alt="">
           </div>
         </div>
@@ -70,20 +72,18 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      showAnime: false
+    }
   },
   mounted() {
   },
   methods: {
     handleClick(item) {
-      // const sourceList = this.messageList.filter(item => item.context?.hook?.type === 'FOCUS')
-      // if (sourceList.length > 0) {
-      //   const ids = sourceList.map(item => item.context?.hook?.id + '')
-      //   if (ids.includes(item.id + '')) return
-      // }
       if (this.messageStatus === 'loading' || this.messageStatus === 'concat') {
         return false
       }
+      item.showAnime = true
       const para = {
         text: item.title,
         context: {
@@ -95,6 +95,7 @@ export default {
       }
       this.$store.dispatch('chat/sendUserMessage', para)
       item.trigger = 1
+      this.$bus.$emit('GO_CHAT_BOTTOM')
     },
     timeDescription(inputTime) {
       if (!inputTime) return '';
@@ -224,8 +225,25 @@ html {
           justify-content: center;
           cursor: pointer;
 
+
           img {
             width: 18px;
+          }
+        }
+
+        .list-item-icon-anime {
+          animation: rotate 1s ease-in-out;
+        }
+
+        @keyframes rotate {
+          0% {
+            transform: rotateX(0deg);
+          }
+          50% {
+            transform: rotateX(180deg);
+          }
+          100% {
+            transform: rotateX(0deg);
           }
         }
       }
