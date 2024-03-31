@@ -259,5 +259,24 @@ export default {
     "InvalidTitle": "Taurion Analysis Failed",
     "ParsingFailed": "Analysis failed",
     "CanceledDesc": "Host cancellation",
-    "today": "Today"
+    "today": "Today",
+    "DynamicVisualSlider_title1_1": `Analysis`,
+    "DynamicVisualSlider_title1_2": `Ecosystem`,
+    "DynamicVisualSlider_title1_3": `Execution`,
+    "DynamicVisualSlider_title2_1": `AI-driven Community`,
+    "DynamicVisualSlider_title2_2": `Taurion AI`,
+    "DynamicVisualSlider_title2_3": `Taurion Agent`,
+    "DynamicVisualSlider_desc_1": `AI-native info flow model where everyone can generate and share portfolios by prompts,
+                and earn profits.`,
+    "DynamicVisualSlider_desc_2": `Let Taurion be your agent, handling tedious
+                trading steps for you and increase your trading bandwidth.`,
+    "DynamicVisualSlider_desc_3": `Provide real-time AI-refined reports with
+                  prompts to enhance your decision-making efficiency.`,
+    "Banner5_title1_1": `Our AI Learns from the Best`,
+    "Banner4_title1_1": `feedback`,
+    "Banner4_title2_1": `from our Community`,
+    "Banner1_title1_1": `YOUR CRYPTO`,
+    "Banner1_title2_1": `AI CO-PILOT`,
+    "MobileBanner1_title1_1": `YOUR CRYPTO`,
+    "MobileBanner1_title2_1": `AI CO-PILOT`,
 }

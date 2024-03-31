@@ -13,7 +13,7 @@
       <div class="focus">
         <btn>
           <img src="@/static/images/chat/s2.svg" alt="">
-          <span>{{ $t("AIFocus_span_1") }}</span>
+          <span>{{ $t("AI_FOCUS") }}</span>
         </btn>
       </div>
       <div class="list-item" v-for="(item,index) in coinData.list"

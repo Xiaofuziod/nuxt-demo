@@ -32,7 +32,7 @@
               <div class="focus-tip">
                 <btn cursor="default">
                   <img src="@/static/images/chat/s2.svg" alt="">
-                  <div>{{ $t("chat_index_div_1") }}</div>
+                  <div>{{ $t("AI_FOCUS") }}</div>
                 </btn>
               </div>
               <div class="focus-text">{{ item.text }}</div>

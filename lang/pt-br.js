@@ -260,5 +260,21 @@ export default {
     "InvalidTitle": "Falha na análise do Taurion",
     "ParsingFailed": "Falha na análise",
     "CanceledDesc": "O anfitrião cancelou",
-    "today": "hoje"
+    "today": "hoje",
+    "DynamicVisualSlider_title1_1": "Análise",
+    "DynamicVisualSlider_title1_2": "Ecossistema",
+    "DynamicVisualSlider_title1_3": "Execução",
+    "DynamicVisualSlider_title2_1": "Comunidade  ",
+    "DynamicVisualSlider_title2_2": "Taurion IA",
+    "DynamicVisualSlider_title2_3": "Agente Taurion",
+    "DynamicVisualSlider_desc_1": "Modelo de fluxo de informações nativo de IA onde todos podem gerar e compartilhar portfólios por comandos, e obter lucros.",
+    "DynamicVisualSlider_desc_2": "Deixe o Taurion ser seu agente, lidando com etapas de negociação tediosas para você e aumentando sua largura de banda de negociação.",
+    "DynamicVisualSlider_desc_3": "Fornece relatórios refinados por IA em tempo real com comandos para melhorar sua eficiência na tomada de decisões.",
+    "Banner5_title1_1": "Nossa IA Aprende com os Melhores",
+    "Banner4_title1_1": "feedback",
+    "Banner4_title2_1": "de nossa Comunidade",
+    "Banner1_title1_1": "SEU CRIPTO",
+    "Banner1_title2_1": "COPILOTO DE IA",
+    "MobileBanner1_title1_1": "SEU CRIPTO",
+    "MobileBanner1_title2_1": "COPILOTO DE IA"
 }

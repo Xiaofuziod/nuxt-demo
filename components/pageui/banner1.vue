@@ -2,8 +2,8 @@
   <div class="b-wrapper">
     <div class="banner-1">
       <div class="banner-left">
-        <div class="title1">YOUR CRYPTO</div>
-        <div class="title2">AI CO-PILOT</div>
+        <div class="title1">{{ $t("Banner1_title1_1") }}</div>
+        <div class="title2">{{ $t("Banner1_title2_1") }}</div>
         <div class="desc-code">
           <typing-text
               font-size="29px"
