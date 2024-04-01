@@ -32,6 +32,8 @@ export default {
     return {
       displayedText: '', // 已经显示的文本
       over: false, // 文本是否已经打印完毕
+      currentIndex: 0,
+      lastTime: 0, // 上一帧的时间
     };
   },
   computed: {
@@ -43,18 +45,46 @@ export default {
     this.typeText();
   },
   methods: {
-    typeText() {
-      let i = 0;
-      const typingInterval = setInterval(() => {
-        if (i < this.text.length) {
-          this.displayedText += this.text.charAt(i);
-          i++;
+    // typeText() {
+    //   let i = 0;
+    //   const typingInterval = setInterval(() => {
+    //     if (i < this.text.length) {
+    //       this.displayedText += this.text.charAt(i);
+    //       i++;
+    //     } else {
+    //       clearInterval(typingInterval);
+    //       this.over = true;
+    //       this.$emit('writerOver');
+    //     }
+    //   }, this.typingSpeed);
+    // },
+    // typeText() {
+    //   if (this.currentIndex < this.text.length) {
+    //     this.displayedText += this.text.charAt(this.currentIndex++);
+    //     window.requestAnimationFrame(this.typeText);
+    //   } else {
+    //     this.over = true;
+    //     this.$emit('writerOver');
+    //   }
+    // },
+    typeText(timestamp = 0) {
+      // 如果这是第一帧，或者已经过了足够的时间间隔
+      if (!this.lastTime || timestamp - this.lastTime >= this.typingSpeed) {
+        if (this.displayedText.length < this.text.length) {
+          // 添加下一个字符到 displayedText
+          this.displayedText += this.text.charAt(this.displayedText.length);
+          // 更新 lastTime
+          this.lastTime = timestamp;
         } else {
-          clearInterval(typingInterval);
+          // 文本已全部显示，可以在这里停止动画或进行其他操作
           this.over = true;
           this.$emit('writerOver');
+          return;
         }
-      }, this.typingSpeed);
+      }
+
+      // 请求下一帧
+      window.requestAnimationFrame(this.typeText);
     },
   },
 }
