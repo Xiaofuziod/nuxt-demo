@@ -647,6 +647,7 @@ export default {
     overflow-y: auto;
     margin: 0 auto;
     position: relative;
+    scroll-behavior: smooth;
 
 
     .text-message-box2 {
