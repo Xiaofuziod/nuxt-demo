@@ -92,8 +92,7 @@
               <!--异常提示-->
               <img class="error-image"
                    v-if="messageStatus === 'error' && item.source !== 'T-brain' && lastMessage.seqNo === item.seqNo"
-                   @click="messageErrorClick(item)"
-                   src="@/assets/imgs/error.svg" alt="">
+                   @click="messageErrorClick(item)" src="@/assets/imgs/error.svg" alt="">
             </div>
           </template>
           <!--定制卡片内容-->
@@ -124,14 +123,7 @@ import welcomeTask from "./components/welcomeTask.vue";
 import SendBtn from "@/components/chat/components/sendBtn.vue";
 import renderedMarkdown from "@/components/renderedMarkdown.vue";
 import {chatClean} from "@/common/home";
-import uuid from "@/utils/uuid";
 
-
-let timer4 = null
-let timer5 = null
-
-const maxCount = 10
-let count = 0
 export default {
   components: {
     Typewriter,
@@ -195,6 +187,8 @@ export default {
     },
   },
   mounted() {
+    // 初始化socket
+    this.$connectSocket()
     // 初始化语言
     this.initLang()
     this.$socket.on('chat', this.onWebsocketReceiveMessage);
@@ -221,42 +215,16 @@ export default {
     this.$bus.$on('GO_CHAT_BOTTOM', () => {
       this.scrollToBottom()
     })
-
-    count = 0
-
-    clearInterval(timer4)
-    timer4 = setInterval(() => {
-      const uid = uuid()
-      console.log('ping-taurion', uid)
-      this.$socket.emit('ping-taurion', uid)
-      timer5 = setTimeout(() => {
-        count++
-        console.log('socket reconnect', count)
-        if (count < maxCount) {
-          this.$reconnectSocket()
-        } else {
-          console.log('超过最大重连次数')
-          window.location.reload()
-        }
-      }, 10 * 1000)
-    }, 5 * 1000)
-
-    this.$socket.on('pong-taurion', (e) => {
-      console.log('pong-taurion', e)
-      clearTimeout(timer5)
-    })
-    this.$socket.on('pong', (e) => {
-      console.log('pong', e)
-      clearTimeout(timer5)
-    })
   },
   methods: {
     clean() {
       this.$axios.get(chatClean)
     },
     messageErrorClick(item) {
-      // console.log('messageErrorClick', item)
       this.$toast.error(item.error || this.$t("networkError"))
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
     },
     initLang() {
       this.$store.dispatch('chat/updateLang', this.showWelcome)
