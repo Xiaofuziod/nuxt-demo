@@ -394,14 +394,15 @@ export default {
       }
     },
     scrollToBottom(topVale) {
-      this.$nextTick(() => {
-        // console.log('scrollToBottom', topVale)
-        const messagesContainer = this.$refs.messagesContainer;
-        messagesContainer.scrollTo({
-          top: topVale || messagesContainer.scrollHeight,
-          behavior: 'smooth'
-        })
-      });
+      console.log('scrollToBottom', topVale)
+      // this.$nextTick(() => {
+      //   // console.log('scrollToBottom', topVale)
+      //   const messagesContainer = this.$refs.messagesContainer;
+      //   messagesContainer.scrollTo({
+      //     top: topVale || messagesContainer.scrollHeight,
+      //     behavior: 'smooth'
+      //   })
+      // });
     },
   },
   beforeDestroy() {
