@@ -17,7 +17,7 @@ const SocketPlugin = {
 
       const token = localStorage.getItem('token')
       console.log('开始连接')
-      socket = io("https://api.taurion.ai?token=" + token);
+      socket = io("https://api-test.taurion.ai?token=" + token);
       // 建立新的连接
 
       // 监听一些基础事件
