@@ -176,9 +176,9 @@ export const actions = {
       text: message.text,
       context: message.context
     }
-    console.log('sendUserMessage', para)
-
-    this.$socket.emit('chat', para)
+    const socket = this.$socket()
+    console.log('sendUserMessage', para, socket)
+    socket.emit('chat', para)
 
     commit('addMessage', para)
     // 追加一个loading的消息

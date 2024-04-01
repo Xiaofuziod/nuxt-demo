@@ -1,39 +1,42 @@
-// plugins/socket.js
-import Vue from 'vue';
+// plugins/socket.io.js
 import io from 'socket.io-client';
+import Vue from 'vue';
 
-// 初始化 WebSocket 连接
-let token = localStorage.getItem('token')
-let socket = io("https://api.taurion.ai?token=" + token, {
-  autoConnect: !!token, // 初始时不自动连接
-});
+// 用于保存 socket 实例的变量
+let socket = null;
 
-// 尝试重新连接
-function reconnect() {
-  socket.disconnect();
-  connect();
-}
-
-function connect() {
-  token = localStorage.getItem('token')
-  console.log('开始重连')
-  socket = io("https://api.taurion.ai?token=" + token, {
-    autoConnect: !!token, // 初始时不自动连接
-  });
-  socket.connect();
-}
-
+// 创建一个插件来处理 socket 连接逻辑
 const SocketPlugin = {
-  install(vue) {
-    vue.prototype.$socket = socket;
-    vue.prototype.$reconnectSocket = reconnect; // 提供一个方法用于重新连接
-  },
+  install(Vue, options) {
+    // 连接方法，允许传入一个 URL 来建立连接
+    Vue.prototype.$connectSocket = () => {
+      // 如果已存在连接，则先断开
+      if (socket && socket.connected) {
+        socket.disconnect();
+      }
+
+      const token = localStorage.getItem('token')
+      console.log('开始连接')
+      socket = io("https://api-test.taurion.ai?token=" + token);
+      // 建立新的连接
+
+      // 监听一些基础事件
+      socket.on('connect', () => {
+        console.log('Socket connected:', socket.id);
+      });
+
+      // 也可以添加更多事件监听...
+    };
+
+    // 注入 socket 实例，以便可以在应用的其他部分直接使用 socket
+    Vue.prototype.$socket = () => socket;
+  }
 };
 
 Vue.use(SocketPlugin);
 
+// 使用 Nuxt 的 inject 方法将 $connectSocket 函数和 $socket 变量注入到每个组件中
 export default (context, inject) => {
-  inject('socket', socket);
-  inject("connectSocket", connect);
-  inject('reconnectSocket', reconnect); // 允许通过 nuxt 上下文访问
+  inject('connectSocket', Vue.prototype.$connectSocket);
+  inject('socket', Vue.prototype.$socket);
 };

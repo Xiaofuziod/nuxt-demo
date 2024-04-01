@@ -50,7 +50,7 @@
                           :audio-src="monitorContent?.link || monitorContent?.m3u8"
             />
             <div class="box-wrapper" v-if="monitorContent">
-              <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments">
+              <InfiniteScroll :loadData="loadData" :initData="monitorContent.segments" :init-next="monitorContent.has_next">
                 <template #default="{ items }">
                   <monitor-content-item v-for="(segment, index) in items" :segment="segment" :key="index"/>
                 </template>

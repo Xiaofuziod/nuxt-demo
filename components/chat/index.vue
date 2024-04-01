@@ -92,7 +92,8 @@
               <!--异常提示-->
               <img class="error-image"
                    v-if="messageStatus === 'error' && item.source !== 'T-brain' && lastMessage.seqNo === item.seqNo"
-                   @click="messageErrorClick(item)" src="@/assets/imgs/error.svg" alt="">
+                   @click="messageErrorClick(item)"
+                   src="@/assets/imgs/error.svg" alt="">
             </div>
           </template>
           <!--定制卡片内容-->
@@ -123,14 +124,9 @@ import welcomeTask from "./components/welcomeTask.vue";
 import SendBtn from "@/components/chat/components/sendBtn.vue";
 import renderedMarkdown from "@/components/renderedMarkdown.vue";
 import {chatClean} from "@/common/home";
-import uuid from "@/utils/uuid";
 
 
-let timer4 = null
-let timer5 = null
-
-const maxCount = 10
-let count = 0
+let socket
 export default {
   components: {
     Typewriter,
@@ -194,10 +190,14 @@ export default {
     },
   },
   mounted() {
+    // 初始化socket
+    this.$connectSocket()
+    socket = this.$socket()
+    console.log('socket', socket)
     // 初始化语言
     this.initLang()
-    this.$socket.on('chat', this.onWebsocketReceiveMessage);
-    this.$socket.on('connect', this.onWebsocketConnect);
+    socket.on('chat', this.onWebsocketReceiveMessage);
+    socket.on('connect', this.onWebsocketConnect);
     if (this.showWelcome) {
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
@@ -220,29 +220,6 @@ export default {
     this.$bus.$on('GO_CHAT_BOTTOM', () => {
       this.scrollToBottom()
     })
-    // count = 0
-    //
-    // clearInterval(timer4)
-    // timer4 = setInterval(() => {
-    //   const uid = uuid()
-    //   console.log('ping-taurion', uid)
-    //   this.$socket.emit('ping-taurion', uid)
-    //   timer5 = setTimeout(() => {
-    //     count++
-    //     console.log('socket reconnect', count)
-    //     if (count < maxCount) {
-    //       this.$reconnectSocket()
-    //     } else {
-    //       console.log('超过最大重连次数')
-    //       window.location.reload()
-    //     }
-    //   }, 10 * 1000)
-    // }, 5 * 1000)
-    //
-    // this.$socket.on('pong-taurion', (e) => {
-    //   console.log('pong', e)
-    //   clearTimeout(timer5)
-    // })
   },
   methods: {
     clean() {
@@ -417,8 +394,8 @@ export default {
     },
   },
   beforeDestroy() {
-    this.$socket.off('chat', this.onWebsocketReceiveMessage);
-    this.$socket.off('connect', this.onWebsocketConnect);
+    socket.off('chat', this.onWebsocketReceiveMessage);
+    socket.off('connect', this.onWebsocketConnect);
     this.$bus.$off('GO_CHAT_BOTTOM')
   }
 }
