@@ -124,6 +124,8 @@ import SendBtn from "@/components/chat/components/sendBtn.vue";
 import renderedMarkdown from "@/components/renderedMarkdown.vue";
 import {chatClean} from "@/common/home";
 
+
+let socket
 export default {
   components: {
     Typewriter,
@@ -189,10 +191,12 @@ export default {
   mounted() {
     // 初始化socket
     this.$connectSocket()
+    socket = this.$socket()
+    console.log('socket', socket)
     // 初始化语言
     this.initLang()
-    this.$socket.on('chat', this.onWebsocketReceiveMessage);
-    this.$socket.on('connect', this.onWebsocketConnect);
+    socket.on('chat', this.onWebsocketReceiveMessage);
+    socket.on('connect', this.onWebsocketConnect);
     if (this.showWelcome) {
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
@@ -389,8 +393,8 @@ export default {
     },
   },
   beforeDestroy() {
-    this.$socket.off('chat', this.onWebsocketReceiveMessage);
-    this.$socket.off('connect', this.onWebsocketConnect);
+    socket.off('chat', this.onWebsocketReceiveMessage);
+    socket.off('connect', this.onWebsocketConnect);
     this.$bus.$off('GO_CHAT_BOTTOM')
   }
 }
