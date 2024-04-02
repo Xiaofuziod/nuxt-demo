@@ -46,6 +46,7 @@ export default {
     {src: '@/plugins/loading-plugin.js', mode: 'client'},
     {src: '~/plugins/localStorage.js', mode: 'client'},
     {src: '~/plugins/markdownit.js', mode: 'client'},
+    { src: '~/plugins/vue-lazyload', ssr: false },
     {
       src: '~plugins/echarts',
       ssr: false

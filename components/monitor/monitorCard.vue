@@ -1,6 +1,6 @@
 <template>
   <div class="card" :class="`${card.status === 1 ? 'disable' : ''}`" @click="cardClick(card.id)">
-    <img class="card-img" :src="card?.logo || bianPic" alt="">
+    <img class="card-img" v-lazy="card?.logo || bianPic" alt="">
     <div class="card-header">
       <h3 class="title1">{{ card?.author }}</h3>
       <h3 class="title2">{{ card?.title }}</h3>

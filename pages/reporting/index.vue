@@ -26,7 +26,7 @@
                :class="{ 'item-active': item.coinId === coinId}"
                @click="handleClick(item)">
             <div class="item-left">
-              <img class="Rectangle" :src="item.icon" alt="" v-if="item.icon">
+              <img class="Rectangle" v-lazy="item.icon" alt="">
               <div class="Bitcoin ellipsis">{{ item.name }}</div>
               <div class="BTC">{{ item.symbol }}</div>
             </div>
@@ -168,7 +168,6 @@ export default {
     }
   },
   async mounted() {
-    // this.loadData()
     await this.$store.dispatch('coin/fetchUserCoinList')
     this.followLoading = false
     this.$store.commit('chat/setPageName', 'report')

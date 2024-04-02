@@ -1,7 +1,6 @@
 <template>
   <div class="echart-box">
-    <box-loading :loading="loading"/>
-
+    <skeleton-loader v-if="loading" />
     <div :style="{opacity: loading?0:1}">
       <div class="coin-name">
         <img :src="coin.logo" v-if="coin.logo" class="coin-logo" :alt="coin.logo">
@@ -36,12 +35,12 @@
 <script>
 import {getCoinPrice} from "@/common/home";
 import {formatPrice} from "@/utils/price";
-import BoxLoading from "@/components/boxLoading.vue";
+import SkeletonLoader from "@/components/echarts/SkeletonLoader.vue";
 
 export default {
   name: 'Echarts',
   components: {
-    BoxLoading
+    SkeletonLoader
   },
   props: {
     from: {

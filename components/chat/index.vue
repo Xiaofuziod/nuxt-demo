@@ -127,6 +127,7 @@ import {chatClean} from "@/common/home";
 
 
 let socket
+let retry = 0
 export default {
   components: {
     Typewriter,
@@ -191,13 +192,10 @@ export default {
   },
   mounted() {
     // 初始化socket
-    this.$connectSocket()
-    socket = this.$socket()
-    console.log('socket', socket)
+    retry = 0
+    this.initSocket()
     // 初始化语言
     this.initLang()
-    socket.on('chat', this.onWebsocketReceiveMessage);
-    socket.on('connect', this.onWebsocketConnect);
     if (this.showWelcome) {
       // 获取热门推荐的币种 和信号源
       setTimeout(() => {
@@ -222,6 +220,20 @@ export default {
     })
   },
   methods: {
+    initSocket() {
+      retry++
+      this.$connectSocket()
+      socket = this.$socket()
+      console.log('socket', socket)
+      socket.on('chat', this.onWebsocketReceiveMessage);
+      socket.on('connect', this.onWebsocketConnect);
+      socket.on('disconnect', () => {
+        console.log('Disconnected from socket server', retry);
+        if (retry < 3) {
+          this.initSocket()
+        }
+      });
+    },
     clean() {
       this.$axios.get(chatClean)
     },
@@ -383,12 +395,12 @@ export default {
       }
     },
     scrollToBottom(topVale) {
+      console.log('scrollToBottom', topVale)
       this.$nextTick(() => {
         // console.log('scrollToBottom', topVale)
         const messagesContainer = this.$refs.messagesContainer;
         messagesContainer.scrollTo({
           top: topVale || messagesContainer.scrollHeight,
-          behavior: 'smooth'
         })
       });
     },
@@ -636,6 +648,7 @@ export default {
     overflow-y: auto;
     margin: 0 auto;
     position: relative;
+    scroll-behavior: smooth;
 
 
     .text-message-box2 {

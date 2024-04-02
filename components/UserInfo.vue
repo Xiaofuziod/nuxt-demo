@@ -4,7 +4,7 @@
     <SkeletonLoader v-if="!user.account"/>
     <template v-else>
       <div class="Ellipse245">
-        <img :src="avator" v-if="user.avatar || MonitorAvator" alt="">
+        <img v-lazy="avator" alt="">
       </div>
       <div>
         <div class="saywteri2473 ellipsis">{{ user.nickname || user.account }}</div>

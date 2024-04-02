@@ -3,7 +3,7 @@
     <div class="top">
       <div class="user-info">
         <div class="pic">
-          <img :src="segment.user_pic || RobotPic" alt="">
+          <img v-lazy="segment.user_pic || RobotPic" alt="">
         </div>
         <p class="author">{{ segment.author }}</p>
       </div>
