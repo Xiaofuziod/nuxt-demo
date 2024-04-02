@@ -5,7 +5,7 @@
            :class="{'coin-row-2': hideOption}"
            class="coin-row">
         <div class="coin-name" v-if="!hideOption">
-          <img :src="coin.logo" class="coin-logo" :alt="coin.logo">
+          <img v-lazy="coin.logo" class="coin-logo">
           <span class="name" :style="{'maxWidth': hideOption ? '200px' : 'unset'}">
             {{ coin.name }}</span>
 <!--          <span class="coin-symbol">{{ coin.symbol }}</span>-->

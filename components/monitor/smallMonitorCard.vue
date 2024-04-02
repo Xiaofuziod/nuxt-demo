@@ -1,6 +1,6 @@
 <template>
   <div class="card" >
-    <img class="card-img" :src="card?.logo || bianPic" alt="">
+    <img class="card-img" v-lazy="card?.logo || bianPic" alt="">
     <div class="card-header">
       <h3 class="title1">{{ card?.title }}</h3>
 <!--      <p class="timestamp">{{ card?.time }}</p>-->

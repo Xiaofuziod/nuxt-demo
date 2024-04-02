@@ -36,7 +36,7 @@
         <div v-if="!userLoggedIn" class="login-btn" @click="showLogin">{{ $t("AppHeader_index_login-btn_1") }}</div>
         <div v-else class="user-profile">
           <div class="user-profile-img">
-            <img :src="user.avatar" v-if="user.avatar" alt="">
+            <img v-lazy="user.avatar" alt="">
           </div>
 
           <!--        账户操作-->
